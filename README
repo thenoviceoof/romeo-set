@@ -1,1 +1,27 @@
-Hello world
+README
+================================================================================
+Embedded Systems, W4840, Columbia University
+
+Authors:
+Luis E. P.              lep2141
+Nathan Hwang            nyh2105
+Stephen Pratt           sdp2128
+Richard Nwaobasi        rcn2105
+
+
+ABOUT
+--------------------------------------------------------------------------------
+A little class project to generate interactive fractals.
+
+In more detail, the project is built on a Altera DE2 FPGA (Cyclone II)
+development board, dispatching the calculation of pixel colors from a
+"soft" Nios II processor to hardware fractal calculators working in
+parallel, which are then stored in a frame buffer and displayed
+through VGA. The parameters used to generate the fractal are dynamic,
+mutable by buttons or some other input.
+
+
+TODO
+--------------------------------------------------------------------------------
+You should see either 1) github issues, or 2) our heads. Or the docs/
+directory, we've likely put our latest and greatest out there.
