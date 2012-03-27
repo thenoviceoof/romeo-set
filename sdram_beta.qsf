@@ -483,5 +483,5 @@ set_global_assignment -name VHDL_FILE nios_system.vhd
 set_global_assignment -name VHDL_FILE sdram_pll.vhd
 set_global_assignment -name VHDL_FILE sdram_top.vhd
 set_global_assignment -name VHDL_FILE sdram_beta_2.vhd
+set_global_assignment -name VHDL_FILE sram.vhd
 set_global_assignment -name VHDL_FILE de2_ifm_bus.vhd
-set_global_assignment -name VHDL_FILE altera_europa_support.vhd
