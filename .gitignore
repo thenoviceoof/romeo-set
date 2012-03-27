@@ -1,9 +1,19 @@
 *~
 
+*.o
+*.d
+*.mk
+*.elf
+*.a
 *.bsf
 *.bak
+*.dpf
+*.pin
+*.sof
 *.qip
+*.ppf
 *.qpf
+*.dat
 *.summary
 *.rpt
 *.mif
@@ -16,4 +26,8 @@
 *.qpf
 
 */db/*
+*.spoc_builder*
+*.ptf
+*nios_system*
 *nios_system_sim/*
+*modelsim*
