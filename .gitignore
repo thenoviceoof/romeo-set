@@ -1,0 +1,19 @@
+*~
+
+*.bsf
+*.bak
+*.qip
+*.qpf
+*.summary
+*.rpt
+*.mif
+*.ocp
+*.tcl # this seems like a bad idea
+*.done
+*.smsg
+*.jdi
+*.pof
+*.qpf
+
+*/db/*
+*nios_system_sim/*
