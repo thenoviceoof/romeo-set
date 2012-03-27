@@ -47,6 +47,12 @@ Here we would talk about the high-level block structure of the project:
   colorizes the pixels as they pass.
 \end{itemize}
 
+These encompass only the so called ``critical modules'', what is
+absolutely needed to have a fast draw of the fractal. Further work,
+known as parameterization modules, go above and beyond by offering
+various ways to mutate the parameters used to draw the fractal, while
+the fractal updates in real-time.
+
 % !!! HAVE KICKASS DRAWING OF BLOCK DIAGRAM HERE
 
 
@@ -147,11 +153,16 @@ allocate and gather the work as IFMs become available and finish.
 \subsection{Frame Buffer}
 
 We store the iteration counts in the SRAM external to the chip, which
-serves as the framebuffer. 
+serves as the framebuffer. The SRAM is 512 kilobinarybytes in size,
+partitioned into 256,000 16-bit words. We are using a $640\cross 480$
+pixel display, and plan on storing 8 bits of iterations in the
+``framebuffer'', such that we use approximately half the SRAM available.
 
-640x480x8
-
-Using a nice addressing scheme, the addresses get passed straight through.
+With a $640\cross 480$ screen size, rows nor columns automatically fit
+nicely into the power of 2 sizes, and multiplication is
+expensive. However, addressing the pixels column-first means that an
+entire column fits in 240 16-bit words, and there is room to spare if
+the row index is merely shifted 8 bits to the left, a fast operation.
 
 Stored as iteration counts: the color conversion happens in the VGA
 module, on the fly.
@@ -200,8 +211,9 @@ output in interesting ways.
 \item Milestone 2 (Apr 10): \\
   Display the colorized (and static) Julia set through VGA.
 \item Milestone 3 (Apr 24): \\ 
-  Implement parameter changing, with
-  subsequent updates to the displayed Julia set.
+  Implement parameter mutation, with subsequent updates to the
+  displayed Julia set.
+\item Final Report and Presentation (May 10)
 \end{itemize}
 
 \end{document}
