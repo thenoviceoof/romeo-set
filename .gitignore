@@ -12,7 +12,6 @@
 *.sof
 *.qip
 *.ppf
-*.qpf
 *.dat
 *.summary
 *.rpt
@@ -23,7 +22,7 @@
 *.smsg
 *.jdi
 *.pof
-*.qpf
+*.qws
 
 *db/*
 *.spoc_builder*
@@ -31,3 +30,4 @@
 *nios_system*
 *nios_system_sim/*
 *modelsim*
+*.metadata/
