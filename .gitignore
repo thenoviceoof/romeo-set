@@ -25,7 +25,7 @@
 *.pof
 *.qpf
 
-*/db/*
+*db/*
 *.spoc_builder*
 *.ptf
 *nios_system*

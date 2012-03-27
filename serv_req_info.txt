@@ -1,0 +1,99 @@
+<internal_error>
+	<executable>quartus</executable>
+	<sub_system>ERR</sub_system>
+	<file>msg_internal_error.cpp</file>
+	<line>732</line>
+	<callstack>
+	0xfffffffff7323730: gdiuser32 + 0x1b8730 (MwSetInputFocusToCurrentApp + 0xd0)
+	0xfffffffff7337558: gdiuser32 + 0x1cc558 (MwWMAllowsToTakeFocus + 0x1b8)
+	0xfffffffff733780a: gdiuser32 + 0x1cc80a (MwWmProtocolMessage + 0x1ca)
+	0xfffffffff72fd591: gdiuser32 + 0x192591 (MwEventSideEffects + 0xf31)
+	0xfffffffff72fe18d: gdiuser32 + 0x19318d (MwEventSideEffects + 0x0)
+	0xfffffffff7302163: gdiuser32 + 0x197163 (MwEventSideEffects + 0x0)
+	0xfffffffff7302ab2: gdiuser32 + 0x197ab2 (PeekMessageA + 0xb2)
+	0xfffffffff79c1a03: mfc400s + 0xcda03 (_ZN4CWnd12RunModalLoopEm + 0xd3)
+	0xfffffffff79f49d9: mfc400s + 0x1009d9 (_ZN14CPropertySheet7DoModalEv + 0x219)
+	0xffffffffefeadcc6: pgm_pgmw + 0xbacc6 (_ZN24PGMW_SELECT_HARDWARE_DLG7DoModalEv + 0x34)
+	0xffffffffefe4caff: pgm_pgmw + 0x59aff (_ZN9PGMW_VIEW15OnHardwareSetupEv + 0xd9)
+	0xfffffffff7a05977: mfc400s + 0x111977 (_Z18_AfxDispatchCmdMsgP10CCmdTargetjiMS_FvvEPvjP18AFX_CMDHANDLERINFO + 0x237)
+	0xfffffffff7a05a77: mfc400s + 0x111a77 (_ZN10CCmdTarget8OnCmdMsgEjiPvP18AFX_CMDHANDLERINFO + 0xc7)
+	0xfffffffff7a0d391: mfc400s + 0x119391 (_ZN5CView8OnCmdMsgEjiPvP18AFX_CMDHANDLERINFO + 0x41)
+	0xfffffffff79c61a6: mfc400s + 0xd21a6 (_ZN9CFrameWnd8OnCmdMsgEjiPvP18AFX_CMDHANDLERINFO + 0x66)
+	0xfffffffff79c28e5: mfc400s + 0xce8e5 (_ZN4CWnd9OnCommandEjl + 0xb5)
+	0xfffffffff79c4df9: mfc400s + 0xd0df9 (_ZN9CFrameWnd9OnCommandEjl + 0x69)
+	0xfffffffff79bf3cf: mfc400s + 0xcb3cf (_ZN4CWnd8OnWndMsgEjjlPl + 0x2cf)
+	0x09b33a1d: quartus + 0x1aeba1d (_ZN15AFC_CHILD_FRAME8OnWndMsgEjjlPl + 0x8f)
+	0xfffffffff79bed59: mfc400s + 0xcad59 (_ZN4CWnd10WindowProcEjjl + 0x39)
+	0xfffffffff79c3623: mfc400s + 0xcf623 (_Z14AfxCallWndProcP4CWndP6HWND__jjl + 0xc3)
+	0xfffffffff79c40c3: mfc400s + 0xd00c3 (_Z10AfxWndProcP6HWND__jjl + 0x53)
+	0xfffffffff79bbe9b: mfc400s + 0xc7e9b (_Z14AfxWndProcBaseP6HWND__jjl + 0x5b)
+	0xfffffffff72eba31: gdiuser32 + 0x180a31 (MwCallCallWndProc + 0x171)
+	0xfffffffff72f87d5: gdiuser32 + 0x18d7d5 (MwInternalSendMessage + 0x45)
+	0xfffffffff72fea9e: gdiuser32 + 0x193a9e (xxxSendMessageTimeout + 0x27e)
+	0xfffffffff72fec03: gdiuser32 + 0x193c03 (xxxSendMessageTimeout + 0x0)
+	0xfffffffff72fed3c: gdiuser32 + 0x193d3c (SendMessageTimeoutA + 0x6c)
+	0xfffffffff72feda4: gdiuser32 + 0x193da4 (SendMessageA + 0x44)
+	0xfffffffff79d0edf: mfc400s + 0xdcedf (_ZN11CControlBar10WindowProcEjjl + 0xdf)
+	0xfffffffff79c3623: mfc400s + 0xcf623 (_Z14AfxCallWndProcP4CWndP6HWND__jjl + 0xc3)
+	0xfffffffff79c40c3: mfc400s + 0xd00c3 (_Z10AfxWndProcP6HWND__jjl + 0x53)
+	0xfffffffff79bbe9b: mfc400s + 0xc7e9b (_Z14AfxWndProcBaseP6HWND__jjl + 0x5b)
+	0xfffffffff7358af9: gdiuser32 + 0x1edaf9 (_ZNK19Direct_Win_Msg_FuncclEPK6tagMSG + 0x29)
+	0xfffffffff735b2e4: gdiuser32 + 0x1f02e4 (_Z15wcs2mbs_win_msgRK15Win_Msg_ContextPK6tagMSG + 0x144)
+	0xfffffffff735be72: gdiuser32 + 0x1f0e72 (MwMessageAnsiConvert + 0x42)
+	0xfffffffff72eb944: gdiuser32 + 0x180944 (MwCallCallWndProc + 0x84)
+	0xfffffffff72f87d5: gdiuser32 + 0x18d7d5 (MwInternalSendMessage + 0x45)
+	0xfffffffff72fea9e: gdiuser32 + 0x193a9e (xxxSendMessageTimeout + 0x27e)
+	0xfffffffff72fec03: gdiuser32 + 0x193c03 (xxxSendMessageTimeout + 0x0)
+	0xfffffffff7300e99: gdiuser32 + 0x195e99 (SendMessageTimeoutW + 0x69)
+	0xfffffffff7300f04: gdiuser32 + 0x195f04 (SendMessageW + 0x44)
+	0xfffffffff726ec4e: gdiuser32 + 0x103c4e (xxxButtonNotifyParent + 0x5e)
+	0xfffffffff726ed2e: gdiuser32 + 0x103d2e (xxxBNReleaseCapture + 0xce)
+	0xfffffffff7270bac: gdiuser32 + 0x105bac (ButtonWndProcWorker + 0x38c)
+	0xfffffffff7271710: gdiuser32 + 0x106710 (ButtonWndProcW + 0xa0)
+	0xfffffffff7358af9: gdiuser32 + 0x1edaf9 (_ZNK19Direct_Win_Msg_FuncclEPK6tagMSG + 0x29)
+	0xfffffffff735755b: gdiuser32 + 0x1ec55b (_Z15mbs2wcs_win_msgRK15Win_Msg_ContextPK6tagMSG + 0x15b)
+	0xfffffffff7357642: gdiuser32 + 0x1ec642 (MwMessageUnicodeConvert + 0x42)
+	0xfffffffff72eb97c: gdiuser32 + 0x18097c (MwCallCallWndProc + 0xbc)
+	0xfffffffff72f75ba: gdiuser32 + 0x18c5ba (MwICallWindowProc + 0x7a)
+	0xfffffffff73039f6: gdiuser32 + 0x1989f6 (CallWindowProcA + 0x66)
+	0xfffffffff79be439: mfc400s + 0xca439 (_ZN4CWnd14DefWindowProcAEjjl + 0x59)
+	0xfffffffff79bed84: mfc400s + 0xcad84 (_ZN4CWnd10WindowProcEjjl + 0x64)
+	0xfffffffff79c3623: mfc400s + 0xcf623 (_Z14AfxCallWndProcP4CWndP6HWND__jjl + 0xc3)
+	0xfffffffff79c40c3: mfc400s + 0xd00c3 (_Z10AfxWndProcP6HWND__jjl + 0x53)
+	0xfffffffff79bbe9b: mfc400s + 0xc7e9b (_Z14AfxWndProcBaseP6HWND__jjl + 0x5b)
+	0xfffffffff7358af9: gdiuser32 + 0x1edaf9 (_ZNK19Direct_Win_Msg_FuncclEPK6tagMSG + 0x29)
+	0xfffffffff735b2e4: gdiuser32 + 0x1f02e4 (_Z15wcs2mbs_win_msgRK15Win_Msg_ContextPK6tagMSG + 0x144)
+	0xfffffffff735be72: gdiuser32 + 0x1f0e72 (MwMessageAnsiConvert + 0x42)
+	0xfffffffff72eb944: gdiuser32 + 0x180944 (MwCallCallWndProc + 0x84)
+	0xfffffffff72f8881: gdiuser32 + 0x18d881 (MwIDispatchMessage + 0xa1)
+	0xfffffffff73599ca: gdiuser32 + 0x1ee9ca (DispatchMessageW + 0x4a)
+	0xfffffffff727ef25: gdiuser32 + 0x113f25 (IsDialogMessageW + 0xd5)
+	0xfffffffff727f45e: gdiuser32 + 0x11445e (IsDialogMessageA + 0x5e)
+	0xfffffffff7a03d7f: mfc400s + 0x10fd7f (_ZN4CWnd16IsDialogMessageAEP6tagMSG + 0x5f)
+	0xfffffffff79c1915: mfc400s + 0xcd915 (_ZN4CWnd17PreTranslateInputEP6tagMSG + 0x55)
+	0xfffffffff79d0bda: mfc400s + 0xdcbda (_ZN11CControlBar19PreTranslateMessageEP6tagMSG + 0xfa)
+	0xfffffffff79c0cb0: mfc400s + 0xcccb0 (_ZN4CWnd20WalkPreTranslateTreeEP6HWND__P6tagMSG + 0x40)
+	0xfffffffff7a1fd63: mfc400s + 0x12bd63 (_ZN10CWinThread19PreTranslateMessageEP6tagMSG + 0x73)
+	0x09b43465: quartus + 0x1afb465 (_ZN7AFC_APP19PreTranslateMessageEP6tagMSG + 0x29)
+	0xfffffffff7a1ffc5: mfc400s + 0x12bfc5 (_ZN10CWinThread11PumpMessageEv + 0x55)
+	0xfffffffff7a1faea: mfc400s + 0x12baea (_ZN10CWinThread3RunEv + 0x8a)
+	0xfffffffff7a21b59: mfc400s + 0x12db59 (_ZN7CWinApp3RunEv + 0x29)
+	0x09b42b01: quartus + 0x1afab01 (_ZN7AFC_APP3RunEv + 0x163)
+	0xfffffffff79d02ed: mfc400s + 0xdc2ed (_Z10AfxWinMainP11HINSTANCE__S0_Pci + 0xad)
+	0x0d31edb3: quartus + 0x52d6db3 (WinMain + 0x53)
+	0x093688bd: quartus + 0x13208bd (main + 0x9d)
+	0x00373e9c: c.so.6 + 0x15e9c (__libc_start_main + 0xdc)
+	0x092b1081: quartus + 0x1269081 (__libc_start_main + 0x0)
+	</callstack>
+	<error>*** Fatal Error: Segment Violation at 0x21c
+Current editor: PGMW, STED, RPW, STED, PGMW
+Module: quartus</error>
+	<date>Mon Mar 26 04:55:38 2012</date>
+	<version>Quartus II Version 7.2 Build 151 09/26/2007 SJ Full Version</version>
+	<full_error>
+*** Fatal Error: Segment Violation at 0x21c
+Current editor: PGMW, STED, RPW, STED, PGMW
+Module: quartus
+Quartus II Version 7.2 Build 151 09/26/2007 SJ Full Version </full_error>
+</internal_error>
+
