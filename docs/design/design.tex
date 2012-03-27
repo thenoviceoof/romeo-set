@@ -1,0 +1,154 @@
+\documentclass{article}
+
+\usepackage{sectsty}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\begin{document}
+
+% title stuff
+\title{Interactive Fractal Viewer \\
+CSEE W4840 Project Design}
+\author{Luis E. P. - lep2141@columbia.edu \and
+Nathan Hwang - nyh2105@columbia.edu \and
+Stephen Pratt - sdp2128@columbia.edu \and
+Richard Nwaobasi - rcn2105@columbia.edu}
+\maketitle
+
+\abstract{In order to display beautiful fractals more efficiently, we
+  utilize specialized hardware to calculate a quadratic polynomial
+  Julia set. Using fixed point calculations within logic blocks
+  executing in parallel, we display the resulting Julia set from a
+  framebuffer, mapped from iteration to RGB space.}
+
+% ------------------------------------------------------------
+% and we begin the design document proper
+
+Everyone loves fractals! We can display them efficiently using
+specialized hardware. 
+
+
+% ------------------------------------------------------------
+\section{High-level Overview}
+
+Here we would talk about the high-level block structure of the project:
+
+\begin{itemize}
+\item Nios II CPU acts as the dispatcher
+\item This writes to a queue, which feeds values to Iterated function
+  modules (IFM)
+\item Multiple IFMs calculate the number of iterations originating at
+  a certain pixel (which maps to a certain point on the imaginary
+  plane)
+\item Another queue recieves the results from the IFMs, and passes
+  them to the framebuffer
+\item The VGA module fetches results from the framebuffer, and
+  colorizes the pixels as they pass.
+\end{itemize}
+
+% !!! HAVE KICKASS DRAWING OF BLOCK DIAGRAM HERE
+
+
+
+% ------------------------------------------------------------
+% now, we delve into the lower levels of the implementation
+% ------------------------------------------------------------
+\section{Critical Modules}
+
+% ----------------------------------------
+\subsection{Generator Module}
+The generator module still has two jobs:
+\begin{itemize}
+\item Keep track of which pixels still need to be
+  generated. Associate those pixels with a complex number determined
+  by our data window and display resolution
+\item Ensure that each pixel gets sent off to an IFM for
+  processing. Two caveats here:
+  \begin{itemize}
+  \item Multiple IFMs can and should work in parallel
+  \item The processing time for each pixel varies
+  \end{itemize}
+
+\item Generator Module: State, integer addition, interface with IFM
+
+We switched this module from a hardware implementation to code sitting
+on top of the Nios II processor.
+
+% ----------------------------------------
+\subsection{Iterated Function Module}
+
+\item IFM: floating point multiplication, addition, and comparison loop
+
+\item Iterated function module (IFM) takes complex number as input,
+  applies function iteratively, and then produces an output describing
+  (a) if the function stayed bounded or (b) for how many iterations it
+  stayed bounded if it became unbounded
+
+% ----------------------------------------
+\subsection{Queues}
+
+
+
+% ----------------------------------------
+\subsection{Frame Buffer}
+
+\item ID Buffer: Encoder to turn Pixels to Addresses, RAM
+\item Intermediate display buffer (ID Buffer) maps each pixel passed
+  along by the Generator module to the output of the IFM for that
+  pixel.
+
+\item Frame Buffer: RAM
+\item Frame buffer stores RGB values for each pixel.
+
+% ----------------------------------------
+\subsection{VGA Module}
+
+\item Colorization Module: Fancy decoder
+\item VGA Out: VGA module a la Lab 3
+
+\item Colorization module takes each value from the ID Buffer, applies
+  the colorization function $k$ to the value, and stores the resulting
+  RGB value $k(n)$ at a point in a frame buffer corresponding to the
+  point in the ID buffer from whence the value came.
+
+\item VGA out module reads from the frame buffer and produces a VGA
+  output signal.
+
+
+
+% ------------------------------------------------------------
+\section{Parametrization Modules}
+
+Time permitting their implementation, these modules can modulate the
+output in interesting ways.
+
+\begin{itemize}
+\item The Seed Module maps switch configurations to a Julia Set
+  constant c. The module must communicate this value to each IFM, and
+  ask the generator module for a remapping.
+\item Display selection module determines the x range and y range of
+  the display window.  The module must communicate these ranges to the
+  generator module and ask for a remapping.
+\item K-selector module cycles through colorization functions and
+  reports the function to the colorization module.
+\item Spectral analysis module takes audio input and uses it to effect
+  the performance of the k-selector module.
+\end{itemize}
+
+
+% ------------------------------------------------------------
+% !!! UPDATE MILESTONES IF NECESSARY
+\section{Updated Milestones}
+
+\begin{itemize}
+\item Milestone 1 (Mar 27): \\
+  Have a static Julia set filled into the ID buffer.
+\item Milestone 2 (Apr 10): \\
+  Display the colorized (and static) Julia set through VGA.
+\item Milestone 3 (Apr 24): \\ 
+  Implement parameter changing, with
+  subsequent updates to the displayed Julia set.
+\end{itemize}
+
+\end{document}
