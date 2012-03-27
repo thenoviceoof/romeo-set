@@ -56,65 +56,118 @@ Here we would talk about the high-level block structure of the project:
 % ------------------------------------------------------------
 \section{Critical Modules}
 
+These are very important. There is a reason why these modules are
+called critical.
+
 % ----------------------------------------
 \subsection{Generator Module}
-The generator module still has two jobs:
-\begin{itemize}
-\item Keep track of which pixels still need to be
-  generated. Associate those pixels with a complex number determined
-  by our data window and display resolution
-\item Ensure that each pixel gets sent off to an IFM for
-  processing. Two caveats here:
-  \begin{itemize}
-  \item Multiple IFMs can and should work in parallel
-  \item The processing time for each pixel varies
-  \end{itemize}
 
-\item Generator Module: State, integer addition, interface with IFM
+The generator module serves to kick off the calculation cascade,
+calculating the position of each pixel in the complex plane and
+writing both to active memory linked up to the input queue (described
+below).
+
+In more detail, the module loops through each pixel given the screen
+resolution, and maps it according to the translation of the origin as
+well as the scale of the complex plane with respect to the VGA
+screen. Since we may yet implement the translation of the origin as a
+parameter mutable by the user, this seperation of concerns makes
+sense.
 
 We switched this module from a hardware implementation to code sitting
-on top of the Nios II processor.
+on top of the \verb!Nios II! processor.
+
+This was partly because having all that pain from lab 3 go to waste
+didn't seem very useful, and 
+
+Implementation-wise, the Nios II processor is the ``economy'' model,
+the \verb!Nios II/e!. It relies on the addition provided by the C
+processor, and takes advantage of the provided Altera fabric to
+communicate with the input queue that sits in front of the IFMs.
+
+The Nios II accepts the SDRAM as it's memory store, since we use the
+SRAM below as the framebuffer.
 
 % ----------------------------------------
-\subsection{Iterated Function Module}
+\subsection{Iterated Function Module (IFM)}
 
-\item IFM: floating point multiplication, addition, and comparison loop
+Calculating the popular Mandelbrot and Julia set fractals requires
+many iterations of relatively simple computations. This alone implies
+that the calculation of fractal sets lends itself to parallel
+computation, but the very nature of the iterated fractal calculation
+means that the run lengths of the individual calculations are
+heterogenous, introducing synchronization issues.
 
-\item Iterated function module (IFM) takes complex number as input,
-  applies function iteratively, and then produces an output describing
-  (a) if the function stayed bounded or (b) for how many iterations it
-  stayed bounded if it became unbounded
+With a pair of queues handling the heterogenity of the fractal
+calculations, the IFM merely need calculate applications of the function:
+
+\begin{equation}
+f(z) = z^2 + c
+\end{equation}
+
+over and over again, where $z,c \in \mathbb{C}$.
+
+% !!! I start to lose coherency right about here
+
+The complex nature of the calculations means that there need be 3
+multiplications, not just 1, to find the next iteration of $z$.
+
+We count 127 iterations: after the 127th iteration, we consider the
+originating point bounded.
+
+We restrict ourselves to 18 bits, since the multipliers on board the
+chip are sized such.
+
+We use fixed point, because floating point is slow and fixed point
+proved ``good enough'' when we did a proof-of-concept with limited bit
+widths with C programs.
+
+We pass a pixel position and point on the complex plane to the IFM
+through the queue, since the complex plane position is meant to
+facilitate the fractal calculation and the pixel position is meant for
+display on the screen.
 
 % ----------------------------------------
 \subsection{Queues}
 
+We hold these opinions to be true:
+
+\begin{itemize}
+\item Multiple IFMs can and should work in parallel
+\item The processing time for each pixel varies
+\end{itemize}
+
+Hence, we implement a pair of queues to wrap the IFM pool, who
+allocate and gather the work as IFMs become available and finish.
+
+% !!! I DON'T KNOW HOW THIS IS IMPLEMENTED
 
 
 % ----------------------------------------
 \subsection{Frame Buffer}
 
-\item ID Buffer: Encoder to turn Pixels to Addresses, RAM
-\item Intermediate display buffer (ID Buffer) maps each pixel passed
-  along by the Generator module to the output of the IFM for that
-  pixel.
+We store the iteration counts in the SRAM external to the chip, which
+serves as the framebuffer. 
 
-\item Frame Buffer: RAM
-\item Frame buffer stores RGB values for each pixel.
+640x480x8
+
+Using a nice addressing scheme, the addresses get passed straight through.
+
+Stored as iteration counts: the color conversion happens in the VGA
+module, on the fly.
+
 
 % ----------------------------------------
 \subsection{VGA Module}
 
-\item Colorization Module: Fancy decoder
-\item VGA Out: VGA module a la Lab 3
+We use something akin to the VGA-portion of Lab 3, while colorizing
+the pixels fetched from the framebuffer.
 
-\item Colorization module takes each value from the ID Buffer, applies
-  the colorization function $k$ to the value, and stores the resulting
-  RGB value $k(n)$ at a point in a frame buffer corresponding to the
-  point in the ID buffer from whence the value came.
+The colorization method is essentially a fancy decoder.
 
-\item VGA out module reads from the frame buffer and produces a VGA
-  output signal.
-
+Colorization module takes each value from the ID Buffer, applies the
+colorization function $k$ to the value, and displays the resulting RGB
+value $k(n)$.
 
 
 % ------------------------------------------------------------
@@ -125,9 +178,9 @@ output in interesting ways.
 
 \begin{itemize}
 \item The Seed Module maps switch configurations to a Julia Set
-  constant c. The module must communicate this value to each IFM, and
+  constant $c$. The module must communicate this value to each IFM, and
   ask the generator module for a remapping.
-\item Display selection module determines the x range and y range of
+\item Display selection module determines the $x$ range and $y$ range of
   the display window.  The module must communicate these ranges to the
   generator module and ask for a remapping.
 \item K-selector module cycles through colorization functions and
