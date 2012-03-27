@@ -31,3 +31,7 @@
 *nios_system*
 *nios_system_sim/*
 *modelsim*
+
+*.aux
+*.log
+*.pdf
