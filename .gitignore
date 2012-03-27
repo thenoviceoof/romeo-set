@@ -27,7 +27,9 @@
 *db/*
 *.spoc_builder*
 *.ptf
+
 *nios_system*
+!nios_system.vhd
 *nios_system_sim/*
 *modelsim*
 *.metadata/
