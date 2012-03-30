@@ -28,7 +28,7 @@
 */db/*
 *.spoc_builder*
 *.ptf
-*nios_system*
+*nios_system*				# This also seems like a bad idea-LEP 
 *nios_system_sim/*
 *modelsim*
 
