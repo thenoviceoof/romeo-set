@@ -34,4 +34,5 @@
 
 *.aux
 *.log
-*.pdf
+docs/proposal/proposal.pdf
+docs/design/design.pdf
