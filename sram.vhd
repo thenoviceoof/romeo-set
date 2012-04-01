@@ -43,6 +43,8 @@ begin
   -- generate the address
   addr <= ry(8 downto 0) & rx(9 downto 1);
   upper <= rx(0);
+  addr <= y(8 downto 0) & x(9 downto 1);
+  upper <= x(0);
   
   -- sram outputs
   sram_addr <= addr;
@@ -57,7 +59,7 @@ begin
   sram_ce_n <= '0';
   -- try to generate the right data
   -- !!! overhaul this
-  sram_data <= wv & "00000011" when (upper='1' AND we='1') else
+  sram_data <= wv & "00000000" when (upper='1' AND we='1') else
                "00000000" & wv when (upper='0' AND we='1') else
                (others => 'Z'); -- we='0', reading
   -- module outputs
