@@ -17,7 +17,14 @@ Stephen Pratt - sdp2128@columbia.edu \and
 Luis Pe\~{n}a - lep2141@columbia.edu}
 \maketitle
 \newpage
-\abstract{ Fractals are often appreciated for their rich and elegant internal complexity. This complexity is responsible for the beautiful aesthetic of these famed mathematical images as well as the amount of computational power required to generate them. Using fixed point calculations within parallelized sequential logic blocks, we aim to develop an hardware-accelerated fractal generator, capable of computing and displaying quadratic Julia sets in significantly less time than a software-based solution.}
+\abstract{Fractals are often appreciated for their rich and elegant
+  internal complexity. This complexity is responsible for the
+  beautiful aesthetic of these famed mathematical images as well as
+  the amount of computational power required to generate them. Using
+  fixed point calculations within parallelized sequential logic
+  blocks, we aim to develop an hardware-accelerated fractal generator,
+  capable of computing and displaying quadratic Julia sets in
+  significantly less time than a software-based solution.}
 
 % ------------------------------------------------------------
 % and we begin the design document proper
@@ -30,19 +37,29 @@ Luis Pe\~{n}a - lep2141@columbia.edu}
 The following is a description the high-level block structure of the project:
 
 \begin{itemize}
-\item A Window Generator builds a set of 4-tuples $(x, y, a, b)$ where each tuple is a mapping from a VGA coordinate $(x, y)$ to a value in the complex plane of the form $a+bi$. The Window Generator is implemtented by the Nios II processor.
-\item The processor writes its values across its bus into a queue, which feeds values to Iterative Function Modules (IFMs).
-\item Each IFM computes the number of function iterations required for a specified value to become unbounded. Multiple IFMs work in parallel.
-\item Another queue recieves 3-tuples $(x, y, c)$ from the IFMs, where $(x, y)$ corresponds to a VGA coordinate and $c$ is the breakaway constant computed by the IFM. These values are passed one at a time to a buffer known as the Coordinate-Breakaway Lookup Table.
-\item The VGA module fetches results from the Coordinate-Breakaway Lookup Table and colorizes them using a separate RAM-based lookup table, displaying the result.
+\item A Window Generator builds a set of 4-tuples $(x, y, a, b)$ where
+  each tuple is a mapping from a VGA coordinate $(x, y)$ to a value in
+  the complex plane of the form $a+bi$. The Window Generator is
+  implemtented by the Nios II processor.
+\item The processor writes its values across its bus into a queue,
+  which feeds values to Iterative Function Modules (IFMs).
+\item Each IFM computes the number of function iterations required for
+  a specified value to become unbounded. Multiple IFMs work in
+  parallel.
+\item Another queue recieves 3-tuples $(x, y, c)$ from the IFMs, where
+  $(x, y)$ corresponds to a VGA coordinate and $c$ is the breakaway
+  constant computed by the IFM. These values are passed one at a time
+  to a buffer known as the Coordinate-Breakaway Lookup Table.
+\item The VGA module fetches results from the Coordinate-Breakaway
+  Lookup Table and colorizes them using a separate RAM-based lookup
+  table, displaying the result.
 \end{itemize}
 
 These encompass only the so called ``critical modules'', what is
 absolutely needed to have a fast draw of the fractal. Further work,
-known as parameterization modules, offer various ways to mutate the parameters used to draw the fractal.
+known as parameterization modules, offer various ways to mutate the
+parameters used to draw the fractal.
 
-% !!! HAVE KICKASS DRAWING OF BLOCK DIAGRAM HERE
-%!!!! OKAY
 \newpage
 
 \begin{figure}[h!]
@@ -73,7 +90,11 @@ parameter mutable by the user, this seperation of concerns makes
 sense.
 
 We switched this module from a hardware implementation to code sitting
-on top of the \verb!Nios II! processor. The processor uses a specialized procedure to generate the window tuples. The procedure requires only four divisions and two modulo operations, which are executed once at procedure start time. The remainder of the operations are additions and comparisons.
+on top of the \verb!Nios II! processor. The processor uses a
+specialized procedure to generate the window tuples. The procedure
+requires only four divisions and two modulo operations, which are
+executed once at procedure start time. The remainder of the operations
+are additions and comparisons.
 
 \begin{lstlisting}[caption="Window Generation Procedure"]
 int row, col;
@@ -176,17 +197,21 @@ else
 }
 \end{lstlisting}
 
+We have the Nios II configured to use the SDRAM as it's memory store,
+since we use the, making the SRAM available for other uses.
 
 
-We have the Nios II configured to use the SDRAM as it's memory store, since we use the, making the SRAM available for other uses.
 
 % ----------------------------------------
 \subsection{Iterative Function Module (IFM)}
 
-Rendering Julia set fractals requires
-many iterations of relatively simple computations in the complex plane. This sequence of computations is independent for each point in the image, which is why the calculation of fractal sets lends itself to parallel
-computation. However, the very nature of the iterated fractal calculation
-means that the run lengths of the individual calculations are heterogenous, introducing synchronization issues.
+Rendering Julia set fractals requires many iterations of relatively
+simple computations in the complex plane. This sequence of
+computations is independent for each point in the image, which is why
+the calculation of fractal sets lends itself to parallel
+computation. However, the very nature of the iterated fractal
+calculation means that the run lengths of the individual calculations
+are heterogenous, introducing synchronization issues.
 
 With a pair of queues handling the heterogenity of the fractal
 calculations, the IFM merely need calculate applications of the function:
@@ -197,12 +222,15 @@ f(z) = z^2 + c
 
 repeatedly, where $z,c \in \mathbb{C}$.
 
-% !!! I start to lose coherency right about here
-
 The complex nature of the calculations means that there need be 3
 multiplications, not just 1, to find the next iteration of $z$.
 
-Numbers are represented as two's-complement fixed-point binary values. We restrict ourselves to 18 bits, as the onboard multipliers are sized such. In order to accomodate the largest-magnitude value we expect to come across during any iteration, we require 6 bits to the left of the radix. Thus, our fixed-point values ahve 12 bits to the right of the radix.
+Numbers are represented as two's-complement fixed-point binary
+values. We restrict ourselves to 18 bits, as the onboard multipliers
+are sized such. In order to accomodate the largest-magnitude value we
+expect to come across during any iteration, we require 6 bits to the
+left of the radix. Thus, our fixed-point values ahve 12 bits to the
+right of the radix.
 
 We count 127 iterations: after the 127th iteration, we consider the
 originating point bounded.
@@ -212,6 +240,8 @@ through the queue. The complex plane position is meant to
 facilitate the fractal calculation and the pixel position is meant for
 display on the screen.
 
+
+
 % ----------------------------------------
 \subsection{Parallel IFM Control Module}
 
@@ -219,10 +249,11 @@ Documentation not complete.
 
 \subsection{Coordinate-Breakaway Lookup Table}
 
-We store the iteration counts in the on-chip RAM module, which offers approximately 400 kilobytes of storage space.
-We are using a $640 \times 480$ pixel display, and plan on storing 8 bits of breakaway information. As such, we fill  307.2 kilobytes, or about 75% of the available RAM.
-
-
+We store the iteration counts in the on-chip RAM module, which offers
+approximately 400 kilobytes of storage space.  We are using a $640
+\times 480$ pixel display, and plan on storing 8 bits of breakaway
+information. As such, we fill 307.2 kilobytes, or about 75\% of the
+available RAM.
 
 With a $640 \times 480$ screen size, rows nor columns automatically fit
 nicely into the power of 2 sizes, and multiplication is
@@ -230,12 +261,22 @@ expensive. However, addressing the pixels column-first means that an
 entire column fits in 240 16-bit words, and there is room to spare if
 the row index is merely shifted 8 bits to the left, a fast operation.
 
+
+
 % ----------------------------------------
 \subsection{VGA Module}
 
-A VGA controller is connected to the Coordinate-Breakaway lookup table in order to display the generated Julia set. As the controller cycles through output coordinates within the display area, it modifies the read address signal for the lookup table. The data signal coming from the RAM is thus the breakaway value associated with that coordinate.
+A VGA controller is connected to the Coordinate-Breakaway lookup table
+in order to display the generated Julia set. As the controller cycles
+through output coordinates within the display area, it modifies the
+read address signal for the lookup table. The data signal coming from
+the RAM is thus the breakaway value associated with that coordinate.
 
-This breakaway value is passed through a decoder known as the Colorization Lookup Table and the resulting $(R, G, B)$ signal tuple is sent to the VGA.
+This breakaway value is passed through a decoder known as the
+Colorization Lookup Table and the resulting $(R, G, B)$ signal tuple
+is sent to the VGA.
+
+
 
 % ------------------------------------------------------------
 \section{Parametrization Modules}
@@ -243,9 +284,17 @@ This breakaway value is passed through a decoder known as the Colorization Looku
 These modules can be used parameterize the output fractal
 
 \begin{itemize}
-\item PS/2 Keyboard input can be used to allow the user to specify fractal recomputation using a different set of parameters, permitting the modification of window ranges and Julia Set constants. Keyboard input would be facilitated through the Nios II processor and would require a reexecution of the Window Generator.
-\item We could create a module for permuting the display colors given by the  Colorization Lookup table using a periodic function, thus causing the colors to cycle. This module would allow us to modify the way the fractal looks without recomputing it.
-\item Spectral analysis module takes audio input and uses it to influence the behavior of the Color Permutation module.
+\item PS/2 Keyboard input can be used to allow the user to specify
+  fractal recomputation using a different set of parameters,
+  permitting the modification of window ranges and Julia Set
+  constants. Keyboard input would be facilitated through the Nios II
+  processor and would require a reexecution of the Window Generator.
+\item We could create a module for permuting the display colors given
+  by the Colorization Lookup table using a periodic function, thus
+  causing the colors to cycle. This module would allow us to modify
+  the way the fractal looks without recomputing it.
+\item Spectral analysis module takes audio input and uses it to
+  influence the behavior of the Color Permutation module.
 \end{itemize}
 
 
@@ -255,7 +304,8 @@ These modules can be used parameterize the output fractal
 
 \begin{itemize}
 \item Milestone 1 (Mar 27): \\
-  Develop a Window Generator and Parallelized IFM module that can communicate successfully.   
+  Develop a Window Generator and
+  Parallelized IFM module that can communicate successfully.
 \item Milestone 2 (Apr 10): \\
   Display the colorized (and static) Julia set through VGA.
 \item Milestone 3 (Apr 24): \\ 
