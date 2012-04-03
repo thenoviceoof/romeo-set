@@ -64,7 +64,7 @@ parameters used to draw the fractal.
 
 \begin{figure}[h!]
   \centering
-	\includegraphics[width=\textwidth]{block_diagram.pdf}
+	\includegraphics[width=\textwidth]{block_diagrams/top_level.pdf}
   \caption{High-level Block Diagram}
 \end{figure}
 \newpage
@@ -200,6 +200,51 @@ else
 We have the Nios II configured to use the SDRAM as it's memory store,
 since we use the, making the SRAM available for other uses.
 
+% ----------------------------------------
+% figures for the window generator
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{block_diagrams/win_gen.pdf}
+  \caption{High-level Block Diagram of the Window Generator}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{block_diagrams/win_gen_interior.pdf}
+  \caption{Interior Block Diagram of the Window Generator}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{block_diagrams/acounter.pdf}
+  \caption{Block diagram of a counter used in window generation}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{block_diagrams/bcounter.pdf}
+  \caption{Block diagram of a counter used in window generation}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{state_diagrams/diff_counter.pdf}
+  \caption{State diagram of the Difference counter}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{state_diagrams/diff_window_gen.pdf}
+  \caption{State diagram of the Window Generator}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{timing_diagrams/diff_counter.pdf}
+  \caption{Timing diagram of the Difference counter}
+\end{figure}
+
 
 
 % ----------------------------------------
@@ -240,26 +285,144 @@ through the queue. The complex plane position is meant to
 facilitate the fractal calculation and the pixel position is meant for
 display on the screen.
 
+% ----------------------------------------
+% figures for the IFMs
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{block_diagrams/ifm.pdf}
+  \caption{Block diagram for the IFM's themselves}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{state_diagrams/ifm.pdf}
+  \caption{Block diagram for the IFM wrappers}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{block_diagrams/ifmunit.pdf}
+  \caption{Block diagram for the IFM wrappers}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{state_diagrams/ifmunit.pdf}
+  \caption{State diagram for the IFM wrappers}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{timing_diagrams/gen_ifm.pdf}
+  \caption{Timing diagram of interface between the window generator
+    and the IFMs.}
+\end{figure}
+
 
 
 % ----------------------------------------
 \subsection{Parallel IFM Control Module}
 
-Documentation not complete.
+% !!! NEED SOMEONE TO WRITE SOMETHING ABOUT THIS
 
+
+
+% ----------------------------------------
 \subsection{Coordinate-Breakaway Lookup Table}
 
-We store the iteration counts in the on-chip RAM module, which offers
-approximately 400 kilobytes of storage space.  We are using a $640
-\times 480$ pixel display, and plan on storing 8 bits of breakaway
-information. As such, we fill 307.2 kilobytes, or about 75\% of the
-available RAM.
+After the count associated with each pixel is calculated, it must be
+stored in a framebuffer that interfaces both with the Parallel IFM
+Control Module as well as the VGA module.
 
-With a $640 \times 480$ screen size, rows nor columns automatically fit
-nicely into the power of 2 sizes, and multiplication is
-expensive. However, addressing the pixels column-first means that an
-entire column fits in 240 16-bit words, and there is room to spare if
-the row index is merely shifted 8 bits to the left, a fast operation.
+For this, we use the SRAM chip that is built into the DE2 board, for
+its relatively expansive memory size (versus on-chip memory), fast
+speed, and ease of use (versus the SDRAM chip). The SRAM chip contains
+512kibibytes in total, and can be accessed and written to in half a 50MHz
+clock cycle, making it ideal for our purposes.
+
+Since we display a $640\times 480$ image in the VGA module and keep 8
+bits of iteration information for each pixel, we need a grand total of
+300kibibytes to store the information, fitting well within the
+confines of the given 512kibibyte SRAM chip.
+
+We use a straightforward addressing scheme to store the count
+information, using the $y$ position as the top 9 bits of the address,
+and the $x$ position as the bottom 10 bits of the address. This way,
+finding the address from a given pixel position is very fast.
+
+A small wrinkle is the fact the SRAM is in fact a 256Kx16 bit memory,
+reading and writing in 16 bit chunks. This merely means that the very
+bottom bit of the $x$ position does not go to the address, but is
+routed to the bitmask signal which controls which bits should be
+exposed or mutated, if either.
+
+\subsection{Reading/Writing}
+
+Since the SRAM has only one multiplexed port, reads and writes must be
+multiplexed. Given that the VGA module will be requesting data for
+long stretches of time at a frequency around half of 50MHz, this means
+that we can interleave reads and writes to the SRAM.
+
+However, we can use the structure of the reads from the VGA to our
+advantage, and allow more writes. Reads always follow a pattern, where
+if we read the lower half of a 16bit word, then we will read the
+higher half in the next 25MHz clock cycle. Hence, if we read the lower
+half of a word, we can fetch the entire word in one read, save the
+higher half in a register, and return the higher half when asked in
+the next clock cycle.
+
+Hence, the SRAM can write every other time it would normally be
+writing, meaning we can interleave 3 writes for each read for superior
+bandwidth.
+
+This is also why we used the particular addressing scheme we did: if
+$y$ took the lower address bits, then we could not rely on the
+regularity of the read accesses incrementing with $x$, and we would be
+reduced back to interleaving single reads and writes.
+
+However, we still have one out of four 50MHz cycles dedicated to
+reading from the SRAM (lest the VGA module not get the required value,
+and snow crash the rest of the screen\footnote{One could conceivably
+  get away with putting writes aboves reads in precedence, if one
+  accepts a glitchy screen displaying for split seconds, with a
+  pronounced effect if the parameters change frequently}), which
+necesitates a queue to write to the SRAM. We use a shift register,
+which only shifts forward when not reading, and always accepts new
+values onto the end\footnote{The queue will only block for one cycle
+  in between several non-blocked cycles, so this is fine}. This is not
+perfect: if the input queue hands off values every clock cycle for an
+extended amount of time while the SRAM is contested for reads, then we
+will lose values. However, we don't believe this will be too large a
+problem.
+
+Hence, the Coordinate-Breakaway Lookup Table abstracts away the SRAM,
+serving readers and writers in an abstract manner.
+
+% ----------------------------------------
+% figures for the CLUT
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{block_diagrams/clut.pdf}
+  \caption{Block Diagram of the Coordinate-Breakaway LUT: signals on
+    the right side are inputs, signals on the left are outputs.}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{state_diagrams/clut.pdf}
+  \caption{Simplified State Diagram of the Coordinate-Breakaway LUT:
+    Mealy machine, only includes re and we as inputs and rv as an
+    output, with ~ denoting a lack of outputs}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{timing_diagrams/ifm_clut.pdf}
+  \caption{Timing diagram of the interface between the IFMs and the CLUT.}
+\end{figure}
+
 
 
 
@@ -275,6 +438,27 @@ the RAM is thus the breakaway value associated with that coordinate.
 This breakaway value is passed through a decoder known as the
 Colorization Lookup Table and the resulting $(R, G, B)$ signal tuple
 is sent to the VGA.
+
+% ----------------------------------------
+% figures for the CLUT
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{block_diagrams/vga.pdf}
+  \caption{Block diagram of the VGA module}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{state_diagrams/vga.pdf}
+  \caption{State diagram of the VGA module}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{timing_diagrams/clut_vga.pdf}
+  \caption{Timing diagram of the interface between the CLUT and VGA module}
+\end{figure}
 
 
 
