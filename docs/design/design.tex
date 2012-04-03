@@ -105,46 +105,55 @@ int x_max = /*max x value in window*/
 int y_min = /*min y value in window */
 int x_min = /*min x value in window */
 
-//set our iteration params
+// set our iteration params
 
-//to compute a and b, we will iterate through each pixel of the screen
-//adding win_dim/screen_dim to a sum that starts at win_dim_min
+// to compute a and b, we will iterate through each
+// pixel of the screen adding win_dim/screen_dim to a
+// sum that starts at win_dim_min
 
-//we will also have "leap" iterations, which are iterations in which
-//the sum must be incremented by 1 to keep it on track towards screen_dim
+// we will also have "leap" iterations, which are
+// iterations in which the sum must be incremented by
+// 1 to keep it on track towards screen_dim
 
-//amount to add each iteration   
+// amount to add each iteration
 int x_delt = (x_max - x_min)/VGA_WIDTH;
 int y_delt = (y_max - y_min)/VGA_HEIGHT;
 
-//leap total is the number of times we'll need to increment our sum by 1
+// leap total is the number of times we'll need to
+// increment our sum by 1
 int x_leap_total = (x_max - x_min)%VGA_WIDTH;
 int y_leap_total = (y_max - y_min)%VGA_HEIGHT;
 
-//leap count will keep track of how many times we incremented our count by this value
+// leap count will keep track of how many times we
+// incremented our count by this value
 int x_leap_count = 0;
 int y_leap_count = 0;
 
-//leap interval is the number of cycles between leaps
+// leap interval is the number of cycles between
+// leaps
 int x_leap_interval = VGA_WIDTH/x_leap_total;
 int y_leap_interval = VGA_HEIGHT/y_leap_total;
 
-//time since last leap
+// time since last leap
 int x_last_leap = 0;
 int y_last_leap = 0;
 
 long a = x_min;
 long b = y_min;
 
-//initialize a data value that will be written to the board
+// initialize a data value that will be written to
+// the board
 
-printf("here...\n");   
-for(row = VGA_HEIGHT-1; row >= 0; row--)    //bottom to top so our min is in the bottom left corner
+printf("here...\n");
+// bottom to top so our min is in the bottom left
+// corner
+for(row = VGA_HEIGHT-1; row >= 0; row--)
 {
 
 a = x_min;
 
-for(col = 0; col < VGA_WIDTH; col++)    //left to right across the row
+// left to right across the row
+for(col = 0; col < VGA_WIDTH; col++)
 {
     //concatenate bit vector
     //printf("a:%x\n",a);
@@ -160,7 +169,8 @@ for(col = 0; col < VGA_WIDTH; col++)    //left to right across the row
     //printf("writing...\n");
     IOWR_32DIRECT(JULIA_CALC_BASE, 0, ((a<<4)|0x0));
     IOWR_32DIRECT(JULIA_CALC_BASE, 0, ((b<<4)|0x1));
-    IOWR_32DIRECT(JULIA_CALC_BASE, 0, ((((col<<X_SHIFT)|row)<<4)|0x2));
+    IOWR_32DIRECT(JULIA_CALC_BASE, 0,
+                  ((((col<<X_SHIFT)|row)<<4)|0x2));
     IOWR_32DIRECT(JULIA_CALC_BASE, 0, (0x3));
    
     //printf("written\n");
@@ -170,7 +180,8 @@ for(col = 0; col < VGA_WIDTH; col++)    //left to right across the row
     a+= x_delt;           
    
     //leap if necessary
-    if(x_last_leap >= x_leap_interval && x_leap_count < x_leap_total)
+    if(x_last_leap >= x_leap_interval &&
+       x_leap_count < x_leap_total)
     {
         a++;
         x_last_leap = 0;
@@ -185,7 +196,8 @@ for(col = 0; col < VGA_WIDTH; col++)    //left to right across the row
 b += y_delt;
 
 //leap if necessary
-if(y_last_leap >= y_leap_interval && y_leap_count < y_leap_total)
+if(y_last_leap >= y_leap_interval &&
+   y_leap_count < y_leap_total)
 {
     b++;
     y_last_leap = 0;
@@ -230,13 +242,18 @@ since we use the, making the SRAM available for other uses.
 \begin{figure}[h!]
   \centering
     \includegraphics[width=\textwidth]{state_diagrams/diff_counter.pdf}
-  \caption{State diagram of the Difference counter}
+  \caption{State Diagram for the diff counter, Moore machine: signals
+    \texttt{max=c\_cuis=max\_itr}, \texttt{leap=iter\_count=v\_leap}. Omit
+    unused signals (X) for compactness. Colorcoded signal bundles.}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
     \includegraphics[width=\textwidth]{state_diagrams/diff_window_gen.pdf}
-  \caption{State diagram of the Window Generator}
+  \caption{State Diagram for the window generator code, Moore machine:
+    signals \texttt{max=c\_cuis=max\_itr},
+    \texttt{leap=iter\_count=v\_leap}. Omit unused signals (X) for
+    compactness.}
 \end{figure}
 
 \begin{figure}[h!]
@@ -297,7 +314,9 @@ display on the screen.
 \begin{figure}[h!]
   \centering
     \includegraphics[width=\textwidth]{state_diagrams/ifm.pdf}
-  \caption{Block diagram for the IFM wrappers}
+  \caption{State diagram for a single IFM unit (IFM itself), Moore
+    machine: using abstract transition descriptions. Omits unused
+    signals for compactness.}
 \end{figure}
 
 \begin{figure}[h!]
@@ -309,7 +328,8 @@ display on the screen.
 \begin{figure}[h!]
   \centering
     \includegraphics[width=\textwidth]{state_diagrams/ifmunit.pdf}
-  \caption{State diagram for the IFM wrappers}
+  \caption{State diagram for a single IFM unit (IFM handler/wrapper),
+    Moore machine: using abstract transition descriptions.}
 \end{figure}
 
 \begin{figure}[h!]
@@ -440,7 +460,7 @@ Colorization Lookup Table and the resulting $(R, G, B)$ signal tuple
 is sent to the VGA.
 
 % ----------------------------------------
-% figures for the CLUT
+% figures for the VGA
 
 \begin{figure}[h!]
   \centering
@@ -451,7 +471,11 @@ is sent to the VGA.
 \begin{figure}[h!]
   \centering
     \includegraphics[width=\textwidth]{state_diagrams/vga.pdf}
-  \caption{State diagram of the VGA module}
+  \caption{State diagram for the \texttt{VGA} module, Mealy machine: ~
+    stands in for no input/output, and VGA stands in for all the VGA\_
+    signals (\texttt!VGA\_CLK!, \texttt!VGA\_HS!, \texttt!VGA\_VS!,
+    \texttt!VGA\_BLANK!, \texttt!VGA\_SYNC!, \texttt!VGA\_R!, \texttt!VGA\_G!,
+    \texttt!VGA\_B!). Omits unused signals for compactness.}
 \end{figure}
 
 \begin{figure}[h!]
