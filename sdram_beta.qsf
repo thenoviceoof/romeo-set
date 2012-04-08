@@ -458,12 +458,11 @@ set_location_assignment PIN_W23 -to GPIO_1[35]
 set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
-set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH tlc_tb -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH sram_tb -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_NAME tlc_tb -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME uut -section_id tlc_tb
 set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1000 ns" -section_id tlc_tb
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME tlc_tb -section_id tlc_tb
-set_global_assignment -name EDA_TEST_BENCH_FILE ../lab3_beta/sdram_beta_t.vhd -section_id tlc_tb
 set_global_assignment -name IGNORE_CLOCK_SETTINGS ON
 set_global_assignment -name FMAX_REQUIREMENT "50 MHz"
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
@@ -471,6 +470,12 @@ set_global_assignment -name PARTITION_COLOR 2147039 -section_id Top
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
 set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
 set_instance_assignment -name PARTITION_HIERARCHY no_file_for_top_partition -to | -section_id Top
+set_global_assignment -name EDA_TEST_BENCH_FILE ../lab3_beta/sdram_beta_t.vhd -section_id tlc_tb
+set_global_assignment -name EDA_TEST_BENCH_NAME sram_tb -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME uut -section_id sram_tb
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "200 ns" -section_id sram_tb
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME sram_tb -section_id sram_tb
+set_global_assignment -name EDA_TEST_BENCH_FILE sram_tb.vhd -section_id sram_tb
 set_global_assignment -name VHDL_FILE parallel.vhd
 set_global_assignment -name VHDL_FILE ifmunit.vhd
 set_global_assignment -name VHDL_FILE mult.vhd
@@ -481,7 +486,7 @@ set_global_assignment -name VHDL_FILE jtag_uart.vhd
 set_global_assignment -name VHDL_FILE cpu.vhd
 set_global_assignment -name VHDL_FILE nios_system.vhd
 set_global_assignment -name VHDL_FILE sdram_pll.vhd
-set_global_assignment -name VHDL_FILE sdram_top.vhd
-set_global_assignment -name VHDL_FILE sdram_beta_2.vhd
 set_global_assignment -name VHDL_FILE sram.vhd
 set_global_assignment -name VHDL_FILE de2_ifm_bus.vhd
+set_global_assignment -name VHDL_FILE sdram_beta_2.vhd
+set_global_assignment -name VHDL_FILE sdram_top.vhd
