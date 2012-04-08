@@ -183,6 +183,45 @@ architecture rtl of sdram_top is
 		signal c_from_box : unsigned(6 downto 0);
 		signal we_from_box: std_logic;
 		
+	component sram is
+	port(
+		rhold_out : out std_logic_vector(15 downto 0);
+		re_count_out : out std_logic_vector(1 downto 0);
+	
+		-- clocks
+		clk_50 : in std_logic;
+		clk_25 : in std_logic;
+
+		-- SRAM_DQ, 16 bit data
+		sram_data : inout std_logic_vector(15 downto 0);
+		-- SRAM_ADDR, 18 bit address space (256k)
+		sram_addr : out std_logic_vector(17 downto 0);
+		-- SRAM_UB_N, *LB_N, upper and lower byte masks
+		sram_ub_n,
+		sram_lb_n,
+		-- SRAM_WE_N, write enable
+		sram_we_n,
+		-- SRAM_CE_N, chip enable (power up chip)
+		sram_ce_n,
+		-- SRAM_OE_N, output enable (when reading)
+		sram_oe_n : out std_logic;
+
+		-- 640<1024 (10 bits)
+		rx : in std_logic_vector(9 downto 0);
+		-- 480<512  (9 bits)
+		ry : in std_logic_vector(8 downto 0);
+		-- same, but for writing
+		wx : in std_logic_vector(9 downto 0);
+		wy : in std_logic_vector(8 downto 0);
+		-- read/write values (8 bits)
+		rv : out std_logic_vector(7 downto 0);
+		wv : in std_logic_vector(7 downto 0);
+		-- read/write controls
+		-- reading takes precedence
+		re : in std_logic;
+		we : in std_logic
+	);
+	end component;
 		
 begin
 	DRAM_BA_1 <= DRAM_BA(1);

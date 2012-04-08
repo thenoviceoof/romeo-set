@@ -27,48 +27,6 @@ architecture tb of sram_tb is
 	signal w_y : std_logic_vector(8 downto 0) :=  "XXXXXXXXX";
 	signal write_sram : std_logic_vector(7 downto 0) := "XXXXXXXX";
 
-	signal rhold : std_logic_vector(15 downto 0) := "ZZZZZZZZZZZZZZZZ";
-	signal re_count : std_logic_vector(1 downto 0) := "ZZ";
-
---	component sram is
---	port(
---		rhold_out : out std_logic_vector(15 downto 0);
---		re_count_out : out std_logic_vector(1 downto 0);
---	
---		-- clocks
---		clk_50 : in std_logic;
---		clk_25 : in std_logic;
---
---		-- SRAM_DQ, 16 bit data
---		sram_data : inout std_logic_vector(15 downto 0);
---		-- SRAM_ADDR, 18 bit address space (256k)
---		sram_addr : out std_logic_vector(17 downto 0);
---		-- SRAM_UB_N, *LB_N, upper and lower byte masks
---		sram_ub_n,
---		sram_lb_n,
---		-- SRAM_WE_N, write enable
---		sram_we_n,
---		-- SRAM_CE_N, chip enable (power up chip)
---		sram_ce_n,
---		-- SRAM_OE_N, output enable (when reading)
---		sram_oe_n : out std_logic;
---
---		-- 640<1024 (10 bits)
---		rx : in std_logic_vector(9 downto 0);
---		-- 480<512  (9 bits)
---		ry : in std_logic_vector(8 downto 0);
---		-- same, but for writing
---		wx : in std_logic_vector(9 downto 0);
---		wy : in std_logic_vector(8 downto 0);
---		-- read/write values (8 bits)
---		rv : out std_logic_vector(7 downto 0);
---		wv : in std_logic_vector(7 downto 0);
---		-- read/write controls
---		-- reading takes precedence
---		re : in std_logic;
---		we : in std_logic
---	);
---	end component;
 begin
 
 	clk_50 <= not clk_50 after 10 ns; -- 50MHz
@@ -144,10 +102,57 @@ begin
 		r_x <= "XXXXXXXXXX";
 		r_y <= "XXXXXXXXX";	
 
+
 		-- 4 --------------------
+		-- keep reading, try writing once simultaneously
+		r_e <= '1';
+		r_x <= "0011000110";
+		r_y <= "000000010";
+		w_e <= '1';
+		w_x <= "1001010110";
+		w_y <= "011111010";
+		write_sram <= "10111111";
+		-- write
+		wait for 12 ns;
+		sram_data <= "1111000000001010";
+		wait for 8 ns;
+		-- clean up
+		w_e <= '0';
+		w_x <= "XXXXXXXXXX";
+		w_y <= "XXXXXXXXX";
+		write_sram <= "XXXXXXXX";
+		-- clean up the sram output
+		wait for 2 ns;
+		sram_data <= "ZZZZZZZZZZZZZZZZ";
+		-- clean up again
+		wait for 18 ns;
+		r_e <= '0';
+		r_x <= "XXXXXXXXXX";
+		r_y <= "XXXXXXXXX";
+
+		-- 5 --------------------
+		-- keep reading
+		r_e <= '1';
+		r_x <= "0011000111";
+		r_y <= "000000010";
+		w_e <= '1';
+		w_x <= "1101011110";
+		w_y <= "111111110";
+		write_sram <= "11001111";
+		wait for 40 ns;
+		-- clean up
+		r_e <= '0';
+		r_x <= "XXXXXXXXXX";
+		r_y <= "XXXXXXXXX";
+		w_e <= '0';
+		w_x <= "XXXXXXXXXX";
+		w_y <= "XXXXXXXXX";
+		write_sram <= "XXXXXXXX";
+		
+		-- 6 --------------------
 		-- keep reading, do writes to both
 		r_e <= '1';
-		r_x <= "0000000110";
+		r_x <= "0000001000";
 		r_y <= "000000010";
 		-- write
 		w_e <= '1';
@@ -175,6 +180,47 @@ begin
 		w_x <= "XXXXXXXXXX";
 		w_y <= "XXXXXXXXX";
 		write_sram <= "XXXXXXXX";
+		
+		-- 7 --------------------
+		-- keep reading for kicks
+		r_e <= '1';
+		r_x <= "0000001001";
+		r_y <= "000000010";
+		wait for 20 ns;
+		w_e <= '1';
+		w_x <= "1001111111";
+		w_y <= "001011110";
+		write_sram <= "10001111";
+		wait for 20 ns;
+		-- keep writing
+		r_e <= '0';
+		r_x <= "XXXXXXXXXX";
+		r_y <= "XXXXXXXXX";
+		
+		-- 8 --------------------
+		r_e <= '1';
+		r_x <= "0000001010";
+		r_y <= "000000010";
+		-- write
+		wait for 12 ns;
+		sram_data <= "1111000110001010";
+		wait for 8 ns;
+		-- clean up
+		w_x <= "1101111111";
+		w_y <= "001011110";
+		write_sram <= "11111111";
+		-- clean up the sram output
+		wait for 2 ns;
+		sram_data <= "ZZZZZZZZZZZZZZZZ";
+		-- clean up again
+		wait for 18 ns;
+		r_e <= '0';
+		r_x <= "XXXXXXXXXX";
+		r_y <= "XXXXXXXXX";
+		w_e <= '0';
+		w_x <= "XXXXXXXXXX";
+		w_y <= "XXXXXXXXX";
+		write_sram <= "XXXXXXXX";
 
 		-- end
 		wait;
@@ -183,16 +229,13 @@ begin
 	-- instantiate unit
 	uut : entity work.sram
 	port map (
-		rhold_out => rhold,
-		re_count_out => re_count,
-		
 		clk_50 => clk_50,
 		clk_25 => clk_25,
     
 		sram_data => sram_data,
 		sram_addr => sram_addr,
 		sram_ub_n => sram_ub_n,
-		sram_lb_n => sram_ub_n,
+		sram_lb_n => sram_lb_n,
 		sram_we_n => sram_we_n,
 		sram_ce_n => sram_ce_n,
 		sram_oe_n => sram_oe_n,
