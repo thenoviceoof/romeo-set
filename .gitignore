@@ -1,37 +1,46 @@
 *~
 
+### software things
 *.o
 *.d
 *.mk
 *.elf
 *.a
-*.bsf
+
+### folders
+*/db/*
+*/simulation/*
+*/timing/*
 *.bak
-*.dpf
-*.pin
-*.sof
-*.qip
-*.ppf
-*.qpf
-*.dat
+*.qar # quartus archive
+### Quartus compilation output
 *.summary
 *.rpt
-*.mif
-*.ocp
-*.tcl # this seems like a bad idea
-*.done
+*.pin
+*.eqn
+*.qmsg
 *.smsg
-*.jdi
-*.pof
-*.qpf
+*.done
+### Megafunction output
+*.html
+*.jpg
+*.cmp
+*.inst
+### Other generated things
+*.sof # SRAM obj
+*.bsf # block symb
+*.dpf # design protocol, doesn't seem 
+*.ppf # pin planner
+*.pof # prog obj
+*.jdi # jtag debug
 
-*/db/*
-*.spoc_builder*
-*.ptf
-*nios_system*				# This also seems like a bad idea-LEP 
-*nios_system_sim/*
-*modelsim*
+### we'll add these back when we add in the Nios
+# *.spoc_builder*
+# *.ptf
+# *nios_system* # This also seems like a bad idea-LEP 
+# *nios_system_sim/*
 
+### TeX things
 *.aux
 *.log
 docs/proposal/proposal.pdf
