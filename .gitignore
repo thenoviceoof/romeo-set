@@ -1,18 +1,13 @@
 *~
 
-### software things
-*.o
-*.d
-*.mk
-*.elf
-*.a
 
-### in ifm_test_scripts
+########## in /ifm_test_scripts/
 ifm_test_scripts/*.png
 ifm_test_scripts/*.txt
 ifm_test_scripts/*.pyc
 
-########## in /src
+
+########## in /src/
 
 ### folders
 */db/*
@@ -46,6 +41,16 @@ ifm_test_scripts/*.pyc
 # *.ptf
 # *nios_system* # This also seems like a bad idea-LEP 
 # *nios_system_sim/*
+
+### software things(?)
+*.o
+*.d
+*.mk
+*.elf
+*.a
+
+
+########## in /docs/
 
 ### TeX things
 *.aux
