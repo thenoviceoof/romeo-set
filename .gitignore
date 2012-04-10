@@ -7,6 +7,13 @@
 *.elf
 *.a
 
+### in ifm_test_scripts
+ifm_test_scripts/*.png
+ifm_test_scripts/*.txt
+ifm_test_scripts/*.pyc
+
+########## in /src
+
 ### folders
 */db/*
 */simulation/*
