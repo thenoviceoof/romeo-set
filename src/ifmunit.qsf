@@ -69,23 +69,6 @@ set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "5 ms" -section_id HOOKWr
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME hooktb2 -section_id HOOKWrite
 set_global_assignment -name EDA_TEST_BENCH_FILE hooktb2.vhd -section_id HOOKWrite
 set_global_assignment -name EDA_TEST_BENCH_FILE hooktb.vhd -section_id "HOOK SHORT"
-set_global_assignment -name VHDL_FILE lab3_vga.vhd
-set_global_assignment -name VHDL_FILE Color_LUT.vhd
-set_global_assignment -name VHDL_FILE counter.vhd
-set_global_assignment -name VHDL_FILE vga.vhd
-set_global_assignment -name VHDL_FILE vga_mod.vhd
-set_global_assignment -name VHDL_FILE sram.vhd
-set_global_assignment -name VHDL_FILE diff_counter.vhd
-set_global_assignment -name VHDL_FILE window_gen.vhd
-set_global_assignment -name VHDL_FILE mult2.vhd
-set_global_assignment -name VHDL_FILE sqr2.vhd
-set_global_assignment -name VHDL_FILE ifmd.vhd
-set_global_assignment -name VHDL_FILE ifmunitd.vhd
-set_global_assignment -name VHDL_FILE hook.vhd
-set_global_assignment -name VHDL_TEST_BENCH_FILE hooktb.vhd
-set_global_assignment -name VHDL_TEST_BENCH_FILE hooktb2.vhd
-set_global_assignment -name VHDL_TEST_BENCH_FILE ifmdtb.vhd
-set_global_assignment -name VHDL_TEST_BENCH_FILE ifmunitdtb.vhd
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_COLOR 2147039 -section_id Top
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
@@ -516,3 +499,21 @@ set_location_assignment PIN_V24 -to GPIO_1[32]
 set_location_assignment PIN_V23 -to GPIO_1[33]
 set_location_assignment PIN_W25 -to GPIO_1[34]
 set_location_assignment PIN_W23 -to GPIO_1[35]
+set_global_assignment -name VHDL_FILE counter.vhd
+set_global_assignment -name VHDL_FILE vga.vhd
+set_global_assignment -name VHDL_FILE vga_mod.vhd
+set_global_assignment -name VHDL_FILE Color_LUT.vhd
+set_global_assignment -name VHDL_FILE pll5025.vhd
+set_global_assignment -name VHDL_FILE sram.vhd
+set_global_assignment -name VHDL_FILE diff_counter.vhd
+set_global_assignment -name VHDL_FILE window_gen.vhd
+set_global_assignment -name VHDL_FILE mult2.vhd
+set_global_assignment -name VHDL_FILE sqr2.vhd
+set_global_assignment -name VHDL_FILE lab3_vga.vhd
+set_global_assignment -name VHDL_FILE ifmd.vhd
+set_global_assignment -name VHDL_FILE ifmunitd.vhd
+set_global_assignment -name VHDL_FILE hook.vhd
+set_global_assignment -name VHDL_TEST_BENCH_FILE hooktb.vhd
+set_global_assignment -name VHDL_TEST_BENCH_FILE hooktb2.vhd
+set_global_assignment -name VHDL_TEST_BENCH_FILE ifmdtb.vhd
+set_global_assignment -name VHDL_TEST_BENCH_FILE ifmunitdtb.vhd

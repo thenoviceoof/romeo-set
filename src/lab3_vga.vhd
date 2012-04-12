@@ -188,14 +188,22 @@ architecture datapath of lab3_vga is
 	signal done			: unsigned(3 downto 0);
 	signal compute		: unsigned(3 downto 0);
 
+	signal pll_lock		: std_logic;
 begin
 
-  process (CLOCK_50)
-  begin
-    if rising_edge(CLOCK_50) then
-      clk25 <= not clk25;
-    end if;
-  end process;
+--  process (CLOCK_50)
+--  begin
+--    if rising_edge(CLOCK_50) then
+--      clk25 <= not clk25;
+--    end if;
+--  end process;
+
+CLK5025: entity work.pll5025 port map(
+	areset => '0',
+	inclk0 => CLOCK_50,
+	c0 => clk25,
+	locked => pll_lock
+	);
 
 IFM: entity work.hook port map(
 	clk50		=> CLOCK_50,
