@@ -174,7 +174,11 @@ end lab3_vga;
 
 architecture datapath of lab3_vga is
 
-  signal clk25 : std_logic := '0';
+	signal clk_25		 : std_logic := '0';
+	signal clk_50		: std_logic := '0';
+	signal clk_sram		: std_logic := '0';
+	signal pll_lock		: std_logic;
+
 	signal cread		: unsigned(7 downto 0);
 	signal xread		: unsigned(9 downto 0);
 	signal yread		: unsigned(8 downto 0);
@@ -187,8 +191,6 @@ architecture datapath of lab3_vga is
 	signal b 			: std_logic_vector(35 downto 0);
 	signal done			: unsigned(3 downto 0);
 	signal compute		: unsigned(3 downto 0);
-
-	signal pll_lock		: std_logic;
 begin
 
 --  process (CLOCK_50)
@@ -199,15 +201,16 @@ begin
 --  end process;
 
 CLK5025: entity work.pll5025 port map(
-	areset => '0',
-	inclk0 => CLOCK_50,
-	c0 => clk25,
-	locked => pll_lock
+	inclk0	=> CLOCK_50,
+	c0		=> clk_50,
+	c1		=> clk_25,
+	c2		=> clk_sram,
+	locked	=> pll_lock
 	);
 
 IFM: entity work.hook port map(
-	clk50		=> CLOCK_50,
-	clk25		=> clk25,
+	clk50		=> clk_50,
+	clk25		=> clk_25,
 	reset		=> SW(0),
 	a_min		=> X"F80000000",
 	a_diff		=> X"000666666",
@@ -226,7 +229,7 @@ IFM: entity work.hook port map(
 	);
 
   VGA: entity work.vga_mod port map (
-    clk => clk25,
+    clk => clk_25,
 	reset => '0',
 	count		=> cread,--EXTERNAL SIGNALS
     VGA_CLK		=> VGA_CLK,
@@ -243,8 +246,8 @@ IFM: entity work.hook port map(
   );
 
 SRAM: entity work.sram port map(
-	clk_50		=> CLOCK_50,
-	clk_25		=> clk25,
+	clk_50		=> clk_50,
+	clk_25		=> clk_25,
 	sram_data	=> SRAM_DQ,
 	sram_addr	=> SRAM_ADDR,
 	sram_ub_n	=> SRAM_UB_N,
