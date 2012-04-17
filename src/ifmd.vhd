@@ -27,10 +27,8 @@ end ifmd;
 
 architecture first of ifmd is
 
---signal		cr		: signed(35 downto 0)	:= X"FCA8F5C29";	-- Real part of the constant		0
---signal		ci		: signed(35 downto 0)	:= X"FF125460B";	-- Imaginary part of the constant	0
-signal		cr		: signed(35 downto 0)	:= X"FF9632429";	-- Real part of the constant		0
-signal		ci		: signed(35 downto 0)	:= X"FF328A31B";	-- Imaginary part of the constant	0
+signal		cr		: signed(35 downto 0)	:= X"FCA8F5C29";	-- Real part of the constant		0
+signal		ci		: signed(35 downto 0)	:= X"FF125460B";	-- Imaginary part of the constant	0
 
 signal		proda	: std_logic_vector(71 downto 0);
 signal		prodb	: std_logic_vector(71 downto 0);
