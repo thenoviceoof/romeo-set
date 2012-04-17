@@ -265,16 +265,16 @@ SRAM: entity work.sram port map(
 	we			=> we
 	);
   
-  HEX7     <= "1100001"; -- Leftmost
-  HEX6     <= "1000001";
-  HEX5     <= "1000111";
-  HEX4     <= "1111001";
-  HEX3     <= "0001000";
-  HEX2     <= "0010010";
-  HEX1     <= "0000110";
-  HEX0     <= "0000111";          -- Rightmost
-  LEDG     <= (others => '1');
-  LEDR     <= (others => '1');
+  HEX7     <= "1100001"; -- J
+  HEX6     <= "1000001"; -- U
+  HEX5     <= "1000111"; -- L
+  HEX4     <= "1111001"; -- I
+  HEX3     <= "0001000"; -- A
+  HEX2     <= "0010010"; -- S
+  HEX1     <= "0000110"; -- E
+  HEX0     <= "0000111"; -- t
+  LEDG     <= (others => '0');
+  LEDR     <= (others => '0');
   LCD_ON   <= '1';
   LCD_BLON <= '1';
   LCD_RW <= '1';
