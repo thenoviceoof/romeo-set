@@ -33,7 +33,7 @@ set_global_assignment -name USE_GENERATED_PHYSICAL_CONSTRAINTS OFF -section_id e
 set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
-set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH HOOKWrite -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH plltb -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_NAME IFMUNIT -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME uut -section_id IFMUNIT
 set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "100 us" -section_id IFMUNIT
@@ -58,17 +58,10 @@ set_global_assignment -name EDA_TEST_BENCH_NAME "HOOK SHORT" -section_id eda_sim
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME uut -section_id "HOOK SHORT"
 set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "10 ms" -section_id "HOOK SHORT"
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME hooktb -section_id "HOOK SHORT"
-set_global_assignment -name EDA_TEST_BENCH_FILE ifmunittb.vhd -section_id IFMUNIT
-set_global_assignment -name EDA_TEST_BENCH_FILE ifmtb.vhd -section_id IFM
-set_global_assignment -name EDA_TEST_BENCH_FILE ifmdtb.vhd -section_id IFM2
-set_global_assignment -name EDA_TEST_BENCH_FILE ifmunitdtb.vhd -section_id IFMUNIT2
-set_global_assignment -name EDA_TEST_BENCH_FILE hooktb.vhd -section_id HOOK
 set_global_assignment -name EDA_TEST_BENCH_NAME HOOKWrite -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME uut -section_id HOOKWrite
 set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "5 ms" -section_id HOOKWrite
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME hooktb2 -section_id HOOKWrite
-set_global_assignment -name EDA_TEST_BENCH_FILE hooktb2.vhd -section_id HOOKWrite
-set_global_assignment -name EDA_TEST_BENCH_FILE hooktb.vhd -section_id "HOOK SHORT"
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_COLOR 2147039 -section_id Top
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
@@ -517,3 +510,16 @@ set_global_assignment -name VHDL_TEST_BENCH_FILE hooktb.vhd
 set_global_assignment -name VHDL_TEST_BENCH_FILE hooktb2.vhd
 set_global_assignment -name VHDL_TEST_BENCH_FILE ifmdtb.vhd
 set_global_assignment -name VHDL_TEST_BENCH_FILE ifmunitdtb.vhd
+set_global_assignment -name VHDL_TEST_BENCH_FILE pll_tb.vhd
+set_global_assignment -name EDA_TEST_BENCH_FILE ifmunittb.vhd -section_id IFMUNIT
+set_global_assignment -name EDA_TEST_BENCH_FILE ifmtb.vhd -section_id IFM
+set_global_assignment -name EDA_TEST_BENCH_FILE ifmdtb.vhd -section_id IFM2
+set_global_assignment -name EDA_TEST_BENCH_FILE ifmunitdtb.vhd -section_id IFMUNIT2
+set_global_assignment -name EDA_TEST_BENCH_FILE hooktb.vhd -section_id HOOK
+set_global_assignment -name EDA_TEST_BENCH_FILE hooktb.vhd -section_id "HOOK SHORT"
+set_global_assignment -name EDA_TEST_BENCH_FILE hooktb2.vhd -section_id HOOKWrite
+set_global_assignment -name EDA_TEST_BENCH_NAME plltb -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME uut -section_id plltb
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "500 ns" -section_id plltb
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME plltb -section_id plltb
+set_global_assignment -name EDA_TEST_BENCH_FILE pll_tb.vhd -section_id plltb
