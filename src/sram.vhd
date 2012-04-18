@@ -45,45 +45,42 @@ architecture sram_arch of sram is
 	-- temp addr signals
 	signal raddr : std_logic_vector(18 downto 0);
 	signal waddr : std_logic_vector(18 downto 0);
-	
-	signal last : std_logic;
 
 	-- byte mask, due to 16bit words in SRAM
 	signal mask : std_logic_vector(1 downto 0);
 
 	-- handle reading from the SRAM
 	signal re_count : unsigned(1 downto 0) := "11";
-	signal rre : std_logic;
-	-- a register for the stored bits
+	signal rre : std_logic; -- really read-enable
+	-- a register for the stored read bits
+	signal hold : std_logic;
 	signal rhold : std_logic_vector(15 downto 0);
 
 	-- buffer for writes, length 2
-	signal we_buffer : std_logic_vector(1 downto 0) := (others => '0');
-	signal rwe_buffer : std_logic_vector(1 downto 0) := (others => '0');
-	signal wv_buffer : std_logic_vector(15 downto 0) := (others => '0');
-	signal waddr_buffer : std_logic_vector(37 downto 0) := (others => '0');
-	-- outputs from the buffer, r for really
-	signal rwe : std_logic;
-	signal rwv : std_logic_vector(7 downto 0);
-	signal rwaddr : std_logic_vector(18 downto 0);
+	signal we_buffer : std_logic;
+	signal wv_buffer : std_logic_vector(7 downto 0);
+	signal waddr_buffer : std_logic_vector(18 downto 0);
+--	signal wdup : std_logic := '0';
+
+	signal rwe : std_logic; -- really write-enable
+
 begin
 	-- determine whether we really need to read from the SRAM
-	rre <= re when re_count="00" else '0';
-	-- and fetch the rest of the results from the write buffer
-	rwe <= (we or we_buffer(0)) and (not rre);
-	rwv <= wv_buffer(7 downto 0) when we_buffer(0)='1' else wv;
-	rwaddr <= waddr_buffer(18 downto 0) when we_buffer(0)='1' else waddr;
+	rre <= re when (re_count="00" and (not rwe='1')) else '0';
+	-- determine if we should really write to the SRAM
+	-- rwe <= (we and (not wdup)); -- don't know why, but this is not better
+	rwe <= we;
 
 	-- generate the address
 	raddr <= ry(8 downto 0) & rx(9 downto 0);
 	-- for the waddr
 	waddr <= wy(8 downto 0) & wx(9 downto 0);
-	addr <= raddr(18 downto 1) when rre='1' else rwaddr(18 downto 1);
+	addr <= waddr(18 downto 1) when rwe='1' else raddr(18 downto 1);
 
 	-- find out if we need to mask either byte
-	mask <= "11" when rre='1' else -- always read both bytes
-			"01" when waddr(0)='0' else
-			"10" when waddr(0)='1' else
+	mask <= "01" when rwe='1' and waddr(0)='0' else
+			"10" when rwe='1' and waddr(0)='1' else
+			"11" when rre='1' else -- always read both bytes
 			"00"; -- don't read anything by default
 
 	-- sram outputs
@@ -99,14 +96,14 @@ begin
 	sram_ce_n <= '0';
 
 	-- try to generate the right data
-	sram_data <= rwv & "00000000" when (rwaddr(0)='1' and rwe='1') else
-				"00000000" & rwv when (rwaddr(0)='0' and rwe='1') else
-				(others => 'Z'); -- rwe='0', reading
+	sram_data <= wv & "00000000" when (waddr(0)='1' and rwe='1') else
+				"00000000" & wv when (waddr(0)='0' and rwe='1') else
+				(others => 'Z');
 	-- module outputs
 	rv <= sram_data(7 downto 0) when rre='1' else
-		rhold(7 downto 0) when (re='1' and raddr(0)='0') else
-		rhold(15 downto 8) when (re='1' and raddr(0)='1') else
-		"00000000";
+			rhold(7 downto 0) when (hold='1' and re='1' and raddr(0)='0') else
+			rhold(15 downto 8) when (hold='1' and re='1' and raddr(0)='1') else
+			"00000000";
 
 	-- handle synchronous things
 	process(clk_50)
@@ -121,41 +118,26 @@ begin
 			end if;
 
 			-- save the results of the read
+			hold <= hold;
+			rhold <= rhold;
 			if rre='1' then
+				hold <= '1';
 				rhold <= sram_data;
-			else
-				rhold <= rhold;
+			elsif (re_count="11" and rwe='1') then
+				-- we're supposed to get updated, but won't
+				hold <= '0';
+				rhold <= (others => '0');
 			end if;
 
-
-			-- buffer for writes
-			-- handle the writes to the head of the buffer
-			if ((((we='1' or we_buffer(0)='1') and (re='1' and re_count="11"))
-				or (we='1' and we_buffer(1)='1'))
-				and (not (rwe_buffer(1)='1' and
-                    waddr_buffer(37 downto 19)=waddr))) then
-				--) then
-				-- write:
-				-- we want to write, but can't (r/w or writing from buffer)
-				-- we're not writing the same data twice
-				we_buffer(1) <= we;
-				wv_buffer(15 downto 8) <= wv;
-				waddr_buffer(37 downto 19) <= waddr;
-			else
-				-- otherwise, write nothing
-				we_buffer(1) <= '0';
-				wv_buffer(15 downto 8) <= wv;
-				waddr_buffer(37 downto 19) <= waddr;
-			end if;
-			
-			-- keep track of the real we's, not just the we
-			rwe_buffer(1) <= we;
-			
-			-- advance the queue
-			we_buffer(0) <= we_buffer(1);
-			rwe_buffer(0) <= rwe_buffer(1);
-			wv_buffer(7 downto 0) <= wv_buffer(15 downto 8);
-			waddr_buffer(18 downto 0) <= waddr_buffer(37 downto 19);
+			-- buffer for writes, mostly to check for dupes
+			we_buffer <= we;
+			wv_buffer <= wv;
+			waddr_buffer <= waddr;
+--			if waddr=waddr_buffer then
+--				wdup <= '1';
+--			else
+--				wdup <= '0';
+--			end if;
 
 		end if;
 	end process;
