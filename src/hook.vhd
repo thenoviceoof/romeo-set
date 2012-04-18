@@ -14,14 +14,16 @@ entity hook is
 	b_min		: in signed(35 downto 0);
 	b_diff		: in signed(35 downto 0);
 	b_leap		: in unsigned(9 downto 0);
+	cr			: in signed(35 downto 0);
+	ci			: in signed(35 downto 0);
 	xout		: out std_logic_vector(9 downto 0);
 	yout		: out std_logic_vector(8 downto 0);
-	aout		: out std_logic_vector(35 downto 0);
-	bout		: out std_logic_vector(35 downto 0);
+--	aout		: out std_logic_vector(35 downto 0);
+--	bout		: out std_logic_vector(35 downto 0);
 	count		: out unsigned (7 downto 0);
-	we			: out std_logic;
-	done		: out unsigned(3 downto 0);
-	compute		: out unsigned(3 downto 0)
+	we			: out std_logic
+--	done		: out unsigned(3 downto 0);
+--	compute		: out unsigned(3 downto 0)
 	);
 
 end hook;
@@ -74,14 +76,12 @@ architecture first of hook is
 	yin			=> yi,
 	ain			=> ai,
 	bin			=> bi,
+	cr			=> cr,
+	ci			=> ci,
 	xout		=> xout,
 	yout		=> yout,
-	aout		=> aout,
-	bout		=> bout,
 	count		=> count,
 	full		=> nxt,
-	done		=> done,
-	compute		=> compute,
 	we			=> we
 
 	);

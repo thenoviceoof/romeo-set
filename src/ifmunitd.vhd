@@ -13,14 +13,16 @@ entity ifmunitd is
 	yin			: in std_logic_vector(8 downto 0);
 	ain			: in std_logic_vector(35 downto 0);
 	bin			: in std_logic_vector(35 downto 0);
+	cr			: in signed(35 downto 0);
+	ci			: in signed(35 downto 0);
 	xout		: out std_logic_vector(9 downto 0);
 	yout		: out std_logic_vector(8 downto 0);
-	aout		: out std_logic_vector(35 downto 0);
-	bout		: out std_logic_vector(35 downto 0);
+--	aout		: out std_logic_vector(35 downto 0);
+--	bout		: out std_logic_vector(35 downto 0);
 	count		: out unsigned(7 downto 0);					--Data to be written in memory
 	full		: out std_logic;
-	done		: out unsigned(3 downto 0);
-	compute		: out unsigned(3 downto 0);
+--	done		: out unsigned(3 downto 0);
+--	compute		: out unsigned(3 downto 0);
 	we			: out std_logic								-- Write enable
 	);
 end ifmunitd;
@@ -32,6 +34,8 @@ type inRecord is record
 	d			: std_logic;
 	a			: std_logic_vector(35 downto 0);
 	b			: std_logic_vector(35 downto 0);
+	cr			: signed(35 downto 0);
+	ci			: signed(35 downto 0);
 	x			: std_logic_vector(9 downto 0);
 	y			: std_logic_vector(8 downto 0);
 end record;
@@ -72,8 +76,6 @@ signal ow			: owb;
 signal oc			: ocb;
 signal ox			: oxb;
 signal oy			: oyb;
-signal oa			: oab;
-signal ob			: obb;
 
 	begin
 	full			<= not ia(1).d;
@@ -81,11 +83,6 @@ signal ob			: obb;
 	yout			<= oy(0);
 	we				<= ow(0);
 	count			<= oc(0);
-	aout			<= oa(0);
-	bout			<= ob(0);
-
-	done			<= unsigned(bdone);
-	compute			<= unsigned(bcomp);
 
 	process(clk50)
 	begin
@@ -101,37 +98,27 @@ signal ob			: obb;
 				ox(0)				<= bx(0);
 				oy(0)				<= by(0);
 				oc(0)				<= bc(0);
-				oa(0)				<= ba(0);
-				ob(0)				<= bb(0);
 				ow(0)				<= '1';
 			elsif bdone(1) = '1' then
 				ox(0)				<= bx(1);
 				oy(0)				<= by(1);
 				oc(0)				<= bc(1);
-				oa(0)				<= ba(1);
-				ob(0)				<= bb(1);
 				ow(0)				<= '1';
 			elsif bdone(2) = '1' then
 				ox(0)				<= bx(2);
 				oy(0)				<= by(2);
 				oc(0)				<= bc(2);
-				oa(0)				<= ba(2);
-				ob(0)				<= bb(2);
 				ow(0)				<= '1';
 			elsif bdone(3) = '1' then
 				ox(0)				<= bx(3);
 				oy(0)				<= by(3);
 				oc(0)				<= bc(3);
-				oa(0)				<= ba(3);
-				ob(0)				<= bb(3);
 				ow(0)				<= '1';
 			end if;
 		else
 			ox(0)				<= (others => '0');
 			oy(0)				<= (others => '0');
 			oc(0)				<= (others => '0');
-			oa(0)				<= (others => '0');
-			ob(0)				<= (others => '0');
 			ow(0)				<= '0';
 		end if;
 	end if;
@@ -148,6 +135,8 @@ signal ob			: obb;
 			ia(idx).d		<= '0';
 			ia(idx).a		<= (others => '0');
 			ia(idx).b		<= (others => '0');
+			ia(idx).cr		<= (others => '0');
+			ia(idx).ci		<= (others => '0');
 			ia(idx).x		<= (others => '0');
 			ia(idx).y		<= (others => '0');
 			end loop init0;
@@ -175,6 +164,8 @@ signal ob			: obb;
 	if data = '1' then
 	ia(1).a			<= ain;
 	ia(1).b			<= bin;
+	ia(1).cr		<= cr;
+	ia(1).ci		<= ci;
 	ia(1).x			<= xin;
 	ia(1).y			<= yin;
 	ia(1).d			<= '1';
@@ -187,6 +178,8 @@ signal ob			: obb;
 	if ia(1).d = '1' then
 	ia(0).a			<= ia(1).a;
 	ia(0).b			<= ia(1).b;
+	ia(0).cr		<= ia(1).cr;
+	ia(0).ci		<= ia(1).ci;
 	ia(0).x			<= ia(1).x;
 	ia(0).y			<= ia(1).y;
 	ia(0).d			<= ia(1).d;
@@ -252,10 +245,12 @@ clear:	for idx in 0 to 3 loop
 		yin			=> ia(0).y,
 		ain			=> ia(0).a,
 		bin			=> ia(0).b,
+		cr			=> ia(0).cr,
+		ci			=> ia(0).ci,
 		xout		=> bx(I),
 		yout		=> by(I),
-		aout		=> ba(I),
-		bout		=> bb(I),
+--		aout		=> ba(I),
+--		bout		=> bb(I),
 		count		=> bc(I),
 		don			=> bdone(I),
 		ready		=> bready(I)

@@ -49,7 +49,6 @@ architecture imp of vga_mod is
 	
   component Color_LUT
     port(
-      clk     : in std_logic;
       count   : in unsigned(7 downto 0);
       VGA_RGB : out unsigned(29 downto 0));
   end component;
@@ -74,8 +73,7 @@ begin
 					re		  => re);
 
    A : Color_LUT port map 
-		(clk		=> clk,
-		count		=> count,
+		(count		=> count,
 		VGA_RGB		=> VGA_RGB);
 
 end imp;

@@ -1,7 +1,4 @@
 --
--- DE2 top-level module that includes the simple VGA raster generator
---
--- Stephen A. Edwards, Columbia University, sedwards@cs.columbia.edu
 --
 -- From an original by Terasic Technology, Inc.
 -- (DE2_TOP.v, part of the DE2 system board CD supplied by Altera)
@@ -11,7 +8,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity lab3_vga is
+entity ifv is
 
   port (
     -- Clocks
@@ -170,14 +167,14 @@ entity lab3_vga is
     GPIO_1 : inout std_logic_vector(35 downto 0) -- GPIO Connection 1   
     );
   
-end lab3_vga;
+end ifv;
 
-architecture datapath of lab3_vga is
+architecture datapath of ifv is
 
 	signal clk_25		 : std_logic := '0';
 	signal clk_50		: std_logic := '0';
-	signal clk_sram		: std_logic := '0';
-	signal pll_lock		: std_logic;
+	signal clk_sdram		: std_logic := '0';
+	signal clk25		: std_logic	:= '0';
 
 	signal cread		: unsigned(7 downto 0);
 	signal xread		: unsigned(9 downto 0);
@@ -187,25 +184,23 @@ architecture datapath of lab3_vga is
 	signal cwrite		: unsigned(7 downto 0);
 	signal xwrite		: unsigned(9 downto 0);
 	signal ywrite		: unsigned(8 downto 0);
-	signal a			: std_logic_vector(35 downto 0);
-	signal b 			: std_logic_vector(35 downto 0);
-	signal done			: unsigned(3 downto 0);
-	signal compute		: unsigned(3 downto 0);
 begin
 
---  process (CLOCK_50)
---  begin
---    if rising_edge(CLOCK_50) then
---      clk25 <= not clk25;
---    end if;
---  end process;
+  process (CLOCK_50)
+  begin
+    if rising_edge(CLOCK_50) then
+      clk25 <= not clk25;
+    end if;
+  end process;
+
+--clk_25		<= clk25;
+--clk_50		<= CLOCK_50;
 
 CLK5025: entity work.pll5025 port map(
 	inclk0	=> CLOCK_50,
 	c0		=> clk_50,
 	c1		=> clk_25,
-	c2		=> clk_sram,
-	locked	=> pll_lock
+	c2		=> clk_sdram
 	);
 
 IFM: entity work.hook port map(
@@ -218,18 +213,16 @@ IFM: entity work.hook port map(
 	b_min		=> X"FA0000000",
 	b_diff		=> X"000666666",
 	b_leap		=> "0000000010",
+	cr			=> X"FCA8F5C29",
+	ci			=> X"FF125460B",
 	std_logic_vector(xout)		=> xwrite,
 	std_logic_vector(yout)		=> ywrite,
-	aout		=> a,
-	bout		=> b,
 	count		=> cwrite,
-	we			=> we,
-	done		=> done,
-	compute		=> compute
+	we			=> we
 	);
 
   VGA: entity work.vga_mod port map (
-    clk => clk_25,
+    clk => clk25,
 	reset => '0',
 	count		=> cread,--EXTERNAL SIGNALS
     VGA_CLK		=> VGA_CLK,
