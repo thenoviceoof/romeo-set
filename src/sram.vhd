@@ -123,7 +123,7 @@ begin
 			if rre='1' then
 				hold <= '1';
 				rhold <= sram_data;
-			elsif re_count="00" and rre='0' then
+			elsif (re_count="11" and rwe='1') then
 				-- we're supposed to get updated, but won't
 				hold <= '0';
 				rhold <= (others => '0');
