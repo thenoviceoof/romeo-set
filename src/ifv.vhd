@@ -11,7 +11,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity test_vga is
+entity ifv is
 
   port (
     -- Clocks
@@ -167,75 +167,112 @@ entity test_vga is
     -- General-purpose I/O
     
     GPIO_0,                                      -- GPIO Connection 0
-    GPIO_1 : inout std_logic_vector(35 downto 0); -- GPIO Connection 1 ;
-
-    count  : in unsigned(7 downto 0);
-    count2 : in unsigned(1 downto 0);
-    RGB    : in unsigned(29 downto 0)  
+    GPIO_1 : inout std_logic_vector(35 downto 0) -- GPIO Connection 1   
     );
   
-end test_vga;
+end ifv;
 
-architecture datapath of test_vga is
+architecture datapath of ifv is
 
-  signal clk25 : std_logic := '0';
+	signal clk_25		 : std_logic;
+	signal clk_50		: std_logic;
+	signal clk_sdram		: std_logic;
 
+	signal clk_vga		: std_logic;
+
+	signal cread		: unsigned(7 downto 0);
+	signal xread		: unsigned(9 downto 0);
+	signal yread		: unsigned(8 downto 0);
+	signal re			: std_logic;
+	signal we			: std_logic;
+	signal cwrite		: unsigned(7 downto 0);
+	signal xwrite		: unsigned(9 downto 0);
+	signal ywrite		: unsigned(8 downto 0);
+--	signal a			: std_logic_vector(35 downto 0);
+--	signal b 			: std_logic_vector(35 downto 0);
+--	signal done			: unsigned(3 downto 0);
+--	signal compute		: unsigned(3 downto 0);
 begin
 
-  process (CLOCK_50)
-  begin
-    if rising_edge(CLOCK_50) then
-      clk25 <= not clk25;
-    end if;
-  end process;
+	process (CLOCK_50)
+	begin
+		if rising_edge(CLOCK_50) then
+			clk_vga <= not clk_vga;
+		end if;
+	end process;
 
+CLK5025: entity work.pll5025 port map(
+	inclk0	=> CLOCK_50,
+	c0		=> clk_50,
+	c1		=> clk_25,
+	c2		=> clk_sdram
+	);
 
-  V0: entity work.vga_mod port map (
-    reset => '0',
-    clk => clk25,
-    VGA_CLK => VGA_CLK,
-    VGA_HS => VGA_HS,
-    VGA_VS => VGA_VS,
-    VGA_BLANK => VGA_BLANK,
-    VGA_SYNC => VGA_SYNC,
-    VGA_R => VGA_R,
-    VGA_G => VGA_G,
-    VGA_B => VGA_B
-  );
---  V1: entity work.de2_vga_raster port map (
---    reset => '0',
---    clk => clk25,
---    VGA_CLK => VGA_CLK,
---    VGA_HS => VGA_HS,
---    VGA_VS => VGA_VS,
---    VGA_BLANK => VGA_BLANK,
---    VGA_SYNC => VGA_SYNC,
---    VGA_R => VGA_R,
---    VGA_G => VGA_G,
---    VGA_B => VGA_B,
---    count => count,
---    VGA_RGB => RGB
---  );
---
---  V2: entity work.counter port map (
---    reset => '0',
---    clk => clk25
---  );
---  
---  V3: entity work.Color_LUT port map (
---    clk => clk25,
---    count => count2  
---  );
-  HEX7     <= "0001001"; -- Leftmost
-  HEX6     <= "0000110";
-  HEX5     <= "1000111";
-  HEX4     <= "1000111";
-  HEX3     <= "1000000";
-  HEX2     <= (others => '1');
-  HEX1     <= (others => '1');
-  HEX0     <= (others => '1');          -- Rightmost
-  LEDG     <= (others => '1');
-  LEDR     <= (others => '1');
+IFM: entity work.hook port map(
+	clk50		=> clk_50,
+	clk25		=> clk_25,
+	reset		=> SW(0),
+	a_min		=> X"F80000000",
+	a_diff		=> X"000666666",
+	a_leap		=> "0000000010",
+	b_min		=> X"FA0000000",
+	b_diff		=> X"000666666",
+	b_leap		=> "0000000010",
+	cr			=> X"FCA8F5C29",
+	ci			=> X"FF125460B",
+	std_logic_vector(xout)		=> xwrite,
+	std_logic_vector(yout)		=> ywrite,
+	count		=> cwrite,
+	we			=> we
+	);
+
+VGA: entity work.vga_mod port map (
+	clk => clk_vga,
+	reset => '0',
+	count		=> cread,--EXTERNAL SIGNALS
+	VGA_CLK		=> VGA_CLK,
+	VGA_HS		=> VGA_HS,
+	VGA_VS		=> VGA_VS,
+	VGA_BLANK	=> VGA_BLANK,
+	VGA_SYNC	=> VGA_SYNC,
+	VGA_R		=> VGA_R,
+	VGA_G		=> VGA_G,
+	VGA_B		=> VGA_B,
+	xout		=> xread,--EXTERNAL SIGNALS
+	yout		=> yread,--EXTERNAL SIGNALS
+	re			=> re--EXTERNAL SIGNALS
+	);
+
+SRAM: entity work.sram port map(
+	clk_50		=> clk_50,
+	clk_25		=> clk_25,
+	sram_data	=> SRAM_DQ,
+	sram_addr	=> SRAM_ADDR,
+	sram_ub_n	=> SRAM_UB_N,
+	sram_lb_n	=> SRAM_LB_N,
+	sram_we_n	=> SRAM_WE_N,
+	sram_ce_n	=> SRAM_CE_N,
+	sram_oe_n	=> SRAM_OE_N,
+	rx			=> std_logic_vector(xread),
+	ry			=> std_logic_vector(yread),
+	wx			=> std_logic_vector(xwrite),
+	wy			=> std_logic_vector(ywrite),
+	std_logic_vector(rv)	=> cread,
+	wv			=> std_logic_vector(cwrite),
+	re			=> re,
+	we			=> we
+	);
+  
+  HEX7     <= "1100001"; -- J
+  HEX6     <= "1000001"; -- U
+  HEX5     <= "1000111"; -- L
+  HEX4     <= "1111001"; -- I
+  HEX3     <= "0001000"; -- A
+  HEX2     <= "0010010"; -- S
+  HEX1     <= "0000110"; -- E
+  HEX0     <= "0000111"; -- t
+  LEDG     <= (others => '0');
+  LEDR     <= (others => '0');
   LCD_ON   <= '1';
   LCD_BLON <= '1';
   LCD_RW <= '1';
@@ -245,14 +282,6 @@ begin
   SD_DAT3 <= '1';  
   SD_CMD <= '1';
   SD_CLK <= '1';
-
-  SRAM_DQ <= (others => 'Z');
-  SRAM_ADDR <= (others => '0');
-  SRAM_UB_N <= '1';
-  SRAM_LB_N <= '1';
-  SRAM_CE_N <= '1';
-  SRAM_WE_N <= '1';
-  SRAM_OE_N <= '1';
 
   UART_TXD <= '0';
   DRAM_ADDR <= (others => '0');

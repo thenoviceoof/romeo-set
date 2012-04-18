@@ -25,7 +25,7 @@
 
 set_global_assignment -name FAMILY "Cyclone II"
 set_global_assignment -name DEVICE EP2C35F672C6
-set_global_assignment -name TOP_LEVEL_ENTITY lab3_vga
+set_global_assignment -name TOP_LEVEL_ENTITY ifv
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 7.2
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "22:08:07  MARCH 31, 2012"
 set_global_assignment -name LAST_QUARTUS_VERSION 7.2
@@ -62,11 +62,6 @@ set_global_assignment -name EDA_TEST_BENCH_NAME HOOKWrite -section_id eda_simula
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME uut -section_id HOOKWrite
 set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "5 ms" -section_id HOOKWrite
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME hooktb2 -section_id HOOKWrite
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_COLOR 2147039 -section_id Top
-set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
-set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
-set_instance_assignment -name PARTITION_HIERARCHY no_file_for_top_partition -to | -section_id Top
 set_location_assignment PIN_N25 -to SW[0]
 set_location_assignment PIN_N26 -to SW[1]
 set_location_assignment PIN_P25 -to SW[2]
@@ -492,25 +487,6 @@ set_location_assignment PIN_V24 -to GPIO_1[32]
 set_location_assignment PIN_V23 -to GPIO_1[33]
 set_location_assignment PIN_W25 -to GPIO_1[34]
 set_location_assignment PIN_W23 -to GPIO_1[35]
-set_global_assignment -name VHDL_FILE counter.vhd
-set_global_assignment -name VHDL_FILE vga.vhd
-set_global_assignment -name VHDL_FILE vga_mod.vhd
-set_global_assignment -name VHDL_FILE Color_LUT.vhd
-set_global_assignment -name VHDL_FILE pll5025.vhd
-set_global_assignment -name VHDL_FILE sram.vhd
-set_global_assignment -name VHDL_FILE diff_counter.vhd
-set_global_assignment -name VHDL_FILE window_gen.vhd
-set_global_assignment -name VHDL_FILE mult2.vhd
-set_global_assignment -name VHDL_FILE sqr2.vhd
-set_global_assignment -name VHDL_FILE lab3_vga.vhd
-set_global_assignment -name VHDL_FILE ifmd.vhd
-set_global_assignment -name VHDL_FILE ifmunitd.vhd
-set_global_assignment -name VHDL_FILE hook.vhd
-set_global_assignment -name VHDL_TEST_BENCH_FILE hooktb.vhd
-set_global_assignment -name VHDL_TEST_BENCH_FILE hooktb2.vhd
-set_global_assignment -name VHDL_TEST_BENCH_FILE ifmdtb.vhd
-set_global_assignment -name VHDL_TEST_BENCH_FILE ifmunitdtb.vhd
-set_global_assignment -name VHDL_TEST_BENCH_FILE pll_tb.vhd
 set_global_assignment -name EDA_TEST_BENCH_FILE ifmunittb.vhd -section_id IFMUNIT
 set_global_assignment -name EDA_TEST_BENCH_FILE ifmtb.vhd -section_id IFM
 set_global_assignment -name EDA_TEST_BENCH_FILE ifmdtb.vhd -section_id IFM2
@@ -523,3 +499,27 @@ set_global_assignment -name EDA_DESIGN_INSTANCE_NAME uut -section_id plltb
 set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "500 ns" -section_id plltb
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME plltb -section_id plltb
 set_global_assignment -name EDA_TEST_BENCH_FILE pll_tb.vhd -section_id plltb
+set_global_assignment -name VHDL_FILE counter.vhd
+set_global_assignment -name VHDL_FILE vga.vhd
+set_global_assignment -name VHDL_FILE vga_mod.vhd
+set_global_assignment -name VHDL_FILE Color_LUT.vhd
+set_global_assignment -name VHDL_FILE pll5025.vhd
+set_global_assignment -name VHDL_FILE sram.vhd
+set_global_assignment -name VHDL_FILE diff_counter.vhd
+set_global_assignment -name VHDL_FILE window_gen.vhd
+set_global_assignment -name VHDL_FILE mult2.vhd
+set_global_assignment -name VHDL_FILE sqr2.vhd
+set_global_assignment -name VHDL_FILE ifmd.vhd
+set_global_assignment -name VHDL_FILE ifmunitd.vhd
+set_global_assignment -name VHDL_FILE hook.vhd
+set_global_assignment -name VHDL_FILE ifv.vhd
+set_global_assignment -name VHDL_TEST_BENCH_FILE hooktb.vhd
+set_global_assignment -name VHDL_TEST_BENCH_FILE hooktb2.vhd
+set_global_assignment -name VHDL_TEST_BENCH_FILE ifmdtb.vhd
+set_global_assignment -name VHDL_TEST_BENCH_FILE ifmunitdtb.vhd
+set_global_assignment -name VHDL_TEST_BENCH_FILE pll_tb.vhd
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_COLOR 2147039 -section_id Top
+set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
+set_instance_assignment -name PARTITION_HIERARCHY no_file_for_top_partition -to | -section_id Top

@@ -13,8 +13,10 @@ entity ifmd is
 	yin			: in std_logic_vector(8 downto 0);			-- The y coordinate input
 	ain			: in std_logic_vector(35 downto 0);			-- Real part of input
 	bin			: in std_logic_vector(35 downto 0);			-- Imaginary part of input
-	aout		: out std_logic_vector(35 downto 0);		-- Real part of input
-	bout		: out std_logic_vector(35 downto 0);		-- Imaginary part of input
+	cr			: in signed(35 downto 0);					-- Real part of constant
+	ci			: in signed(35 downto 0);					-- Imaginary part of constant
+--	aout		: out std_logic_vector(35 downto 0);		-- Real part of input
+--	bout		: out std_logic_vector(35 downto 0);		-- Imaginary part of input
 	xout		: out std_logic_vector(9 downto 0);			-- The x coordinate output
 	yout		: out std_logic_vector(8 downto 0);			-- The y coordinate output
 	count		: out unsigned(7 downto 0);					-- Iteration count
@@ -27,8 +29,8 @@ end ifmd;
 
 architecture first of ifmd is
 
-signal		cr		: signed(35 downto 0)	:= X"FCA8F5C29";	-- Real part of the constant		0
-signal		ci		: signed(35 downto 0)	:= X"FF125460B";	-- Imaginary part of the constant	0
+--signal		cr		: signed(35 downto 0)	:= X"FCA8F5C29";	-- Real part of the constant		0
+--signal		ci		: signed(35 downto 0)	:= X"FF125460B";	-- Imaginary part of the constant	0
 
 signal		proda	: std_logic_vector(71 downto 0);
 signal		prodb	: std_logic_vector(71 downto 0);
@@ -69,8 +71,8 @@ signal		done	: std_logic				:= '0';						-- Indicates if IFM is done iterating
 	ready	<= clr nor compute;
 	xout	<= x;
 	yout	<= y;
-	aout	<= a;
-	bout	<= b;
+--	aout	<= a;
+--	bout	<= b;
 
 	process(clock)
 	begin
@@ -115,14 +117,14 @@ signal		done	: std_logic				:= '0';						-- Indicates if IFM is done iterating
 		result		=> proda
 
 	);
-	
+
 		multb:	entity	work.sqr2 port map(
 
 		dataa		=> oldi,
 		result		=> prodb
 
 	);
-	
+
 		multc:	entity	work.mult2 port map(
 
 		dataa		=> oldr,

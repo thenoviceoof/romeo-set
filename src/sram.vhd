@@ -57,9 +57,9 @@ architecture sram_arch of sram is
 	signal rhold : std_logic_vector(15 downto 0);
 
 	-- buffer for writes, length 2
-	signal we_buffer : std_logic := '0';
-	signal wv_buffer : std_logic_vector(7 downto 0) := (others => '0');
-	signal waddr_buffer : std_logic_vector(18 downto 0) := (others => '0');
+	signal we_buffer : std_logic;
+	signal wv_buffer : std_logic_vector(7 downto 0);
+	signal waddr_buffer : std_logic_vector(18 downto 0);
 --	signal wdup : std_logic := '0';
 
 	signal rwe : std_logic; -- really write-enable

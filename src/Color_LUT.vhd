@@ -3,8 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity Color_LUT is
-  port (clk     : in std_logic;
-        count   : in unsigned(7 downto 0);
+  port (count   : in unsigned(7 downto 0);
         VGA_RGB : out unsigned(29 downto 0));
   end Color_LUT;
 
