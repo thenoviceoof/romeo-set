@@ -46,17 +46,25 @@ architecture sram_arch of sram is
 	signal raddr : std_logic_vector(18 downto 0);
 	signal waddr : std_logic_vector(18 downto 0);
 
-	-- byte mask, due to 16bit words in SRAM
-	signal mask : std_logic_vector(1 downto 0);
-	
+	-- "really" signals
 	signal rre : std_logic;
 	signal rwe : std_logic;
+
+	-- byte mask, due to 16bit words in SRAM
+	signal mask : std_logic_vector(1 downto 0);
+
+	-- write buffer
+	signal we_buffer : std_logic;
+	signal wv_buffer : std_logic_vector(7 downto 0);
+	signal waddr_buffer : std_logic_vector(18 downto 0);
+	signal wdup : std_logic := '0';
 
 begin
 	-- determine whether we really need to read from the SRAM
 	rre <= re when not rwe='1' else '0';
 	-- determine if we should really write to the SRAM
 	-- rwe <= (we and (not wdup)); -- don't know why, but this is not better
+	--rwe <= we and not wdup;
 	rwe <= we;
 
 	-- generate the address
@@ -91,5 +99,23 @@ begin
 	rv <= sram_data(7 downto 0) when rre='1' and raddr(0)='0' else
 			sram_data(15 downto 8) when rre='1' and raddr(0)='1' else
 			"00000000";
+
+	-- handle synchronous things
+--	process(clk_50)
+--	begin
+--		if rising_edge(clk_50) then
+--
+--			-- buffer for writes, mostly to check for dupes
+--			we_buffer <= we;
+--			wv_buffer <= wv;
+--			waddr_buffer <= waddr;
+--			if waddr=waddr_buffer then
+--				wdup <= '1';
+--			else
+--				wdup <= '0';
+--			end if;
+--
+--		end if;
+--	end process;
 
 end sram_arch;
