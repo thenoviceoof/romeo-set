@@ -8,12 +8,18 @@ clean:
 	rm -f *.bak
 	rm -f *.summary
 	rm -f *.rpt
-	rm -f *.done
+	rm -f *.pin
 	rm -f *.eqn
 	rm -f *.qmsg
-	rm -f *.pin
 	rm -f *.smsg
-	rm -f *.cmp
+	rm -f *.done
 	rm -f *.html
 	rm -f *.jpg
+	rm -f *.cmp
+	rm -f *.inst
 	rm -f *.sof
+	rm -f *.bsf
+	rm -f *.dpf
+	rm -f *.ppf
+	rm -f *.pof
+	rm -f *.jdi
