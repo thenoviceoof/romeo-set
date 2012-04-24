@@ -171,9 +171,9 @@ end ifv;
 
 architecture datapath of ifv is
 
-	signal clk_25		 : std_logic := '0';
+	signal clk_25		: std_logic := '0';
 	signal clk_50		: std_logic := '0';
-	signal clk_sdram		: std_logic := '0';
+	signal clk_sdram	: std_logic := '0';
 	signal clk25		: std_logic	:= '0';
 
 	signal cread		: unsigned(7 downto 0);
@@ -184,6 +184,20 @@ architecture datapath of ifv is
 	signal cwrite		: unsigned(7 downto 0);
 	signal xwrite		: unsigned(9 downto 0);
 	signal ywrite		: unsigned(8 downto 0);
+	
+	signal a_min		: std_logic_vector(35 downto 0);
+	signal b_min		: std_logic_vector(35 downto 0);
+	signal a_diff		: std_logic_vector(35 downto 0);
+	signal b_diff		: std_logic_vector(35 downto 0);
+	signal cr			: std_logic_vector(35 downto 0);
+	signal ci			: std_logic_vector(35 downto 0);
+	signal a_leap		: std_logic_vector(9 downto 0);
+	signal b_leap		: std_logic_vector(9 downto 0);
+	
+	signal reset		: std_logic;
+	signal DRAM_BA 	: std_logic_vector(1 downto 0);
+	signal DRAM_DQM	: std_logic_vector(1 downto 0);
+		
 begin
 
   process (CLOCK_50)
@@ -193,6 +207,11 @@ begin
     end if;
   end process;
 
+	DRAM_BA_1 <= DRAM_BA(1);
+	DRAM_BA_0 <= DRAM_BA(0);
+	DRAM_UDQM <= DRAM_DQM(1);
+	DRAM_LDQM <= DRAM_DQM(0);
+
 --clk_25		<= clk25;
 --clk_50		<= CLOCK_50;
 
@@ -200,21 +219,21 @@ CLK5025: entity work.pll5025 port map(
 	inclk0	=> CLOCK_50,
 	c0		=> clk_50,
 	c1		=> clk_25,
-	c2		=> clk_sdram
+	c2		=> DRAM_CLK
 	);
 
 IFM: entity work.hook port map(
 	clk50		=> clk_50,
 	clk25		=> clk_25,
-	reset		=> SW(0),
-	a_min		=> X"F80000000",
-	a_diff		=> X"000666666",
-	a_leap		=> "0000000010",
-	b_min		=> X"FA0000000",
-	b_diff		=> X"000666666",
-	b_leap		=> "0000000010",
-	cr			=> X"FCA8F5C29",
-	ci			=> X"FF125460B",
+	reset		=> reset,
+	a_min		=> signed(a_min),
+	a_diff		=> signed(a_diff),
+	a_leap		=> unsigned(a_leap),
+	b_min		=> signed(b_min),
+	b_diff		=> signed(b_diff),
+	b_leap		=> unsigned(b_leap),
+	cr			=> signed(cr),
+	ci			=> signed(ci),
 	std_logic_vector(xout)		=> xwrite,
 	std_logic_vector(yout)		=> ywrite,
 	count		=> cwrite,
@@ -238,26 +257,55 @@ IFM: entity work.hook port map(
 	re			=> re--EXTERNAL SIGNALS
   );
 
-SRAM: entity work.sram port map(
-	clk_50		=> clk_50,
-	clk_25		=> clk_25,
-	sram_data	=> SRAM_DQ,
-	sram_addr	=> SRAM_ADDR,
-	sram_ub_n	=> SRAM_UB_N,
-	sram_lb_n	=> SRAM_LB_N,
-	sram_we_n	=> SRAM_WE_N,
-	sram_ce_n	=> SRAM_CE_N,
-	sram_oe_n	=> SRAM_OE_N,
-	rx			=> std_logic_vector(xread),
-	ry			=> std_logic_vector(yread),
-	wx			=> std_logic_vector(xwrite),
-	wy			=> std_logic_vector(ywrite),
-	std_logic_vector(rv)	=> cread,
-	wv			=> std_logic_vector(cwrite),
-	re			=> re,
-	we			=> we
+	SRAM: entity work.sram port map(
+		clk_50		=> clk_50,
+		clk_25		=> clk_25,
+		sram_data	=> SRAM_DQ,
+		sram_addr	=> SRAM_ADDR,
+		sram_ub_n	=> SRAM_UB_N,
+		sram_lb_n	=> SRAM_LB_N,
+		sram_we_n	=> SRAM_WE_N,
+		sram_ce_n	=> SRAM_CE_N,
+		sram_oe_n	=> SRAM_OE_N,
+		rx			=> std_logic_vector(xread),
+		ry			=> std_logic_vector(yread),
+		wx			=> std_logic_vector(xwrite),
+		wy			=> std_logic_vector(ywrite),
+		std_logic_vector(rv)	=> cread,
+		wv			=> std_logic_vector(cwrite),
+		re			=> re,
+		we			=> we
+		);
+	
+	nios : entity work.nios_system port map(
+	  -- global signals:
+		 clk 							=> clk_25,
+		 reset_n 						=> '0',
+
+	  -- the_julia_gen
+		 a_diff_from_the_julia_gen 		=> a_diff,
+		 a_leap_from_the_julia_gen 		=> a_leap,
+		 a_min_from_the_julia_gen 		=> a_min,
+		 b_diff_from_the_julia_gen 		=> b_diff,
+		 b_leap_from_the_julia_gen 		=> b_leap,
+		 b_min_from_the_julia_gen 		=> b_min,
+		 ci_from_the_julia_gen 			=> ci,
+		 cr_from_the_julia_gen 			=> cr,
+		 exp_data_from_the_julia_gen 	=> reset,
+
+	  -- the_sdram
+		zs_addr_from_the_sdram 			=> DRAM_ADDR,
+		zs_ba_from_the_sdram 			=> DRAM_BA,
+		zs_cas_n_from_the_sdram 		=> DRAM_CAS_N,
+		zs_cke_from_the_sdram 			=> DRAM_CKE,
+		zs_cs_n_from_the_sdram 			=> DRAM_CS_N,
+		zs_dq_to_and_from_the_sdram 	=> DRAM_DQ,
+		zs_dqm_from_the_sdram 			=> DRAM_DQM,
+		zs_ras_n_from_the_sdram 		=> DRAM_RAS_N,
+		zs_we_n_from_the_sdram 			=> DRAM_WE_N
 	);
-  
+		
+	  
   HEX7     <= "1100001"; -- Leftmost
   HEX6     <= "1000001";
   HEX5     <= "1000111";
@@ -279,17 +327,17 @@ SRAM: entity work.sram port map(
   SD_CLK <= '1';
 
   UART_TXD <= '0';
-  DRAM_ADDR <= (others => '0');
-  DRAM_LDQM <= '0';
-  DRAM_UDQM <= '0';
-  DRAM_WE_N <= '1';
-  DRAM_CAS_N <= '1';
-  DRAM_RAS_N <= '1';
-  DRAM_CS_N <= '1';
-  DRAM_BA_0 <= '0';
-  DRAM_BA_1 <= '0';
-  DRAM_CLK <= '0';
-  DRAM_CKE <= '0';
+  --DRAM_ADDR <= (others => '0');
+  --DRAM_LDQM <= '0';
+  --DRAM_UDQM <= '0';
+  --DRAM_WE_N <= '1';
+  --DRAM_CAS_N <= '1';
+  --DRAM_RAS_N <= '1';
+  --DRAM_CS_N <= '1';
+  --DRAM_BA_0 <= '0';
+  --DRAM_BA_1 <= '0';
+  --DRAM_CLK <= '0';
+  --DRAM_CKE <= '0';
   FL_ADDR <= (others => '0');
   FL_WE_N <= '1';
   FL_RST_N <= '0';
