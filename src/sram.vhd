@@ -46,29 +46,25 @@ architecture sram_arch of sram is
 	signal raddr : std_logic_vector(18 downto 0);
 	signal waddr : std_logic_vector(18 downto 0);
 
+	-- "really" signals
+	signal rre : std_logic;
+	signal rwe : std_logic;
+
 	-- byte mask, due to 16bit words in SRAM
 	signal mask : std_logic_vector(1 downto 0);
 
-	-- handle reading from the SRAM
-	signal re_count : unsigned(1 downto 0) := "11";
-	signal rre : std_logic; -- really read-enable
-	-- a register for the stored read bits
-	signal hold : std_logic;
-	signal rhold : std_logic_vector(15 downto 0);
-
-	-- buffer for writes, length 2
+	-- write buffer
 	signal we_buffer : std_logic;
 	signal wv_buffer : std_logic_vector(7 downto 0);
 	signal waddr_buffer : std_logic_vector(18 downto 0);
---	signal wdup : std_logic := '0';
-
-	signal rwe : std_logic; -- really write-enable
+	signal wdup : std_logic := '0';
 
 begin
 	-- determine whether we really need to read from the SRAM
-	rre <= re when (re_count="00" and (not rwe='1')) else '0';
+	rre <= re when not rwe='1' else '0';
 	-- determine if we should really write to the SRAM
 	-- rwe <= (we and (not wdup)); -- don't know why, but this is not better
+	--rwe <= we and not wdup;
 	rwe <= we;
 
 	-- generate the address
@@ -100,45 +96,26 @@ begin
 				"00000000" & wv when (waddr(0)='0' and rwe='1') else
 				(others => 'Z');
 	-- module outputs
-	rv <= sram_data(7 downto 0) when rre='1' else
-			rhold(7 downto 0) when (hold='1' and re='1' and raddr(0)='0') else
-			rhold(15 downto 8) when (hold='1' and re='1' and raddr(0)='1') else
+	rv <= sram_data(7 downto 0) when rre='1' and raddr(0)='0' else
+			sram_data(15 downto 8) when rre='1' and raddr(0)='1' else
 			"00000000";
 
 	-- handle synchronous things
-	process(clk_50)
-	begin
-		if rising_edge(clk_50) then
-
-			-- increment the re_count, keeps track of when to really read
-			if re='1' then
-				re_count <= re_count + "01";
-			else
-				re_count <= re_count;
-			end if;
-
-			-- save the results of the read
-			hold <= hold;
-			rhold <= rhold;
-			if rre='1' then
-				hold <= '1';
-				rhold <= sram_data;
-			elsif (re_count="11" and rwe='1') then
-				-- we're supposed to get updated, but won't
-				hold <= '0';
-				rhold <= (others => '0');
-			end if;
-
-			-- buffer for writes, mostly to check for dupes
-			we_buffer <= we;
-			wv_buffer <= wv;
-			waddr_buffer <= waddr;
+--	process(clk_50)
+--	begin
+--		if rising_edge(clk_50) then
+--
+--			-- buffer for writes, mostly to check for dupes
+--			we_buffer <= we;
+--			wv_buffer <= wv;
+--			waddr_buffer <= waddr;
 --			if waddr=waddr_buffer then
 --				wdup <= '1';
 --			else
 --				wdup <= '0';
 --			end if;
+--
+--		end if;
+--	end process;
 
-		end if;
-	end process;
 end sram_arch;
