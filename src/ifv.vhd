@@ -173,8 +173,7 @@ architecture datapath of ifv is
 
 	signal clk_25		: std_logic := '0';
 	signal clk_50		: std_logic := '0';
-	signal clk_sdram	: std_logic := '0';
-	signal clk25		: std_logic	:= '0';
+	signal clk_vga		: std_logic := '0';
 
 	signal cread		: unsigned(7 downto 0);
 	signal xread		: unsigned(9 downto 0);
@@ -185,14 +184,14 @@ architecture datapath of ifv is
 	signal xwrite		: unsigned(9 downto 0);
 	signal ywrite		: unsigned(8 downto 0);
 	
-	signal a_min		: std_logic_vector(35 downto 0);
-	signal b_min		: std_logic_vector(35 downto 0);
-	signal a_diff		: std_logic_vector(35 downto 0);
-	signal b_diff		: std_logic_vector(35 downto 0);
-	signal cr			: std_logic_vector(35 downto 0);
-	signal ci			: std_logic_vector(35 downto 0);
-	signal a_leap		: std_logic_vector(9 downto 0);
-	signal b_leap		: std_logic_vector(9 downto 0);
+	signal a_min		: std_logic_vector(35 downto 0)			:= X"F80000000";
+	signal b_min		: std_logic_vector(35 downto 0)			:= X"FA0000000";
+	signal a_diff		: std_logic_vector(35 downto 0)			:= X"000666666";
+	signal b_diff		: std_logic_vector(35 downto 0)			:= X"000666666";
+	signal cr		: std_logic_vector(35 downto 0)			:= X"FCA8F5C29";
+	signal ci		: std_logic_vector(35 downto 0)			:= X"FF125460B";
+	signal a_leap		: std_logic_vector(9 downto 0)			:= "0000000010";
+	signal b_leap		: std_logic_vector(9 downto 0)			:= "0000000010";
 	
 	signal reset		: std_logic;
 	signal DRAM_BA 	: std_logic_vector(1 downto 0);
@@ -203,7 +202,7 @@ begin
   process (CLOCK_50)
   begin
     if rising_edge(CLOCK_50) then
-      clk25 <= not clk25;
+      clk_vga <= not clk_vga;
     end if;
   end process;
 
@@ -211,9 +210,6 @@ begin
 	DRAM_BA_0 <= DRAM_BA(0);
 	DRAM_UDQM <= DRAM_DQM(1);
 	DRAM_LDQM <= DRAM_DQM(0);
-
---clk_25		<= clk25;
---clk_50		<= CLOCK_50;
 
 CLK5025: entity work.pll5025 port map(
 	inclk0	=> CLOCK_50,
@@ -223,25 +219,25 @@ CLK5025: entity work.pll5025 port map(
 	);
 
 IFM: entity work.hook port map(
-	clk50		=> clk_50,
-	clk25		=> clk_25,
-	reset		=> reset,
-	a_min		=> signed(a_min),
-	a_diff		=> signed(a_diff),
-	a_leap		=> unsigned(a_leap),
-	b_min		=> signed(b_min),
-	b_diff		=> signed(b_diff),
-	b_leap		=> unsigned(b_leap),
+	clk50			=> clk_50,
+	clk25			=> clk_25,
+	reset			=> reset,
+	a_min			=> signed(a_min),
+	a_diff			=> signed(a_diff),
+	a_leap			=> unsigned(a_leap),
+	b_min			=> signed(b_min),
+	b_diff			=> signed(b_diff),
+	b_leap			=> unsigned(b_leap),
 	cr			=> signed(cr),
 	ci			=> signed(ci),
-	std_logic_vector(xout)		=> xwrite,
-	std_logic_vector(yout)		=> ywrite,
-	count		=> cwrite,
+	std_logic_vector(xout)	=> xwrite,
+	std_logic_vector(yout)	=> ywrite,
+	count			=> cwrite,
 	we			=> we
 	);
 
   VGA: entity work.vga_mod port map (
-    clk => clk25,
+    clk => clk_vga,
 	reset => '0',
 	count		=> cread,--EXTERNAL SIGNALS
     VGA_CLK		=> VGA_CLK,
@@ -306,14 +302,14 @@ IFM: entity work.hook port map(
 	);
 		
 	  
-  HEX7     <= "1100001"; -- Leftmost
-  HEX6     <= "1000001";
-  HEX5     <= "1000111";
-  HEX4     <= "1111001";
-  HEX3     <= "0001000";
-  HEX2     <= "0010010";
-  HEX1     <= "0000110";
-  HEX0     <= "0000111";          -- Rightmost
+  HEX7     <= "1100001"; -- J
+  HEX6     <= "1000001"; -- U
+  HEX5     <= "1000111"; -- L
+  HEX4     <= "1111001"; -- I
+  HEX3     <= "0001000"; -- A
+  HEX2     <= "0010010"; -- S
+  HEX1     <= "0000110"; -- E
+  HEX0     <= "0000111"; -- t
   LEDG     <= (others => '1');
   LEDR     <= (others => '1');
   LCD_ON   <= '1';
