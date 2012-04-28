@@ -499,6 +499,7 @@ set_global_assignment -name PARTITION_COLOR 2147039 -section_id Top
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
 set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
 set_instance_assignment -name PARTITION_HIERARCHY no_file_for_top_partition -to | -section_id Top
+set_global_assignment -name VHDL_FILE de2_ifm_bus.vhd
 set_global_assignment -name VHDL_FILE julia_gen.vhd
 set_global_assignment -name VHDL_FILE Color_LUT.vhd
 set_global_assignment -name VHDL_FILE vga.vhd

@@ -1,5 +1,5 @@
 *~
-
+*.swp
 
 ########## in /ifm_test_scripts/
 ifm_test_scripts/*.png
@@ -15,6 +15,7 @@ ifm_test_scripts/*.pickle
 */simulation/*
 */timing/*
 *.bak
+# qurtus archive
 *.qar # quartus archive
 ### Quartus compilation output
 *.summary
@@ -30,25 +31,39 @@ ifm_test_scripts/*.pickle
 *.cmp
 *.inst
 ### Other generated things
-*.sof # SRAM obj
-*.bsf # block symb
-*.dpf # design protocol, doesn't seem 
-*.ppf # pin planner
-*.pof # prog obj
-*.jdi # jtag debug
+# SRAM obj
+*.sof
+# block symb
+*.bsf
+# design protocol, doesn't seem 
+*.dpf
+# pin planner
+*.ppf
+# prog obj
+*.pof
+# jtag debug
+*.jdi
 
-### we'll add these back when we add in the Nios
-# *.spoc_builder*
-# *.ptf
-# *nios_system* # This also seems like a bad idea-LEP 
-# *nios_system_sim/*
+### generated nios things
+*nios_system_sim/*
+*.sopc_builder/*
+*.ptf
+*_ptf
+# memory inititalization file
+*.mif
+*log.txt
 
-### software things(?)
+### software things
 *.o
 *.d
 *.mk
 *.elf
 *.a
+*/software/.metadata
+*/software/bin/*
+*/software/tmp/*
+*/software/*/Debug/*
+*/.settings/*
 
 
 ########## in /docs/
