@@ -18,6 +18,7 @@ ifm_test_scripts/*.pickle
 # qurtus archive
 *.qar # quartus archive
 ### Quartus compilation output
+*.qws
 *.summary
 *.rpt
 *.pin
@@ -64,6 +65,10 @@ ifm_test_scripts/*.pickle
 */software/tmp/*
 */software/*/Debug/*
 */.settings/*
+*/.project/*
+.cdtbuild
+.cdtproject
+*.prefs
 
 
 ########## in /docs/
