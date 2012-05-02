@@ -26,6 +26,7 @@ ifm_test_scripts/*.pickle
 *.qmsg
 *.smsg
 *.done
+*.qdf
 ### Megafunction output
 *.html
 *.jpg
