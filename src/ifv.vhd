@@ -184,32 +184,35 @@ architecture datapath of ifv is
 	signal xwrite		: unsigned(9 downto 0);
 	signal ywrite		: unsigned(8 downto 0);
 	
-	signal a_min		: std_logic_vector(35 downto 0)			:= X"F80000000";
-	signal b_min		: std_logic_vector(35 downto 0)			:= X"FA0000000";
-	signal a_diff		: std_logic_vector(35 downto 0)			:= X"000666666";
-	signal b_diff		: std_logic_vector(35 downto 0)			:= X"000666666";
+	signal a_min		: std_logic_vector(35 downto 0)		:= X"F80000000";
+	signal b_min		: std_logic_vector(35 downto 0)		:= X"FA0000000";
+	signal a_diff		: std_logic_vector(35 downto 0)		:= X"000666666";
+	signal b_diff		: std_logic_vector(35 downto 0)		:= X"000666666";
 	signal cr		: std_logic_vector(35 downto 0)			:= X"FCA8F5C29";
 	signal ci		: std_logic_vector(35 downto 0)			:= X"FF125460B";
-	signal a_leap		: std_logic_vector(9 downto 0)			:= "0000000010";
-	signal b_leap		: std_logic_vector(9 downto 0)			:= "0000000010";
+	signal a_leap		: std_logic_vector(9 downto 0)		:= "0000000010";
+	signal b_leap		: std_logic_vector(9 downto 0)		:= "0000000010";
+	signal reset_n		: std_logic							:='1';
 	
-	signal reset		: std_logic;
+	signal reset			: std_logic;
+	signal reset_from_nios	: std_logic;
 	signal DRAM_BA 	: std_logic_vector(1 downto 0);
 	signal DRAM_DQM	: std_logic_vector(1 downto 0);
 		
 begin
 
-  process (CLOCK_50)
-  begin
-    if rising_edge(CLOCK_50) then
-      clk_vga <= not clk_vga;
-    end if;
-  end process;
+--  process (CLOCK_50)
+--  begin
+--    if rising_edge(CLOCK_50) then
+--      clk_vga <= not clk_vga;
+--    end if;
+--  end process;
 
 	DRAM_BA_1 <= DRAM_BA(1);
 	DRAM_BA_0 <= DRAM_BA(0);
 	DRAM_UDQM <= DRAM_DQM(1);
 	DRAM_LDQM <= DRAM_DQM(0);
+	reset <= reset_from_nios or SW(0);
 
 CLK5025: entity work.pll5025 port map(
 	inclk0	=> CLOCK_50,
@@ -237,7 +240,7 @@ IFM: entity work.hook port map(
 	);
 
   VGA: entity work.vga_mod port map (
-    clk => clk_vga,
+    clk => clk_25,
 	reset => '0',
 	count		=> cread,--EXTERNAL SIGNALS
     VGA_CLK		=> VGA_CLK,
@@ -275,8 +278,8 @@ IFM: entity work.hook port map(
 	
 	nios : entity work.nios_system port map(
 	  -- global signals:
-		 clk 							=> clk_25,
-		 reset_n 						=> '0',
+		 clk 							=> clk_50,
+		 reset_n 						=> KEY(0),
 
 	  -- the_julia_gen
 		 a_diff_from_the_julia_gen 		=> a_diff,
@@ -287,7 +290,7 @@ IFM: entity work.hook port map(
 		 b_min_from_the_julia_gen 		=> b_min,
 		 ci_from_the_julia_gen 			=> ci,
 		 cr_from_the_julia_gen 			=> cr,
-		 exp_data_from_the_julia_gen 	=> reset,
+		 exp_data_from_the_julia_gen 	=> reset_from_nios,
 
 	  -- the_sdram
 		zs_addr_from_the_sdram 			=> DRAM_ADDR,
@@ -310,8 +313,9 @@ IFM: entity work.hook port map(
   HEX2     <= "0010010"; -- S
   HEX1     <= "0000110"; -- E
   HEX0     <= "0000111"; -- t
-  LEDG     <= (others => '1');
-  LEDR     <= (others => '1');
+  LEDG(7 downto 1)     <= (others => '0');
+  LEDG(0)				<= reset_from_nios;
+  LEDR(17 downto 0)     <= (others => '0');
   LCD_ON   <= '1';
   LCD_BLON <= '1';
   LCD_RW <= '1';

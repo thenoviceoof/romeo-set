@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <system name="nios_system">
-    <parameter valueString="12700061533" name="systemHash"/>
+    <parameter valueString="7526997838" name="systemHash"/>
     <parameter name="quartusRootDir">/opt/altera/altera7.2/quartus</parameter>
-    <parameter valueString="1335297423050" name="timeStamp"/>
+    <parameter valueString="1335636096248" name="timeStamp"/>
     <parameter valueString="false" name="generateLegacySDK"/>
     <parameter name="bonusData">bonusData 
 {
-   element cpu.jtag_debug_module
+   element sdram.s1
    {
       datum baseAddress
       {
-         value = "33556480";
+         value = "8388608";
+         type = "long";
+      }
+   }
+   element julia_gen.avalon_slave_0
+   {
+      datum baseAddress
+      {
+         value = "16781320";
          type = "long";
       }
    }
@@ -27,35 +35,11 @@
          type = "String";
       }
    }
-   element sdram
-   {
-      datum _sortIndex
-      {
-         value = "1";
-         type = "int";
-      }
-      datum megawizard_uipreferences
-      {
-         value = "{}";
-         type = "String";
-      }
-   }
-   element julia_gen.avalon_slave_0
+   element cpu.jtag_debug_module
    {
       datum baseAddress
       {
-         value = "33558528";
-         type = "long";
-      }
-   }
-   element nios_system
-   {
-   }
-   element sdram.s1
-   {
-      datum baseAddress
-      {
-         value = "0";
+         value = "16779264";
          type = "long";
       }
    }
@@ -70,6 +54,43 @@
          type = "int";
       }
    }
+   element nios_system
+   {
+   }
+   element jtag_uart
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{}";
+         type = "String";
+      }
+   }
+   element jtag_uart.avalon_jtag_slave
+   {
+      datum baseAddress
+      {
+         value = "16781312";
+         type = "long";
+      }
+   }
+   element sdram
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{}";
+         type = "String";
+      }
+   }
 }
 </parameter>
     <parameter valueString="false" name="hardcopyCompatible"/>
@@ -77,7 +98,7 @@
     <parameter valueString="false" name="generateLegacySim"/>
     <parameter valueString="ifmunit.qpf" name="projectName"/>
     <parameter valueString="VHDL" name="hdlLanguage"/>
-    <parameter name="projectDirectory">/home/user4/spring12/nyh2105/embedded/romeo-set/src</parameter>
+    <parameter name="projectDirectory">/home/user5/spring12/sdp2128/romeo-set/src</parameter>
     <module version="7.2" name="clk" kind="clock_source">
         <parameter valueString="true" name="clockFrequencyKnown"/>
         <parameter valueString="50000000" name="clockFrequency"/>
@@ -174,28 +195,48 @@
     <module version="1.0" name="julia_gen" kind="de2_ifm_bus">
         <parameter valueString="" name="sharedPorts"/>
     </module>
+    <module version="7.2" name="jtag_uart" kind="altera_avalon_jtag_uart">
+        <parameter valueString="8" name="readIRQThreshold"/>
+        <parameter valueString="" name="simInputCharacterStream"/>
+        <parameter valueString="0" name="hubInstanceID"/>
+        <parameter valueString="64" name="readBufferDepth"/>
+        <parameter valueString="false" name="allowMultipleConnections"/>
+        <parameter valueString="64" name="writeBufferDepth"/>
+        <parameter valueString="8" name="writeIRQThreshold"/>
+        <parameter valueString="false" name="useRegistersForWriteBuffer"/>
+        <parameter valueString="false" name="useRegistersForReadBuffer"/>
+        <parameter name="simInteractiveOptions">INTERACTIVE_ASCII_OUTPUT</parameter>
+    </module>
     <connection version="7.2" start="clk.clk" kind="clock" end="cpu.clk"/>
     <connection version="7.2" start="cpu.instruction_master" kind="avalon" end="cpu.jtag_debug_module">
         <parameter valueString="1" name="arbitrationPriority"/>
-        <parameter valueString="0x02000800" name="baseAddress"/>
+        <parameter valueString="0x01000800" name="baseAddress"/>
     </connection>
     <connection version="7.2" start="cpu.data_master" kind="avalon" end="cpu.jtag_debug_module">
         <parameter valueString="1" name="arbitrationPriority"/>
-        <parameter valueString="0x02000800" name="baseAddress"/>
+        <parameter valueString="0x01000800" name="baseAddress"/>
     </connection>
     <connection version="7.2" start="clk.clk" kind="clock" end="sdram.clk"/>
     <connection version="7.2" start="cpu.instruction_master" kind="avalon" end="sdram.s1">
         <parameter valueString="1" name="arbitrationPriority"/>
-        <parameter valueString="0x0000" name="baseAddress"/>
+        <parameter valueString="0x00800000" name="baseAddress"/>
     </connection>
     <connection version="7.2" start="cpu.data_master" kind="avalon" end="sdram.s1">
         <parameter valueString="1" name="arbitrationPriority"/>
-        <parameter valueString="0x0000" name="baseAddress"/>
+        <parameter valueString="0x00800000" name="baseAddress"/>
     </connection>
     <connection version="7.2" start="clk.clk" kind="clock" end="julia_gen.clock"/>
     <connection version="7.2" start="cpu.data_master" kind="avalon" end="julia_gen.avalon_slave_0">
         <parameter valueString="1" name="arbitrationPriority"/>
-        <parameter valueString="0x02001000" name="baseAddress"/>
+        <parameter valueString="0x01001008" name="baseAddress"/>
+    </connection>
+    <connection version="7.2" start="clk.clk" kind="clock" end="jtag_uart.clk"/>
+    <connection version="7.2" start="cpu.data_master" kind="avalon" end="jtag_uart.avalon_jtag_slave">
+        <parameter valueString="1" name="arbitrationPriority"/>
+        <parameter valueString="0x01001000" name="baseAddress"/>
+    </connection>
+    <connection version="7.2" start="cpu.d_irq" kind="interrupt" end="jtag_uart.irq">
+        <parameter valueString="0" name="irqNumber"/>
     </connection>
 </system>
 

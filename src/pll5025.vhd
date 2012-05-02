@@ -153,7 +153,7 @@ BEGIN
 		clk1_duty_cycle => 50,
 		clk1_multiply_by => 1,
 		clk1_phase_shift => "0",
-		clk2_divide_by => 2,
+		clk2_divide_by => 1,
 		clk2_duty_cycle => 50,
 		clk2_multiply_by => 1,
 		clk2_phase_shift => "-3000",
@@ -236,7 +236,7 @@ END SYN;
 -- Retrieval info: PRIVATE: DEVICE_SPEED_GRADE STRING "6"
 -- Retrieval info: PRIVATE: DIV_FACTOR0 NUMERIC "1"
 -- Retrieval info: PRIVATE: DIV_FACTOR1 NUMERIC "2"
--- Retrieval info: PRIVATE: DIV_FACTOR2 NUMERIC "2"
+-- Retrieval info: PRIVATE: DIV_FACTOR2 NUMERIC "1"
 -- Retrieval info: PRIVATE: DUTY_CYCLE0 STRING "50.00000000"
 -- Retrieval info: PRIVATE: DUTY_CYCLE1 STRING "50.00000000"
 -- Retrieval info: PRIVATE: DUTY_CYCLE2 STRING "50.00000000"
@@ -332,7 +332,7 @@ END SYN;
 -- Retrieval info: CONSTANT: CLK1_DUTY_CYCLE NUMERIC "50"
 -- Retrieval info: CONSTANT: CLK1_MULTIPLY_BY NUMERIC "1"
 -- Retrieval info: CONSTANT: CLK1_PHASE_SHIFT STRING "0"
--- Retrieval info: CONSTANT: CLK2_DIVIDE_BY NUMERIC "2"
+-- Retrieval info: CONSTANT: CLK2_DIVIDE_BY NUMERIC "1"
 -- Retrieval info: CONSTANT: CLK2_DUTY_CYCLE NUMERIC "50"
 -- Retrieval info: CONSTANT: CLK2_MULTIPLY_BY NUMERIC "1"
 -- Retrieval info: CONSTANT: CLK2_PHASE_SHIFT STRING "-3000"
