@@ -9,20 +9,20 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity vga_mod is
-  port(
-    clk, reset  : in std_logic;
-	count		: in unsigned(7 downto 0);
-    VGA_CLK,                             -- Clock
-    VGA_HS,                              -- H_SYNC
-    VGA_VS,                              -- V_SYNC
-    VGA_BLANK,                           -- BLANK
-    VGA_SYNC : out std_logic;            -- SYNC
-    VGA_R,                               -- Red[9:0]
-    VGA_G,                               -- Green[9:0]
-    VGA_B : out unsigned(9 downto 0);   -- Blue[9:0]
-	xout		: out unsigned(9 downto 0);
-	yout		: out unsigned(8 downto 0);
-	re			: out std_logic);
+	port(
+		clk, reset  : in std_logic;
+		count		: in unsigned(7 downto 0);
+		VGA_CLK,                                -- Clock
+		VGA_HS,                                 -- H_SYNC
+		VGA_VS,                                 -- V_SYNC
+		VGA_BLANK,                              -- BLANK
+		VGA_SYNC	: out std_logic;            -- SYNC
+		VGA_R,                                  -- Red[9:0]
+		VGA_G,                                  -- Green[9:0]
+		VGA_B		: out unsigned(9 downto 0); -- Blue[9:0]
+		xout		: out unsigned(9 downto 0);
+		yout		: out unsigned(8 downto 0);
+		re			: out std_logic);
 end vga_mod;
 
 architecture imp of vga_mod is

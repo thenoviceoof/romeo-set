@@ -51,6 +51,7 @@ ifm_test_scripts/*.pickle
 *.sopc_builder/*
 *.ptf
 *_ptf
+*nios_system.qip
 # memory inititalization file
 *.mif
 *log.txt

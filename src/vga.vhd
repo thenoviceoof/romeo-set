@@ -99,7 +99,7 @@ begin
 
   HSyncGen : process (clk)
   begin
-    if rising_edge(clk) then     
+    if rising_edge(clk) then
       if reset = '1' or EndOfLine = '1' then
         vga_hsync <= '1';
       elsif Hcount = HSYNC - 1 then
@@ -159,7 +159,7 @@ begin
       VGA_R <= "0000000000";
       VGA_G <= "0000000000";
       VGA_B <= "0000000000";
-    elsif clk'event and clk = '1' then
+    elsif rising_edge(clk) then -- clk'event and clk = '1'
       if vga_hblank = '0' and vga_vblank = '0' then
           VGA_R <= VGA_RGB(29 downto 20);
           VGA_G <= VGA_RGB(19 downto 10);
@@ -169,7 +169,7 @@ begin
         VGA_R <= "0000000000";
         VGA_G <= "0000000000";
         VGA_B <= "0000000000";
-        re <= '0';    
+        re <= '0';
       end if;
     end if;
   end process VideoOut;

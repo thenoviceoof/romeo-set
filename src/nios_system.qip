@@ -1,2 +1,0 @@
-set_global_assignment -name SOURCE_FILE [file join $::quartus(qip_path) /home/user5/spring12/sdp2128/romeo-set/src/de2_ifm_bus_hw.tcl]
-set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) /home/user5/spring12/sdp2128/romeo-set/src/de2_ifm_bus.vhd]

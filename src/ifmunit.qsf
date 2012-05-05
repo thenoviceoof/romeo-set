@@ -518,9 +518,7 @@ set_global_assignment -name VHDL_TEST_BENCH_FILE hooktb.vhd
 set_global_assignment -name VHDL_TEST_BENCH_FILE hooktb2.vhd
 set_global_assignment -name VHDL_TEST_BENCH_FILE ifmdtb.vhd
 set_global_assignment -name VHDL_TEST_BENCH_FILE ifmunitdtb.vhd
-set_global_assignment -name VHDL_FILE altera_europa_support.vhd
 set_global_assignment -name VHDL_FILE nios_system.vhd
-set_global_assignment -name QIP_FILE nios_system.qip
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"

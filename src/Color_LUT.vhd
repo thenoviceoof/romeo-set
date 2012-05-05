@@ -81,6 +81,7 @@ constant CLUT : rom_type :=
 );
 
 begin
-	index	<= count(6) & count(4 downto 0);
+	--index	<= count(6) & count(4 downto 0);
+	index <= count(7 downto 2);
 	VGA_RGB <= CLUT(to_integer(index));
 end imp;

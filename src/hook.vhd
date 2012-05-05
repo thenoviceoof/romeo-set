@@ -42,48 +42,44 @@ architecture first of hook is
 
 	begin
 
-	yi				<= yo(8 downto 0);
+	yi <= yo(8 downto 0);
 
-	gen:	entity	work.window_gen port map(
+	gen: entity work.window_gen port map(
+		clk			=> clk25,
+		next_val	=> nxt,
+		reset		=> reset,
+		a_min		=> a_min,
+		a_diff		=> a_diff,
+		a_leap		=> a_leap,
+		b_min		=> b_min,
+		b_diff		=> b_diff,
+		b_leap		=> b_leap,
 
-	clk			=> clk25,
-	next_val	=> nxt,
-	reset		=> reset,
-	a_min		=> a_min,
-	a_diff		=> a_diff,
-	a_leap		=> a_leap,
-	b_min		=> b_min,
-	b_diff		=> b_diff,
-	b_leap		=> b_leap,
+		a_out		=> ai,
+		b_out		=> bi,
+		x_out		=> x,
+		y_out		=> yo,
 
-	a_out		=> ai,
-	b_out		=> bi,
-	x_out		=> x,
-	y_out		=> yo,
-	
-	at_max		=> max,
-	ready		=> data
-
+		at_max		=> max,
+		ready		=> data
 	);
 
-	ifm:	entity	work.ifmunitd port map(
-
-	clk25		=> clk25,
-	clk50		=> clk50,
-	reset		=> reset,
-	data		=> data,
-	xin			=> x,
-	yin			=> yi,
-	ain			=> ai,
-	bin			=> bi,
-	cr			=> cr,
-	ci			=> ci,
-	xout		=> xout,
-	yout		=> yout,
-	count		=> count,
-	full		=> nxt,
-	we			=> we
-
+	ifm: entity work.ifmunitd port map(
+		clk25		=> clk25,
+		clk50		=> clk50,
+		reset		=> reset,
+		data		=> data,
+		xin			=> x,
+		yin			=> yi,
+		ain			=> ai,
+		bin			=> bi,
+		cr			=> cr,
+		ci			=> ci,
+		xout		=> xout,
+		yout		=> yout,
+		count		=> count,
+		full		=> nxt,
+		we			=> we
 	);
 
 end first;

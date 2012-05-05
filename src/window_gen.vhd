@@ -30,8 +30,8 @@ end window_gen;
 
 architecture wg of window_gen is 
 
-constant HACTIVE      : integer := 640-1;
-constant VACTIVE      : integer := 480-1;
+constant HACTIVE	: integer := 640-1;
+constant VACTIVE	: integer := 480-1;
 
 signal x_max 		: unsigned(9 downto 0) := to_unsigned(HACTIVE, 10);
 signal y_max 		: unsigned(9 downto 0) := to_unsigned(VACTIVE, 10);

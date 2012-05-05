@@ -212,7 +212,8 @@ begin
 	DRAM_BA_0 <= DRAM_BA(0);
 	DRAM_UDQM <= DRAM_DQM(1);
 	DRAM_LDQM <= DRAM_DQM(0);
-	reset <= reset_from_nios or SW(0);
+	--reset <= reset_from_nios or SW(0);
+	reset <= SW(0);
 
 CLK5025: entity work.pll5025 port map(
 	inclk0	=> CLOCK_50,
@@ -221,106 +222,135 @@ CLK5025: entity work.pll5025 port map(
 	c2		=> DRAM_CLK
 	);
 
+--IFM: entity work.hook port map(
+--	clk50			=> clk_50,
+--	clk25			=> clk_25,
+--	reset			=> reset_from_nios,
+--	a_min			=> signed(a_min),
+--	a_diff			=> signed(a_diff),
+--	a_leap			=> unsigned(a_leap),
+--	b_min			=> signed(b_min),
+--	b_diff			=> signed(b_diff),
+--	b_leap			=> unsigned(b_leap),
+--	cr			=> signed(cr),
+--	ci			=> signed(ci),
+--	std_logic_vector(xout)	=> xwrite,
+--	std_logic_vector(yout)	=> ywrite,
+--	count			=> cwrite,
+--	we			=> we
+--	);
 IFM: entity work.hook port map(
 	clk50			=> clk_50,
 	clk25			=> clk_25,
 	reset			=> reset,
-	a_min			=> signed(a_min),
-	a_diff			=> signed(a_diff),
-	a_leap			=> unsigned(a_leap),
-	b_min			=> signed(b_min),
-	b_diff			=> signed(b_diff),
-	b_leap			=> unsigned(b_leap),
-	cr			=> signed(cr),
-	ci			=> signed(ci),
+	a_min			=> X"F80000000",
+	a_diff			=> X"000666666",
+	a_leap			=> "0000000010",
+	b_min			=> X"FA0000000",
+	b_diff			=> X"000666666",
+	b_leap			=> "0000000010",
+	cr				=> X"FCA8F5C29",
+	ci				=> X"FF125460B",
 	std_logic_vector(xout)	=> xwrite,
 	std_logic_vector(yout)	=> ywrite,
-	count			=> cwrite,
-	we			=> we
+	count					=> cwrite,
+	we						=> we
 	);
 
-  VGA: entity work.vga_mod port map (
-    clk => clk_25,
+VGA: entity work.vga_mod port map (
+	clk => clk_25,
 	reset => '0',
 	count		=> cread,--EXTERNAL SIGNALS
-    VGA_CLK		=> VGA_CLK,
-    VGA_HS		=> VGA_HS,
-    VGA_VS		=> VGA_VS,
-    VGA_BLANK	=> VGA_BLANK,
-    VGA_SYNC	=> VGA_SYNC,
-    VGA_R		=> VGA_R,
-    VGA_G		=> VGA_G,
-    VGA_B		=> VGA_B,
+	VGA_CLK		=> VGA_CLK,
+	VGA_HS		=> VGA_HS,
+	VGA_VS		=> VGA_VS,
+	VGA_BLANK	=> VGA_BLANK,
+	VGA_SYNC	=> VGA_SYNC,
+	VGA_R		=> VGA_R,
+	VGA_G		=> VGA_G,
+	VGA_B		=> VGA_B,
 	xout		=> xread,--EXTERNAL SIGNALS
 	yout		=> yread,--EXTERNAL SIGNALS
 	re			=> re--EXTERNAL SIGNALS
-  );
-
-	SRAM: entity work.sram port map(
-		clk_50		=> clk_50,
-		clk_25		=> clk_25,
-		sram_data	=> SRAM_DQ,
-		sram_addr	=> SRAM_ADDR,
-		sram_ub_n	=> SRAM_UB_N,
-		sram_lb_n	=> SRAM_LB_N,
-		sram_we_n	=> SRAM_WE_N,
-		sram_ce_n	=> SRAM_CE_N,
-		sram_oe_n	=> SRAM_OE_N,
-		rx			=> std_logic_vector(xread),
-		ry			=> std_logic_vector(yread),
-		wx			=> std_logic_vector(xwrite),
-		wy			=> std_logic_vector(ywrite),
-		std_logic_vector(rv)	=> cread,
-		wv			=> std_logic_vector(cwrite),
-		re			=> re,
-		we			=> we
-		);
-	
-	nios : entity work.nios_system port map(
-	  -- global signals:
-		 clk 							=> clk_50,
-		 reset_n 						=> KEY(0),
-
-	  -- the_julia_gen
-		 a_diff_from_the_julia_gen 		=> a_diff,
-		 a_leap_from_the_julia_gen 		=> a_leap,
-		 a_min_from_the_julia_gen 		=> a_min,
-		 b_diff_from_the_julia_gen 		=> b_diff,
-		 b_leap_from_the_julia_gen 		=> b_leap,
-		 b_min_from_the_julia_gen 		=> b_min,
-		 ci_from_the_julia_gen 			=> ci,
-		 cr_from_the_julia_gen 			=> cr,
-		 exp_data_from_the_julia_gen 	=> reset_from_nios,
-
-	  -- the_sdram
-		zs_addr_from_the_sdram 			=> DRAM_ADDR,
-		zs_ba_from_the_sdram 			=> DRAM_BA,
-		zs_cas_n_from_the_sdram 		=> DRAM_CAS_N,
-		zs_cke_from_the_sdram 			=> DRAM_CKE,
-		zs_cs_n_from_the_sdram 			=> DRAM_CS_N,
-		zs_dq_to_and_from_the_sdram 	=> DRAM_DQ,
-		zs_dqm_from_the_sdram 			=> DRAM_DQM,
-		zs_ras_n_from_the_sdram 		=> DRAM_RAS_N,
-		zs_we_n_from_the_sdram 			=> DRAM_WE_N
 	);
-		
-	  
-  HEX7     <= "1100001"; -- J
-  HEX6     <= "1000001"; -- U
-  HEX5     <= "1000111"; -- L
-  HEX4     <= "1111001"; -- I
-  HEX3     <= "0001000"; -- A
-  HEX2     <= "0010010"; -- S
-  HEX1     <= "0000110"; -- E
-  HEX0     <= "0000111"; -- t
-  LEDG(7 downto 1)     <= (others => '0');
-  LEDG(0)				<= reset_from_nios;
-  LEDR(17 downto 0)     <= (others => '0');
-  LCD_ON   <= '1';
-  LCD_BLON <= '1';
-  LCD_RW <= '1';
-  LCD_EN <= '0';
-  LCD_RS <= '0';
+
+SRAM: entity work.sram port map(
+	clk_50		=> clk_50,
+	clk_25		=> clk_25,
+	sram_data	=> SRAM_DQ,
+	sram_addr	=> SRAM_ADDR,
+	sram_ub_n	=> SRAM_UB_N,
+	sram_lb_n	=> SRAM_LB_N,
+	sram_we_n	=> SRAM_WE_N,
+	sram_ce_n	=> SRAM_CE_N,
+	sram_oe_n	=> SRAM_OE_N,
+	rx			=> std_logic_vector(xread),
+	ry			=> std_logic_vector(yread),
+	wx			=> std_logic_vector(xwrite),
+	wy			=> std_logic_vector(ywrite),
+	std_logic_vector(rv)	=> cread,
+	wv			=> std_logic_vector(cwrite),
+	re			=> re,
+	we			=> we
+	);
+
+--nios : entity work.nios_system port map(
+--  -- global signals:
+--	 clk 							=> clk_50,
+--	 reset_n 						=> not reset,
+--
+--  -- the_julia_gen
+--	 a_diff_from_the_julia_gen 		=> a_diff,
+--	 a_leap_from_the_julia_gen 		=> a_leap,
+--	 a_min_from_the_julia_gen 		=> a_min,
+--	 b_diff_from_the_julia_gen 		=> b_diff,
+--	 b_leap_from_the_julia_gen 		=> b_leap,
+--	 b_min_from_the_julia_gen 		=> b_min,
+--	 ci_from_the_julia_gen 			=> ci,
+--	 cr_from_the_julia_gen 			=> cr,
+--	 exp_data_from_the_julia_gen 	=> reset_from_nios,
+--
+--  -- the_sdram
+--	zs_addr_from_the_sdram 			=> DRAM_ADDR,
+--	zs_ba_from_the_sdram 			=> DRAM_BA,
+--	zs_cas_n_from_the_sdram 		=> DRAM_CAS_N,
+--	zs_cke_from_the_sdram 			=> DRAM_CKE,
+--	zs_cs_n_from_the_sdram 			=> DRAM_CS_N,
+--	zs_dq_to_and_from_the_sdram 	=> DRAM_DQ,
+--	zs_dqm_from_the_sdram 			=> DRAM_DQM,
+--	zs_ras_n_from_the_sdram 		=> DRAM_RAS_N,
+--	zs_we_n_from_the_sdram 			=> DRAM_WE_N
+--	);
+
+
+	HEX7     <= "1100001"; -- J
+	HEX6     <= "1000001"; -- U
+	HEX5     <= "1000111"; -- L
+	HEX4     <= "1111001"; -- I
+	HEX3     <= "0001000"; -- A
+	HEX2     <= "0010010"; -- S
+	HEX1     <= "0000110"; -- E
+	HEX0     <= "0000111"; -- t
+	LEDG(8 downto 4)	<= (others => '0');
+	LEDG(0)				<= reset_from_nios;
+	LEDG(1)				<= reset;
+	LEDG(2) <= SW(0);
+	LEDG(3) <= SW(1);
+	--LEDR(17 downto 0)     <= (others => '0');
+	--LEDR(9 downto 0) <= std_logic_vector(xwrite);
+	--LEDR(17 downto 10) <= std_logic_vector(cwrite);
+	--LEDR(9 downto 0) <= std_logic_vector(xread);
+	--LEDR(17 downto 10) <= std_logic_vector(cread);
+	LEDR(8 downto 0) <= std_logic_vector(yread);
+	LEDR(9) <= '0';
+	LEDR(17 downto 10) <= std_logic_vector(cread);
+	--LEDR(17 downto 0) <= a_min(35 downto 18);
+	--LEDR(17 downto 10) <= (others => '0');
+	LCD_ON   <= '1';
+	LCD_BLON <= '1';
+	LCD_RW <= '1';
+	LCD_EN <= '0';
+	LCD_RS <= '0';
 
   SD_DAT3 <= '1';  
   SD_CMD <= '1';
