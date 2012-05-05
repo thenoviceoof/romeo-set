@@ -195,18 +195,18 @@ architecture datapath of ifv is
 	signal reset_n		: std_logic							:='1';
 	
 	signal reset			: std_logic;
-	signal reset_from_nios	: std_logic;
-	signal DRAM_BA 	: std_logic_vector(1 downto 0);
+	signal reset_from_nios 	: std_logic;
+	signal DRAM_BA	: std_logic_vector(1 downto 0);
 	signal DRAM_DQM	: std_logic_vector(1 downto 0);
 		
 begin
 
---  process (CLOCK_50)
---  begin
---    if rising_edge(CLOCK_50) then
---      clk_vga <= not clk_vga;
---    end if;
---  end process;
+--	process (CLOCK_50)
+--	begin
+--	if rising_edge(CLOCK_50) then
+--		clk_vga <= not clk_vga;
+--	end if;
+--	end process;
 
 	DRAM_BA_1 <= DRAM_BA(1);
 	DRAM_BA_0 <= DRAM_BA(0);
@@ -249,17 +249,18 @@ IFM: entity work.hook port map(
 	b_min			=> X"FA0000000",
 	b_diff			=> X"000666666",
 	b_leap			=> "0000000010",
-	cr				=> X"FCA8F5C29",
-	ci				=> X"FF125460B",
+	cr  			=> X"FCA8F5C29",
+	ci  			=> X"FF125460B",
 	std_logic_vector(xout)	=> xwrite,
 	std_logic_vector(yout)	=> ywrite,
 	count					=> cwrite,
-	we						=> we
+	we  					=> we
 	);
 
 VGA: entity work.vga_mod port map (
 	clk => clk_25,
 	reset => '0',
+	switch => SW(17),
 	count		=> cread,--EXTERNAL SIGNALS
 	VGA_CLK		=> VGA_CLK,
 	VGA_HS		=> VGA_HS,
@@ -271,7 +272,8 @@ VGA: entity work.vga_mod port map (
 	VGA_B		=> VGA_B,
 	xout		=> xread,--EXTERNAL SIGNALS
 	yout		=> yread,--EXTERNAL SIGNALS
-	re			=> re--EXTERNAL SIGNALS
+	re  		=> re,--EXTERNAL SIGNALS
+	ce  		=> SW(2)
 	);
 
 SRAM: entity work.sram port map(
@@ -334,8 +336,8 @@ SRAM: entity work.sram port map(
 	LEDG(8 downto 4)	<= (others => '0');
 	LEDG(0)				<= reset_from_nios;
 	LEDG(1)				<= reset;
-	LEDG(2) <= SW(0);
-	LEDG(3) <= SW(1);
+	LEDG(2) <= not SW(0);
+	LEDG(3) <= not SW(1);
 	--LEDR(17 downto 0)     <= (others => '0');
 	--LEDR(9 downto 0) <= std_logic_vector(xwrite);
 	--LEDR(17 downto 10) <= std_logic_vector(cwrite);
@@ -356,18 +358,19 @@ SRAM: entity work.sram port map(
   SD_CMD <= '1';
   SD_CLK <= '1';
 
+--  DRAM_ADDR <= (others => '0');
+--  DRAM_LDQM <= '0';
+--  DRAM_UDQM <= '0';
+--  DRAM_WE_N <= '1';
+--  DRAM_CAS_N <= '1';
+--  DRAM_RAS_N <= '1';
+--  DRAM_CS_N <= '1';
+--  DRAM_BA_0 <= '0';
+--  DRAM_BA_1 <= '0';
+--  DRAM_CLK <= '0';
+--  DRAM_CKE <= '0';
+
   UART_TXD <= '0';
-  --DRAM_ADDR <= (others => '0');
-  --DRAM_LDQM <= '0';
-  --DRAM_UDQM <= '0';
-  --DRAM_WE_N <= '1';
-  --DRAM_CAS_N <= '1';
-  --DRAM_RAS_N <= '1';
-  --DRAM_CS_N <= '1';
-  --DRAM_BA_0 <= '0';
-  --DRAM_BA_1 <= '0';
-  --DRAM_CLK <= '0';
-  --DRAM_CKE <= '0';
   FL_ADDR <= (others => '0');
   FL_WE_N <= '1';
   FL_RST_N <= '0';

@@ -14,14 +14,14 @@ entity hook is
 	b_min		: in signed(35 downto 0);
 	b_diff		: in signed(35 downto 0);
 	b_leap		: in unsigned(9 downto 0);
-	cr			: in signed(35 downto 0);
-	ci			: in signed(35 downto 0);
+	cr  		: in signed(35 downto 0);
+	ci  		: in signed(35 downto 0);
 	xout		: out std_logic_vector(9 downto 0);
 	yout		: out std_logic_vector(8 downto 0);
 --	aout		: out std_logic_vector(35 downto 0);
 --	bout		: out std_logic_vector(35 downto 0);
 	count		: out unsigned (7 downto 0);
-	we			: out std_logic
+	we  		: out std_logic
 --	done		: out unsigned(3 downto 0);
 --	compute		: out unsigned(3 downto 0)
 	);
@@ -45,7 +45,7 @@ architecture first of hook is
 	yi <= yo(8 downto 0);
 
 	gen: entity work.window_gen port map(
-		clk			=> clk25,
+		clk 		=> clk25,
 		next_val	=> nxt,
 		reset		=> reset,
 		a_min		=> a_min,
@@ -69,17 +69,17 @@ architecture first of hook is
 		clk50		=> clk50,
 		reset		=> reset,
 		data		=> data,
-		xin			=> x,
-		yin			=> yi,
-		ain			=> ai,
-		bin			=> bi,
-		cr			=> cr,
-		ci			=> ci,
+		xin 		=> x,
+		yin 		=> yi,
+		ain 		=> ai,
+		bin 		=> bi,
+		cr  		=> cr,
+		ci  		=> ci,
 		xout		=> xout,
 		yout		=> yout,
 		count		=> count,
 		full		=> nxt,
-		we			=> we
+		we  		=> we
 	);
 
 end first;
