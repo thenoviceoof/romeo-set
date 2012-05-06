@@ -352,7 +352,7 @@ SRAM: entity work.sram port map(
 	-- Set all bidirectional ports to tri-state
 	DRAM_DQ     <= (others => 'Z');
 	FL_DQ       <= (others => 'Z');
-	SRAM_DQ     <= (others => 'Z');
+--	SRAM_DQ     <= (others => 'Z');
 	OTG_DATA    <= (others => 'Z');
 	LCD_DATA    <= (others => 'Z');
 	SD_DAT      <= 'Z';
