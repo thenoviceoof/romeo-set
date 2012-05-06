@@ -116,10 +116,25 @@ class Base:
         cb = self.color_b.get_vector()
         d = {}
         for i in range(CAP):
-            d[i] = (round(cr[i]/4),
-                    round(cg[i]/4),
-                    round(cb[i]/4))
+            d[i] = (round(cr[i]/4) % 2**8,
+                    round(cg[i]/4) % 2**8,
+                    round(cb[i]/4) % 2**8)
         return d
+
+    def gen_clut(self, widget, data=None):
+        def convert_bin(num):
+            s = ""
+            for i in range(self.prec):
+                s = str(int(round(num) % 2)) + s
+                num /= 2
+            return s
+        d = self.build_color_map()
+        ss = ["\"%s%s%s\"" % (convert_bin(d[i][0]),
+                              convert_bin(d[i][1]),
+                              convert_bin(d[i][2]))
+              for i in range(CAP)]
+        print len(ss)
+        print ",\n".join(ss)
 
     def refractal(self, widget, data=None):
         print("Recalculating fractal geometry")
@@ -128,7 +143,6 @@ class Base:
         self.fractal = generate_fractal(const = real+comp*1j)
         self.recolor(None)
     def recolor(self, widget, data=None):
-        print self.color_r.get_vector()
         print("Recalculating fractal colormap")
         img = color_img(self.fractal, self.build_color_map())
         s = convert_string(img)
@@ -140,14 +154,15 @@ class Base:
     def __init__(self):
         self.img = gtk.Image()
         self.size = DEFAULT_SIZE
+        self.prec = 10
 
         # color curves
         self.color_r = gtk.Curve()
-        self.color_r.set_range(0, CAP, 0, 2**10)
+        self.color_r.set_range(0, CAP, 0, 2**self.prec)
         self.color_g = gtk.Curve()
-        self.color_g.set_range(0, CAP, 0, 2**10)
+        self.color_g.set_range(0, CAP, 0, 2**self.prec)
         self.color_b = gtk.Curve()
-        self.color_b.set_range(0, CAP, 0, 2**10)
+        self.color_b.set_range(0, CAP, 0, 2**self.prec)
 
         # adjustment tools
         realadj = gtk.Adjustment(0.0, -1.0, 1.0, 0.01)
@@ -158,6 +173,7 @@ class Base:
         # buttons
         self.recolorb = gtk.Button("Recalculate Colormap")
         self.refractalb = gtk.Button("Recalculate Fractal")
+        self.clutb = gtk.Button("Output CLUT")
 
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
 
@@ -167,6 +183,7 @@ class Base:
 
         self.recolorb.connect("clicked", self.recolor)
         self.refractalb.connect("clicked", self.refractal)
+        self.clutb.connect("clicked", self.gen_clut)
 
         # packing
         self.const_input_pane = gtk.HBox()
@@ -180,10 +197,11 @@ class Base:
         self.side_pane.pack_start(self.const_input_pane)
         self.side_pane.pack_start(self.recolorb)
         self.side_pane.pack_start(self.refractalb)
+        self.side_pane.pack_start(self.clutb)
 
         self.main_pane = gtk.HBox()
-        self.main_pane.pack_start(self.img)
-        self.main_pane.pack_start(self.side_pane)
+        self.main_pane.pack_start(self.img, expand=False)
+        self.main_pane.pack_start(self.side_pane, expand=True)
 
         self.window.add(self.main_pane)
 
@@ -199,6 +217,7 @@ class Base:
         self.img.show()
         self.recolorb.show()
         self.refractalb.show()
+        self.clutb.show()
 
         self.side_pane.show()
         self.main_pane.show()
