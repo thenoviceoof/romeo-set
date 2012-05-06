@@ -198,10 +198,19 @@ architecture datapath of ifv is
 	signal b_leap		: std_logic_vector(9 downto 0)		:= "0000000010";
 	signal reset_n		: std_logic							:='1';
 
+	signal a_mine		: std_logic_vector(35 downto 0)		;
+	signal b_mine		: std_logic_vector(35 downto 0)		;
+	signal a_diffe		: std_logic_vector(35 downto 0)		;
+	signal b_diffe		: std_logic_vector(35 downto 0)		;
+	signal cre   		: std_logic_vector(35 downto 0)		;
+	signal cie   		: std_logic_vector(35 downto 0)		;
+	signal a_leape		: std_logic_vector(9 downto 0)		;
+	signal b_leape		: std_logic_vector(9 downto 0)		;
+
 	signal reset			: std_logic;
 	signal reset_from_nios 	: std_logic;
-	signal DRAM_BA	: std_logic_vector(1 downto 0);
-	signal DRAM_DQM	: std_logic_vector(1 downto 0);
+	signal DRAM_BA			: std_logic_vector(1 downto 0);
+	signal DRAM_DQM			: std_logic_vector(1 downto 0);
 
 begin
 
@@ -212,10 +221,11 @@ begin
 		end if;
 	end process;
 	
---	DRAM_BA_1 <= DRAM_BA(1);
---	DRAM_BA_0 <= DRAM_BA(0);
---	DRAM_UDQM <= DRAM_DQM(1);
---	DRAM_LDQM <= DRAM_DQM(0);
+	DRAM_BA_1 <= DRAM_BA(1);
+	DRAM_BA_0 <= DRAM_BA(0);
+	DRAM_UDQM <= DRAM_DQM(1);
+	DRAM_LDQM <= DRAM_DQM(0);
+	DRAM_CLK  <= clk_sdram;
 --	reset <= reset_from_nios or SW(0);
 	reset <= SW(0);
 
@@ -243,6 +253,34 @@ IFM: entity work.hook port map(
 	count		=> cwrite,
 	we			=> we
 	);
+
+NIOS: entity work.nios port map (
+ -- 1) global signals:
+	clk							=> clk_50,
+	reset_n						=> '1',
+
+ -- the_fbus
+	adiff_from_the_fbus			=> a_diffe,
+	aleap_from_the_fbus			=> a_leape,
+	amin_from_the_fbus			=> a_mine,
+	bdiff_from_the_fbus			=> b_diffe,
+	bleap_from_the_fbus			=> b_leape,
+	bmin_from_the_fbus			=> b_mine,
+	cio_from_the_fbus			=> cie,
+	cro_from_the_fbus			=> cre,
+	expdata_from_the_fbus		=> reset_from_nios,
+
+ -- the_sdram
+	zs_addr_from_the_sdram		=> DRAM_ADDR,
+	zs_ba_from_the_sdram		=> DRAM_BA,
+	zs_cas_n_from_the_sdram		=> DRAM_CAS_N,
+	zs_cke_from_the_sdram		=> DRAM_CKE,
+	zs_cs_n_from_the_sdram		=> DRAM_CS_N,
+	zs_dq_to_and_from_the_sdram	=> DRAM_DQ,
+	zs_dqm_from_the_sdram		=> DRAM_DQM,
+	zs_ras_n_from_the_sdram		=> DRAM_RAS_N,
+	zs_we_n_from_the_sdram		=> DRAM_WE_N
+ );
 
 VGA: entity work.vga_mod port map (
 	clk => clk_vga,
@@ -305,17 +343,17 @@ SRAM: entity work.sram port map(
 	SD_CLK <= '1';
 
 	UART_TXD <= '0';
-	DRAM_ADDR <= (others => '0');
-	DRAM_LDQM <= '0';
-	DRAM_UDQM <= '0';
-	DRAM_WE_N <= '1';
-	DRAM_CAS_N <= '1';
-	DRAM_RAS_N <= '1';
-	DRAM_CS_N <= '1';
-	DRAM_BA_0 <= '0';
-	DRAM_BA_1 <= '0';
-	DRAM_CLK <= '0';
-	DRAM_CKE <= '0';
+--	DRAM_ADDR <= (others => '0');
+--	DRAM_LDQM <= '0';
+--	DRAM_UDQM <= '0';
+--	DRAM_WE_N <= '1';
+--	DRAM_CAS_N <= '1';
+--	DRAM_RAS_N <= '1';
+--	DRAM_CS_N <= '1';
+--	DRAM_BA_0 <= '0';
+--	DRAM_BA_1 <= '0';
+--	DRAM_CLK <= '0';
+--	DRAM_CKE <= '0';
 
 	FL_ADDR <= (others => '0');
 	FL_WE_N <= '1';

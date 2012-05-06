@@ -1,32 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<system name="nios_system">
-    <parameter valueString="7526997838" name="systemHash"/>
+<system name="nios">
+    <parameter valueString="10628232090" name="systemHash"/>
     <parameter name="quartusRootDir">/opt/altera/altera7.2/quartus</parameter>
-    <parameter valueString="1335636096248" name="timeStamp"/>
+    <parameter valueString="1336309082270" name="timeStamp"/>
     <parameter valueString="false" name="generateLegacySDK"/>
     <parameter name="bonusData">bonusData 
 {
-   element sdram.s1
+   element clk
    {
-      datum baseAddress
-      {
-         value = "8388608";
-         type = "long";
-      }
    }
-   element julia_gen.avalon_slave_0
-   {
-      datum baseAddress
-      {
-         value = "16781320";
-         type = "long";
-      }
-   }
-   element cpu
+   element sdram
    {
       datum _sortIndex
       {
-         value = "0";
+         value = "2";
          type = "int";
       }
       datum megawizard_uipreferences
@@ -43,42 +30,23 @@
          type = "long";
       }
    }
-   element clk
-   {
-   }
-   element julia_gen
-   {
-      datum _sortIndex
-      {
-         value = "2";
-         type = "int";
-      }
-   }
-   element nios_system
-   {
-   }
-   element jtag_uart
-   {
-      datum _sortIndex
-      {
-         value = "3";
-         type = "int";
-      }
-      datum megawizard_uipreferences
-      {
-         value = "{}";
-         type = "String";
-      }
-   }
-   element jtag_uart.avalon_jtag_slave
+   element fbus.avalon_slave_0
    {
       datum baseAddress
       {
-         value = "16781312";
+         value = "16781320";
          type = "long";
       }
    }
-   element sdram
+   element sdram.s1
+   {
+      datum baseAddress
+      {
+         value = "8388608";
+         type = "long";
+      }
+   }
+   element jtag_uart
    {
       datum _sortIndex
       {
@@ -91,14 +59,46 @@
          type = "String";
       }
    }
+   element fbus
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+   }
+   element cpu
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{}";
+         type = "String";
+      }
+   }
+   element nios
+   {
+   }
+   element jtag_uart.avalon_jtag_slave
+   {
+      datum baseAddress
+      {
+         value = "16781312";
+         type = "long";
+      }
+   }
 }
 </parameter>
     <parameter valueString="false" name="hardcopyCompatible"/>
     <parameter valueString="CYCLONEII" name="deviceFamily"/>
     <parameter valueString="false" name="generateLegacySim"/>
-    <parameter valueString="ifmunit.qpf" name="projectName"/>
+    <parameter valueString="ifv.qpf" name="projectName"/>
     <parameter valueString="VHDL" name="hdlLanguage"/>
-    <parameter name="projectDirectory">/home/user5/spring12/sdp2128/romeo-set/src</parameter>
+    <parameter name="projectDirectory">/home/user4/spring12/lep2141/4840/IFV</parameter>
     <module version="7.2" name="clk" kind="clock_source">
         <parameter valueString="true" name="clockFrequencyKnown"/>
         <parameter valueString="50000000" name="clockFrequency"/>
@@ -168,33 +168,6 @@
         <parameter valueString="true" name="debug_triggerArming"/>
         <parameter valueString="false" name="mmu_enabled"/>
     </module>
-    <module version="7.2" name="sdram" kind="altera_avalon_new_sdram_controller">
-        <parameter valueString="15.0" name="TRP"/>
-        <parameter valueString="16" name="dataWidth"/>
-        <parameter valueString="12" name="rowWidth"/>
-        <parameter valueString="66.0" name="TRFC"/>
-        <parameter valueString="true" name="registerDataIn"/>
-        <parameter valueString="2" name="casLatency"/>
-        <parameter valueString="100.0" name="powerUpDelay"/>
-        <parameter valueString="false" name="generateSimulationModel"/>
-        <parameter valueString="2" name="initRefreshCommands"/>
-        <parameter valueString="" name="masteredTristateBridgeSlave"/>
-        <parameter valueString="3" name="TMRD"/>
-        <parameter valueString="14.0" name="TWR"/>
-        <parameter valueString="0.0" name="initNOPDelay"/>
-        <parameter valueString="15.625" name="refreshPeriod"/>
-        <parameter valueString="5.4" name="TAC"/>
-        <parameter valueString="8" name="columnWidth"/>
-        <parameter valueString="4" name="numberOfBanks"/>
-        <parameter valueString="1" name="numberOfChipSelects"/>
-        <parameter valueString="false" name="pinsSharedViaTriState"/>
-        <parameter valueString="15.0" name="TRCD"/>
-        <parameter valueString="custom" name="model"/>
-        <parameter valueString="8388608" name="size"/>
-    </module>
-    <module version="1.0" name="julia_gen" kind="de2_ifm_bus">
-        <parameter valueString="" name="sharedPorts"/>
-    </module>
     <module version="7.2" name="jtag_uart" kind="altera_avalon_jtag_uart">
         <parameter valueString="8" name="readIRQThreshold"/>
         <parameter valueString="" name="simInputCharacterStream"/>
@@ -207,6 +180,33 @@
         <parameter valueString="false" name="useRegistersForReadBuffer"/>
         <parameter name="simInteractiveOptions">INTERACTIVE_ASCII_OUTPUT</parameter>
     </module>
+    <module version="7.2" name="sdram" kind="altera_avalon_new_sdram_controller">
+        <parameter valueString="20.0" name="TRP"/>
+        <parameter valueString="16" name="dataWidth"/>
+        <parameter valueString="12" name="rowWidth"/>
+        <parameter valueString="70.0" name="TRFC"/>
+        <parameter valueString="true" name="registerDataIn"/>
+        <parameter valueString="3" name="casLatency"/>
+        <parameter valueString="100.0" name="powerUpDelay"/>
+        <parameter valueString="false" name="generateSimulationModel"/>
+        <parameter valueString="2" name="initRefreshCommands"/>
+        <parameter valueString="" name="masteredTristateBridgeSlave"/>
+        <parameter valueString="3" name="TMRD"/>
+        <parameter valueString="14.0" name="TWR"/>
+        <parameter valueString="0.0" name="initNOPDelay"/>
+        <parameter valueString="15.625" name="refreshPeriod"/>
+        <parameter valueString="5.5" name="TAC"/>
+        <parameter valueString="8" name="columnWidth"/>
+        <parameter valueString="4" name="numberOfBanks"/>
+        <parameter valueString="1" name="numberOfChipSelects"/>
+        <parameter valueString="false" name="pinsSharedViaTriState"/>
+        <parameter valueString="20.0" name="TRCD"/>
+        <parameter valueString="custom" name="model"/>
+        <parameter valueString="8388608" name="size"/>
+    </module>
+    <module version="1.0" name="fbus" kind="de2_ifm_bus">
+        <parameter valueString="" name="sharedPorts"/>
+    </module>
     <connection version="7.2" start="clk.clk" kind="clock" end="cpu.clk"/>
     <connection version="7.2" start="cpu.instruction_master" kind="avalon" end="cpu.jtag_debug_module">
         <parameter valueString="1" name="arbitrationPriority"/>
@@ -215,6 +215,14 @@
     <connection version="7.2" start="cpu.data_master" kind="avalon" end="cpu.jtag_debug_module">
         <parameter valueString="1" name="arbitrationPriority"/>
         <parameter valueString="0x01000800" name="baseAddress"/>
+    </connection>
+    <connection version="7.2" start="clk.clk" kind="clock" end="jtag_uart.clk"/>
+    <connection version="7.2" start="cpu.data_master" kind="avalon" end="jtag_uart.avalon_jtag_slave">
+        <parameter valueString="1" name="arbitrationPriority"/>
+        <parameter valueString="0x01001000" name="baseAddress"/>
+    </connection>
+    <connection version="7.2" start="cpu.d_irq" kind="interrupt" end="jtag_uart.irq">
+        <parameter valueString="0" name="irqNumber"/>
     </connection>
     <connection version="7.2" start="clk.clk" kind="clock" end="sdram.clk"/>
     <connection version="7.2" start="cpu.instruction_master" kind="avalon" end="sdram.s1">
@@ -225,18 +233,10 @@
         <parameter valueString="1" name="arbitrationPriority"/>
         <parameter valueString="0x00800000" name="baseAddress"/>
     </connection>
-    <connection version="7.2" start="clk.clk" kind="clock" end="julia_gen.clock"/>
-    <connection version="7.2" start="cpu.data_master" kind="avalon" end="julia_gen.avalon_slave_0">
+    <connection version="7.2" start="clk.clk" kind="clock" end="fbus.clock"/>
+    <connection version="7.2" start="cpu.data_master" kind="avalon" end="fbus.avalon_slave_0">
         <parameter valueString="1" name="arbitrationPriority"/>
         <parameter valueString="0x01001008" name="baseAddress"/>
-    </connection>
-    <connection version="7.2" start="clk.clk" kind="clock" end="jtag_uart.clk"/>
-    <connection version="7.2" start="cpu.data_master" kind="avalon" end="jtag_uart.avalon_jtag_slave">
-        <parameter valueString="1" name="arbitrationPriority"/>
-        <parameter valueString="0x01001000" name="baseAddress"/>
-    </connection>
-    <connection version="7.2" start="cpu.d_irq" kind="interrupt" end="jtag_uart.irq">
-        <parameter valueString="0" name="irqNumber"/>
     </connection>
 </system>
 

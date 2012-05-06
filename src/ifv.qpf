@@ -15,9 +15,9 @@
 
 
 QUARTUS_VERSION = "7.2"
-DATE = "22:08:07  March 31, 2012"
+DATE = "07:44:42  May 06, 2012"
 
 
 # Revisions
 
-PROJECT_REVISION = "ifmunit"
+PROJECT_REVISION = "ifv"
