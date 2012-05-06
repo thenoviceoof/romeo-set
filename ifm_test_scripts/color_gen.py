@@ -165,8 +165,8 @@ class Base:
         # adjustment tools
         realadj = gtk.Adjustment(0.0, -1.0, 1.0, 0.01)
         compadj = gtk.Adjustment(0.0, -1.0, 1.0, 0.01)
-        self.realin = gtk.SpinButton(adjustment=realadj, digits=2)
-        self.compin = gtk.SpinButton(adjustment=compadj, digits=2)
+        self.realin = gtk.SpinButton(adjustment=realadj, digits=4)
+        self.compin = gtk.SpinButton(adjustment=compadj, digits=4)
 
         # buttons
         self.recolorb = gtk.Button("Recalculate Colormap")
