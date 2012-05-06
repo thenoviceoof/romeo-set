@@ -149,6 +149,19 @@ class Base:
                                            self.size[0], self.size[1], 3*640)
         self.img.set_from_pixbuf(buf)
 
+    def set_ex1(self, widget, data=None):
+        self.realin.set_value(-0.835)
+        self.compin.set_value(-0.2321)
+    def set_ex2(self, widget, data=None):
+        self.realin.set_value(-0.4)
+        self.compin.set_value(0.6)
+    def set_ex3(self, widget, data=None):
+        self.realin.set_value(-0.7018)
+        self.compin.set_value(-0.3842)
+    def set_ex4(self, widget, data=None):
+        self.realin.set_value(-0.8)
+        self.compin.set_value(0.156)
+
     def __init__(self):
         self.img = gtk.Image()
         self.size = DEFAULT_SIZE
@@ -173,6 +186,11 @@ class Base:
         self.refractalb = gtk.Button("Recalculate Fractal")
         self.clutb = gtk.Button("Output CLUT")
 
+        self.ex1b = gtk.Button("Ex1")
+        self.ex2b = gtk.Button("Ex2")
+        self.ex3b = gtk.Button("Ex3")
+        self.ex4b = gtk.Button("Ex4")
+
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
 
         # signals
@@ -183,16 +201,28 @@ class Base:
         self.refractalb.connect("clicked", self.refractal)
         self.clutb.connect("clicked", self.gen_clut)
 
+        self.ex1b.connect("clicked", self.set_ex1)
+        self.ex2b.connect("clicked", self.set_ex2)
+        self.ex3b.connect("clicked", self.set_ex3)
+        self.ex4b.connect("clicked", self.set_ex4)
+
         # packing
         self.const_input_pane = gtk.HBox()
         self.const_input_pane.pack_start(self.realin)
         self.const_input_pane.pack_start(self.compin)
+
+        self.example_pane = gtk.HBox()
+        self.example_pane.pack_start(self.ex1b)
+        self.example_pane.pack_start(self.ex2b)
+        self.example_pane.pack_start(self.ex3b)
+        self.example_pane.pack_start(self.ex4b)
 
         self.side_pane = gtk.VBox()
         self.side_pane.pack_start(self.color_r)
         self.side_pane.pack_start(self.color_g)
         self.side_pane.pack_start(self.color_b)
         self.side_pane.pack_start(self.const_input_pane)
+        self.side_pane.pack_start(self.example_pane)
         self.side_pane.pack_start(self.recolorb)
         self.side_pane.pack_start(self.refractalb)
         self.side_pane.pack_start(self.clutb)
@@ -211,6 +241,12 @@ class Base:
         self.realin.show()
         self.compin.show()
         self.const_input_pane.show()
+
+        self.ex1b.show()
+        self.ex2b.show()
+        self.ex3b.show()
+        self.ex4b.show()
+        self.example_pane.show()
 
         self.img.show()
         self.recolorb.show()
