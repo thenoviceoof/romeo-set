@@ -1,4 +1,7 @@
 --
+-- DE2 top-level module that includes the simple VGA raster generator
+--
+-- Stephen A. Edwards, Columbia University, sedwards@cs.columbia.edu
 --
 -- From an original by Terasic Technology, Inc.
 -- (DE2_TOP.v, part of the DE2 system board CD supplied by Altera)
@@ -171,9 +174,10 @@ end ifv;
 
 architecture datapath of ifv is
 
-	signal clk_25		: std_logic := '0';
-	signal clk_50		: std_logic := '0';
-	signal clk_vga		: std_logic := '0';
+	signal clk_25		: std_logic;
+	signal clk_50		: std_logic;
+	signal clk_vga		: std_logic;
+	signal clk_sdram	: std_logic;
 
 	signal cread		: unsigned(7 downto 0);
 	signal xread		: unsigned(9 downto 0);
@@ -183,84 +187,67 @@ architecture datapath of ifv is
 	signal cwrite		: unsigned(7 downto 0);
 	signal xwrite		: unsigned(9 downto 0);
 	signal ywrite		: unsigned(8 downto 0);
-	
+
 	signal a_min		: std_logic_vector(35 downto 0)		:= X"F80000000";
 	signal b_min		: std_logic_vector(35 downto 0)		:= X"FA0000000";
 	signal a_diff		: std_logic_vector(35 downto 0)		:= X"000666666";
 	signal b_diff		: std_logic_vector(35 downto 0)		:= X"000666666";
-	signal cr		: std_logic_vector(35 downto 0)			:= X"FCA8F5C29";
-	signal ci		: std_logic_vector(35 downto 0)			:= X"FF125460B";
+	signal cr   		: std_logic_vector(35 downto 0)		:= X"FCA8F5C29";
+	signal ci   		: std_logic_vector(35 downto 0)		:= X"FF125460B";
 	signal a_leap		: std_logic_vector(9 downto 0)		:= "0000000010";
 	signal b_leap		: std_logic_vector(9 downto 0)		:= "0000000010";
 	signal reset_n		: std_logic							:='1';
-	
+
 	signal reset			: std_logic;
 	signal reset_from_nios 	: std_logic;
 	signal DRAM_BA	: std_logic_vector(1 downto 0);
 	signal DRAM_DQM	: std_logic_vector(1 downto 0);
-		
+
 begin
 
---	process (CLOCK_50)
---	begin
---	if rising_edge(CLOCK_50) then
---		clk_vga <= not clk_vga;
---	end if;
---	end process;
-
-	DRAM_BA_1 <= DRAM_BA(1);
-	DRAM_BA_0 <= DRAM_BA(0);
-	DRAM_UDQM <= DRAM_DQM(1);
-	DRAM_LDQM <= DRAM_DQM(0);
-	--reset <= reset_from_nios or SW(0);
+	process (CLOCK_50)
+	begin
+		if rising_edge(CLOCK_50) then
+			clk_vga <= not clk_vga;
+		end if;
+	end process;
+	
+--	DRAM_BA_1 <= DRAM_BA(1);
+--	DRAM_BA_0 <= DRAM_BA(0);
+--	DRAM_UDQM <= DRAM_DQM(1);
+--	DRAM_LDQM <= DRAM_DQM(0);
+--	reset <= reset_from_nios or SW(0);
 	reset <= SW(0);
 
 CLK5025: entity work.pll5025 port map(
 	inclk0	=> CLOCK_50,
 	c0		=> clk_50,
 	c1		=> clk_25,
-	c2		=> DRAM_CLK
+	c2		=> clk_sdram
 	);
 
---IFM: entity work.hook port map(
---	clk50			=> clk_50,
---	clk25			=> clk_25,
---	reset			=> reset_from_nios,
---	a_min			=> signed(a_min),
---	a_diff			=> signed(a_diff),
---	a_leap			=> unsigned(a_leap),
---	b_min			=> signed(b_min),
---	b_diff			=> signed(b_diff),
---	b_leap			=> unsigned(b_leap),
---	cr			=> signed(cr),
---	ci			=> signed(ci),
---	std_logic_vector(xout)	=> xwrite,
---	std_logic_vector(yout)	=> ywrite,
---	count			=> cwrite,
---	we			=> we
---	);
 IFM: entity work.hook port map(
-	clk50			=> clk_50,
-	clk25			=> clk_25,
-	reset			=> reset,
-	a_min			=> X"F80000000",
-	a_diff			=> X"000666666",
-	a_leap			=> "0000000010",
-	b_min			=> X"FA0000000",
-	b_diff			=> X"000666666",
-	b_leap			=> "0000000010",
-	cr  			=> X"FCA8F5C29",
-	ci  			=> X"FF125460B",
-	std_logic_vector(xout)	=> xwrite,
-	std_logic_vector(yout)	=> ywrite,
-	count					=> cwrite,
-	we  					=> we
+	clk50		=> clk_50,
+	clk25		=> clk_25,
+	reset		=> reset,
+	a_min		=> signed(a_min),
+	a_diff		=> signed(a_diff),
+	a_leap		=> unsigned(a_leap),
+	b_min		=> signed(b_min),
+	b_diff		=> signed(b_diff),
+	b_leap		=> unsigned(b_leap),
+	cr			=> signed(cr),
+	ci			=> signed(ci),
+	std_logic_vector(xout)		=> xwrite,
+	std_logic_vector(yout)		=> ywrite,
+	count		=> cwrite,
+	we			=> we
 	);
 
 VGA: entity work.vga_mod port map (
-	clk => clk_25,
+	clk => clk_vga,
 	reset => '0',
-	switch => SW(17),
+	switch => SW(3),
 	count		=> cread,--EXTERNAL SIGNALS
 	VGA_CLK		=> VGA_CLK,
 	VGA_HS		=> VGA_HS,
@@ -295,82 +282,41 @@ SRAM: entity work.sram port map(
 	re			=> re,
 	we			=> we
 	);
+  
+  HEX7     <= "1100001"; -- J
+  HEX6     <= "1000001"; -- U
+  HEX5     <= "1000111"; -- L
+  HEX4     <= "1111001"; -- I
+  HEX3     <= "0001000"; -- A
+  HEX2     <= "0010010"; -- S
+  HEX1     <= "0000110"; -- E
+  HEX0     <= "0000111"; -- t
+  LEDG     <= (others => '0');
+  LEDR     <= (others => '0');
 
---nios : entity work.nios_system port map(
---  -- global signals:
---	 clk 							=> clk_50,
---	 reset_n 						=> not reset,
---
---  -- the_julia_gen
---	 a_diff_from_the_julia_gen 		=> a_diff,
---	 a_leap_from_the_julia_gen 		=> a_leap,
---	 a_min_from_the_julia_gen 		=> a_min,
---	 b_diff_from_the_julia_gen 		=> b_diff,
---	 b_leap_from_the_julia_gen 		=> b_leap,
---	 b_min_from_the_julia_gen 		=> b_min,
---	 ci_from_the_julia_gen 			=> ci,
---	 cr_from_the_julia_gen 			=> cr,
---	 exp_data_from_the_julia_gen 	=> reset_from_nios,
---
---  -- the_sdram
---	zs_addr_from_the_sdram 			=> DRAM_ADDR,
---	zs_ba_from_the_sdram 			=> DRAM_BA,
---	zs_cas_n_from_the_sdram 		=> DRAM_CAS_N,
---	zs_cke_from_the_sdram 			=> DRAM_CKE,
---	zs_cs_n_from_the_sdram 			=> DRAM_CS_N,
---	zs_dq_to_and_from_the_sdram 	=> DRAM_DQ,
---	zs_dqm_from_the_sdram 			=> DRAM_DQM,
---	zs_ras_n_from_the_sdram 		=> DRAM_RAS_N,
---	zs_we_n_from_the_sdram 			=> DRAM_WE_N
---	);
-
-
-	HEX7     <= "1100001"; -- J
-	HEX6     <= "1000001"; -- U
-	HEX5     <= "1000111"; -- L
-	HEX4     <= "1111001"; -- I
-	HEX3     <= "0001000"; -- A
-	HEX2     <= "0010010"; -- S
-	HEX1     <= "0000110"; -- E
-	HEX0     <= "0000111"; -- t
-	LEDG(8 downto 4)	<= (others => '0');
-	LEDG(0)				<= reset_from_nios;
-	LEDG(1)				<= reset;
-	LEDG(2) <= not SW(0);
-	LEDG(3) <= not SW(1);
-	--LEDR(17 downto 0)     <= (others => '0');
-	--LEDR(9 downto 0) <= std_logic_vector(xwrite);
-	--LEDR(17 downto 10) <= std_logic_vector(cwrite);
-	--LEDR(9 downto 0) <= std_logic_vector(xread);
-	--LEDR(17 downto 10) <= std_logic_vector(cread);
-	LEDR(8 downto 0) <= std_logic_vector(yread);
-	LEDR(9) <= '0';
-	LEDR(17 downto 10) <= std_logic_vector(cread);
-	--LEDR(17 downto 0) <= a_min(35 downto 18);
-	--LEDR(17 downto 10) <= (others => '0');
-	LCD_ON   <= '1';
-	LCD_BLON <= '1';
-	LCD_RW <= '1';
-	LCD_EN <= '0';
-	LCD_RS <= '0';
+  LCD_ON   <= '1';
+  LCD_BLON <= '1';
+  LCD_RW <= '1';
+  LCD_EN <= '0';
+  LCD_RS <= '0';
 
   SD_DAT3 <= '1';  
   SD_CMD <= '1';
   SD_CLK <= '1';
 
---  DRAM_ADDR <= (others => '0');
---  DRAM_LDQM <= '0';
---  DRAM_UDQM <= '0';
---  DRAM_WE_N <= '1';
---  DRAM_CAS_N <= '1';
---  DRAM_RAS_N <= '1';
---  DRAM_CS_N <= '1';
---  DRAM_BA_0 <= '0';
---  DRAM_BA_1 <= '0';
---  DRAM_CLK <= '0';
---  DRAM_CKE <= '0';
-
   UART_TXD <= '0';
+  DRAM_ADDR <= (others => '0');
+  DRAM_LDQM <= '0';
+  DRAM_UDQM <= '0';
+  DRAM_WE_N <= '1';
+  DRAM_CAS_N <= '1';
+  DRAM_RAS_N <= '1';
+  DRAM_CS_N <= '1';
+  DRAM_BA_0 <= '0';
+  DRAM_BA_1 <= '0';
+  DRAM_CLK <= '0';
+  DRAM_CKE <= '0';
+
   FL_ADDR <= (others => '0');
   FL_WE_N <= '1';
   FL_RST_N <= '0';

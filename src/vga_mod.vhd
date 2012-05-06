@@ -80,7 +80,7 @@ begin
 					re		  => re);
 
    A : Color_LUT port map 
-		(count		=> count,
+		(count		=> count + cycle,
 		switch		=> switch,
 		VGA_RGB		=> VGA_RGB);
 
