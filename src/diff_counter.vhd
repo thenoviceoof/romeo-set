@@ -45,22 +45,23 @@ ready <= ready_sig;
 process(clk)
 
 begin	
-	
-	c_next <= c_curr+1;
-	v_next <= v_curr + v_diff;
-	
-	itr_next <= itr_count+1;
-	if leap = '1' then 
-		v_next <= v_curr + v_diff + 1;
-		itr_next <= (others=>'0');
-	end if;
-	
-	leap <= '0';
-	if itr_next = v_leap then
-		leap <= '1';
-	end if;	
-	
-	if rising_edge(clk) then		
+
+	if rising_edge(clk) then
+
+		c_next <= c_curr+1;
+		v_next <= v_curr + v_diff;
+		
+		itr_next <= itr_count+1;
+		if leap = '1' then 
+			v_next <= v_curr + v_diff + 1;
+			itr_next <= (others=>'0');
+		end if;
+
+		leap <= '0';
+		if itr_next = v_leap then
+			leap <= '1';
+		end if;	
+
 		itr_count <= itr_count;		
 		if reset = '1' then
 			v_curr <= v_min;
