@@ -112,11 +112,19 @@ class Base:
         cr = self.color_r.get_vector()
         cg = self.color_g.get_vector()
         cb = self.color_b.get_vector()
+        cr = [min(max(c, 0), 2**self.prec-1) for c in cr]
+        cg = [min(max(c, 0), 2**self.prec-1) for c in cg]
+        cb = [min(max(c, 0), 2**self.prec-1) for c in cb]
         d = {}
         for i in range(CAP):
-            d[i] = (round(cr[i]/4) % 2**8,
-                    round(cg[i]/4) % 2**8,
-                    round(cb[i]/4) % 2**8)
+            d[i] = (cr[i], cg[i], cb[i])
+        return d
+    def build_bmp_color_map(self):
+        d = self.build_color_map()
+        for i in range(CAP):
+            d[i] = (round(d[i][0]/4) % 2**8,
+                    round(d[i][1]/4) % 2**8,
+                    round(d[i][2]/4) % 2**8)
         return d
 
     def gen_clut(self, widget, data=None):
@@ -142,7 +150,7 @@ class Base:
         self.recolor(None)
     def recolor(self, widget, data=None):
         print("Recalculating fractal colormap")
-        img = color_img(self.fractal, self.build_color_map())
+        img = color_img(self.fractal, self.build_bmp_color_map())
         s = convert_string(img)
         buf = gtk.gdk.pixbuf_new_from_data(s, gtk.gdk.COLORSPACE_RGB,
                                            False, 8,
