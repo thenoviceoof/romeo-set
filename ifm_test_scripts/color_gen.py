@@ -110,6 +110,17 @@ class Base:
         print("Goodbye!")
         gtk.main_quit()
 
+    def build_color_map(self):
+        cr = self.color_r.get_vector()
+        cg = self.color_g.get_vector()
+        cb = self.color_b.get_vector()
+        d = {}
+        for i in range(CAP):
+            d[i] = (round(cr[i]/4),
+                    round(cg[i]/4),
+                    round(cb[i]/4))
+        return d
+
     def refractal(self, widget, data=None):
         print("Recalculating fractal geometry")
         real = self.realin.get_value()
@@ -117,9 +128,9 @@ class Base:
         self.fractal = generate_fractal(const = real+comp*1j)
         self.recolor(None)
     def recolor(self, widget, data=None):
+        print self.color_r.get_vector()
         print("Recalculating fractal colormap")
-        img = color_img(self.fractal, self.maps[self.mapi % len(self.maps)]())
-        self.mapi += 1
+        img = color_img(self.fractal, self.build_color_map())
         s = convert_string(img)
         buf = gtk.gdk.pixbuf_new_from_data(s, gtk.gdk.COLORSPACE_RGB,
                                            False, 8,
@@ -129,17 +140,22 @@ class Base:
     def __init__(self):
         self.img = gtk.Image()
         self.size = DEFAULT_SIZE
-        # this is just debug stuff
-        self.maps = [linear_color_map, sqrt_color_map]
-        self.mapi = 0
 
+        # color curves
+        self.color_r = gtk.Curve()
+        self.color_r.set_range(0, CAP, 0, 2**10)
+        self.color_g = gtk.Curve()
+        self.color_g.set_range(0, CAP, 0, 2**10)
+        self.color_b = gtk.Curve()
+        self.color_b.set_range(0, CAP, 0, 2**10)
+
+        # adjustment tools
         realadj = gtk.Adjustment(0.0, -1.0, 1.0, 0.01)
         compadj = gtk.Adjustment(0.0, -1.0, 1.0, 0.01)
         self.realin = gtk.SpinButton(adjustment=realadj, digits=2)
         self.compin = gtk.SpinButton(adjustment=compadj, digits=2)
-        self.refractal(None)
-        self.recolor(None)
 
+        # buttons
         self.recolorb = gtk.Button("Recalculate Colormap")
         self.refractalb = gtk.Button("Recalculate Fractal")
 
@@ -158,6 +174,9 @@ class Base:
         self.const_input_pane.pack_start(self.compin)
 
         self.side_pane = gtk.VBox()
+        self.side_pane.pack_start(self.color_r)
+        self.side_pane.pack_start(self.color_g)
+        self.side_pane.pack_start(self.color_b)
         self.side_pane.pack_start(self.const_input_pane)
         self.side_pane.pack_start(self.recolorb)
         self.side_pane.pack_start(self.refractalb)
@@ -169,6 +188,10 @@ class Base:
         self.window.add(self.main_pane)
 
         # showing things
+        self.color_r.show()
+        self.color_g.show()
+        self.color_b.show()
+
         self.realin.show()
         self.compin.show()
         self.const_input_pane.show()
@@ -180,6 +203,9 @@ class Base:
         self.side_pane.show()
         self.main_pane.show()
         self.window.show()
+
+        # calculate the initial fractal
+        self.refractal(None)
 
     def main(self):
         gtk.main()
