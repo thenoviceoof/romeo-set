@@ -7,6 +7,8 @@ import gtk
 import os
 import pickle
 
+import math
+
 BITS = 7
 CAP = 2**BITS
 
@@ -115,9 +117,20 @@ class Base:
         cr = [min(max(c, 0), 2**self.prec-1) for c in cr]
         cg = [min(max(c, 0), 2**self.prec-1) for c in cg]
         cb = [min(max(c, 0), 2**self.prec-1) for c in cb]
+        # have to renormalize between len(cr) and CAP
+        def interpolate(points, x):
+            """points: the series of points
+            x: where you want the value
+            """
+            indl = int(math.floor(x*len(points)))
+            indh = int(math.ceil(x*len(points)))
+            ip = (x*len(points) - indl)
+            return (points[indh] - points[indl])*ip + points[indl]
         d = {}
         for i in range(CAP):
-            d[i] = (cr[i], cg[i], cb[i])
+            d[i] = (interpolate(cr, float(i)/CAP),
+                    interpolate(cg, float(i)/CAP),
+                    interpolate(cb, float(i)/CAP))
         return d
     def build_bmp_color_map(self):
         d = self.build_color_map()
@@ -131,15 +144,17 @@ class Base:
         def convert_bin(num):
             s = ""
             for i in range(self.prec):
-                s = str(int(round(num) % 2)) + s
+                if int(round(num)) & 1 == 1:
+                    s = "1" + s
+                else:
+                    s = "0" + s
                 num /= 2
             return s
         d = self.build_color_map()
-        ss = ["\"%s%s%s\"" % (convert_bin(d[i][0]),
-                              convert_bin(d[i][1]),
-                              convert_bin(d[i][2]))
+        ss = ["\"%s %s %s\"" % (convert_bin(int(round(d[i][0]))),
+                                convert_bin(int(round(d[i][1]))),
+                                convert_bin(int(round(d[i][2]))))
               for i in range(CAP)]
-        print len(ss)
         print ",\n".join(ss)
 
     def refractal(self, widget, data=None):
