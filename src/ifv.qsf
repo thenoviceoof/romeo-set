@@ -30,11 +30,6 @@ set_global_assignment -name ORIGINAL_QUARTUS_VERSION 7.2
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "07:44:42  MAY 06, 2012"
 set_global_assignment -name LAST_QUARTUS_VERSION 7.2
 set_global_assignment -name USE_GENERATED_PHYSICAL_CONSTRAINTS OFF -section_id eda_palace
-set_instance_assignment -name PARTITION_HIERARCHY no_file_for_top_partition -to | -section_id Top
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_COLOR 2147039 -section_id Top
-set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
-set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
 set_location_assignment PIN_N25 -to SW[0]
 set_location_assignment PIN_N26 -to SW[1]
 set_location_assignment PIN_P25 -to SW[2]
@@ -460,7 +455,7 @@ set_location_assignment PIN_V24 -to GPIO_1[32]
 set_location_assignment PIN_V23 -to GPIO_1[33]
 set_location_assignment PIN_W25 -to GPIO_1[34]
 set_location_assignment PIN_W23 -to GPIO_1[35]
-set_global_assignment -name VHDL_FILE fbus.vhd
+set_global_assignment -name VHDL_FILE ram.vhd
 set_global_assignment -name VHDL_FILE cpu_jtag_debug_module.vhd
 set_global_assignment -name VHDL_FILE sdram.vhd
 set_global_assignment -name VHDL_FILE jtag_uart.vhd
@@ -479,5 +474,9 @@ set_global_assignment -name VHDL_FILE sram.vhd
 set_global_assignment -name VHDL_FILE vga.vhd
 set_global_assignment -name VHDL_FILE vga_mod.vhd
 set_global_assignment -name VHDL_FILE window_gen.vhd
-set_global_assignment -name QIP_FILE nios.qip
-set_global_assignment -name VHDL_FILE altera_europa_support.vhd
+set_global_assignment -name VHDL_FILE rammer.vhd
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_COLOR 2147039 -section_id Top
+set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
+set_instance_assignment -name PARTITION_HIERARCHY no_file_for_top_partition -to | -section_id Top

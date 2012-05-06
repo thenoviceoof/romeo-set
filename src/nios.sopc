@@ -1,19 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <system name="nios">
-    <parameter valueString="10628232090" name="systemHash"/>
+    <parameter valueString="12736831162" name="systemHash"/>
     <parameter name="quartusRootDir">/opt/altera/altera7.2/quartus</parameter>
-    <parameter valueString="1336309082270" name="timeStamp"/>
+    <parameter valueString="1336326261838" name="timeStamp"/>
     <parameter valueString="false" name="generateLegacySDK"/>
     <parameter name="bonusData">bonusData 
 {
    element clk
    {
    }
+   element ram
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+   }
    element sdram
    {
       datum _sortIndex
       {
          value = "2";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{}";
+         type = "String";
+      }
+   }
+   element ram.avalon_slave_0
+   {
+      datum baseAddress
+      {
+         value = "16781312";
+         type = "long";
+      }
+   }
+   element cpu
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{}";
+         type = "String";
+      }
+   }
+   element jtag_uart
+   {
+      datum _sortIndex
+      {
+         value = "1";
          type = "int";
       }
       datum megawizard_uipreferences
@@ -30,13 +72,8 @@
          type = "long";
       }
    }
-   element fbus.avalon_slave_0
+   element nios
    {
-      datum baseAddress
-      {
-         value = "16781320";
-         type = "long";
-      }
    }
    element sdram.s1
    {
@@ -46,48 +83,11 @@
          type = "long";
       }
    }
-   element jtag_uart
-   {
-      datum _sortIndex
-      {
-         value = "1";
-         type = "int";
-      }
-      datum megawizard_uipreferences
-      {
-         value = "{}";
-         type = "String";
-      }
-   }
-   element fbus
-   {
-      datum _sortIndex
-      {
-         value = "3";
-         type = "int";
-      }
-   }
-   element cpu
-   {
-      datum _sortIndex
-      {
-         value = "0";
-         type = "int";
-      }
-      datum megawizard_uipreferences
-      {
-         value = "{}";
-         type = "String";
-      }
-   }
-   element nios
-   {
-   }
    element jtag_uart.avalon_jtag_slave
    {
       datum baseAddress
       {
-         value = "16781312";
+         value = "16781376";
          type = "long";
       }
    }
@@ -204,7 +204,7 @@
         <parameter valueString="custom" name="model"/>
         <parameter valueString="8388608" name="size"/>
     </module>
-    <module version="1.0" name="fbus" kind="de2_ifm_bus">
+    <module version="1.0" name="ram" kind="ramcon">
         <parameter valueString="" name="sharedPorts"/>
     </module>
     <connection version="7.2" start="clk.clk" kind="clock" end="cpu.clk"/>
@@ -219,7 +219,7 @@
     <connection version="7.2" start="clk.clk" kind="clock" end="jtag_uart.clk"/>
     <connection version="7.2" start="cpu.data_master" kind="avalon" end="jtag_uart.avalon_jtag_slave">
         <parameter valueString="1" name="arbitrationPriority"/>
-        <parameter valueString="0x01001000" name="baseAddress"/>
+        <parameter valueString="0x01001040" name="baseAddress"/>
     </connection>
     <connection version="7.2" start="cpu.d_irq" kind="interrupt" end="jtag_uart.irq">
         <parameter valueString="0" name="irqNumber"/>
@@ -233,10 +233,10 @@
         <parameter valueString="1" name="arbitrationPriority"/>
         <parameter valueString="0x00800000" name="baseAddress"/>
     </connection>
-    <connection version="7.2" start="clk.clk" kind="clock" end="fbus.clock"/>
-    <connection version="7.2" start="cpu.data_master" kind="avalon" end="fbus.avalon_slave_0">
+    <connection version="7.2" start="clk.clk" kind="clock" end="ram.clock"/>
+    <connection version="7.2" start="cpu.data_master" kind="avalon" end="ram.avalon_slave_0">
         <parameter valueString="1" name="arbitrationPriority"/>
-        <parameter valueString="0x01001008" name="baseAddress"/>
+        <parameter valueString="0x01001000" name="baseAddress"/>
     </connection>
 </system>
 

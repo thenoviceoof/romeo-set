@@ -174,43 +174,47 @@ end ifv;
 
 architecture datapath of ifv is
 
-	signal clk_25		: std_logic;
-	signal clk_50		: std_logic;
-	signal clk_vga		: std_logic;
-	signal clk_sdram	: std_logic;
+	signal clk_25			: std_logic;
+	signal clk_50			: std_logic;
+	signal clk_vga			: std_logic;
+	signal clk_sdram		: std_logic;
 
-	signal cread		: unsigned(7 downto 0);
-	signal xread		: unsigned(9 downto 0);
-	signal yread		: unsigned(8 downto 0);
-	signal re			: std_logic;
-	signal we			: std_logic;
-	signal cwrite		: unsigned(7 downto 0);
-	signal xwrite		: unsigned(9 downto 0);
-	signal ywrite		: unsigned(8 downto 0);
+	signal cread			: unsigned(7 downto 0);
+	signal xread			: unsigned(9 downto 0);
+	signal yread			: unsigned(8 downto 0);
+	signal re				: std_logic;
+	signal we				: std_logic;
+	signal cwrite			: unsigned(7 downto 0);
+	signal xwrite			: unsigned(9 downto 0);
+	signal ywrite			: unsigned(8 downto 0);
 
-	signal a_min		: std_logic_vector(35 downto 0)		:= X"F80000000";
-	signal b_min		: std_logic_vector(35 downto 0)		:= X"FA0000000";
-	signal a_diff		: std_logic_vector(35 downto 0)		:= X"000666666";
-	signal b_diff		: std_logic_vector(35 downto 0)		:= X"000666666";
-	signal cr   		: std_logic_vector(35 downto 0)		:= X"FCA8F5C29";
-	signal ci   		: std_logic_vector(35 downto 0)		:= X"FF125460B";
-	signal a_leap		: std_logic_vector(9 downto 0)		:= "0000000010";
-	signal b_leap		: std_logic_vector(9 downto 0)		:= "0000000010";
-	signal reset_n		: std_logic							:='1';
+	signal a_min			: signed(35 downto 0)		:= X"F80000000";
+	signal b_min			: signed(35 downto 0)		:= X"FA0000000";
+	signal a_diff			: signed(35 downto 0)		:= X"000666666";
+	signal b_diff			: signed(35 downto 0)		:= X"000666666";
+	signal cr   			: signed(35 downto 0)		:= X"FCA8F5C29";
+	signal ci   			: signed(35 downto 0)		:= X"FF125460B";
+	signal a_leap			: unsigned(9 downto 0)		:= "0000000010";
+	signal b_leap			: unsigned(9 downto 0)		:= "0000000010";
+	signal reset_n			: std_logic							:='1';
 
-	signal a_mine		: std_logic_vector(35 downto 0)		;
-	signal b_mine		: std_logic_vector(35 downto 0)		;
-	signal a_diffe		: std_logic_vector(35 downto 0)		;
-	signal b_diffe		: std_logic_vector(35 downto 0)		;
-	signal cre   		: std_logic_vector(35 downto 0)		;
-	signal cie   		: std_logic_vector(35 downto 0)		;
-	signal a_leape		: std_logic_vector(9 downto 0)		;
-	signal b_leape		: std_logic_vector(9 downto 0)		;
+	signal a_mine			: signed(35 downto 0)		;
+	signal b_mine			: signed(35 downto 0)		;
+	signal a_diffe			: signed(35 downto 0)		;
+	signal b_diffe			: signed(35 downto 0)		;
+	signal cre   			: signed(35 downto 0)		;
+	signal cie   			: signed(35 downto 0)		;
+	signal a_leape			: unsigned(9 downto 0)		;
+	signal b_leape			: unsigned(9 downto 0)		;
 
 	signal reset			: std_logic;
 	signal reset_from_nios 	: std_logic;
 	signal DRAM_BA			: std_logic_vector(1 downto 0);
 	signal DRAM_DQM			: std_logic_vector(1 downto 0);
+
+	signal ram_read			: std_logic;
+	signal ram_data			: signed(17 downto 0);
+	signal ram_address		: unsigned(3 downto 0);
 
 begin
 
@@ -218,6 +222,36 @@ begin
 	begin
 		if rising_edge(CLOCK_50) then
 			clk_vga <= not clk_vga;
+			if SW(6) = '1' then
+			if SW(4) = '1' then
+				a_min		<= X"F80000000";
+				b_min		<= X"FA0000000";
+				a_diff		<= X"000666666";
+				b_diff		<= X"000666666";
+				cr			<= X"000000000";
+				ci			<= X"000000000";
+				a_leap		<= "0000000010";
+				b_leap		<= "0000000010";
+			else
+				a_min		<= X"F80000000";
+				b_min		<= X"FA0000000";
+				a_diff		<= X"000666666";
+				b_diff		<= X"000666666";
+				cr			<= X"FCA8F5C29";
+				ci			<= X"FF125460B";
+				a_leap		<= "0000000010";
+				b_leap		<= "0000000010";
+			end if;
+			else
+				a_min		<= a_mine;
+				b_min		<= b_mine;
+				a_diff		<= a_diffe;
+				b_diff		<= b_diffe;
+				cr			<= cre;
+				ci			<= cie;
+				a_leap		<= a_leape;
+				b_leap		<= b_leape; 
+			end if;
 		end if;
 	end process;
 	
@@ -240,14 +274,14 @@ IFM: entity work.hook port map(
 	clk50		=> clk_50,
 	clk25		=> clk_25,
 	reset		=> reset,
-	a_min		=> signed(a_min),
-	a_diff		=> signed(a_diff),
-	a_leap		=> unsigned(a_leap),
-	b_min		=> signed(b_min),
-	b_diff		=> signed(b_diff),
-	b_leap		=> unsigned(b_leap),
-	cr			=> signed(cr),
-	ci			=> signed(ci),
+	a_min		=> a_min,
+	a_diff		=> a_diff,
+	a_leap		=> a_leap,
+	b_min		=> b_min,
+	b_diff		=> b_diff,
+	b_leap		=> b_leap,
+	cr			=> cr,
+	ci			=> ci,
 	std_logic_vector(xout)		=> xwrite,
 	std_logic_vector(yout)		=> ywrite,
 	count		=> cwrite,
@@ -259,16 +293,10 @@ NIOS: entity work.nios port map (
 	clk							=> clk_50,
 	reset_n						=> '1',
 
- -- the_fbus
-	adiff_from_the_fbus			=> a_diffe,
-	aleap_from_the_fbus			=> a_leape,
-	amin_from_the_fbus			=> a_mine,
-	bdiff_from_the_fbus			=> b_diffe,
-	bleap_from_the_fbus			=> b_leape,
-	bmin_from_the_fbus			=> b_mine,
-	cio_from_the_fbus			=> cie,
-	cro_from_the_fbus			=> cre,
-	expdata_from_the_fbus		=> reset_from_nios,
+ -- the_ram
+	addressout_to_the_ram		=> std_logic_vector(ram_address),
+	read_to_the_ram				=> ram_read,
+	std_logic_vector(readdata_from_the_ram)		=> ram_data,
 
  -- the_sdram
 	zs_addr_from_the_sdram		=> DRAM_ADDR,
@@ -282,10 +310,27 @@ NIOS: entity work.nios port map (
 	zs_we_n_from_the_sdram		=> DRAM_WE_N
  );
 
+RMR: entity work.rammer port map(
+	clk				=> clk_50,
+	compute			=> SW(5),
+	done			=> LEDG(0),
+	read			=> ram_read,
+	addressout		=> ram_address,
+	readdata		=> ram_data,
+	amin			=> a_mine,
+	bmin			=> b_mine,
+	adiff			=> a_diffe,
+	bdiff			=> b_diffe,
+	aleap			=> a_leape,
+	bleap			=> b_leape,
+	cro				=> cre,
+	cio				=> cie
+	);
+
 VGA: entity work.vga_mod port map (
-	clk => clk_vga,
-	reset => '0',
-	switch => SW(3),
+	clk			=> clk_vga,
+	reset		=> '0',
+	switch		=> SW(3),
 	count		=> cread,--EXTERNAL SIGNALS
 	VGA_CLK		=> VGA_CLK,
 	VGA_HS		=> VGA_HS,
@@ -329,7 +374,7 @@ SRAM: entity work.sram port map(
 	HEX2     <= "0010010"; -- S
 	HEX1     <= "0000110"; -- E
 	HEX0     <= "0000111"; -- t
-	LEDG     <= (others => '0');
+	LEDG(8 downto 1)<= (others => '0');
 	LEDR     <= (others => '0');
 
 	LCD_ON   <= '1';
