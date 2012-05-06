@@ -6,6 +6,7 @@ ifm_test_scripts/*.png
 ifm_test_scripts/*.txt
 ifm_test_scripts/*.pyc
 ifm_test_scripts/*.pickle
+ifm_test_scripts/cache/*
 
 
 ########## in /src/
