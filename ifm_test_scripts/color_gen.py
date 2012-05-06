@@ -7,8 +7,6 @@ import gtk
 import os
 import pickle
 
-from PIL import Image
-
 BITS = 7
 CAP = 2**BITS
 
