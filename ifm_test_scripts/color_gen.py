@@ -110,7 +110,13 @@ class Base:
         print("Goodbye!")
         gtk.main_quit()
 
-    def reload(self, widget, data=None):
+    def refractal(self, widget, data=None):
+        print("Recalculating fractal geometry")
+        real = self.realin.get_value()
+        comp = self.compin.get_value()
+        self.fractal = generate_fractal(const = real+comp*1j)
+        self.recolor(None)
+    def recolor(self, widget, data=None):
         print("Recalculating fractal colormap")
         img = color_img(self.fractal, self.maps[self.mapi % len(self.maps)]())
         self.mapi += 1
@@ -123,12 +129,19 @@ class Base:
     def __init__(self):
         self.img = gtk.Image()
         self.size = DEFAULT_SIZE
-        self.fractal = generate_fractal(const = -0.835-0.2321j)
+        # this is just debug stuff
         self.maps = [linear_color_map, sqrt_color_map]
         self.mapi = 0
-        self.reload(None)
 
-        self.butt = gtk.Button("Recalculate Colormap")
+        realadj = gtk.Adjustment(0.0, -1.0, 1.0, 0.01)
+        compadj = gtk.Adjustment(0.0, -1.0, 1.0, 0.01)
+        self.realin = gtk.SpinButton(adjustment=realadj, digits=2)
+        self.compin = gtk.SpinButton(adjustment=compadj, digits=2)
+        self.refractal(None)
+        self.recolor(None)
+
+        self.recolorb = gtk.Button("Recalculate Colormap")
+        self.refractalb = gtk.Button("Recalculate Fractal")
 
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
 
@@ -136,19 +149,33 @@ class Base:
         self.window.connect("delete_event", self.delete_event)
         self.window.connect("destroy", self.destroy)
 
-        self.butt.connect("clicked", self.reload)
+        self.recolorb.connect("clicked", self.recolor)
+        self.refractalb.connect("clicked", self.refractal)
 
         # packing
+        self.const_input_pane = gtk.HBox()
+        self.const_input_pane.pack_start(self.realin)
+        self.const_input_pane.pack_start(self.compin)
+
         self.side_pane = gtk.VBox()
-        self.side_pane.pack_start(self.butt)
+        self.side_pane.pack_start(self.const_input_pane)
+        self.side_pane.pack_start(self.recolorb)
+        self.side_pane.pack_start(self.refractalb)
+
         self.main_pane = gtk.HBox()
         self.main_pane.pack_start(self.img)
         self.main_pane.pack_start(self.side_pane)
 
         self.window.add(self.main_pane)
 
+        # showing things
+        self.realin.show()
+        self.compin.show()
+        self.const_input_pane.show()
+
         self.img.show()
-        self.butt.show()
+        self.recolorb.show()
+        self.refractalb.show()
 
         self.side_pane.show()
         self.main_pane.show()
