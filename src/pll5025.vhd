@@ -162,7 +162,7 @@ BEGIN
 		intended_device_family => "Cyclone II",
 		lpm_hint => "CBX_MODULE_PREFIX=pll5025",
 		lpm_type => "altpll",
-		operation_mode => "SOURCE_SYNCHRONOUS",
+		operation_mode => "NORMAL",
 		port_activeclock => "PORT_UNUSED",
 		port_areset => "PORT_UNUSED",
 		port_clkbad0 => "PORT_UNUSED",
@@ -268,7 +268,7 @@ END SYN;
 -- Retrieval info: PRIVATE: MULT_FACTOR0 NUMERIC "1"
 -- Retrieval info: PRIVATE: MULT_FACTOR1 NUMERIC "1"
 -- Retrieval info: PRIVATE: MULT_FACTOR2 NUMERIC "1"
--- Retrieval info: PRIVATE: NORMAL_MODE_RADIO STRING "0"
+-- Retrieval info: PRIVATE: NORMAL_MODE_RADIO STRING "1"
 -- Retrieval info: PRIVATE: OUTPUT_FREQ0 STRING "100.00000000"
 -- Retrieval info: PRIVATE: OUTPUT_FREQ1 STRING "100.00000000"
 -- Retrieval info: PRIVATE: OUTPUT_FREQ2 STRING "100.00000000"
@@ -308,7 +308,7 @@ END SYN;
 -- Retrieval info: PRIVATE: SPREAD_FREQ_UNIT STRING "KHz"
 -- Retrieval info: PRIVATE: SPREAD_PERCENT STRING "0.500"
 -- Retrieval info: PRIVATE: SPREAD_USE STRING "0"
--- Retrieval info: PRIVATE: SRC_SYNCH_COMP_RADIO STRING "1"
+-- Retrieval info: PRIVATE: SRC_SYNCH_COMP_RADIO STRING "0"
 -- Retrieval info: PRIVATE: STICKY_CLK0 STRING "1"
 -- Retrieval info: PRIVATE: STICKY_CLK1 STRING "1"
 -- Retrieval info: PRIVATE: STICKY_CLK2 STRING "1"
@@ -340,7 +340,7 @@ END SYN;
 -- Retrieval info: CONSTANT: INCLK0_INPUT_FREQUENCY NUMERIC "20000"
 -- Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "Cyclone II"
 -- Retrieval info: CONSTANT: LPM_TYPE STRING "altpll"
--- Retrieval info: CONSTANT: OPERATION_MODE STRING "SOURCE_SYNCHRONOUS"
+-- Retrieval info: CONSTANT: OPERATION_MODE STRING "NORMAL"
 -- Retrieval info: CONSTANT: PORT_ACTIVECLOCK STRING "PORT_UNUSED"
 -- Retrieval info: CONSTANT: PORT_ARESET STRING "PORT_UNUSED"
 -- Retrieval info: CONSTANT: PORT_CLKBAD0 STRING "PORT_UNUSED"

@@ -9,6 +9,7 @@ entity rammer is
 	done					: out std_logic;
 	read					: out std_logic;
 	addressout				: out unsigned(3 downto 0);
+	addressin				: in unsigned(3 downto 0);
 	readdata				: in signed(17 downto 0);
 	amin					: out signed(35 downto 0);
 	bmin					: out signed(35 downto 0);
@@ -52,7 +53,7 @@ architecture compute of rammer is
 	begin
 		if rising_edge(clk) then
 			if compute = '1' and idx /= "1111" then
-			case idx is
+			case addressin is
 				when "0000"		=>	a_min(35 downto 18)	<= readdata;
 				when "0001"		=>	a_min(17 downto 0)	<= readdata;
 				when "0010"		=>	b_min(35 downto 18)	<= readdata;
@@ -70,6 +71,9 @@ architecture compute of rammer is
 				when others		=>	finish				<= '1';
 			end case;
 			idx <= idx + 1;
+			elsif compute = '0' and idx = "1111" then
+				idx <= "0000";
+				finish <= '0';
 			end if;
 		end if;
 	end process;

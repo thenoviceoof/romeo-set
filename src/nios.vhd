@@ -1166,7 +1166,7 @@ begin
   end process;
 
   ram_avalon_slave_0_begins_xfer <= NOT d1_reasons_to_wait AND (internal_cpu_data_master_qualified_request_ram_avalon_slave_0);
-  internal_cpu_data_master_requests_ram_avalon_slave_0 <= ((to_std_logic(((Std_Logic_Vector'(cpu_data_master_address_to_slave(24 DOWNTO 6) & std_logic_vector'("000000")) = std_logic_vector'("1000000000001000000000000")))) AND ((cpu_data_master_read OR cpu_data_master_write)))) AND cpu_data_master_write;
+  internal_cpu_data_master_requests_ram_avalon_slave_0 <= ((to_std_logic(((Std_Logic_Vector'(cpu_data_master_address_to_slave(24 DOWNTO 6) & std_logic_vector'("000000")) = std_logic_vector'("0000000000000000000000000")))) AND ((cpu_data_master_read OR cpu_data_master_write)))) AND cpu_data_master_write;
   --ram_avalon_slave_0_arb_share_counter set values, which is an e_mux
   ram_avalon_slave_0_arb_share_set_values <= std_logic_vector'("01");
   --ram_avalon_slave_0_non_bursting_master_requests mux, which is an e_mux
@@ -2659,6 +2659,7 @@ entity nios is
               -- the_ram
                  signal addressout_to_the_ram : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
                  signal read_to_the_ram : IN STD_LOGIC;
+                 signal readaddr_from_the_ram : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
                  signal readdata_from_the_ram : OUT STD_LOGIC_VECTOR (17 DOWNTO 0);
 
               -- the_sdram
@@ -2925,6 +2926,7 @@ component ram is
                     signal writedata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
 
                  -- outputs:
+                    signal readaddr : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
                     signal readdata : OUT STD_LOGIC_VECTOR (17 DOWNTO 0)
                  );
 end component ram;
@@ -3078,6 +3080,7 @@ end component nios_reset_clk_domain_synch_module;
                 signal d1_jtag_uart_avalon_jtag_slave_end_xfer :  STD_LOGIC;
                 signal d1_ram_avalon_slave_0_end_xfer :  STD_LOGIC;
                 signal d1_sdram_s1_end_xfer :  STD_LOGIC;
+                signal internal_readaddr_from_the_ram :  STD_LOGIC_VECTOR (3 DOWNTO 0);
                 signal internal_readdata_from_the_ram :  STD_LOGIC_VECTOR (17 DOWNTO 0);
                 signal internal_zs_addr_from_the_sdram :  STD_LOGIC_VECTOR (11 DOWNTO 0);
                 signal internal_zs_ba_from_the_sdram :  STD_LOGIC_VECTOR (1 DOWNTO 0);
@@ -3350,6 +3353,7 @@ begin
   --the_ram, which is an e_ptf_instance
   the_ram : ram
     port map(
+      readaddr => internal_readaddr_from_the_ram,
       readdata => internal_readdata_from_the_ram,
       address => ram_avalon_slave_0_address,
       addressout => addressout_to_the_ram,
@@ -3445,6 +3449,8 @@ begin
   --reset sources mux, which is an e_mux
   reset_n_sources <= Vector_To_Std_Logic(NOT (((((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT reset_n))) OR std_logic_vector'("00000000000000000000000000000000")) OR (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_jtag_debug_module_resetrequest_from_sa)))) OR (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_jtag_debug_module_resetrequest_from_sa))))));
   --vhdl renameroo for output signals
+  readaddr_from_the_ram <= internal_readaddr_from_the_ram;
+  --vhdl renameroo for output signals
   readdata_from_the_ram <= internal_readdata_from_the_ram;
   --vhdl renameroo for output signals
   zs_addr_from_the_sdram <= internal_zs_addr_from_the_sdram;
@@ -3496,6 +3502,7 @@ component nios is
                  -- the_ram
                     signal addressout_to_the_ram : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
                     signal read_to_the_ram : IN STD_LOGIC;
+                    signal readaddr_from_the_ram : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
                     signal readdata_from_the_ram : OUT STD_LOGIC_VECTOR (17 DOWNTO 0);
 
                  -- the_sdram
@@ -3516,6 +3523,7 @@ end component nios;
                 signal jtag_uart_avalon_jtag_slave_dataavailable_from_sa :  STD_LOGIC;
                 signal jtag_uart_avalon_jtag_slave_readyfordata_from_sa :  STD_LOGIC;
                 signal read_to_the_ram :  STD_LOGIC;
+                signal readaddr_from_the_ram :  STD_LOGIC_VECTOR (3 DOWNTO 0);
                 signal readdata_from_the_ram :  STD_LOGIC_VECTOR (17 DOWNTO 0);
                 signal reset_n :  STD_LOGIC;
                 signal zs_addr_from_the_sdram :  STD_LOGIC_VECTOR (11 DOWNTO 0);
@@ -3539,6 +3547,7 @@ begin
   --Set us up the Dut
   DUT : nios
     port map(
+      readaddr_from_the_ram => readaddr_from_the_ram,
       readdata_from_the_ram => readdata_from_the_ram,
       zs_addr_from_the_sdram => zs_addr_from_the_sdram,
       zs_ba_from_the_sdram => zs_ba_from_the_sdram,

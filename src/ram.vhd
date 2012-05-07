@@ -36,6 +36,7 @@ entity ram is
                  signal writedata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
 
               -- outputs:
+                 signal readaddr : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
                  signal readdata : OUT STD_LOGIC_VECTOR (17 DOWNTO 0)
               );
 end entity ram;
@@ -55,10 +56,12 @@ component ramcon is
                     signal writedata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
 
                  -- outputs:
+                    signal readaddr : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
                     signal readdata : OUT STD_LOGIC_VECTOR (17 DOWNTO 0)
                  );
 end component ramcon;
 
+                signal internal_readaddr :  STD_LOGIC_VECTOR (3 DOWNTO 0);
                 signal internal_readdata :  STD_LOGIC_VECTOR (17 DOWNTO 0);
 
 begin
@@ -66,6 +69,7 @@ begin
   --the_ramcon, which is an e_instance
   the_ramcon : ramcon
     port map(
+      readaddr => internal_readaddr,
       readdata => internal_readdata,
       address => address,
       addressout => addressout,
@@ -78,6 +82,8 @@ begin
     );
 
 
+  --vhdl renameroo for output signals
+  readaddr <= internal_readaddr;
   --vhdl renameroo for output signals
   readdata <= internal_readdata;
 

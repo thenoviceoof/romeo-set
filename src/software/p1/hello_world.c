@@ -63,7 +63,7 @@ int main()
     
     a_min = 0xF80000000LL;
     b_min = 0xFA0000000LL;
-    c_rea = 0xFCA8F5C29LL;
+    c_rea = 0xF3A8F5C29LL;
     c_img = 0xFF125460BLL;
 
     //set the constant
@@ -145,7 +145,7 @@ int main()
     int i;    
     printf("________________________\n");
     for(i = 0; i < 14; i++){
-        IOWR_32DIRECT(RAM_BASE, i*4, payload[i]);
+        IOWR_32DIRECT(RAM_BASE, (i+1)*4, payload[i]);
         printf("0x%x\n", payload[i]);
         printf("0x%d\n", payload[i]);
     }

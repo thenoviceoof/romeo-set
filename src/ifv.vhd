@@ -176,7 +176,7 @@ architecture datapath of ifv is
 
 	signal clk_25			: std_logic;
 	signal clk_50			: std_logic;
-	signal clk_vga			: std_logic;
+	--signal clk_vga			: std_logic;
 	signal clk_sdram		: std_logic;
 
 	signal cread			: unsigned(7 downto 0);
@@ -215,21 +215,41 @@ architecture datapath of ifv is
 	signal ram_read			: std_logic;
 	signal ram_data			: signed(17 downto 0);
 	signal ram_address		: unsigned(3 downto 0);
-
+	signal ram_addr			: unsigned(3 downto 0);
+	
+	signal debug_vector 	: std_logic_vector(3 downto 0);
 begin
-
-	process (CLOCK_50)
+	process (clk_50)
 	begin
-		if rising_edge(CLOCK_50) then
-			clk_vga <= not clk_vga;
+		debug_vector <= SW(17 downto 14);
+		case debug_vector is
+			when "0000"		=>	LEDR(17 downto 0) <= std_logic_vector(a_min(35 downto 18));
+			when "0001"		=>	LEDR(17 downto 0) <= std_logic_vector(a_min(17 downto 0));
+			when "0010"		=>	LEDR(17 downto 0) <= std_logic_vector(b_min(35 downto 18));
+			when "0011"		=>	LEDR(17 downto 0) <= std_logic_vector(b_min(17 downto 0));
+			when "0100"		=>	LEDR(17 downto 0) <= std_logic_vector(a_diff(35 downto 18));
+			when "0101"		=>	LEDR(17 downto 0) <= std_logic_vector(a_diff(17 downto 0));
+			when "0110"		=>	LEDR(17 downto 0) <= std_logic_vector(b_diff(35 downto 18));
+			when "0111"		=>	LEDR(17 downto 0) <= std_logic_vector(b_diff(17 downto 0));
+			when "1000"		=>	LEDR(17 downto 0) <= std_logic_vector((a_leap&"00000000"));
+			when "1001"		=>	LEDR(17 downto 0) <= std_logic_vector((b_leap&"00000000"));
+			when "1010"		=>	LEDR(17 downto 0) <= std_logic_vector(cr(35 downto 18));
+			when "1011"		=>	LEDR(17 downto 0) <= std_logic_vector(cr(17 downto 0));
+			when "1100"		=>	LEDR(17 downto 0) <= std_logic_vector(ci(35 downto 18));
+			when "1101"		=>	LEDR(17 downto 0) <= std_logic_vector(ci(17 downto 0));
+			when others		=>	LEDR(17 downto 0) <= (others => '1');
+		end case;
+	
+		if rising_edge(clk_50) then
+			--clk_vga <= not clk_vga;
 			if SW(6) = '1' then
 			if SW(4) = '1' then
 				a_min		<= X"F80000000";
 				b_min		<= X"FA0000000";
 				a_diff		<= X"000666666";
 				b_diff		<= X"000666666";
-				cr			<= X"000000000";
-				ci			<= X"000000000";
+				cr			<= X"CCCCCCCCC";
+				ci			<= X"CCCCCCCCC";
 				a_leap		<= "0000000010";
 				b_leap		<= "0000000010";
 			else
@@ -254,6 +274,8 @@ begin
 			end if;
 		end if;
 	end process;
+	
+	
 	
 	DRAM_BA_1 <= DRAM_BA(1);
 	DRAM_BA_0 <= DRAM_BA(0);
@@ -297,6 +319,7 @@ NIOS: entity work.nios port map (
 	addressout_to_the_ram		=> std_logic_vector(ram_address),
 	read_to_the_ram				=> ram_read,
 	std_logic_vector(readdata_from_the_ram)		=> ram_data,
+	std_logic_vector(readaddr_from_the_ram)		=> ram_addr,
 
  -- the_sdram
 	zs_addr_from_the_sdram		=> DRAM_ADDR,
@@ -316,6 +339,7 @@ RMR: entity work.rammer port map(
 	done			=> LEDG(0),
 	read			=> ram_read,
 	addressout		=> ram_address,
+	addressin		=> ram_addr,
 	readdata		=> ram_data,
 	amin			=> a_mine,
 	bmin			=> b_mine,
@@ -328,7 +352,7 @@ RMR: entity work.rammer port map(
 	);
 
 VGA: entity work.vga_mod port map (
-	clk			=> clk_vga,
+	clk			=> clk_25,
 	reset		=> '0',
 	switch		=> SW(3),
 	count		=> cread,--EXTERNAL SIGNALS
@@ -375,7 +399,6 @@ SRAM: entity work.sram port map(
 	HEX1     <= "0000110"; -- E
 	HEX0     <= "0000111"; -- t
 	LEDG(8 downto 1)<= (others => '0');
-	LEDR     <= (others => '0');
 
 	LCD_ON   <= '1';
 	LCD_BLON <= '1';
