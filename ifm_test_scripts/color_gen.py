@@ -151,9 +151,9 @@ class Base:
                 num /= 2
             return s
         d = self.build_color_map()
-        ss = ["\"%s %s %s\"" % (convert_bin(int(round(d[i][0]))),
-                                convert_bin(int(round(d[i][1]))),
-                                convert_bin(int(round(d[i][2]))))
+        ss = ["\"%s%s%s\"" % (convert_bin(int(round(d[i][0]))),
+                              convert_bin(int(round(d[i][1]))),
+                              convert_bin(int(round(d[i][2]))))
               for i in range(CAP)]
         print ",\n".join(ss)
 
