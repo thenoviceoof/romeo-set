@@ -1,0 +1,40 @@
+PACKAGE install2 
+{
+   # This file informs the Nios II IDE of TCL component paths.
+   # Generated 2012.05.08.00:32:24
+   COMPONENT altera_avalon_pixel_converter 
+   {
+      VERSION 7.2 
+      {
+         local = "/opt/altera/altera7.2/ip/sopc_builder_ip/altera_avalon_pixel_converter";
+      }
+   }
+   COMPONENT altera_avalon_remote_update_cycloneiii 
+   {
+      VERSION 7.2 
+      {
+         local = "/opt/altera/altera7.2/ip/sopc_builder_ip/altera_avalon_remote_update_cycloneiii";
+      }
+   }
+   COMPONENT altera_avalon_video_sync_generator 
+   {
+      VERSION 7.2 
+      {
+         local = "/opt/altera/altera7.2/ip/sopc_builder_ip/altera_avalon_video_sync_generator";
+      }
+   }
+   COMPONENT de2_ifm_bus 
+   {
+      VERSION 1.0 
+      {
+         local = "/home/user4/spring12/lep2141/4840/romeo-set/src";
+      }
+   }
+   COMPONENT ramcon 
+   {
+      VERSION 1.0 
+      {
+         local = "/home/user4/spring12/lep2141/4840/romeo-set/src";
+      }
+   }
+}

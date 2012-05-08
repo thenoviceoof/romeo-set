@@ -22,22 +22,16 @@ architecture ramarch of ramcon is
 
 	type ram_type is array(15 downto 0) of unsigned(17 downto 0);
 	signal RAM				: ram_type;
-	signal read_addr		: integer;
 	begin
 
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			read_addr	<= to_integer(addressout);
 			readaddr	<= addressout;
 			readdata	<= RAM(to_integer(addressout));
-			if reset_n = '0' then
-				read_addr	<= 0;
-			else
-				if chipselect = '1' then					
-					if write = '1' then
-						RAM(to_integer(address))	<= writedata(17 downto 0);
-					end if;
+			if chipselect = '1' then					
+				if write = '1' then
+					RAM(to_integer(address))	<= writedata(17 downto 0);
 				end if;
 			end if;
 		end if;
