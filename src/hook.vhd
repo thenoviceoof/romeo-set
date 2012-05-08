@@ -36,7 +36,6 @@ architecture first of hook is
 	signal x		: std_logic_vector(9 downto 0);
 	signal yi		: std_logic_vector(8 downto 0);
 	signal yo		: std_logic_vector(9 downto 0);
-	signal max		: std_logic;
 	signal data		: std_logic;
 
 
@@ -59,8 +58,6 @@ architecture first of hook is
 		b_out		=> bi,
 		x_out		=> x,
 		y_out		=> yo,
-
-		at_max		=> max,
 		ready		=> data
 	);
 

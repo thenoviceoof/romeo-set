@@ -1,2 +1,2 @@
-set_global_assignment -name SOURCE_FILE [file join $::quartus(qip_path) /home/user5/spring12/sdp2128/dante/romeo-set/src/ramcon_hw.tcl]
-set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) /home/user5/spring12/sdp2128/dante/romeo-set/src/ramcon.vhd]
+set_global_assignment -name SOURCE_FILE [file join $::quartus(qip_path) /home/user4/spring12/lep2141/4840/romeo-set/src/ramcon_hw.tcl]
+set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) /home/user4/spring12/lep2141/4840/romeo-set/src/ramcon.vhd]

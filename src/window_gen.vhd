@@ -21,8 +21,6 @@ entity window_gen is
 	b_out		: out std_logic_vector(35 downto 0);
 	x_out		: out std_logic_vector(9 downto 0);
 	y_out		: out std_logic_vector(9 downto 0);
-	
-	at_max		: out std_logic;
 	ready		: out std_logic
 	);
   
@@ -55,7 +53,6 @@ begin
 	both_max <= a_at_max and b_at_max;
 	
 	a_reset <= reset or (b_next and not both_max); 
-	at_max <= both_max;
 	y_out <= std_logic_vector(y_max - unsigned(y_out_mirror));
 	
 	ready <= a_ready and b_ready;

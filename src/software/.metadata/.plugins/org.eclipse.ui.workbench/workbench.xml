@@ -28,23 +28,26 @@
 <folder appearance="1" expanded="2">
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
+<part id="1"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="hello_world.c" partName="hello_world.c" path="/home/user5/spring12/sdp2128/dante/romeo-set/src/software/hello_world_1/hello_world.c" title="hello_world.c" tooltip="hello_world_1/hello_world.c" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="hello_world.c" partName="hello_world.c" path="/home/user4/spring12/lep2141/4840/romeo-set/src/software/hello_world_1/hello_world.c" title="hello_world.c" tooltip="hello_world_1/hello_world.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_1/hello_world.c"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="hello_world.c" partName="hello_world.c" path="/home/user4/spring12/lep2141/4840/romeo-set/src/software/pr12/hello_world.c" title="hello_world.c" tooltip="pr12/hello_world.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/pr12/hello_world.c"/>
 </editor>
 </editors>
 <views>
 <view id="com.altera.nj.ui.Nios2CView" partName="Nios II C/C++ Projects">
 <viewState horizontalPosition="0" verticalPosition="0">
 <expanded>
-<element path="/home/user5/spring12/sdp2128/dante/romeo-set/src/software/hello_world_1"/>
-<element path="/home/user5/spring12/sdp2128/dante/romeo-set/src/software/p1"/>
+<element path="/home/user4/spring12/lep2141/4840/romeo-set/src/software/hello_world_1"/>
 </expanded>
 <selection>
-<element path="/home/user5/spring12/sdp2128/dante/romeo-set/src/software/hello_world_1/hello_world.c"/>
+<element path="/home/user4/spring12/lep2141/4840/romeo-set/src/software/hello_world_1/hello_world.c"/>
 </selection>
 <customFilters userDefinedPatternsEnabled="false">
 <xmlDefinedFilters>
@@ -183,6 +186,7 @@
 <editors>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/p1/hello_world.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_1/hello_world.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pr12/hello_world.c"/>
 </editors>
 <item historyLabel="hello_world.c" index="0">
 <position/>
@@ -223,8 +227,17 @@
 <item historyLabel="hello_world.c" index="0">
 <position info="not_deleted" x="4479" y="0"/>
 </item>
-<item active="true" historyLabel="hello_world.c" index="1">
+<item historyLabel="hello_world.c" index="1">
 <position info="not_deleted" x="2771" y="0"/>
+</item>
+<item historyLabel="hello_world.c" index="2">
+<position/>
+</item>
+<item historyLabel="hello_world.c" index="1">
+<position/>
+</item>
+<item active="true" historyLabel="hello_world.c" index="2">
+<position/>
 </item>
 </navigationHistory>
 <stickyState/>
@@ -244,6 +257,9 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="hello_world.c" tooltip="pr12/hello_world.c">
+<persistable path="/pr12/hello_world.c"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="hello_world.c" tooltip="hello_world_1/hello_world.c">
 <persistable path="/hello_world_1/hello_world.c"/>
 </file>

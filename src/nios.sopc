@@ -2,63 +2,23 @@
 <system name="nios">
     <parameter valueString="15378877402" name="systemHash"/>
     <parameter name="quartusRootDir">/opt/altera/altera7.2/quartus</parameter>
-    <parameter valueString="1336366337092" name="timeStamp"/>
+    <parameter valueString="1336450878753" name="timeStamp"/>
     <parameter valueString="false" name="generateLegacySDK"/>
     <parameter name="bonusData">bonusData 
 {
-   element cpu
-   {
-      datum _sortIndex
-      {
-         value = "0";
-         type = "int";
-      }
-      datum megawizard_uipreferences
-      {
-         value = "{}";
-         type = "String";
-      }
-   }
-   element clk
-   {
-   }
-   element ram
-   {
-      datum _sortIndex
-      {
-         value = "3";
-         type = "int";
-      }
-   }
-   element nios
-   {
-   }
-   element sdram
-   {
-      datum _sortIndex
-      {
-         value = "2";
-         type = "int";
-      }
-      datum megawizard_uipreferences
-      {
-         value = "{}";
-         type = "String";
-      }
-   }
-   element ram.avalon_slave_0
+   element sdram.s1
    {
       datum baseAddress
       {
-         value = "16781312";
+         value = "8388608";
          type = "long";
       }
    }
-   element cpu.jtag_debug_module
+   element jtag_uart.avalon_jtag_slave
    {
       datum baseAddress
       {
-         value = "16779264";
+         value = "16781376";
          type = "long";
       }
    }
@@ -75,20 +35,60 @@
          type = "String";
       }
    }
-   element jtag_uart.avalon_jtag_slave
+   element sdram
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{}";
+         type = "String";
+      }
+   }
+   element cpu.jtag_debug_module
    {
       datum baseAddress
       {
-         value = "16781376";
+         value = "16779264";
          type = "long";
       }
    }
-   element sdram.s1
+   element nios
+   {
+   }
+   element clk
+   {
+   }
+   element cpu
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{}";
+         type = "String";
+      }
+   }
+   element ram.avalon_slave_0
    {
       datum baseAddress
       {
-         value = "8388608";
+         value = "16781312";
          type = "long";
+      }
+   }
+   element ram
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
       }
    }
 }
@@ -98,7 +98,7 @@
     <parameter valueString="false" name="generateLegacySim"/>
     <parameter valueString="ifv.qpf" name="projectName"/>
     <parameter valueString="VHDL" name="hdlLanguage"/>
-    <parameter name="projectDirectory">/home/user5/spring12/sdp2128/dante/romeo-set/src</parameter>
+    <parameter name="projectDirectory">/home/user4/spring12/lep2141/4840/romeo-set/src</parameter>
     <module version="7.2" name="clk" kind="clock_source">
         <parameter valueString="true" name="clockFrequencyKnown"/>
         <parameter valueString="50000000" name="clockFrequency"/>
