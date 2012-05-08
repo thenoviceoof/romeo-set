@@ -13,65 +13,65 @@ ifm_test_scripts/cache/*
 
 ### folders
 */db/*
-*/simulation/*
-*/timing/*
-*.bak
+#*/simulation/*
+#*/timing/*
+#*.bak
 # qurtus archive
-*.qar # quartus archive
+#*.qar # quartus archive
 ### Quartus compilation output
-*.qws
-*.summary
-*.rpt
-*.pin
-*.eqn
-*.qmsg
-*.smsg
-*.done
-*.qdf
+#*.qws
+#*.summary
+#*.rpt
+#*.pin
+#*.eqn
+#*.qmsg
+#*.smsg
+#*.done
+#*.qdf
 ### Megafunction output
-*.html
-*.jpg
-*.cmp
-*.inst
+#*.html
+#*.jpg
+#*.cmp
+#*.inst
 ### Other generated things
 # SRAM obj
-*.sof
+#*.sof
 # block symb
-*.bsf
+#*.bsf
 # design protocol, doesn't seem 
-*.dpf
+#*.dpf
 # pin planner
-*.ppf
+#*.ppf
 # prog obj
-*.pof
+#*.pof
 # jtag debug
-*.jdi
+#*.jdi
 
 ### generated nios things
-*nios_system_sim/*
-*.sopc_builder/*
-*.ptf
-*_ptf
-*nios_system.qip
+#*nios_system_sim/*
+#*.sopc_builder/*
+#*.ptf
+#*_ptf
+#*nios_system.qip
 # memory inititalization file
-*.mif
-*log.txt
+#*.mif
+#*log.txt
 
 ### software things
-*.o
-*.d
-*.mk
-*.elf
-*.a
-*/software/.metadata
-*/software/bin/*
-*/software/tmp/*
-*/software/*/Debug/*
-*/.settings/*
-*/.project/*
-.cdtbuild
-.cdtproject
-*.prefs
+#*.o
+#*.d
+#*.mk
+#*.elf
+#*.a
+#*/software/.metadata
+#*/software/bin/*
+#*/software/tmp/*
+#*/software/*/Debug/*
+#*/.settings/*
+#*/.project/*
+#.cdtbuild
+#.cdtproject
+#*.prefs
 
 
 ########## in /docs/
