@@ -12,6 +12,8 @@
 <includePath path="/usr/local/include"/>
 <includePath path="/usr/lib/gcc/x86_64-redhat-linux/4.1.2/include"/>
 <includePath path="/usr/include"/>
+<includePath path="/home/user4/spring12/lep2141/4840/romeo-set/src/software"/>
+<includePath path="/home/user4/spring12/lep2141/4840/romeo-set/src/software/hello_world_1_syslib/Debug/system_description"/>
 <definedSymbol symbol="ALTERA_INCLUDES"/>
 <definedSymbol symbol="SYSTEM_BUS_WIDTH=32"/>
 <definedSymbol symbol="ALT_NO_INSTRUCTION_EMULATION"/>

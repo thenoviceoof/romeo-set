@@ -30,6 +30,7 @@ architecture ramarch of ramcon is
 		if rising_edge(clk) then
 			read_addr <= to_integer(addressout);
 			readaddr	<= addressout;
+			readdata	<= RAM(read_addr);
 			if reset_n = '0' then
 				read_addr	<= 0;
 			else
@@ -41,6 +42,6 @@ architecture ramarch of ramcon is
 			end if;
 		end if;
 	end process;
-	readdata	<= RAM(read_addr);
+	
 	
 end ramarch;

@@ -16,6 +16,6 @@ obj/hello_world.o: ../hello_world.c \
   /opt/altera/altera7.2/nios2eds/bin/nios2-gnutools/H-i686-pc-linux-gnu/bin/../lib/gcc/nios2-elf/3.4.1/../../../../nios2-elf/include/stdlib.h \
   /opt/altera/altera7.2/nios2eds/bin/nios2-gnutools/H-i686-pc-linux-gnu/bin/../lib/gcc/nios2-elf/3.4.1/../../../../nios2-elf/include/machine/stdlib.h \
   /opt/altera/altera7.2/nios2eds/bin/nios2-gnutools/H-i686-pc-linux-gnu/bin/../lib/gcc/nios2-elf/3.4.1/../../../../nios2-elf/include/alloca.h \
-  /home/user5/spring12/sdp2128/dante/romeo-set/src/software/hello_world_1_syslib/Debug/system_description/system.h \
+  /home/user4/spring12/lep2141/4840/romeo-set/src/software/hello_world_1_syslib/Debug/system_description/system.h \
   /opt/altera/altera7.2/ip/nios2_ip/altera_nios2/HAL/inc/io.h \
   /opt/altera/altera7.2/ip/nios2_ip/altera_nios2/HAL/inc/alt_types.h

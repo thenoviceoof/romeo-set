@@ -176,7 +176,7 @@ architecture datapath of ifv is
 
 	signal clk_25			: std_logic;
 	signal clk_50			: std_logic;
-	signal clk_vga			: std_logic;
+	--signal clk_vga			: std_logic;
 	signal clk_sdram		: std_logic;
 
 	signal cread			: unsigned(7 downto 0);
@@ -241,7 +241,7 @@ begin
 		end case;
 	
 		if rising_edge(clk_50) then
-			clk_vga <= not clk_vga;
+			--clk_vga <= not clk_vga;
 			if SW(6) = '1' then
 			if SW(4) = '1' then
 				a_min		<= X"F80000000";
@@ -352,7 +352,7 @@ RMR: entity work.rammer port map(
 	);
 
 VGA: entity work.vga_mod port map (
-	clk			=> clk_vga,
+	clk			=> clk_25,
 	reset		=> '0',
 	switch		=> SW(3),
 	count		=> cread,--EXTERNAL SIGNALS

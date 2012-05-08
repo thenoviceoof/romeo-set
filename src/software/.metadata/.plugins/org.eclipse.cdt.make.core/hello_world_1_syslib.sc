@@ -12,6 +12,8 @@
 <includePath path="/opt/altera/altera7.2/ip/sopc_builder_ip/altera_avalon_jtag_uart/inc"/>
 <includePath path="/opt/altera/altera7.2/ip/nios2_ip/altera_nios2/HAL/inc"/>
 <includePath path="/opt/altera/altera7.2/nios2eds/components/altera_hal/HAL/inc"/>
+<includePath path="/home/user4/spring12/lep2141/4840/romeo-set/src/software/hello_world_1_syslib"/>
+<includePath path="/home/user4/spring12/lep2141/4840/romeo-set/src/software/hello_world_1_syslib/Debug/system_description"/>
 <definedSymbol symbol="ALTERA_INCLUDES"/>
 <definedSymbol symbol="SYSTEM_BUS_WIDTH=32"/>
 <definedSymbol symbol="ALT_NO_INSTRUCTION_EMULATION"/>

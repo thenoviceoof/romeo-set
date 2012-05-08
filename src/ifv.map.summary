@@ -1,14 +1,14 @@
-Analysis & Synthesis Status : Successful - Mon May  7 21:45:25 2012
+Analysis & Synthesis Status : Successful - Mon May  7 22:26:55 2012
 Quartus II Version : 7.2 Build 151 09/26/2007 SJ Full Version
 Revision Name : ifv
-Top-level Entity Name : ifv
+Top-level Entity Name : ramcon
 Family : Cyclone II
-Total logic elements : 14,507
-    Total combinational functions : 14,507
-    Dedicated logic registers : 2,628
-Total registers : 2628
-Total pins : 428
+Total logic elements : 4
+    Total combinational functions : 1
+    Dedicated logic registers : 4
+Total registers : 4
+Total pins : 67
 Total virtual pins : 0
-Total memory bits : 10,528
-Embedded Multiplier 9-bit elements : 32
-Total PLLs : 1
+Total memory bits : 288
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0

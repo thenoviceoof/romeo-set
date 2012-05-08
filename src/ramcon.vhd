@@ -28,9 +28,9 @@ architecture ramarch of ramcon is
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			read_addr <= to_integer(addressout);
+			read_addr	<= to_integer(addressout);
 			readaddr	<= addressout;
-			readdata	<= RAM(read_addr);
+			readdata	<= RAM(to_integer(addressout));
 			if reset_n = '0' then
 				read_addr	<= 0;
 			else
