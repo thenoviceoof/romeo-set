@@ -8,6 +8,7 @@
 \usepackage{array}
 \usepackage{parskip}
 \usepackage{graphicx}
+\usepackage{caption}
 %\usepackage{dsfont}
 \usepackage{framed}
 \usepackage{ upgreek }
@@ -16,13 +17,13 @@
 \lstset{basicstyle=\small}
 \usepackage{fancyhdr}
 \setlength{\headheight}{15.2pt}
-\pagestyle{fancy}
 \setlength{\parindent}{0pt}
 \setcounter{secnumdepth}{2}
 \usepackage{graphicx}
 \usepackage{float}
 
 %\usepackage{sectsty}
+\captionsetup{width=10cm}
 
 \begin{document}
 
@@ -89,6 +90,36 @@ Generating Julia sets in this fashion can be a very lengthy process, especially 
 
 \section{Design}
 
+\subsection{System Description}
+The Interactive Fractal Generator is implemented on an \textbf{Altera DE2 Cyclone FPGA} by \textit{Terasic Technologies}. Terasic advertises the following specification about the device:
+
+\begin{itemize}
+\item Altera Cyclone II 2C35 FPGA with 35000 LEs
+\item Altera Serial Configuration devices (EPCS16) for Cyclone II 2C35
+\item USB Blaster built in on board for programming and user API controlling
+\item JTAG Mode and AS Mode are supported
+\item 8Mbyte (1M x 4 x 16) SDRAM
+\item 512K byte(256K X16) SRAM
+\item 4Mbyte Flash Memory (upgradeable to 4Mbyte)
+\item SD Card Socket
+\item 4 Push-button switches
+\item 18 DPDT switches
+\item 9 Green User LEDs
+\item 18 Red User LEDs
+\item 16 x 2 LCD Module
+\item 50MHz Oscillator and 27MHz Oscillator for external clock sources
+\item 24-bit CD-Quality Audio CODEC with line-in, line-out, and microphone-in jacks
+\item VGA DAC (10-bit high-speed triple DACs) with VGA out connector
+\item TV Decoder (NTSC/PAL) and TV in connector
+\item 10/100 Ethernet Controller with socket.
+\item USB Host/Slave Controller with USB type A and type B connectors.
+\item RS-232 Transceiver and 9-pin connector
+\item PS/2 mouse/keyboard connector
+\item IrDA transceiver
+\item Two 40-pin Expansion Headers with diode protection
+\item DE2 Lab CD-ROM which contains many examples with source code to exercise the boards, including: SDRAM and Flash Controller, CD-Quality Music Player, VGA and TV Labs, SD Card reader, RS-232/PS-2 Communication Labs, NIOSII, and Control Panel API
+\end{itemize}
+
 \begin{figure}\label{fig:block}
   \centering
 	\includegraphics[width=\textwidth]{block_diagrams/top_level.pdf}
@@ -141,19 +172,20 @@ way, we map \textbf{VGA} coordinates to their associated breakaway iterations.
 % ------------------------------------------------------------
 % now, we delve into the lower levels of the implementation
 % ------------------------------------------------------------
-\subsection{Critical Modules}
+\subsection{Module Implementation}
 
 % ----------------------------------------
 \subsubsection{User Interface Module}
 
 As an interactive device, our fractal generator has the capacity to accept user parameters such as window size or
-Julia set constants during operation. This communication with the user is facilitated by the UI module, which is 
-implemented on the NIOS II processor. This module is responsible for handling communication with input peripherals
+Julia set constants during operation. This communication with the user is facilitated by the NIOS II Processor 
+taking PS/2 keyboard input. We refer to these entities and all their supporting devices as the \texttt{User Interface 
+Module}. This module is responsible for handling communication with input peripherals
 and translating user input into information that can easily be used by the hardware-based fractal generator. Once 
-this information has been translated into a set of instructions for the generator, these instructions are written
-to a specialized bus across the Avalon interconnect fabric.
+this information has been translated into a set of values that can be used by the remainder of the system generator, they are written into an on-board RAM. When the \texttt{User Interface Module} is ready for the hardware to take some action, it sends a signal to a component on the board, which forwards the signal appropriately. All communication with
+the board is performed over the Avalon Interconnect Fabric.
 
-We have the Nios II configured to use the SDRAM as its memory store, making the SRAM available for other uses.
+The NIOS II Processor uses the SDRAM as its memory store.
 
 \begin{figure}
   \centering
@@ -162,25 +194,54 @@ We have the Nios II configured to use the SDRAM as its memory store, making the 
 \end{figure}
 
 Parameters of primary concern are those of viewing window and Julia set constant. The window is set using the 
-following values (which will be elaborated on in the next section)
+following values (which will be elaborated on in the \texttt{Window Generator} section):
 
-\begin{itemize}
-\item $a_{min} - 36$ bits
-\item $a_{diff} - 36$ bits
-\item $a_{leap} - 10$ bits
-\item $b_{min} - 36$ bits
-\item $b_{diff} - 36$ bits
-\item $b_{leap} - 10$ bits
-\end{itemize}
+\begin{tabular}{rll}
+-&$a_{min}$ & $36$ bits\\
+-&$a_{diff}$ & $36$ bits\\
+-&$a_{leap}$ & $10$ bits\\
+-&$b_{min}$ & $36$ bits\\
+-&$b_{diff}$ & $36$ bits\\
+-&$b_{leap}$ & $10$ bits\\
+\end{tabular}
 
 Meanwhile, the Julia set constant is set using the following values
 
-\begin{itemize}
-\item $c_{real} - 36$ bits
-\item $c_{img} - 36$ bits
-\end{itemize}
+\begin{tabular}{rll}
+-&$c_{real}$ & $36$ bits\\
+-&$c_{img}$ & $36$ bits
+\end{tabular}
 
-\textit{New RAM stuff goes here}
+\subsubsection{Parameter RAM}
+In order to allow for the buffering and mutation of individual parameters, the \texttt{UI Module} writes each 
+individual parameter into a RAM. Since the Avalon interconnect fabric only allows for $32$ bits to be transferred
+at once, but most parametrs are $36$ bits wide, the RAM is $18$ bits in width and parameters are sent in with the
+$18$ least significant bits of each $32$ bit write. For simplicity, these rows are still addressed by the 
+NIOS as if they were $32$ bits wide.
+
+Each of the $14$ rows in this RAM has a different purpose.
+
+\begin{tabular}{rlcl}
+\textbf{Row}&\textbf{Data Stored}&\textbf{Portion}&\textbf{Offset}\\ \hline
+0&$a_{min}$ &18 MSB& 0x0\\
+1&$a_{min}$ &18 LSB& 0x4\\
+2&$b_{min}$ &18 MSB& 0x8\\
+3&$b_{min}$ &18 LSB& 0xC\\
+4&$a_{diff}$ &18 MSB& 0x10\\
+5&$a_{diff}$ &18 LSB& 0x14\\
+6&$b_{diff}$ &18 MSB& 0x18\\
+7&$b_{diff}$ &18 LSB& 0x1C\\
+8&$a_{leap}$ &-& 0x20\\
+9&$b_{leap}$ &-& 0x24\\
+10&$c_{real}$ &18 MSB& 0x28\\
+11&$c_{real}$ &18 LSB& 0x2C\\
+12&$c_{img}$ &18 MSB& 0x30\\
+13&$c_{img}$ &18 LSB& 0x34\\
+\end{tabular}
+
+When the \texttt{UI Module} sends a redraw signal to the board, a device called the \texttt{Rammer} moves
+these values into registers that will be read by the \texttt{Window Generator} and \texttt{IFM}s when drawing
+the image.
 
 \subsubsection{Window Generator}
 
@@ -201,35 +262,43 @@ operations to map out a whole window. Say we have a window that stretches from $
 N pixels. The procedure works by iterating from 0 to N-1 and producing a sum at each step of the way that
 corresponds to a the value of $v$ at that point. The procedure requires a few values as input:
 
+\begin{tabular}{rl|p{10cm}}
+\textbf{Parameter}&\textbf{Width}&\textbf{Purpose}\\
+&&\\
+$a_{min}$ & 36 bits& Describes the minimum value of $a$ in the window\\
+&&\\
+$a_{diff}$ & 36 bits& Describes the standard differential between consecutive a values in the window $(a_{max} - a_{min})/WIDTH_{SCREEN}$ this is computed by the NIOS processor.\\
+&&\\
+$a_{leap}$ & 10 bits& Periodically, we will need to add 1 to our sum to compensate for precision loss. This value
+corresponds to the length of the intervals between these "leap cycles" $WIDTH_{SCREEN}/((a_{max} - a_{min}) \mod WIDTH_{SCREEN})$\\
+&&\\
+$b_{min}$ & 36 bits& Describes the minimum value of $a$ in the window.\\
+&&\\
+$b_{diff}$ & 36 bits& Describes the standard differential between consecutive a values in the window $(b_{max} - 
+b_{min})/HEIGHT_{SCREEN}$ this is computed by the NIOS processor.\\
+&&\\
+$b_{leap}$ & 10 bits& Periodically, we will need to add 1 to our sum to compensate for precision loss. This value
+corresponds to the length of the intervals between these "leap cycles" $HEIGHT_{SCREEN}/((b_{max} - b_{min}) \mod HEIGHT_{SCREEN})$\\
+&&\\
+\end{tabular}
 
-\begin{itemize}
-\item $a_{min} - 36$ bits: Describes the minimum value of $a$ in the window
-\item $a_{diff} - 36$ bits: Describes the standard differential between consecutive a values in the window $(a_{max} - a_{min})/WIDTH_{SCREEN}$ this is computed by the NIOS processor.
-\item $a_{leap} - 10$ bits: Periodically, we will need to add 1 to our sum to compensate for precision loss. This value
-corresponds to the length of the intervals between these "leap cycles" $WIDTH_{SCREEN}/((a_{max} - a_{min})\%WIDTH_{SCREEN})$
-\item $b_{min} - 36$ bits: Describes the minimum value of $a$ in the window
-\item $b_{diff} - 36$ bits: Describes the standard differential between consecutive a values in the window $(b_{max} - b_{min})/HEIGHT_{SCREEN}$ this is computed by the NIOS processor.
-\item $b_{leap} - 10$ bits: Periodically, we will need to add 1 to our sum to compensate for precision loss. This value
-corresponds to the length of the intervals between these "leap cycles" $HEIGHT_{SCREEN}/((b_{max} - b_{min})\%HEIGHT_{SCREEN})$
-\end{itemize}
-
-The window generator is therefore comprised of two "differential counters" that are responsible for performing the 
+The \texttt{Window Generator} is therefore comprised of two \texttt{Differential Counters} that are responsible for performing the 
 iterations. One computes values for $b$ and the other $a$. 
 
 \begin{figure}
   \centering
     \includegraphics[width=160pt]{block_diagrams/acounter.pdf}
-  \caption{Block diagram of a differential counter used in window generation}
+  \caption{Block diagram of a \texttt{Differential Counter} used in window generation}
 \end{figure}
 
-When the differential counter receives a reset signal, it initializes its data according to the signals coming in.
+When the \texttt{Differential Counter} receives a reset signal, it initializes its data according to the signals coming in.
 Then, each time it recieves a next-value signal, it increments the output value accordingly. If the counter reaches
 its maximum, it asserts a flag.
 
 \begin{figure}
   \centering
     \includegraphics[width=200pt]{state_diagrams/diff_counter.pdf}
-  \caption{State Diagram for the diff counter, Moore machine: signals
+  \caption{State Diagram for the \texttt{Differential Counter}, Moore machine: signals
     \texttt{max=c\_cuis=max\_itr}, \texttt{leap=iter\_count=v\_leap}. Omit
     unused signals (X) for compactness. Colorcoded signal bundles.}
 \end{figure}
@@ -237,10 +306,10 @@ its maximum, it asserts a flag.
 \begin{figure}
   \centering
     \includegraphics[width=200pt]{timing_diagrams/diff_counter.pdf}
-  \caption{Timing diagram of the differential counter}
+  \caption{Timing diagram of the \texttt{Differential Counter}}
 \end{figure}
 
-In the window generator, the differential counters are hooked up in such a way that the points are cycled through
+In the \texttt{Window Generator}, the \texttt{Differential Counters} are hooked up in such a way that the points are cycled through
 from left to right down the screen.
 
 \begin{figure}
@@ -249,14 +318,14 @@ from left to right down the screen.
   \caption{Block diagram illustrating $(x, y, a, b)$ tuple dataflow.}
 \end{figure}
 
-The window generator takes reset signals from the bus connected to the NIOS processor. When the window
-generator is ready for computation (the same cycle that it is reset by the bus), it asserts a data flag.
-When the IFM reads an $(x, y, a, b)$ tuple, it asserts a next value signal indicating that it will need new data in the following cycle. Once the window generator runs out of values to give, it asserts an at max flag.
+The \texttt{Window Generator} takes reset signals from the bus connected to the NIOS processor. When the \texttt{Window
+Generator} is ready for computation (the same cycle that it is reset by the bus), it asserts a data flag.
+When the \texttt{IFM} reads an $(x, y, a, b)$ tuple, it asserts a next value signal indicating that it will need new data in the following cycle. Once the \texttt{Window Generator} runs out of values to give, it asserts an at max flag.
 
 \begin{figure}
   \centering
     \includegraphics[width=180pt]{state_diagrams/diff_window_gen.pdf}
-  \caption{State Diagram for the window generator code, Moore machine:
+  \caption{State Diagram for the \texttt{Window Generator} code, Moore machine:
     signals \texttt{max=c\_cuis=max\_itr},
     \texttt{leap=iter\_count=v\_leap}. Omit unused signals (X) for
     compactness.}
@@ -266,11 +335,11 @@ When the IFM reads an $(x, y, a, b)$ tuple, it asserts a next value signal indic
 \begin{figure}
   \centering
     \includegraphics[width=160pt]{timing_diagrams/gen_ifm.pdf}
-  \caption{Timing diagram of interface between the window generator
+  \caption{Timing diagram of interface between the \texttt{Window Generator}
     and the IFMs.}
 \end{figure}
 
-\subsubsection{Parallel IFM Control Module}
+\subsubsection{IFM Controller}
 
 Rendering Julia set fractals requires many iterations of relatively
 simple computations in the complex plane. This sequence of
@@ -288,12 +357,10 @@ IFM control module to resolve these issues.
 \end{figure}
 
 
-The IFM control module constantly transmits the $(x, y, a, b)$ tuple currently being expressed by the window generator to 
-each of the IFMs. When an IFM indicates that it is in the ready state, the controller asserts a signal instructing the 
-IFM to accept the new data and begin computation (assuming that the window generator is asserting the valid data flag).
-Simultaneously, the controller signals to the window generator that it needs the next data tuple in the window. If more
-than one IFM is in the ready state at once, the controller only sends the read and compute signal to one, saving the 
-upcoming data tuples for the rest.
+The \texttt{IFM Controller} constantly transmits the $(x, y, a, b)$ tuple currently being expressed by the window generator to each of the \texttt{IFM}s. When an \texttt{IFM} indicates that it is in the ready state, the controller asserts a signal instructing the 
+\texttt{IFM} to accept the new data and begin computation (assuming that the window generator is asserting the valid data flag).
+Simultaneously, the controller signals to the \texttt{Window Generator} that it needs the next data tuple in the window. If more
+than one \texttt{IFM} is in the ready state at once, the controller only sends the read and compute signal to one, saving the upcoming data tuples for the rest.
 
 
 % ----------------------------------------
@@ -350,7 +417,8 @@ are sized as such.
 In order to accomodate the largest-magnitude value we
 expect to come across during any iteration, we require 6 bits to the
 left of the radix. Thus, our fixed-point values have 30 bits to the
-right of the radix.
+right of the radix. This gives us a machine precision of approximately
+$9.31 \times 10 ^ -10$.
 
 \begin{figure}[H]
   \centering
@@ -372,22 +440,22 @@ Thus, the \texttt{IFM Controller} need only alter the state of the wrapper modul
 \end{figure}
 
 If a wrapper module is in the done state, the controller indicates that its $(x, y, c)$ triple should be read into
-the output register. If multiple IFM wrappers are in the done state simultaneously, the controller chooses one at a
+the output register. If multiple \texttt{IFM} wrappers are in the done state simultaneously, the controller chooses one at a
 time to be read in. These triples are then augmented with an asserted write enable flag to indicate that they represent
-valid data, and should be written to the Coordinate-Breakaway lookup table. 
+valid data, and should be written to the \texttt{Coordinate-Breakaway lookup table}. 
 
 
 % ----------------------------------------
 \subsubsection{Coordinate-Breakaway Lookup Table}
 
 After the count associated with each pixel is calculated, it must be
-stored in a framebuffer that interfaces both with the Parallel IFM
-Control Module as well as the VGA module.
+stored in a framebuffer that interfaces both with the \texttt{IFM
+Controller} as well as the \texttt{VGA Module}.
 
 \begin{figure}[H]
   \centering
     \includegraphics[width=160pt]{block_diagrams/clut.pdf}
-  \caption{Block Diagram of the Coordinate-Breakaway LUT: signals on
+  \caption{Block Diagram of the \texttt{Coordinate-Breakaway LUT}: signals on
     the right side are inputs, signals on the left are outputs.}
 \end{figure}
 
@@ -435,15 +503,15 @@ the next clock cycle. In this way, we reduce the frequency of VGA reads from the
   \caption{Timing diagram of the interface between the Coordinate-Breakaway LUT and VGA module}
 \end{figure}
 
-Even with every other 25Mhz cycle being dedicated to writing the data being sent out by the IFMs, the SRAM might
-still miss a coordinate if the IFMs are generating their maximum possible throughput of 25MB/s. To account for this, 
+Even with every other 25Mhz cycle being dedicated to writing the data being sent out by the \texttt{IFM}s, the SRAM might
+still miss a coordinate if the \texttt{IFM}s are generating their maximum possible throughput of 25MB/s. To account for this, 
 we put the junction serving writedata to the SRAM on a 50MHz clock. This junction consists of a shift register that 
-constantly reads from the IFM output, but only shifts when the SRAM's read enable signal is not being asserted. 
+constantly reads from the \texttt{IFM} output, but only shifts when the SRAM's read enable signal is not being asserted. 
 
 \begin{figure}[H]
   \centering
     \includegraphics[width=200pt]{state_diagrams/clut.pdf}
-  \caption{Simplified State Diagram of the Coordinate-Breakaway LUT:
+  \caption{Simplified State Diagram of the \texttt{Coordinate-Breakaway LUT}:
     Mealy machine, only includes re and we as inputs and rv as an
     output, with $\thicksim$ denoting a lack of outputs}
 \end{figure}
@@ -457,7 +525,7 @@ guaranteeing reliable data transmission.
 \begin{figure}[H]
   \centering
     \includegraphics[width=200pt]{timing_diagrams/ifm_clut.pdf}
-  \caption{Timing diagram of the interface between the IFMs and the Coordinate-Breakaway LUT.}
+  \caption{Timing diagram of the interface between the \texttt{IFM}s and the \texttt{Coordinate-Breakaway LUT}.}
 \end{figure}
 
 Dangerous though it may be, the effect of having a faster clock for the SRAM write junction is well contained.
@@ -468,7 +536,7 @@ without consequence. The write junction merely serves as a conduit through which
 \subsubsection{VGA Module}
 
 In order to display the generated Julia set, we connect a VGA controller 
- to the Coordinate-Breakaway lookup table. As the controller cycles
+ to the \texttt{Coordinate-Breakaway lookup table}. As the controller cycles
 through output coordinates within the display area, it modifies the
 read address signal for the lookup table. The data signal coming from
 the RAM is thus the breakaway value associated with that coordinate.
@@ -480,7 +548,7 @@ the RAM is thus the breakaway value associated with that coordinate.
 \end{figure}
 
 This breakaway value is passed through a decoder known as the
-Colorization Lookup Table and the resulting $(R, G, B)$ signal tuple
+\texttt{Colorization lookup table} and the resulting $(R, G, B)$ signal tuple
 is sent to the VGA port.
 
 % ----------------------------------------
@@ -490,8 +558,8 @@ is sent to the VGA port.
 \begin{figure}
   \centering
     \includegraphics[width=200px]{state_diagrams/vga.pdf}
-  \caption{State diagram for the \texttt{VGA} module, Mealy machine: $\thicksim$
-    stands in for no input/output, and VGA stands in for all the VGA\_
+  \caption{State diagram for the \texttt{VGA module}, Mealy machine: $\thicksim$
+    stands in for no input/output, and VGA stands in for all the \texttt{VGA\_}
     signals (\texttt{VGA\_CLK}, \texttt{VGA\_HS}, \texttt{VGA\_VS},
     \texttt{VGA\_BLANK}, \texttt{VGA\_SYNC}, \texttt{VGA\_R}, \texttt{VGA\_G},
     \texttt{VGA\_B}). Omits unused signals for compactness.}
@@ -529,7 +597,7 @@ is sent to the VGA port.
 Milestone 1&Mar 27&Have a static Julia set filled into a buffer.&
 	Develop a \texttt{Window Generator} capable of communicating with a parallelized \texttt{IFM Controller}\\
 &&&\\
-Milestone 2&Apr 10&Display the colorized Julia set through \textbf{VGA}.&\textit{As planned.}\\
+Milestone 2&Apr 10&Display the colorized Julia set through VGA.&\textit{As planned.}\\
 &&&\\
 Milestone 3&Apr 24&Implement parameter mutation, with subsequent updates to the displayed Julia set.&
 	Hardware-based parameter mutation and set redraw.\\
@@ -540,9 +608,59 @@ Deadline&May 10&Feature complete system with accompanying report and presentatio
 
 \section{Challenges and Lessons Learned}
 
+This project was one filled with learning opportunities, both in terms of technical knowlege as well as
+personal growth. Some major design and implementation challenges included:
+
+\begin{enumerate}{}
+\item \textbf{Design and Implementation of the IFMs} - Working with a system as parallel and dynamic as our \texttt{IFM} array presented a very unique set of challenges. Many communication protocols, state machines, and design concepts were
+discussed when planning the design of this core component of our device. Because most elements of our system needed
+to interface with the \texttt{IFM Controller} in some way, successful integration of the component was in many ways a cornerstone acheivement for our team.
+
+\item \textbf{Maintaining Timing Discipline} - Clocks were consistently an adversary for our team, as many parts 
+of our system needed to operate at different rates. The NIOS processor and the buses it writes to necessarily run at 50MHz, while the critical path on our \texttt{IFM}s allowed for only 25MHz frequencies. The SDRAM clock needed to lag the NIOS to account for setup, charging, and hold times, and the VGA clock needed to run at just over 25MHz to meet protocol. We did run into trouble on many occasions when trying to manage interplay between these components, but this taught us a lot about the importance of synchronization in Embedded Systems and the nature of Phase-Locked Loops.
+
+\end{enumerate}
+
+Furthermore, each group member ended up with a few personal takeaways:
+
+\begin{itemize}
+
+\item
+\textbf{Nathan Hwang}
+\begin{enumerate}
+\item 
+\end{enumerate}
+
+\item 
+\textbf{Richard Nwaobasi}
+\begin{enumerate}
+\item 
+\end{enumerate}
+
+\item 
+\textbf{Luis Pe\~{n}a}
+\begin{enumerate}
+\item 
+\end{enumerate}
+
+\item 
+\textbf{Stephen Pratt}
+\begin{enumerate}
+\item Consistent progress is of central importance to the success of a project. A team should always focus on 
+moving forward at least a little bit, no matter the week. Even the most marginal rates of progress are far preferable
+to the overhead that ends up getting poured into teardown/setup time if a team decides to focus its efforts elsewhere
+for even a short period.
+\item Implementation challenges are not exam questions. They do not need to be solved alone, or even successfully on 
+the first go around. It's far better to experiment and utilize resources that are available than to design a failing
+solution and pour time into trying to make the implementation work out.
+\end{enumerate}
+
+\end{itemize}
+
+
 \section{Reflections and Prospective}
 
-All things considered, our team is extraordinarily satisfied with the results that we've achieved. 
+All things considered, our team is extremely satisfied with the results that we've achieved. 
 Development was certainly not without its ups and downs, but ultimately, we brought all major project
 goals to fruition. 
 
