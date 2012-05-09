@@ -1,5 +1,5 @@
 Flow report for ifv
-Tue May  8 00:29:06 2012
+Wed May  9 02:34:20 2012
 Quartus II Version 7.2 Build 151 09/26/2007 SJ Full Version
 
 
@@ -37,7 +37,7 @@ applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +------------------------------------+------------------------------------------+
-; Flow Status                        ; Successful - Tue May  8 00:29:05 2012    ;
+; Flow Status                        ; Successful - Wed May  9 02:34:19 2012    ;
 ; Quartus II Version                 ; 7.2 Build 151 09/26/2007 SJ Full Version ;
 ; Revision Name                      ; ifv                                      ;
 ; Top-level Entity Name              ; ifv                                      ;
@@ -62,7 +62,7 @@ applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 05/08/2012 00:23:17 ;
+; Start date & time ; 05/09/2012 02:28:47 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; ifv                 ;
 +-------------------+---------------------+
@@ -84,11 +84,11 @@ applicable agreement for further details.
 +-------------------------+--------------+-------------------------+
 ; Module Name             ; Elapsed Time ; Average Processors Used ;
 +-------------------------+--------------+-------------------------+
-; Analysis & Synthesis    ; 00:03:44     ; 1.0                     ;
-; Fitter                  ; 00:01:26     ; 1.0                     ;
-; Assembler               ; 00:00:10     ; 1.0                     ;
-; Classic Timing Analyzer ; 00:00:10     ; 1.0                     ;
-; Total                   ; 00:05:30     ; --                      ;
+; Analysis & Synthesis    ; 00:03:28     ; 1.0                     ;
+; Fitter                  ; 00:01:27     ; 1.0                     ;
+; Assembler               ; 00:00:11     ; 1.0                     ;
+; Classic Timing Analyzer ; 00:00:11     ; 1.0                     ;
+; Total                   ; 00:05:17     ; --                      ;
 +-------------------------+--------------+-------------------------+
 
 

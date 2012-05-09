@@ -1,5 +1,5 @@
 Analysis & Synthesis report for ifv
-Tue May  8 00:27:04 2012
+Wed May  9 02:32:17 2012
 Quartus II Version 7.2 Build 151 09/26/2007 SJ Full Version
 
 
@@ -86,7 +86,7 @@ applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +------------------------------------+------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Tue May  8 00:27:04 2012    ;
+; Analysis & Synthesis Status        ; Successful - Wed May  9 02:32:16 2012    ;
 ; Quartus II Version                 ; 7.2 Build 151 09/26/2007 SJ Full Version ;
 ; Revision Name                      ; ifv                                      ;
 ; Top-level Entity Name              ; ifv                                      ;
@@ -220,9 +220,7 @@ applicable agreement for further details.
 ; altdpram.inc                      ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/altdpram.inc                ;
 ; altqpram.inc                      ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/altqpram.inc                ;
 ; db/altsyncram_ig22.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/altsyncram_ig22.tdf            ;
-; cpu_rf_ram.mif                    ; yes             ; Other                        ; /home/user4/spring12/lep2141/4840/romeo-set/src/cpu_rf_ram.mif                    ;
 ; db/altsyncram_t072.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/altsyncram_t072.tdf            ;
-; cpu_ociram_default_contents.mif   ; yes             ; Other                        ; /home/user4/spring12/lep2141/4840/romeo-set/src/cpu_ociram_default_contents.mif   ;
 ; db/altsyncram_e502.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/altsyncram_e502.tdf            ;
 ; cpu_jtag_debug_module_wrapper.vhd ; yes             ; Other                        ; /home/user4/spring12/lep2141/4840/romeo-set/src/cpu_jtag_debug_module_wrapper.vhd ;
 ; scfifo.tdf                        ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/scfifo.tdf                  ;
@@ -2124,7 +2122,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus II Analysis & Synthesis
     Info: Version 7.2 Build 151 09/26/2007 SJ Full Version
-    Info: Processing started: Tue May  8 00:23:17 2012
+    Info: Processing started: Wed May  9 02:28:45 2012
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off ifv -c ifv
 Info: Found 2 design units, including 1 entities, in source file pllvga.vhd
     Info: Found design unit 1: pllvga-SYN
@@ -2277,22 +2275,6 @@ Info: Found 2 design units, including 1 entities, in source file ramcon.vhd
     Info: Found entity 1: ramcon
 Warning: Can't analyze file -- file /home/user4/spring12/lep2141/4840/romeo-set/src/altera_europa_support.vhd is missing
 Info: Elaborating entity "ifv" for the top level hierarchy
-Warning (10492): VHDL Process Statement warning at ifv.vhd(224): signal "SW" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at ifv.vhd(225): signal "debug_vector" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at ifv.vhd(226): signal "a_min" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at ifv.vhd(227): signal "a_min" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at ifv.vhd(228): signal "b_min" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at ifv.vhd(229): signal "b_min" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at ifv.vhd(230): signal "a_diff" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at ifv.vhd(231): signal "a_diff" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at ifv.vhd(232): signal "b_diff" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at ifv.vhd(233): signal "b_diff" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at ifv.vhd(234): signal "a_leap" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at ifv.vhd(235): signal "b_leap" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at ifv.vhd(236): signal "cr" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at ifv.vhd(237): signal "cr" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at ifv.vhd(238): signal "ci" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
-Warning (10492): VHDL Process Statement warning at ifv.vhd(239): signal "ci" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
 Info: Elaborating entity "pll5025" for hierarchy "pll5025:CLK5025"
 Info: Found 1 design units, including 1 entities, in source file /opt/altera/altera7.2/quartus/libraries/megafunctions/altpll.tdf
     Info: Found entity 1: altpll
@@ -2876,8 +2858,8 @@ Info: Implemented 15691 device resources after synthesis - the final resource co
     Info: Implemented 98 RAM segments
     Info: Implemented 1 ClockLock PLLs
     Info: Implemented 32 DSP elements
-Info: Quartus II Analysis & Synthesis was successful. 0 errors, 324 warnings
-    Info: Processing ended: Tue May  8 00:27:05 2012
-    Info: Elapsed time: 00:03:48
+Info: Quartus II Analysis & Synthesis was successful. 0 errors, 308 warnings
+    Info: Processing ended: Wed May  9 02:32:17 2012
+    Info: Elapsed time: 00:03:32
 
 

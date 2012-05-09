@@ -5,8 +5,8 @@ Timing Analyzer Summary
 Type           : Worst-case tsu
 Slack          : N/A
 Required Time  : None
-Actual Time    : 13.553 ns
-From           : SRAM_DQ[2]
+Actual Time    : 13.011 ns
+From           : SRAM_DQ[0]
 To             : vga_mod:VGA|vga:G|VGA_G[4]
 From Clock     : --
 To Clock       : CLOCK_50
@@ -15,9 +15,9 @@ Failed Paths   : 0
 Type           : Worst-case tco
 Slack          : N/A
 Required Time  : None
-Actual Time    : 12.172 ns
-From           : a_diff[23]
-To             : LEDR[5]
+Actual Time    : 11.548 ns
+From           : a_diff[21]
+To             : LEDR[3]
 From Clock     : CLOCK_50
 To Clock       : --
 Failed Paths   : 0
@@ -25,8 +25,8 @@ Failed Paths   : 0
 Type           : Worst-case tpd
 Slack          : N/A
 Required Time  : None
-Actual Time    : 17.583 ns
-From           : SW[14]
+Actual Time    : 17.264 ns
+From           : SW[17]
 To             : LEDR[1]
 From Clock     : --
 To Clock       : --
@@ -35,7 +35,7 @@ Failed Paths   : 0
 Type           : Worst-case th
 Slack          : N/A
 Required Time  : None
-Actual Time    : 2.981 ns
+Actual Time    : 2.812 ns
 From           : altera_internal_jtag~TDIUTAP
 To             : sld_hub:sld_hub_inst|lpm_shiftreg:jtag_ir_register|dffs[9]
 From Clock     : --
@@ -43,17 +43,17 @@ To Clock       : altera_internal_jtag~TCKUTAP
 Failed Paths   : 0
 
 Type           : Clock Setup: 'pll5025:CLK5025|altpll:altpll_component|_clk0'
-Slack          : 9.419 ns
+Slack          : 9.000 ns
 Required Time  : 50.00 MHz ( period = 20.000 ns )
-Actual Time    : 94.51 MHz ( period = 10.581 ns )
-From           : nios:NIOS|cpu:the_cpu|F_pc[11]
-To             : nios:NIOS|cpu:the_cpu|av_ld_byte1_data[1]
+Actual Time    : 90.91 MHz ( period = 11.000 ns )
+From           : nios:NIOS|cpu:the_cpu|F_pc[16]
+To             : nios:NIOS|cpu:the_cpu|av_ld_byte1_data[3]
 From Clock     : pll5025:CLK5025|altpll:altpll_component|_clk0
 To Clock       : pll5025:CLK5025|altpll:altpll_component|_clk0
 Failed Paths   : 0
 
 Type           : Clock Setup: 'pll5025:CLK5025|altpll:altpll_component|_clk1'
-Slack          : 9.747 ns
+Slack          : 9.841 ns
 Required Time  : 25.00 MHz ( period = 40.000 ns )
 Actual Time    : N/A
 From           : hook:IFM|ifmunitd:ifm|ow[0]
@@ -65,9 +65,9 @@ Failed Paths   : 0
 Type           : Clock Setup: 'altera_internal_jtag~TCKUTAP'
 Slack          : N/A
 Required Time  : None
-Actual Time    : 122.91 MHz ( period = 8.136 ns )
+Actual Time    : 127.71 MHz ( period = 7.830 ns )
 From           : sld_hub:sld_hub_inst|jtag_debug_mode
-To             : nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_jtag_debug_module_wrapper:the_cpu_jtag_debug_module_wrapper|cpu_jtag_debug_module:the_cpu_jtag_debug_module1|sr[11]
+To             : nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_jtag_debug_module_wrapper:the_cpu_jtag_debug_module_wrapper|cpu_jtag_debug_module:the_cpu_jtag_debug_module1|sr[32]
 From Clock     : altera_internal_jtag~TCKUTAP
 To Clock       : altera_internal_jtag~TCKUTAP
 Failed Paths   : 0

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workbench version="2.0">
 <workbenchAdvisor/>
-<window height="768" maximized="true" width="1024" x="0" y="25">
+<window height="768" maximized="true" width="1028" x="0" y="25">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
@@ -28,27 +28,17 @@
 <folder appearance="1" expanded="2">
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
-<part id="1"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="hello_world.c" partName="hello_world.c" path="/home/user4/spring12/lep2141/4840/romeo-set/src/software/hello_world_1/hello_world.c" title="hello_world.c" tooltip="hello_world_1/hello_world.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/hello_world_1/hello_world.c"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="hello_world.c" partName="hello_world.c" path="/home/user4/spring12/lep2141/4840/romeo-set/src/software/pr12/hello_world.c" title="hello_world.c" tooltip="pr12/hello_world.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/pr12/hello_world.c"/>
+<editor focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="hello_world.c" partName="hello_world.c" path="/home/user4/spring12/lep2141/4840/romeo-set/src/software/p1/hello_world.c" title="hello_world.c" tooltip="p1/hello_world.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/p1/hello_world.c"/>
 </editor>
 </editors>
 <views>
 <view id="com.altera.nj.ui.Nios2CView" partName="Nios II C/C++ Projects">
 <viewState horizontalPosition="0" verticalPosition="0">
-<expanded>
-<element path="/home/user4/spring12/lep2141/4840/romeo-set/src/software/hello_world_1"/>
-</expanded>
-<selection>
-<element path="/home/user4/spring12/lep2141/4840/romeo-set/src/software/hello_world_1/hello_world.c"/>
-</selection>
 <customFilters userDefinedPatternsEnabled="false">
 <xmlDefinedFilters>
 <child filterId="com.altera.nj.ui.Nios2CView.ObjectFilter" isEnabled="false"/>
@@ -83,7 +73,7 @@
 </viewState>
 </view>
 </views>
-<perspectives activePart="org.eclipse.cdt.ui.editor.CEditor" activePerspective="com.altera.nj.ui.CPerspective">
+<perspectives activePart="org.eclipse.ui.console.ConsoleView" activePerspective="com.altera.nj.ui.CPerspective">
 <perspective editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="com.altera.nj.ui.Nios2CPerspectiveFactory" id="com.altera.nj.ui.CPerspective" label="Nios II C/C++"/>
 <alwaysOnActionSet id="com.altera.nj.launch.NiosIIToolsMenuActionSet"/>
@@ -187,6 +177,7 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/p1/hello_world.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/hello_world_1/hello_world.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/pr12/hello_world.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/p1/hello_world.c"/>
 </editors>
 <item historyLabel="hello_world.c" index="0">
 <position/>
@@ -236,7 +227,10 @@
 <item historyLabel="hello_world.c" index="1">
 <position/>
 </item>
-<item active="true" historyLabel="hello_world.c" index="2">
+<item historyLabel="hello_world.c" index="2">
+<position/>
+</item>
+<item active="true" historyLabel="hello_world.c" index="3">
 <position/>
 </item>
 </navigationHistory>
@@ -257,14 +251,14 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="hello_world.c" tooltip="p1/hello_world.c">
+<persistable path="/p1/hello_world.c"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="hello_world.c" tooltip="pr12/hello_world.c">
 <persistable path="/pr12/hello_world.c"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="hello_world.c" tooltip="hello_world_1/hello_world.c">
 <persistable path="/hello_world_1/hello_world.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="hello_world.c" tooltip="p1/hello_world.c">
-<persistable path="/p1/hello_world.c"/>
 </file>
 </mruList>
 </workbench>

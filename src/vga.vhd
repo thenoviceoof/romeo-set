@@ -16,8 +16,6 @@ entity vga is
     reset   : in std_logic;
     clk     : in std_logic;                    -- Should be 25.125 MHz
     VGA_RGB : in unsigned(29 downto 0);
-    
-    VGA_CLK,                          -- Clock
     VGA_HS,                           -- H_SYNC
     VGA_VS,                           -- V_SYNC
     VGA_BLANK,                        -- BLANK
@@ -176,7 +174,6 @@ begin
 
   x_pos <= Hcount - (HSYNC + HBACK_PORCH);
   y_pos <= unsigned(Vcount - (VSYNC + VBACK_PORCH))(8 downto 0);
-  VGA_CLK <= clk;
   VGA_HS <= not vga_hsync;
   VGA_VS <= not vga_vsync;
   VGA_SYNC <= '0';
