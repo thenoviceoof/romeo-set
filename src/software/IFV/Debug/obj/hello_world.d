@@ -16,7 +16,7 @@ obj/hello_world.o: ../hello_world.c \
   /opt/altera/altera7.2/nios2eds/bin/nios2-gnutools/H-i686-pc-linux-gnu/bin/../lib/gcc/nios2-elf/3.4.1/../../../../nios2-elf/include/stdlib.h \
   /opt/altera/altera7.2/nios2eds/bin/nios2-gnutools/H-i686-pc-linux-gnu/bin/../lib/gcc/nios2-elf/3.4.1/../../../../nios2-elf/include/machine/stdlib.h \
   /opt/altera/altera7.2/nios2eds/bin/nios2-gnutools/H-i686-pc-linux-gnu/bin/../lib/gcc/nios2-elf/3.4.1/../../../../nios2-elf/include/alloca.h \
-  /home/user5/spring12/rcn2105/Desktop/software/IFV_syslib/Debug/system_description/system.h \
+  /home/user4/spring12/lep2141/4840/romeo-set/src/software/IFV_syslib/Debug/system_description/system.h \
   /opt/altera/altera7.2/ip/nios2_ip/altera_nios2/HAL/inc/io.h \
   /opt/altera/altera7.2/ip/nios2_ip/altera_nios2/HAL/inc/alt_types.h \
   ../ps2_keyboard.h ../alt_up_ps2_port.h ../alt_up_ps2_port_regs.h

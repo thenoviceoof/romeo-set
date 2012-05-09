@@ -11,4 +11,4 @@
 #
 # DO NOT MODIFY THIS FILE
  
-SYSTEM_CONFIG_DIR=/home/user5/spring12/rcn2105/Desktop/software/IFV_syslib/Debug
+SYSTEM_CONFIG_DIR=/home/user4/spring12/lep2141/4840/romeo-set/src/software/IFV_syslib/Debug

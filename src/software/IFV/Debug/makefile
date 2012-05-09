@@ -28,7 +28,7 @@ RM := rm -rf
 # This project
 PROJECT := IFV
 # Location of this project
-APP_DIR :=/home/user5/spring12/rcn2105/Desktop/software/IFV
+APP_DIR :=/home/user4/spring12/lep2141/4840/romeo-set/src/software/IFV
 
 # Configuration for application project
 # The configuration can be changed from C/C++ build property page -> Configuration drop-down box.
@@ -39,14 +39,14 @@ APP_CONFIG := Debug
 # Referenced system library & location. 
 # These can be changed from App Options property page
 SYSTEM_NAME := IFV_syslib
-SYSTEM_DIR := /home/user5/spring12/rcn2105/Desktop/software/IFV_syslib
+SYSTEM_DIR := /home/user4/spring12/lep2141/4840/romeo-set/src/software/IFV_syslib
 
 # Configuration for system library project
 # The configuration can be changed from system library properties -> C/C++ build -> Configuration drop-down box.
 # If changed a new configuration folder (e.g. Release) is generated with all the generated and built files
 SYS_CONFIG := Debug
 
-PTF := /home/user5/spring12/rcn2105/Desktop/nios.ptf
+PTF := /home/user4/spring12/lep2141/4840/romeo-set/src/nios.ptf
 
 # Change this setting from Window->Preferences->Nios II Run and Build Settings
 DO_MAKE_OBJDUMP := 0

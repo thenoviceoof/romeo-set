@@ -3,9 +3,9 @@
 # generated.sh - shell script fragment - not very useful on its own
 #
 # Machine generated for a CPU named "cpu" as defined in:
-# /home/user5/spring12/rcn2105/Desktop/software/IFV_syslib/../../nios.ptf
+# /home/user4/spring12/lep2141/4840/romeo-set/src/software/IFV_syslib/../../nios.ptf
 #
-# Generated: 2012-05-09 09:48:12.853
+# Generated: 2012-05-09 12:22:08.611
 
 # DO NOT MODIFY THIS FILE
 #
@@ -18,7 +18,7 @@
 # DO NOT MODIFY THIS FILE
 
 # This variable indicates where the PTF file for this design is located
-ptf=/home/user5/spring12/rcn2105/Desktop/software/IFV_syslib/../../nios.ptf
+ptf=/home/user4/spring12/lep2141/4840/romeo-set/src/software/IFV_syslib/../../nios.ptf
 
 # This variable indicates whether there is a CPU debug core
 nios2_debug_core=yes

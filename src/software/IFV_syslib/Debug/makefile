@@ -20,14 +20,14 @@ ARFLAGS = -src
 # This project
 SYSTEM_NAME := IFV_syslib
 # Location of this project
-SYSTEM_DIR := /home/user5/spring12/rcn2105/Desktop/software/IFV_syslib
+SYSTEM_DIR := /home/user4/spring12/lep2141/4840/romeo-set/src/software/IFV_syslib
 
 # Configuration for system library project
 # The configuration can be changed from system library properties -> C/C++ build -> Configuration drop-down box.
 # If changed a new configuration folder (e.g. Release) is generated with all the generated and built files
 SYS_CONFIG := Debug
 
-PTF := /home/user5/spring12/rcn2105/Desktop/nios.ptf
+PTF := /home/user4/spring12/lep2141/4840/romeo-set/src/nios.ptf
 
 RM := rm -rf
 
