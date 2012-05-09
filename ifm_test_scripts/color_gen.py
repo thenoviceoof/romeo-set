@@ -1,5 +1,14 @@
 #!/usr/bin/python
 
+##################################################################
+#color_gen.py
+#
+#A python script for building color schemes and producing ROM
+#encodings
+#
+#Author: Nathan Hwang
+##################################################################
+
 import pygtk
 pygtk.require("2.0")
 import gtk

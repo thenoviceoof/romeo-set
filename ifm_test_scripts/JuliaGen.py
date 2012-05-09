@@ -1,3 +1,11 @@
+##################################################################
+#julia_gen.py
+#
+#A floating point Julia set generator written in Python
+#
+#Author: Stephen Pratt
+##################################################################
+
 class JuliaSetGenerator:
     
     def __init__(self, z_c):

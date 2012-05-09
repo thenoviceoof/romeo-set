@@ -1,4 +1,14 @@
 #!/usr/bin/env python
+
+##################################################################
+#test_image.py
+#
+#A python script for rendering Julia set image from data stored
+#in a pickle
+#
+#Author: Nathan Hwang
+##################################################################
+
 # convert test_out.txt data to an image
 
 import sys
