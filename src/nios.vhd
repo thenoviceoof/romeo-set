@@ -28,6 +28,938 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+entity clock_0_in_arbitrator is 
+        port (
+              -- inputs:
+                 signal clk : IN STD_LOGIC;
+                 signal clock_0_in_endofpacket : IN STD_LOGIC;
+                 signal clock_0_in_readdata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                 signal clock_0_in_waitrequest : IN STD_LOGIC;
+                 signal cpu_data_master_address_to_slave : IN STD_LOGIC_VECTOR (24 DOWNTO 0);
+                 signal cpu_data_master_byteenable : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+                 signal cpu_data_master_read : IN STD_LOGIC;
+                 signal cpu_data_master_waitrequest : IN STD_LOGIC;
+                 signal cpu_data_master_write : IN STD_LOGIC;
+                 signal cpu_data_master_writedata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                 signal reset_n : IN STD_LOGIC;
+
+              -- outputs:
+                 signal clock_0_in_address : OUT STD_LOGIC_VECTOR (5 DOWNTO 0);
+                 signal clock_0_in_byteenable : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+                 signal clock_0_in_endofpacket_from_sa : OUT STD_LOGIC;
+                 signal clock_0_in_nativeaddress : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+                 signal clock_0_in_read : OUT STD_LOGIC;
+                 signal clock_0_in_readdata_from_sa : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+                 signal clock_0_in_reset_n : OUT STD_LOGIC;
+                 signal clock_0_in_waitrequest_from_sa : OUT STD_LOGIC;
+                 signal clock_0_in_write : OUT STD_LOGIC;
+                 signal clock_0_in_writedata : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+                 signal cpu_data_master_granted_clock_0_in : OUT STD_LOGIC;
+                 signal cpu_data_master_qualified_request_clock_0_in : OUT STD_LOGIC;
+                 signal cpu_data_master_read_data_valid_clock_0_in : OUT STD_LOGIC;
+                 signal cpu_data_master_requests_clock_0_in : OUT STD_LOGIC;
+                 signal d1_clock_0_in_end_xfer : OUT STD_LOGIC
+              );
+attribute auto_dissolve : boolean;
+attribute auto_dissolve of clock_0_in_arbitrator : entity is FALSE;
+end entity clock_0_in_arbitrator;
+
+
+architecture europa of clock_0_in_arbitrator is
+                signal clock_0_in_allgrants :  STD_LOGIC;
+                signal clock_0_in_allow_new_arb_cycle :  STD_LOGIC;
+                signal clock_0_in_any_bursting_master_saved_grant :  STD_LOGIC;
+                signal clock_0_in_any_continuerequest :  STD_LOGIC;
+                signal clock_0_in_arb_counter_enable :  STD_LOGIC;
+                signal clock_0_in_arb_share_counter :  STD_LOGIC_VECTOR (2 DOWNTO 0);
+                signal clock_0_in_arb_share_counter_next_value :  STD_LOGIC_VECTOR (2 DOWNTO 0);
+                signal clock_0_in_arb_share_set_values :  STD_LOGIC_VECTOR (2 DOWNTO 0);
+                signal clock_0_in_beginbursttransfer_internal :  STD_LOGIC;
+                signal clock_0_in_begins_xfer :  STD_LOGIC;
+                signal clock_0_in_end_xfer :  STD_LOGIC;
+                signal clock_0_in_firsttransfer :  STD_LOGIC;
+                signal clock_0_in_grant_vector :  STD_LOGIC;
+                signal clock_0_in_in_a_read_cycle :  STD_LOGIC;
+                signal clock_0_in_in_a_write_cycle :  STD_LOGIC;
+                signal clock_0_in_master_qreq_vector :  STD_LOGIC;
+                signal clock_0_in_non_bursting_master_requests :  STD_LOGIC;
+                signal clock_0_in_reg_firsttransfer :  STD_LOGIC;
+                signal clock_0_in_slavearbiterlockenable :  STD_LOGIC;
+                signal clock_0_in_slavearbiterlockenable2 :  STD_LOGIC;
+                signal clock_0_in_unreg_firsttransfer :  STD_LOGIC;
+                signal clock_0_in_waits_for_read :  STD_LOGIC;
+                signal clock_0_in_waits_for_write :  STD_LOGIC;
+                signal cpu_data_master_arbiterlock :  STD_LOGIC;
+                signal cpu_data_master_arbiterlock2 :  STD_LOGIC;
+                signal cpu_data_master_continuerequest :  STD_LOGIC;
+                signal cpu_data_master_saved_grant_clock_0_in :  STD_LOGIC;
+                signal d1_reasons_to_wait :  STD_LOGIC;
+                signal enable_nonzero_assertions :  STD_LOGIC;
+                signal end_xfer_arb_share_counter_term_clock_0_in :  STD_LOGIC;
+                signal in_a_read_cycle :  STD_LOGIC;
+                signal in_a_write_cycle :  STD_LOGIC;
+                signal internal_clock_0_in_waitrequest_from_sa :  STD_LOGIC;
+                signal internal_cpu_data_master_granted_clock_0_in :  STD_LOGIC;
+                signal internal_cpu_data_master_qualified_request_clock_0_in :  STD_LOGIC;
+                signal internal_cpu_data_master_requests_clock_0_in :  STD_LOGIC;
+                signal wait_for_clock_0_in_counter :  STD_LOGIC;
+
+begin
+
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      d1_reasons_to_wait <= std_logic'('0');
+    elsif clk'event and clk = '1' then
+      if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+        d1_reasons_to_wait <= NOT clock_0_in_end_xfer;
+      end if;
+    end if;
+
+  end process;
+
+  clock_0_in_begins_xfer <= NOT d1_reasons_to_wait AND (internal_cpu_data_master_qualified_request_clock_0_in);
+  --assign clock_0_in_readdata_from_sa = clock_0_in_readdata so that symbol knows where to group signals which may go to master only, which is an e_assign
+  clock_0_in_readdata_from_sa <= clock_0_in_readdata;
+  internal_cpu_data_master_requests_clock_0_in <= to_std_logic(((Std_Logic_Vector'(cpu_data_master_address_to_slave(24 DOWNTO 6) & std_logic_vector'("000000")) = std_logic_vector'("1000000000001000000000000")))) AND ((cpu_data_master_read OR cpu_data_master_write));
+  --assign clock_0_in_waitrequest_from_sa = clock_0_in_waitrequest so that symbol knows where to group signals which may go to master only, which is an e_assign
+  internal_clock_0_in_waitrequest_from_sa <= clock_0_in_waitrequest;
+  --clock_0_in_arb_share_counter set values, which is an e_mux
+  clock_0_in_arb_share_set_values <= std_logic_vector'("001");
+  --clock_0_in_non_bursting_master_requests mux, which is an e_mux
+  clock_0_in_non_bursting_master_requests <= internal_cpu_data_master_requests_clock_0_in;
+  --clock_0_in_any_bursting_master_saved_grant mux, which is an e_mux
+  clock_0_in_any_bursting_master_saved_grant <= std_logic'('0');
+  --clock_0_in_arb_share_counter_next_value assignment, which is an e_assign
+  clock_0_in_arb_share_counter_next_value <= A_EXT (A_WE_StdLogicVector((std_logic'(clock_0_in_firsttransfer) = '1'), (((std_logic_vector'("000000000000000000000000000000") & (clock_0_in_arb_share_set_values)) - std_logic_vector'("000000000000000000000000000000001"))), A_WE_StdLogicVector((std_logic'(or_reduce(clock_0_in_arb_share_counter)) = '1'), (((std_logic_vector'("000000000000000000000000000000") & (clock_0_in_arb_share_counter)) - std_logic_vector'("000000000000000000000000000000001"))), std_logic_vector'("000000000000000000000000000000000"))), 3);
+  --clock_0_in_allgrants all slave grants, which is an e_mux
+  clock_0_in_allgrants <= clock_0_in_grant_vector;
+  --clock_0_in_end_xfer assignment, which is an e_assign
+  clock_0_in_end_xfer <= NOT ((clock_0_in_waits_for_read OR clock_0_in_waits_for_write));
+  --end_xfer_arb_share_counter_term_clock_0_in arb share counter enable term, which is an e_assign
+  end_xfer_arb_share_counter_term_clock_0_in <= clock_0_in_end_xfer AND (((NOT clock_0_in_any_bursting_master_saved_grant OR in_a_read_cycle) OR in_a_write_cycle));
+  --clock_0_in_arb_share_counter arbitration counter enable, which is an e_assign
+  clock_0_in_arb_counter_enable <= ((end_xfer_arb_share_counter_term_clock_0_in AND clock_0_in_allgrants)) OR ((end_xfer_arb_share_counter_term_clock_0_in AND NOT clock_0_in_non_bursting_master_requests));
+  --clock_0_in_arb_share_counter counter, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      clock_0_in_arb_share_counter <= std_logic_vector'("000");
+    elsif clk'event and clk = '1' then
+      if std_logic'(clock_0_in_arb_counter_enable) = '1' then 
+        clock_0_in_arb_share_counter <= clock_0_in_arb_share_counter_next_value;
+      end if;
+    end if;
+
+  end process;
+
+  --clock_0_in_slavearbiterlockenable slave enables arbiterlock, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      clock_0_in_slavearbiterlockenable <= std_logic'('0');
+    elsif clk'event and clk = '1' then
+      if std_logic'((((clock_0_in_master_qreq_vector AND end_xfer_arb_share_counter_term_clock_0_in)) OR ((end_xfer_arb_share_counter_term_clock_0_in AND NOT clock_0_in_non_bursting_master_requests)))) = '1' then 
+        clock_0_in_slavearbiterlockenable <= or_reduce(clock_0_in_arb_share_counter_next_value);
+      end if;
+    end if;
+
+  end process;
+
+  --cpu/data_master clock_0/in arbiterlock, which is an e_assign
+  cpu_data_master_arbiterlock <= clock_0_in_slavearbiterlockenable AND cpu_data_master_continuerequest;
+  --clock_0_in_slavearbiterlockenable2 slave enables arbiterlock2, which is an e_assign
+  clock_0_in_slavearbiterlockenable2 <= or_reduce(clock_0_in_arb_share_counter_next_value);
+  --cpu/data_master clock_0/in arbiterlock2, which is an e_assign
+  cpu_data_master_arbiterlock2 <= clock_0_in_slavearbiterlockenable2 AND cpu_data_master_continuerequest;
+  --clock_0_in_any_continuerequest at least one master continues requesting, which is an e_assign
+  clock_0_in_any_continuerequest <= std_logic'('1');
+  --cpu_data_master_continuerequest continued request, which is an e_assign
+  cpu_data_master_continuerequest <= std_logic'('1');
+  internal_cpu_data_master_qualified_request_clock_0_in <= internal_cpu_data_master_requests_clock_0_in AND NOT ((((cpu_data_master_read AND (NOT cpu_data_master_waitrequest))) OR (((NOT cpu_data_master_waitrequest) AND cpu_data_master_write))));
+  --clock_0_in_writedata mux, which is an e_mux
+  clock_0_in_writedata <= cpu_data_master_writedata;
+  --assign clock_0_in_endofpacket_from_sa = clock_0_in_endofpacket so that symbol knows where to group signals which may go to master only, which is an e_assign
+  clock_0_in_endofpacket_from_sa <= clock_0_in_endofpacket;
+  --master is always granted when requested
+  internal_cpu_data_master_granted_clock_0_in <= internal_cpu_data_master_qualified_request_clock_0_in;
+  --cpu/data_master saved-grant clock_0/in, which is an e_assign
+  cpu_data_master_saved_grant_clock_0_in <= internal_cpu_data_master_requests_clock_0_in;
+  --allow new arb cycle for clock_0/in, which is an e_assign
+  clock_0_in_allow_new_arb_cycle <= std_logic'('1');
+  --placeholder chosen master
+  clock_0_in_grant_vector <= std_logic'('1');
+  --placeholder vector of master qualified-requests
+  clock_0_in_master_qreq_vector <= std_logic'('1');
+  --clock_0_in_reset_n assignment, which is an e_assign
+  clock_0_in_reset_n <= reset_n;
+  --clock_0_in_firsttransfer first transaction, which is an e_assign
+  clock_0_in_firsttransfer <= A_WE_StdLogic((std_logic'(clock_0_in_begins_xfer) = '1'), clock_0_in_unreg_firsttransfer, clock_0_in_reg_firsttransfer);
+  --clock_0_in_unreg_firsttransfer first transaction, which is an e_assign
+  clock_0_in_unreg_firsttransfer <= NOT ((clock_0_in_slavearbiterlockenable AND clock_0_in_any_continuerequest));
+  --clock_0_in_reg_firsttransfer first transaction, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      clock_0_in_reg_firsttransfer <= std_logic'('1');
+    elsif clk'event and clk = '1' then
+      if std_logic'(clock_0_in_begins_xfer) = '1' then 
+        clock_0_in_reg_firsttransfer <= clock_0_in_unreg_firsttransfer;
+      end if;
+    end if;
+
+  end process;
+
+  --clock_0_in_beginbursttransfer_internal begin burst transfer, which is an e_assign
+  clock_0_in_beginbursttransfer_internal <= clock_0_in_begins_xfer;
+  --clock_0_in_read assignment, which is an e_mux
+  clock_0_in_read <= internal_cpu_data_master_granted_clock_0_in AND cpu_data_master_read;
+  --clock_0_in_write assignment, which is an e_mux
+  clock_0_in_write <= internal_cpu_data_master_granted_clock_0_in AND cpu_data_master_write;
+  --clock_0_in_address mux, which is an e_mux
+  clock_0_in_address <= cpu_data_master_address_to_slave (5 DOWNTO 0);
+  --slaveid clock_0_in_nativeaddress nativeaddress mux, which is an e_mux
+  clock_0_in_nativeaddress <= A_EXT (A_SRL(cpu_data_master_address_to_slave,std_logic_vector'("00000000000000000000000000000010")), 4);
+  --d1_clock_0_in_end_xfer register, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      d1_clock_0_in_end_xfer <= std_logic'('1');
+    elsif clk'event and clk = '1' then
+      if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+        d1_clock_0_in_end_xfer <= clock_0_in_end_xfer;
+      end if;
+    end if;
+
+  end process;
+
+  --clock_0_in_waits_for_read in a cycle, which is an e_mux
+  clock_0_in_waits_for_read <= clock_0_in_in_a_read_cycle AND internal_clock_0_in_waitrequest_from_sa;
+  --clock_0_in_in_a_read_cycle assignment, which is an e_assign
+  clock_0_in_in_a_read_cycle <= internal_cpu_data_master_granted_clock_0_in AND cpu_data_master_read;
+  --in_a_read_cycle assignment, which is an e_mux
+  in_a_read_cycle <= clock_0_in_in_a_read_cycle;
+  --clock_0_in_waits_for_write in a cycle, which is an e_mux
+  clock_0_in_waits_for_write <= clock_0_in_in_a_write_cycle AND internal_clock_0_in_waitrequest_from_sa;
+  --clock_0_in_in_a_write_cycle assignment, which is an e_assign
+  clock_0_in_in_a_write_cycle <= internal_cpu_data_master_granted_clock_0_in AND cpu_data_master_write;
+  --in_a_write_cycle assignment, which is an e_mux
+  in_a_write_cycle <= clock_0_in_in_a_write_cycle;
+  wait_for_clock_0_in_counter <= std_logic'('0');
+  --clock_0_in_byteenable byte enable port mux, which is an e_mux
+  clock_0_in_byteenable <= A_EXT (A_WE_StdLogicVector((std_logic'((internal_cpu_data_master_granted_clock_0_in)) = '1'), (std_logic_vector'("0000000000000000000000000000") & (cpu_data_master_byteenable)), -SIGNED(std_logic_vector'("00000000000000000000000000000001"))), 4);
+  --vhdl renameroo for output signals
+  clock_0_in_waitrequest_from_sa <= internal_clock_0_in_waitrequest_from_sa;
+  --vhdl renameroo for output signals
+  cpu_data_master_granted_clock_0_in <= internal_cpu_data_master_granted_clock_0_in;
+  --vhdl renameroo for output signals
+  cpu_data_master_qualified_request_clock_0_in <= internal_cpu_data_master_qualified_request_clock_0_in;
+  --vhdl renameroo for output signals
+  cpu_data_master_requests_clock_0_in <= internal_cpu_data_master_requests_clock_0_in;
+--synthesis translate_off
+    --clock_0/in enable non-zero assertions, which is an e_register
+    process (clk, reset_n)
+    begin
+      if reset_n = '0' then
+        enable_nonzero_assertions <= std_logic'('0');
+      elsif clk'event and clk = '1' then
+        if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+          enable_nonzero_assertions <= std_logic'('1');
+        end if;
+      end if;
+
+    end process;
+
+--synthesis translate_on
+
+end europa;
+
+
+
+-- turn off superfluous VHDL processor warnings 
+-- altera message_level Level1 
+-- altera message_off 10034 10035 10036 10037 10230 10240 10030 
+
+library altera;
+use altera.altera_europa_support_lib.all;
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
+
+library std;
+use std.textio.all;
+
+entity clock_0_out_arbitrator is 
+        port (
+              -- inputs:
+                 signal clk : IN STD_LOGIC;
+                 signal clock_0_out_address : IN STD_LOGIC_VECTOR (5 DOWNTO 0);
+                 signal clock_0_out_granted_ram_avalon_slave_0 : IN STD_LOGIC;
+                 signal clock_0_out_qualified_request_ram_avalon_slave_0 : IN STD_LOGIC;
+                 signal clock_0_out_read : IN STD_LOGIC;
+                 signal clock_0_out_read_data_valid_ram_avalon_slave_0 : IN STD_LOGIC;
+                 signal clock_0_out_requests_ram_avalon_slave_0 : IN STD_LOGIC;
+                 signal clock_0_out_write : IN STD_LOGIC;
+                 signal clock_0_out_writedata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                 signal d1_ram_avalon_slave_0_end_xfer : IN STD_LOGIC;
+                 signal reset_n : IN STD_LOGIC;
+
+              -- outputs:
+                 signal clock_0_out_address_to_slave : OUT STD_LOGIC_VECTOR (5 DOWNTO 0);
+                 signal clock_0_out_readdata : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+                 signal clock_0_out_reset_n : OUT STD_LOGIC;
+                 signal clock_0_out_waitrequest : OUT STD_LOGIC
+              );
+attribute auto_dissolve : boolean;
+attribute auto_dissolve of clock_0_out_arbitrator : entity is FALSE;
+end entity clock_0_out_arbitrator;
+
+
+architecture europa of clock_0_out_arbitrator is
+                signal active_and_waiting_last_time :  STD_LOGIC;
+                signal clock_0_out_address_last_time :  STD_LOGIC_VECTOR (5 DOWNTO 0);
+                signal clock_0_out_read_last_time :  STD_LOGIC;
+                signal clock_0_out_run :  STD_LOGIC;
+                signal clock_0_out_write_last_time :  STD_LOGIC;
+                signal clock_0_out_writedata_last_time :  STD_LOGIC_VECTOR (31 DOWNTO 0);
+                signal internal_clock_0_out_address_to_slave :  STD_LOGIC_VECTOR (5 DOWNTO 0);
+                signal internal_clock_0_out_waitrequest :  STD_LOGIC;
+                signal r_0 :  STD_LOGIC;
+
+begin
+
+  --r_0 master_run cascaded wait assignment, which is an e_assign
+  r_0 <= Vector_To_Std_Logic(((std_logic_vector'("00000000000000000000000000000001") AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT clock_0_out_qualified_request_ram_avalon_slave_0 OR NOT clock_0_out_read)))) OR (((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT d1_ram_avalon_slave_0_end_xfer)))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(clock_0_out_read)))))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT clock_0_out_qualified_request_ram_avalon_slave_0 OR NOT clock_0_out_write)))) OR ((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(clock_0_out_write)))))))));
+  --cascaded wait assignment, which is an e_assign
+  clock_0_out_run <= r_0;
+  --optimize select-logic by passing only those address bits which matter.
+  internal_clock_0_out_address_to_slave <= clock_0_out_address;
+  --actual waitrequest port, which is an e_assign
+  internal_clock_0_out_waitrequest <= NOT clock_0_out_run;
+  --clock_0_out_reset_n assignment, which is an e_assign
+  clock_0_out_reset_n <= reset_n;
+  --vhdl renameroo for output signals
+  clock_0_out_address_to_slave <= internal_clock_0_out_address_to_slave;
+  --vhdl renameroo for output signals
+  clock_0_out_waitrequest <= internal_clock_0_out_waitrequest;
+--synthesis translate_off
+    --clock_0_out_address check against wait, which is an e_register
+    process (clk, reset_n)
+    begin
+      if reset_n = '0' then
+        clock_0_out_address_last_time <= std_logic_vector'("000000");
+      elsif clk'event and clk = '1' then
+        if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+          clock_0_out_address_last_time <= clock_0_out_address;
+        end if;
+      end if;
+
+    end process;
+
+    --clock_0/out waited last time, which is an e_register
+    process (clk, reset_n)
+    begin
+      if reset_n = '0' then
+        active_and_waiting_last_time <= std_logic'('0');
+      elsif clk'event and clk = '1' then
+        if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+          active_and_waiting_last_time <= internal_clock_0_out_waitrequest AND ((clock_0_out_read OR clock_0_out_write));
+        end if;
+      end if;
+
+    end process;
+
+    --clock_0_out_address matches last port_name, which is an e_process
+    process (active_and_waiting_last_time, clock_0_out_address, clock_0_out_address_last_time)
+    VARIABLE write_line : line;
+    begin
+        if std_logic'((active_and_waiting_last_time AND to_std_logic(((clock_0_out_address /= clock_0_out_address_last_time))))) = '1' then 
+          write(write_line, now);
+          write(write_line, string'(": "));
+          write(write_line, string'("clock_0_out_address did not heed wait!!!"));
+          write(output, write_line.all);
+          deallocate (write_line);
+          assert false report "VHDL STOP" severity failure;
+        end if;
+
+    end process;
+
+    --clock_0_out_read check against wait, which is an e_register
+    process (clk, reset_n)
+    begin
+      if reset_n = '0' then
+        clock_0_out_read_last_time <= std_logic'('0');
+      elsif clk'event and clk = '1' then
+        if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+          clock_0_out_read_last_time <= clock_0_out_read;
+        end if;
+      end if;
+
+    end process;
+
+    --clock_0_out_read matches last port_name, which is an e_process
+    process (active_and_waiting_last_time, clock_0_out_read, clock_0_out_read_last_time)
+    VARIABLE write_line1 : line;
+    begin
+        if std_logic'((active_and_waiting_last_time AND to_std_logic(((std_logic'(clock_0_out_read) /= std_logic'(clock_0_out_read_last_time)))))) = '1' then 
+          write(write_line1, now);
+          write(write_line1, string'(": "));
+          write(write_line1, string'("clock_0_out_read did not heed wait!!!"));
+          write(output, write_line1.all);
+          deallocate (write_line1);
+          assert false report "VHDL STOP" severity failure;
+        end if;
+
+    end process;
+
+    --clock_0_out_write check against wait, which is an e_register
+    process (clk, reset_n)
+    begin
+      if reset_n = '0' then
+        clock_0_out_write_last_time <= std_logic'('0');
+      elsif clk'event and clk = '1' then
+        if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+          clock_0_out_write_last_time <= clock_0_out_write;
+        end if;
+      end if;
+
+    end process;
+
+    --clock_0_out_write matches last port_name, which is an e_process
+    process (active_and_waiting_last_time, clock_0_out_write, clock_0_out_write_last_time)
+    VARIABLE write_line2 : line;
+    begin
+        if std_logic'((active_and_waiting_last_time AND to_std_logic(((std_logic'(clock_0_out_write) /= std_logic'(clock_0_out_write_last_time)))))) = '1' then 
+          write(write_line2, now);
+          write(write_line2, string'(": "));
+          write(write_line2, string'("clock_0_out_write did not heed wait!!!"));
+          write(output, write_line2.all);
+          deallocate (write_line2);
+          assert false report "VHDL STOP" severity failure;
+        end if;
+
+    end process;
+
+    --clock_0_out_writedata check against wait, which is an e_register
+    process (clk, reset_n)
+    begin
+      if reset_n = '0' then
+        clock_0_out_writedata_last_time <= std_logic_vector'("00000000000000000000000000000000");
+      elsif clk'event and clk = '1' then
+        if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+          clock_0_out_writedata_last_time <= clock_0_out_writedata;
+        end if;
+      end if;
+
+    end process;
+
+    --clock_0_out_writedata matches last port_name, which is an e_process
+    process (active_and_waiting_last_time, clock_0_out_write, clock_0_out_writedata, clock_0_out_writedata_last_time)
+    VARIABLE write_line3 : line;
+    begin
+        if std_logic'(((active_and_waiting_last_time AND to_std_logic(((clock_0_out_writedata /= clock_0_out_writedata_last_time)))) AND clock_0_out_write)) = '1' then 
+          write(write_line3, now);
+          write(write_line3, string'(": "));
+          write(write_line3, string'("clock_0_out_writedata did not heed wait!!!"));
+          write(output, write_line3.all);
+          deallocate (write_line3);
+          assert false report "VHDL STOP" severity failure;
+        end if;
+
+    end process;
+
+--synthesis translate_on
+
+end europa;
+
+
+
+-- turn off superfluous VHDL processor warnings 
+-- altera message_level Level1 
+-- altera message_off 10034 10035 10036 10037 10230 10240 10030 
+
+library altera;
+use altera.altera_europa_support_lib.all;
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
+
+entity clock_1_in_arbitrator is 
+        port (
+              -- inputs:
+                 signal clk : IN STD_LOGIC;
+                 signal clock_1_in_endofpacket : IN STD_LOGIC;
+                 signal clock_1_in_readdata : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+                 signal clock_1_in_waitrequest : IN STD_LOGIC;
+                 signal cpu_data_master_address_to_slave : IN STD_LOGIC_VECTOR (24 DOWNTO 0);
+                 signal cpu_data_master_byteenable : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+                 signal cpu_data_master_dbs_address : IN STD_LOGIC_VECTOR (1 DOWNTO 0);
+                 signal cpu_data_master_dbs_write_8 : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+                 signal cpu_data_master_no_byte_enables_and_last_term : IN STD_LOGIC;
+                 signal cpu_data_master_read : IN STD_LOGIC;
+                 signal cpu_data_master_waitrequest : IN STD_LOGIC;
+                 signal cpu_data_master_write : IN STD_LOGIC;
+                 signal reset_n : IN STD_LOGIC;
+
+              -- outputs:
+                 signal clock_1_in_address : OUT STD_LOGIC;
+                 signal clock_1_in_endofpacket_from_sa : OUT STD_LOGIC;
+                 signal clock_1_in_nativeaddress : OUT STD_LOGIC;
+                 signal clock_1_in_read : OUT STD_LOGIC;
+                 signal clock_1_in_readdata_from_sa : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+                 signal clock_1_in_reset_n : OUT STD_LOGIC;
+                 signal clock_1_in_waitrequest_from_sa : OUT STD_LOGIC;
+                 signal clock_1_in_write : OUT STD_LOGIC;
+                 signal clock_1_in_writedata : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+                 signal cpu_data_master_byteenable_clock_1_in : OUT STD_LOGIC;
+                 signal cpu_data_master_granted_clock_1_in : OUT STD_LOGIC;
+                 signal cpu_data_master_qualified_request_clock_1_in : OUT STD_LOGIC;
+                 signal cpu_data_master_read_data_valid_clock_1_in : OUT STD_LOGIC;
+                 signal cpu_data_master_requests_clock_1_in : OUT STD_LOGIC;
+                 signal d1_clock_1_in_end_xfer : OUT STD_LOGIC
+              );
+attribute auto_dissolve : boolean;
+attribute auto_dissolve of clock_1_in_arbitrator : entity is FALSE;
+end entity clock_1_in_arbitrator;
+
+
+architecture europa of clock_1_in_arbitrator is
+                signal clock_1_in_allgrants :  STD_LOGIC;
+                signal clock_1_in_allow_new_arb_cycle :  STD_LOGIC;
+                signal clock_1_in_any_bursting_master_saved_grant :  STD_LOGIC;
+                signal clock_1_in_any_continuerequest :  STD_LOGIC;
+                signal clock_1_in_arb_counter_enable :  STD_LOGIC;
+                signal clock_1_in_arb_share_counter :  STD_LOGIC_VECTOR (2 DOWNTO 0);
+                signal clock_1_in_arb_share_counter_next_value :  STD_LOGIC_VECTOR (2 DOWNTO 0);
+                signal clock_1_in_arb_share_set_values :  STD_LOGIC_VECTOR (2 DOWNTO 0);
+                signal clock_1_in_beginbursttransfer_internal :  STD_LOGIC;
+                signal clock_1_in_begins_xfer :  STD_LOGIC;
+                signal clock_1_in_end_xfer :  STD_LOGIC;
+                signal clock_1_in_firsttransfer :  STD_LOGIC;
+                signal clock_1_in_grant_vector :  STD_LOGIC;
+                signal clock_1_in_in_a_read_cycle :  STD_LOGIC;
+                signal clock_1_in_in_a_write_cycle :  STD_LOGIC;
+                signal clock_1_in_master_qreq_vector :  STD_LOGIC;
+                signal clock_1_in_non_bursting_master_requests :  STD_LOGIC;
+                signal clock_1_in_pretend_byte_enable :  STD_LOGIC;
+                signal clock_1_in_reg_firsttransfer :  STD_LOGIC;
+                signal clock_1_in_slavearbiterlockenable :  STD_LOGIC;
+                signal clock_1_in_slavearbiterlockenable2 :  STD_LOGIC;
+                signal clock_1_in_unreg_firsttransfer :  STD_LOGIC;
+                signal clock_1_in_waits_for_read :  STD_LOGIC;
+                signal clock_1_in_waits_for_write :  STD_LOGIC;
+                signal cpu_data_master_arbiterlock :  STD_LOGIC;
+                signal cpu_data_master_arbiterlock2 :  STD_LOGIC;
+                signal cpu_data_master_byteenable_clock_1_in_segment_0 :  STD_LOGIC;
+                signal cpu_data_master_byteenable_clock_1_in_segment_1 :  STD_LOGIC;
+                signal cpu_data_master_byteenable_clock_1_in_segment_2 :  STD_LOGIC;
+                signal cpu_data_master_byteenable_clock_1_in_segment_3 :  STD_LOGIC;
+                signal cpu_data_master_continuerequest :  STD_LOGIC;
+                signal cpu_data_master_saved_grant_clock_1_in :  STD_LOGIC;
+                signal d1_reasons_to_wait :  STD_LOGIC;
+                signal enable_nonzero_assertions :  STD_LOGIC;
+                signal end_xfer_arb_share_counter_term_clock_1_in :  STD_LOGIC;
+                signal in_a_read_cycle :  STD_LOGIC;
+                signal in_a_write_cycle :  STD_LOGIC;
+                signal internal_clock_1_in_waitrequest_from_sa :  STD_LOGIC;
+                signal internal_cpu_data_master_byteenable_clock_1_in :  STD_LOGIC;
+                signal internal_cpu_data_master_granted_clock_1_in :  STD_LOGIC;
+                signal internal_cpu_data_master_qualified_request_clock_1_in :  STD_LOGIC;
+                signal internal_cpu_data_master_requests_clock_1_in :  STD_LOGIC;
+                signal wait_for_clock_1_in_counter :  STD_LOGIC;
+
+begin
+
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      d1_reasons_to_wait <= std_logic'('0');
+    elsif clk'event and clk = '1' then
+      if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+        d1_reasons_to_wait <= NOT clock_1_in_end_xfer;
+      end if;
+    end if;
+
+  end process;
+
+  clock_1_in_begins_xfer <= NOT d1_reasons_to_wait AND (internal_cpu_data_master_qualified_request_clock_1_in);
+  --assign clock_1_in_readdata_from_sa = clock_1_in_readdata so that symbol knows where to group signals which may go to master only, which is an e_assign
+  clock_1_in_readdata_from_sa <= clock_1_in_readdata;
+  internal_cpu_data_master_requests_clock_1_in <= to_std_logic(((Std_Logic_Vector'(cpu_data_master_address_to_slave(24 DOWNTO 1) & A_ToStdLogicVector(std_logic'('0'))) = std_logic_vector'("1000000000001000001001000")))) AND ((cpu_data_master_read OR cpu_data_master_write));
+  --assign clock_1_in_waitrequest_from_sa = clock_1_in_waitrequest so that symbol knows where to group signals which may go to master only, which is an e_assign
+  internal_clock_1_in_waitrequest_from_sa <= clock_1_in_waitrequest;
+  --clock_1_in_arb_share_counter set values, which is an e_mux
+  clock_1_in_arb_share_set_values <= A_EXT (A_WE_StdLogicVector((std_logic'((internal_cpu_data_master_granted_clock_1_in)) = '1'), std_logic_vector'("00000000000000000000000000000100"), std_logic_vector'("00000000000000000000000000000001")), 3);
+  --clock_1_in_non_bursting_master_requests mux, which is an e_mux
+  clock_1_in_non_bursting_master_requests <= internal_cpu_data_master_requests_clock_1_in;
+  --clock_1_in_any_bursting_master_saved_grant mux, which is an e_mux
+  clock_1_in_any_bursting_master_saved_grant <= std_logic'('0');
+  --clock_1_in_arb_share_counter_next_value assignment, which is an e_assign
+  clock_1_in_arb_share_counter_next_value <= A_EXT (A_WE_StdLogicVector((std_logic'(clock_1_in_firsttransfer) = '1'), (((std_logic_vector'("000000000000000000000000000000") & (clock_1_in_arb_share_set_values)) - std_logic_vector'("000000000000000000000000000000001"))), A_WE_StdLogicVector((std_logic'(or_reduce(clock_1_in_arb_share_counter)) = '1'), (((std_logic_vector'("000000000000000000000000000000") & (clock_1_in_arb_share_counter)) - std_logic_vector'("000000000000000000000000000000001"))), std_logic_vector'("000000000000000000000000000000000"))), 3);
+  --clock_1_in_allgrants all slave grants, which is an e_mux
+  clock_1_in_allgrants <= clock_1_in_grant_vector;
+  --clock_1_in_end_xfer assignment, which is an e_assign
+  clock_1_in_end_xfer <= NOT ((clock_1_in_waits_for_read OR clock_1_in_waits_for_write));
+  --end_xfer_arb_share_counter_term_clock_1_in arb share counter enable term, which is an e_assign
+  end_xfer_arb_share_counter_term_clock_1_in <= clock_1_in_end_xfer AND (((NOT clock_1_in_any_bursting_master_saved_grant OR in_a_read_cycle) OR in_a_write_cycle));
+  --clock_1_in_arb_share_counter arbitration counter enable, which is an e_assign
+  clock_1_in_arb_counter_enable <= ((end_xfer_arb_share_counter_term_clock_1_in AND clock_1_in_allgrants)) OR ((end_xfer_arb_share_counter_term_clock_1_in AND NOT clock_1_in_non_bursting_master_requests));
+  --clock_1_in_arb_share_counter counter, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      clock_1_in_arb_share_counter <= std_logic_vector'("000");
+    elsif clk'event and clk = '1' then
+      if std_logic'(clock_1_in_arb_counter_enable) = '1' then 
+        clock_1_in_arb_share_counter <= clock_1_in_arb_share_counter_next_value;
+      end if;
+    end if;
+
+  end process;
+
+  --clock_1_in_slavearbiterlockenable slave enables arbiterlock, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      clock_1_in_slavearbiterlockenable <= std_logic'('0');
+    elsif clk'event and clk = '1' then
+      if std_logic'((((clock_1_in_master_qreq_vector AND end_xfer_arb_share_counter_term_clock_1_in)) OR ((end_xfer_arb_share_counter_term_clock_1_in AND NOT clock_1_in_non_bursting_master_requests)))) = '1' then 
+        clock_1_in_slavearbiterlockenable <= or_reduce(clock_1_in_arb_share_counter_next_value);
+      end if;
+    end if;
+
+  end process;
+
+  --cpu/data_master clock_1/in arbiterlock, which is an e_assign
+  cpu_data_master_arbiterlock <= clock_1_in_slavearbiterlockenable AND cpu_data_master_continuerequest;
+  --clock_1_in_slavearbiterlockenable2 slave enables arbiterlock2, which is an e_assign
+  clock_1_in_slavearbiterlockenable2 <= or_reduce(clock_1_in_arb_share_counter_next_value);
+  --cpu/data_master clock_1/in arbiterlock2, which is an e_assign
+  cpu_data_master_arbiterlock2 <= clock_1_in_slavearbiterlockenable2 AND cpu_data_master_continuerequest;
+  --clock_1_in_any_continuerequest at least one master continues requesting, which is an e_assign
+  clock_1_in_any_continuerequest <= std_logic'('1');
+  --cpu_data_master_continuerequest continued request, which is an e_assign
+  cpu_data_master_continuerequest <= std_logic'('1');
+  internal_cpu_data_master_qualified_request_clock_1_in <= internal_cpu_data_master_requests_clock_1_in AND NOT ((((cpu_data_master_read AND (NOT cpu_data_master_waitrequest))) OR (((((NOT cpu_data_master_waitrequest OR cpu_data_master_no_byte_enables_and_last_term) OR NOT(internal_cpu_data_master_byteenable_clock_1_in))) AND cpu_data_master_write))));
+  --clock_1_in_writedata mux, which is an e_mux
+  clock_1_in_writedata <= cpu_data_master_dbs_write_8;
+  --assign clock_1_in_endofpacket_from_sa = clock_1_in_endofpacket so that symbol knows where to group signals which may go to master only, which is an e_assign
+  clock_1_in_endofpacket_from_sa <= clock_1_in_endofpacket;
+  --master is always granted when requested
+  internal_cpu_data_master_granted_clock_1_in <= internal_cpu_data_master_qualified_request_clock_1_in;
+  --cpu/data_master saved-grant clock_1/in, which is an e_assign
+  cpu_data_master_saved_grant_clock_1_in <= internal_cpu_data_master_requests_clock_1_in;
+  --allow new arb cycle for clock_1/in, which is an e_assign
+  clock_1_in_allow_new_arb_cycle <= std_logic'('1');
+  --placeholder chosen master
+  clock_1_in_grant_vector <= std_logic'('1');
+  --placeholder vector of master qualified-requests
+  clock_1_in_master_qreq_vector <= std_logic'('1');
+  --clock_1_in_reset_n assignment, which is an e_assign
+  clock_1_in_reset_n <= reset_n;
+  --clock_1_in_firsttransfer first transaction, which is an e_assign
+  clock_1_in_firsttransfer <= A_WE_StdLogic((std_logic'(clock_1_in_begins_xfer) = '1'), clock_1_in_unreg_firsttransfer, clock_1_in_reg_firsttransfer);
+  --clock_1_in_unreg_firsttransfer first transaction, which is an e_assign
+  clock_1_in_unreg_firsttransfer <= NOT ((clock_1_in_slavearbiterlockenable AND clock_1_in_any_continuerequest));
+  --clock_1_in_reg_firsttransfer first transaction, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      clock_1_in_reg_firsttransfer <= std_logic'('1');
+    elsif clk'event and clk = '1' then
+      if std_logic'(clock_1_in_begins_xfer) = '1' then 
+        clock_1_in_reg_firsttransfer <= clock_1_in_unreg_firsttransfer;
+      end if;
+    end if;
+
+  end process;
+
+  --clock_1_in_beginbursttransfer_internal begin burst transfer, which is an e_assign
+  clock_1_in_beginbursttransfer_internal <= clock_1_in_begins_xfer;
+  --clock_1_in_read assignment, which is an e_mux
+  clock_1_in_read <= internal_cpu_data_master_granted_clock_1_in AND cpu_data_master_read;
+  --clock_1_in_write assignment, which is an e_mux
+  clock_1_in_write <= ((internal_cpu_data_master_granted_clock_1_in AND cpu_data_master_write)) AND clock_1_in_pretend_byte_enable;
+  --clock_1_in_address mux, which is an e_mux
+  clock_1_in_address <= Vector_To_Std_Logic(Std_Logic_Vector'(A_SRL(cpu_data_master_address_to_slave,std_logic_vector'("00000000000000000000000000000010")) & cpu_data_master_dbs_address(1 DOWNTO 0)));
+  --slaveid clock_1_in_nativeaddress nativeaddress mux, which is an e_mux
+  clock_1_in_nativeaddress <= Vector_To_Std_Logic(A_SRL(cpu_data_master_address_to_slave,std_logic_vector'("00000000000000000000000000000010")));
+  --d1_clock_1_in_end_xfer register, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      d1_clock_1_in_end_xfer <= std_logic'('1');
+    elsif clk'event and clk = '1' then
+      if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+        d1_clock_1_in_end_xfer <= clock_1_in_end_xfer;
+      end if;
+    end if;
+
+  end process;
+
+  --clock_1_in_waits_for_read in a cycle, which is an e_mux
+  clock_1_in_waits_for_read <= clock_1_in_in_a_read_cycle AND internal_clock_1_in_waitrequest_from_sa;
+  --clock_1_in_in_a_read_cycle assignment, which is an e_assign
+  clock_1_in_in_a_read_cycle <= internal_cpu_data_master_granted_clock_1_in AND cpu_data_master_read;
+  --in_a_read_cycle assignment, which is an e_mux
+  in_a_read_cycle <= clock_1_in_in_a_read_cycle;
+  --clock_1_in_waits_for_write in a cycle, which is an e_mux
+  clock_1_in_waits_for_write <= clock_1_in_in_a_write_cycle AND internal_clock_1_in_waitrequest_from_sa;
+  --clock_1_in_in_a_write_cycle assignment, which is an e_assign
+  clock_1_in_in_a_write_cycle <= internal_cpu_data_master_granted_clock_1_in AND cpu_data_master_write;
+  --in_a_write_cycle assignment, which is an e_mux
+  in_a_write_cycle <= clock_1_in_in_a_write_cycle;
+  wait_for_clock_1_in_counter <= std_logic'('0');
+  --clock_1_in_pretend_byte_enable byte enable port mux, which is an e_mux
+  clock_1_in_pretend_byte_enable <= Vector_To_Std_Logic(A_WE_StdLogicVector((std_logic'((internal_cpu_data_master_granted_clock_1_in)) = '1'), (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(internal_cpu_data_master_byteenable_clock_1_in))), -SIGNED(std_logic_vector'("00000000000000000000000000000001"))));
+  (cpu_data_master_byteenable_clock_1_in_segment_3, cpu_data_master_byteenable_clock_1_in_segment_2, cpu_data_master_byteenable_clock_1_in_segment_1, cpu_data_master_byteenable_clock_1_in_segment_0) <= cpu_data_master_byteenable;
+  internal_cpu_data_master_byteenable_clock_1_in <= A_WE_StdLogic((((std_logic_vector'("000000000000000000000000000000") & (cpu_data_master_dbs_address(1 DOWNTO 0))) = std_logic_vector'("00000000000000000000000000000000"))), cpu_data_master_byteenable_clock_1_in_segment_0, A_WE_StdLogic((((std_logic_vector'("000000000000000000000000000000") & (cpu_data_master_dbs_address(1 DOWNTO 0))) = std_logic_vector'("00000000000000000000000000000001"))), cpu_data_master_byteenable_clock_1_in_segment_1, A_WE_StdLogic((((std_logic_vector'("000000000000000000000000000000") & (cpu_data_master_dbs_address(1 DOWNTO 0))) = std_logic_vector'("00000000000000000000000000000010"))), cpu_data_master_byteenable_clock_1_in_segment_2, cpu_data_master_byteenable_clock_1_in_segment_3)));
+  --vhdl renameroo for output signals
+  clock_1_in_waitrequest_from_sa <= internal_clock_1_in_waitrequest_from_sa;
+  --vhdl renameroo for output signals
+  cpu_data_master_byteenable_clock_1_in <= internal_cpu_data_master_byteenable_clock_1_in;
+  --vhdl renameroo for output signals
+  cpu_data_master_granted_clock_1_in <= internal_cpu_data_master_granted_clock_1_in;
+  --vhdl renameroo for output signals
+  cpu_data_master_qualified_request_clock_1_in <= internal_cpu_data_master_qualified_request_clock_1_in;
+  --vhdl renameroo for output signals
+  cpu_data_master_requests_clock_1_in <= internal_cpu_data_master_requests_clock_1_in;
+--synthesis translate_off
+    --clock_1/in enable non-zero assertions, which is an e_register
+    process (clk, reset_n)
+    begin
+      if reset_n = '0' then
+        enable_nonzero_assertions <= std_logic'('0');
+      elsif clk'event and clk = '1' then
+        if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+          enable_nonzero_assertions <= std_logic'('1');
+        end if;
+      end if;
+
+    end process;
+
+--synthesis translate_on
+
+end europa;
+
+
+
+-- turn off superfluous VHDL processor warnings 
+-- altera message_level Level1 
+-- altera message_off 10034 10035 10036 10037 10230 10240 10030 
+
+library altera;
+use altera.altera_europa_support_lib.all;
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
+
+library std;
+use std.textio.all;
+
+entity clock_1_out_arbitrator is 
+        port (
+              -- inputs:
+                 signal clk : IN STD_LOGIC;
+                 signal clock_1_out_address : IN STD_LOGIC;
+                 signal clock_1_out_granted_ram_signal_avalon_slave_0 : IN STD_LOGIC;
+                 signal clock_1_out_qualified_request_ram_signal_avalon_slave_0 : IN STD_LOGIC;
+                 signal clock_1_out_read : IN STD_LOGIC;
+                 signal clock_1_out_read_data_valid_ram_signal_avalon_slave_0 : IN STD_LOGIC;
+                 signal clock_1_out_requests_ram_signal_avalon_slave_0 : IN STD_LOGIC;
+                 signal clock_1_out_write : IN STD_LOGIC;
+                 signal clock_1_out_writedata : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+                 signal d1_ram_signal_avalon_slave_0_end_xfer : IN STD_LOGIC;
+                 signal reset_n : IN STD_LOGIC;
+
+              -- outputs:
+                 signal clock_1_out_address_to_slave : OUT STD_LOGIC;
+                 signal clock_1_out_readdata : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+                 signal clock_1_out_reset_n : OUT STD_LOGIC;
+                 signal clock_1_out_waitrequest : OUT STD_LOGIC
+              );
+attribute auto_dissolve : boolean;
+attribute auto_dissolve of clock_1_out_arbitrator : entity is FALSE;
+end entity clock_1_out_arbitrator;
+
+
+architecture europa of clock_1_out_arbitrator is
+                signal active_and_waiting_last_time :  STD_LOGIC;
+                signal clock_1_out_address_last_time :  STD_LOGIC;
+                signal clock_1_out_read_last_time :  STD_LOGIC;
+                signal clock_1_out_run :  STD_LOGIC;
+                signal clock_1_out_write_last_time :  STD_LOGIC;
+                signal clock_1_out_writedata_last_time :  STD_LOGIC_VECTOR (7 DOWNTO 0);
+                signal internal_clock_1_out_address_to_slave :  STD_LOGIC;
+                signal internal_clock_1_out_waitrequest :  STD_LOGIC;
+                signal r_0 :  STD_LOGIC;
+
+begin
+
+  --r_0 master_run cascaded wait assignment, which is an e_assign
+  r_0 <= Vector_To_Std_Logic(((std_logic_vector'("00000000000000000000000000000001") AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT clock_1_out_qualified_request_ram_signal_avalon_slave_0 OR NOT clock_1_out_read)))) OR (((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT d1_ram_signal_avalon_slave_0_end_xfer)))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(clock_1_out_read)))))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT clock_1_out_qualified_request_ram_signal_avalon_slave_0 OR NOT clock_1_out_write)))) OR ((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(clock_1_out_write)))))))));
+  --cascaded wait assignment, which is an e_assign
+  clock_1_out_run <= r_0;
+  --optimize select-logic by passing only those address bits which matter.
+  internal_clock_1_out_address_to_slave <= clock_1_out_address;
+  --actual waitrequest port, which is an e_assign
+  internal_clock_1_out_waitrequest <= NOT clock_1_out_run;
+  --clock_1_out_reset_n assignment, which is an e_assign
+  clock_1_out_reset_n <= reset_n;
+  --vhdl renameroo for output signals
+  clock_1_out_address_to_slave <= internal_clock_1_out_address_to_slave;
+  --vhdl renameroo for output signals
+  clock_1_out_waitrequest <= internal_clock_1_out_waitrequest;
+--synthesis translate_off
+    --clock_1_out_address check against wait, which is an e_register
+    process (clk, reset_n)
+    begin
+      if reset_n = '0' then
+        clock_1_out_address_last_time <= std_logic'('0');
+      elsif clk'event and clk = '1' then
+        if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+          clock_1_out_address_last_time <= clock_1_out_address;
+        end if;
+      end if;
+
+    end process;
+
+    --clock_1/out waited last time, which is an e_register
+    process (clk, reset_n)
+    begin
+      if reset_n = '0' then
+        active_and_waiting_last_time <= std_logic'('0');
+      elsif clk'event and clk = '1' then
+        if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+          active_and_waiting_last_time <= internal_clock_1_out_waitrequest AND ((clock_1_out_read OR clock_1_out_write));
+        end if;
+      end if;
+
+    end process;
+
+    --clock_1_out_address matches last port_name, which is an e_process
+    process (active_and_waiting_last_time, clock_1_out_address, clock_1_out_address_last_time)
+    VARIABLE write_line4 : line;
+    begin
+        if std_logic'((active_and_waiting_last_time AND to_std_logic(((std_logic'(clock_1_out_address) /= std_logic'(clock_1_out_address_last_time)))))) = '1' then 
+          write(write_line4, now);
+          write(write_line4, string'(": "));
+          write(write_line4, string'("clock_1_out_address did not heed wait!!!"));
+          write(output, write_line4.all);
+          deallocate (write_line4);
+          assert false report "VHDL STOP" severity failure;
+        end if;
+
+    end process;
+
+    --clock_1_out_read check against wait, which is an e_register
+    process (clk, reset_n)
+    begin
+      if reset_n = '0' then
+        clock_1_out_read_last_time <= std_logic'('0');
+      elsif clk'event and clk = '1' then
+        if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+          clock_1_out_read_last_time <= clock_1_out_read;
+        end if;
+      end if;
+
+    end process;
+
+    --clock_1_out_read matches last port_name, which is an e_process
+    process (active_and_waiting_last_time, clock_1_out_read, clock_1_out_read_last_time)
+    VARIABLE write_line5 : line;
+    begin
+        if std_logic'((active_and_waiting_last_time AND to_std_logic(((std_logic'(clock_1_out_read) /= std_logic'(clock_1_out_read_last_time)))))) = '1' then 
+          write(write_line5, now);
+          write(write_line5, string'(": "));
+          write(write_line5, string'("clock_1_out_read did not heed wait!!!"));
+          write(output, write_line5.all);
+          deallocate (write_line5);
+          assert false report "VHDL STOP" severity failure;
+        end if;
+
+    end process;
+
+    --clock_1_out_write check against wait, which is an e_register
+    process (clk, reset_n)
+    begin
+      if reset_n = '0' then
+        clock_1_out_write_last_time <= std_logic'('0');
+      elsif clk'event and clk = '1' then
+        if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+          clock_1_out_write_last_time <= clock_1_out_write;
+        end if;
+      end if;
+
+    end process;
+
+    --clock_1_out_write matches last port_name, which is an e_process
+    process (active_and_waiting_last_time, clock_1_out_write, clock_1_out_write_last_time)
+    VARIABLE write_line6 : line;
+    begin
+        if std_logic'((active_and_waiting_last_time AND to_std_logic(((std_logic'(clock_1_out_write) /= std_logic'(clock_1_out_write_last_time)))))) = '1' then 
+          write(write_line6, now);
+          write(write_line6, string'(": "));
+          write(write_line6, string'("clock_1_out_write did not heed wait!!!"));
+          write(output, write_line6.all);
+          deallocate (write_line6);
+          assert false report "VHDL STOP" severity failure;
+        end if;
+
+    end process;
+
+    --clock_1_out_writedata check against wait, which is an e_register
+    process (clk, reset_n)
+    begin
+      if reset_n = '0' then
+        clock_1_out_writedata_last_time <= std_logic_vector'("00000000");
+      elsif clk'event and clk = '1' then
+        if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+          clock_1_out_writedata_last_time <= clock_1_out_writedata;
+        end if;
+      end if;
+
+    end process;
+
+    --clock_1_out_writedata matches last port_name, which is an e_process
+    process (active_and_waiting_last_time, clock_1_out_write, clock_1_out_writedata, clock_1_out_writedata_last_time)
+    VARIABLE write_line7 : line;
+    begin
+        if std_logic'(((active_and_waiting_last_time AND to_std_logic(((clock_1_out_writedata /= clock_1_out_writedata_last_time)))) AND clock_1_out_write)) = '1' then 
+          write(write_line7, now);
+          write(write_line7, string'(": "));
+          write(write_line7, string'("clock_1_out_writedata did not heed wait!!!"));
+          write(output, write_line7.all);
+          deallocate (write_line7);
+          assert false report "VHDL STOP" severity failure;
+        end if;
+
+    end process;
+
+--synthesis translate_on
+
+end europa;
+
+
+
+-- turn off superfluous VHDL processor warnings 
+-- altera message_level Level1 
+-- altera message_off 10034 10035 10036 10037 10230 10240 10030 
+
+library altera;
+use altera.altera_europa_support_lib.all;
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
+
 library std;
 use std.textio.all;
 
@@ -90,9 +1022,9 @@ architecture europa of cpu_jtag_debug_module_arbitrator is
                 signal cpu_jtag_debug_module_any_continuerequest :  STD_LOGIC;
                 signal cpu_jtag_debug_module_arb_addend :  STD_LOGIC_VECTOR (1 DOWNTO 0);
                 signal cpu_jtag_debug_module_arb_counter_enable :  STD_LOGIC;
-                signal cpu_jtag_debug_module_arb_share_counter :  STD_LOGIC_VECTOR (1 DOWNTO 0);
-                signal cpu_jtag_debug_module_arb_share_counter_next_value :  STD_LOGIC_VECTOR (1 DOWNTO 0);
-                signal cpu_jtag_debug_module_arb_share_set_values :  STD_LOGIC_VECTOR (1 DOWNTO 0);
+                signal cpu_jtag_debug_module_arb_share_counter :  STD_LOGIC_VECTOR (2 DOWNTO 0);
+                signal cpu_jtag_debug_module_arb_share_counter_next_value :  STD_LOGIC_VECTOR (2 DOWNTO 0);
+                signal cpu_jtag_debug_module_arb_share_set_values :  STD_LOGIC_VECTOR (2 DOWNTO 0);
                 signal cpu_jtag_debug_module_arb_winner :  STD_LOGIC_VECTOR (1 DOWNTO 0);
                 signal cpu_jtag_debug_module_arbitration_holdoff_internal :  STD_LOGIC;
                 signal cpu_jtag_debug_module_beginbursttransfer_internal :  STD_LOGIC;
@@ -150,13 +1082,13 @@ begin
   cpu_jtag_debug_module_readdata_from_sa <= cpu_jtag_debug_module_readdata;
   internal_cpu_data_master_requests_cpu_jtag_debug_module <= to_std_logic(((Std_Logic_Vector'(cpu_data_master_address_to_slave(24 DOWNTO 11) & std_logic_vector'("00000000000")) = std_logic_vector'("1000000000000100000000000")))) AND ((cpu_data_master_read OR cpu_data_master_write));
   --cpu_jtag_debug_module_arb_share_counter set values, which is an e_mux
-  cpu_jtag_debug_module_arb_share_set_values <= std_logic_vector'("01");
+  cpu_jtag_debug_module_arb_share_set_values <= std_logic_vector'("001");
   --cpu_jtag_debug_module_non_bursting_master_requests mux, which is an e_mux
   cpu_jtag_debug_module_non_bursting_master_requests <= ((internal_cpu_data_master_requests_cpu_jtag_debug_module OR internal_cpu_instruction_master_requests_cpu_jtag_debug_module) OR internal_cpu_data_master_requests_cpu_jtag_debug_module) OR internal_cpu_instruction_master_requests_cpu_jtag_debug_module;
   --cpu_jtag_debug_module_any_bursting_master_saved_grant mux, which is an e_mux
   cpu_jtag_debug_module_any_bursting_master_saved_grant <= std_logic'('0');
   --cpu_jtag_debug_module_arb_share_counter_next_value assignment, which is an e_assign
-  cpu_jtag_debug_module_arb_share_counter_next_value <= A_EXT (A_WE_StdLogicVector((std_logic'(cpu_jtag_debug_module_firsttransfer) = '1'), (((std_logic_vector'("0000000000000000000000000000000") & (cpu_jtag_debug_module_arb_share_set_values)) - std_logic_vector'("000000000000000000000000000000001"))), A_WE_StdLogicVector((std_logic'(or_reduce(cpu_jtag_debug_module_arb_share_counter)) = '1'), (((std_logic_vector'("0000000000000000000000000000000") & (cpu_jtag_debug_module_arb_share_counter)) - std_logic_vector'("000000000000000000000000000000001"))), std_logic_vector'("000000000000000000000000000000000"))), 2);
+  cpu_jtag_debug_module_arb_share_counter_next_value <= A_EXT (A_WE_StdLogicVector((std_logic'(cpu_jtag_debug_module_firsttransfer) = '1'), (((std_logic_vector'("000000000000000000000000000000") & (cpu_jtag_debug_module_arb_share_set_values)) - std_logic_vector'("000000000000000000000000000000001"))), A_WE_StdLogicVector((std_logic'(or_reduce(cpu_jtag_debug_module_arb_share_counter)) = '1'), (((std_logic_vector'("000000000000000000000000000000") & (cpu_jtag_debug_module_arb_share_counter)) - std_logic_vector'("000000000000000000000000000000001"))), std_logic_vector'("000000000000000000000000000000000"))), 3);
   --cpu_jtag_debug_module_allgrants all slave grants, which is an e_mux
   cpu_jtag_debug_module_allgrants <= ((or_reduce(cpu_jtag_debug_module_grant_vector) OR or_reduce(cpu_jtag_debug_module_grant_vector)) OR or_reduce(cpu_jtag_debug_module_grant_vector)) OR or_reduce(cpu_jtag_debug_module_grant_vector);
   --cpu_jtag_debug_module_end_xfer assignment, which is an e_assign
@@ -169,7 +1101,7 @@ begin
   process (clk, reset_n)
   begin
     if reset_n = '0' then
-      cpu_jtag_debug_module_arb_share_counter <= std_logic_vector'("00");
+      cpu_jtag_debug_module_arb_share_counter <= std_logic_vector'("000");
     elsif clk'event and clk = '1' then
       if std_logic'(cpu_jtag_debug_module_arb_counter_enable) = '1' then 
         cpu_jtag_debug_module_arb_share_counter <= cpu_jtag_debug_module_arb_share_counter_next_value;
@@ -381,15 +1313,15 @@ begin
 
     --grant signals are active simultaneously, which is an e_process
     process (clk)
-    VARIABLE write_line : line;
+    VARIABLE write_line8 : line;
     begin
       if clk'event and clk = '1' then
         if (std_logic_vector'("000000000000000000000000000000") & (((std_logic_vector'("0") & (A_TOSTDLOGICVECTOR(internal_cpu_data_master_granted_cpu_jtag_debug_module))) + (std_logic_vector'("0") & (A_TOSTDLOGICVECTOR(internal_cpu_instruction_master_granted_cpu_jtag_debug_module))))))>std_logic_vector'("00000000000000000000000000000001") then 
-          write(write_line, now);
-          write(write_line, string'(": "));
-          write(write_line, string'("> 1 of grant signals are active simultaneously"));
-          write(output, write_line.all);
-          deallocate (write_line);
+          write(write_line8, now);
+          write(write_line8, string'(": "));
+          write(write_line8, string'("> 1 of grant signals are active simultaneously"));
+          write(output, write_line8.all);
+          deallocate (write_line8);
           assert false report "VHDL STOP" severity failure;
         end if;
       end if;
@@ -398,15 +1330,15 @@ begin
 
     --saved_grant signals are active simultaneously, which is an e_process
     process (clk)
-    VARIABLE write_line1 : line;
+    VARIABLE write_line9 : line;
     begin
       if clk'event and clk = '1' then
         if (std_logic_vector'("000000000000000000000000000000") & (((std_logic_vector'("0") & (A_TOSTDLOGICVECTOR(cpu_data_master_saved_grant_cpu_jtag_debug_module))) + (std_logic_vector'("0") & (A_TOSTDLOGICVECTOR(cpu_instruction_master_saved_grant_cpu_jtag_debug_module))))))>std_logic_vector'("00000000000000000000000000000001") then 
-          write(write_line1, now);
-          write(write_line1, string'(": "));
-          write(write_line1, string'("> 1 of saved_grant signals are active simultaneously"));
-          write(output, write_line1.all);
-          deallocate (write_line1);
+          write(write_line9, now);
+          write(write_line9, string'(": "));
+          write(write_line9, string'("> 1 of saved_grant signals are active simultaneously"));
+          write(output, write_line9.all);
+          deallocate (write_line9);
           assert false report "VHDL STOP" severity failure;
         end if;
       end if;
@@ -435,33 +1367,43 @@ entity cpu_data_master_arbitrator is
         port (
               -- inputs:
                  signal clk : IN STD_LOGIC;
+                 signal clock_0_in_readdata_from_sa : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                 signal clock_0_in_waitrequest_from_sa : IN STD_LOGIC;
+                 signal clock_1_in_readdata_from_sa : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+                 signal clock_1_in_waitrequest_from_sa : IN STD_LOGIC;
                  signal cpu_data_master_address : IN STD_LOGIC_VECTOR (24 DOWNTO 0);
+                 signal cpu_data_master_byteenable_clock_1_in : IN STD_LOGIC;
                  signal cpu_data_master_byteenable_sdram_s1 : IN STD_LOGIC_VECTOR (1 DOWNTO 0);
                  signal cpu_data_master_debugaccess : IN STD_LOGIC;
+                 signal cpu_data_master_granted_clock_0_in : IN STD_LOGIC;
+                 signal cpu_data_master_granted_clock_1_in : IN STD_LOGIC;
                  signal cpu_data_master_granted_cpu_jtag_debug_module : IN STD_LOGIC;
                  signal cpu_data_master_granted_jtag_uart_avalon_jtag_slave : IN STD_LOGIC;
-                 signal cpu_data_master_granted_ram_avalon_slave_0 : IN STD_LOGIC;
                  signal cpu_data_master_granted_sdram_s1 : IN STD_LOGIC;
+                 signal cpu_data_master_qualified_request_clock_0_in : IN STD_LOGIC;
+                 signal cpu_data_master_qualified_request_clock_1_in : IN STD_LOGIC;
                  signal cpu_data_master_qualified_request_cpu_jtag_debug_module : IN STD_LOGIC;
                  signal cpu_data_master_qualified_request_jtag_uart_avalon_jtag_slave : IN STD_LOGIC;
-                 signal cpu_data_master_qualified_request_ram_avalon_slave_0 : IN STD_LOGIC;
                  signal cpu_data_master_qualified_request_sdram_s1 : IN STD_LOGIC;
                  signal cpu_data_master_read : IN STD_LOGIC;
+                 signal cpu_data_master_read_data_valid_clock_0_in : IN STD_LOGIC;
+                 signal cpu_data_master_read_data_valid_clock_1_in : IN STD_LOGIC;
                  signal cpu_data_master_read_data_valid_cpu_jtag_debug_module : IN STD_LOGIC;
                  signal cpu_data_master_read_data_valid_jtag_uart_avalon_jtag_slave : IN STD_LOGIC;
-                 signal cpu_data_master_read_data_valid_ram_avalon_slave_0 : IN STD_LOGIC;
                  signal cpu_data_master_read_data_valid_sdram_s1 : IN STD_LOGIC;
                  signal cpu_data_master_read_data_valid_sdram_s1_shift_register : IN STD_LOGIC;
+                 signal cpu_data_master_requests_clock_0_in : IN STD_LOGIC;
+                 signal cpu_data_master_requests_clock_1_in : IN STD_LOGIC;
                  signal cpu_data_master_requests_cpu_jtag_debug_module : IN STD_LOGIC;
                  signal cpu_data_master_requests_jtag_uart_avalon_jtag_slave : IN STD_LOGIC;
-                 signal cpu_data_master_requests_ram_avalon_slave_0 : IN STD_LOGIC;
                  signal cpu_data_master_requests_sdram_s1 : IN STD_LOGIC;
                  signal cpu_data_master_write : IN STD_LOGIC;
                  signal cpu_data_master_writedata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
                  signal cpu_jtag_debug_module_readdata_from_sa : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                 signal d1_clock_0_in_end_xfer : IN STD_LOGIC;
+                 signal d1_clock_1_in_end_xfer : IN STD_LOGIC;
                  signal d1_cpu_jtag_debug_module_end_xfer : IN STD_LOGIC;
                  signal d1_jtag_uart_avalon_jtag_slave_end_xfer : IN STD_LOGIC;
-                 signal d1_ram_avalon_slave_0_end_xfer : IN STD_LOGIC;
                  signal d1_sdram_s1_end_xfer : IN STD_LOGIC;
                  signal jtag_uart_avalon_jtag_slave_irq_from_sa : IN STD_LOGIC;
                  signal jtag_uart_avalon_jtag_slave_readdata_from_sa : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
@@ -474,6 +1416,7 @@ entity cpu_data_master_arbitrator is
                  signal cpu_data_master_address_to_slave : OUT STD_LOGIC_VECTOR (24 DOWNTO 0);
                  signal cpu_data_master_dbs_address : OUT STD_LOGIC_VECTOR (1 DOWNTO 0);
                  signal cpu_data_master_dbs_write_16 : OUT STD_LOGIC_VECTOR (15 DOWNTO 0);
+                 signal cpu_data_master_dbs_write_8 : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
                  signal cpu_data_master_irq : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
                  signal cpu_data_master_no_byte_enables_and_last_term : OUT STD_LOGIC;
                  signal cpu_data_master_readdata : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
@@ -488,6 +1431,9 @@ architecture europa of cpu_data_master_arbitrator is
                 signal cpu_data_master_dbs_increment :  STD_LOGIC_VECTOR (1 DOWNTO 0);
                 signal cpu_data_master_run :  STD_LOGIC;
                 signal dbs_16_reg_segment_0 :  STD_LOGIC_VECTOR (15 DOWNTO 0);
+                signal dbs_8_reg_segment_0 :  STD_LOGIC_VECTOR (7 DOWNTO 0);
+                signal dbs_8_reg_segment_1 :  STD_LOGIC_VECTOR (7 DOWNTO 0);
+                signal dbs_8_reg_segment_2 :  STD_LOGIC_VECTOR (7 DOWNTO 0);
                 signal dbs_count_enable :  STD_LOGIC;
                 signal dbs_counter_overflow :  STD_LOGIC;
                 signal internal_cpu_data_master_address_to_slave :  STD_LOGIC_VECTOR (24 DOWNTO 0);
@@ -497,34 +1443,25 @@ architecture europa of cpu_data_master_arbitrator is
                 signal last_dbs_term_and_run :  STD_LOGIC;
                 signal next_dbs_address :  STD_LOGIC_VECTOR (1 DOWNTO 0);
                 signal p1_dbs_16_reg_segment_0 :  STD_LOGIC_VECTOR (15 DOWNTO 0);
+                signal p1_dbs_8_reg_segment_0 :  STD_LOGIC_VECTOR (7 DOWNTO 0);
+                signal p1_dbs_8_reg_segment_1 :  STD_LOGIC_VECTOR (7 DOWNTO 0);
+                signal p1_dbs_8_reg_segment_2 :  STD_LOGIC_VECTOR (7 DOWNTO 0);
                 signal p1_registered_cpu_data_master_readdata :  STD_LOGIC_VECTOR (31 DOWNTO 0);
                 signal pre_dbs_count_enable :  STD_LOGIC;
                 signal r_0 :  STD_LOGIC;
+                signal r_1 :  STD_LOGIC;
                 signal registered_cpu_data_master_readdata :  STD_LOGIC_VECTOR (31 DOWNTO 0);
 
 begin
 
   --r_0 master_run cascaded wait assignment, which is an e_assign
-  r_0 <= Vector_To_Std_Logic((((((((((((((((((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_qualified_request_cpu_jtag_debug_module OR NOT cpu_data_master_requests_cpu_jtag_debug_module)))))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_granted_cpu_jtag_debug_module OR NOT cpu_data_master_qualified_request_cpu_jtag_debug_module)))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_cpu_jtag_debug_module OR NOT cpu_data_master_read)))) OR (((std_logic_vector'("00000000000000000000000000000001") AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_data_master_read)))))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_cpu_jtag_debug_module OR NOT cpu_data_master_write)))) OR ((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_data_master_write)))))))) AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_qualified_request_jtag_uart_avalon_jtag_slave OR NOT cpu_data_master_requests_jtag_uart_avalon_jtag_slave)))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_jtag_uart_avalon_jtag_slave OR NOT ((cpu_data_master_read OR cpu_data_master_write)))))) OR (((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT jtag_uart_avalon_jtag_slave_waitrequest_from_sa)))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_read OR cpu_data_master_write)))))))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_jtag_uart_avalon_jtag_slave OR NOT ((cpu_data_master_read OR cpu_data_master_write)))))) OR (((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT jtag_uart_avalon_jtag_slave_waitrequest_from_sa)))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_read OR cpu_data_master_write)))))))))) AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_qualified_request_ram_avalon_slave_0 OR NOT cpu_data_master_requests_ram_avalon_slave_0)))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_ram_avalon_slave_0 OR NOT cpu_data_master_read)))) OR (((std_logic_vector'("00000000000000000000000000000001") AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_data_master_read)))))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_ram_avalon_slave_0 OR NOT cpu_data_master_write)))) OR ((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_data_master_write)))))))) AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((((cpu_data_master_qualified_request_sdram_s1 OR ((cpu_data_master_read_data_valid_sdram_s1 AND internal_cpu_data_master_dbs_address(1)))) OR (((cpu_data_master_write AND NOT(or_reduce(cpu_data_master_byteenable_sdram_s1))) AND internal_cpu_data_master_dbs_address(1)))) OR NOT cpu_data_master_requests_sdram_s1)))))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_granted_sdram_s1 OR NOT cpu_data_master_qualified_request_sdram_s1)))))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((((NOT cpu_data_master_qualified_request_sdram_s1 OR NOT cpu_data_master_read) OR (((cpu_data_master_read_data_valid_sdram_s1 AND (internal_cpu_data_master_dbs_address(1))) AND cpu_data_master_read)))))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_sdram_s1 OR NOT cpu_data_master_write)))) OR ((((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT sdram_s1_waitrequest_from_sa)))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((internal_cpu_data_master_dbs_address(1)))))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_data_master_write)))))))));
+  r_0 <= Vector_To_Std_Logic((((((((((((((((((((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_qualified_request_clock_0_in OR NOT cpu_data_master_requests_clock_0_in)))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_clock_0_in OR NOT ((cpu_data_master_read OR cpu_data_master_write)))))) OR (((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT clock_0_in_waitrequest_from_sa)))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_read OR cpu_data_master_write)))))))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_clock_0_in OR NOT ((cpu_data_master_read OR cpu_data_master_write)))))) OR (((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT clock_0_in_waitrequest_from_sa)))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_read OR cpu_data_master_write)))))))))) AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((((cpu_data_master_qualified_request_clock_1_in OR ((((cpu_data_master_write AND NOT(cpu_data_master_byteenable_clock_1_in)) AND internal_cpu_data_master_dbs_address(1)) AND internal_cpu_data_master_dbs_address(0)))) OR NOT cpu_data_master_requests_clock_1_in)))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_clock_1_in OR NOT cpu_data_master_read)))) OR ((((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT clock_1_in_waitrequest_from_sa)))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((internal_cpu_data_master_dbs_address(1) AND internal_cpu_data_master_dbs_address(0))))))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_data_master_read)))))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_clock_1_in OR NOT cpu_data_master_write)))) OR ((((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT clock_1_in_waitrequest_from_sa)))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((internal_cpu_data_master_dbs_address(1) AND internal_cpu_data_master_dbs_address(0))))))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_data_master_write)))))))) AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_qualified_request_cpu_jtag_debug_module OR NOT cpu_data_master_requests_cpu_jtag_debug_module)))))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_granted_cpu_jtag_debug_module OR NOT cpu_data_master_qualified_request_cpu_jtag_debug_module)))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_cpu_jtag_debug_module OR NOT cpu_data_master_read)))) OR (((std_logic_vector'("00000000000000000000000000000001") AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_data_master_read)))))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_cpu_jtag_debug_module OR NOT cpu_data_master_write)))) OR ((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_data_master_write)))))))) AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_qualified_request_jtag_uart_avalon_jtag_slave OR NOT cpu_data_master_requests_jtag_uart_avalon_jtag_slave)))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_jtag_uart_avalon_jtag_slave OR NOT ((cpu_data_master_read OR cpu_data_master_write)))))) OR (((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT jtag_uart_avalon_jtag_slave_waitrequest_from_sa)))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_read OR cpu_data_master_write)))))))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_jtag_uart_avalon_jtag_slave OR NOT ((cpu_data_master_read OR cpu_data_master_write)))))) OR (((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT jtag_uart_avalon_jtag_slave_waitrequest_from_sa)))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_read OR cpu_data_master_write)))))))))) AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((((cpu_data_master_qualified_request_sdram_s1 OR ((cpu_data_master_read_data_valid_sdram_s1 AND internal_cpu_data_master_dbs_address(1)))) OR (((cpu_data_master_write AND NOT(or_reduce(cpu_data_master_byteenable_sdram_s1))) AND internal_cpu_data_master_dbs_address(1)))) OR NOT cpu_data_master_requests_sdram_s1)))))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_granted_sdram_s1 OR NOT cpu_data_master_qualified_request_sdram_s1)))))));
   --cascaded wait assignment, which is an e_assign
-  cpu_data_master_run <= r_0;
+  cpu_data_master_run <= r_0 AND r_1;
+  --r_1 master_run cascaded wait assignment, which is an e_assign
+  r_1 <= Vector_To_Std_Logic(((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((((NOT cpu_data_master_qualified_request_sdram_s1 OR NOT cpu_data_master_read) OR (((cpu_data_master_read_data_valid_sdram_s1 AND (internal_cpu_data_master_dbs_address(1))) AND cpu_data_master_read))))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_data_master_qualified_request_sdram_s1 OR NOT cpu_data_master_write)))) OR ((((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT sdram_s1_waitrequest_from_sa)))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((internal_cpu_data_master_dbs_address(1)))))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_data_master_write)))))))));
   --optimize select-logic by passing only those address bits which matter.
   internal_cpu_data_master_address_to_slave <= cpu_data_master_address(24 DOWNTO 0);
-  --cpu/data_master readdata mux, which is an e_mux
-  cpu_data_master_readdata <= (((A_REP(NOT cpu_data_master_requests_cpu_jtag_debug_module, 32) OR cpu_jtag_debug_module_readdata_from_sa)) AND ((A_REP(NOT cpu_data_master_requests_jtag_uart_avalon_jtag_slave, 32) OR registered_cpu_data_master_readdata))) AND ((A_REP(NOT cpu_data_master_requests_sdram_s1, 32) OR registered_cpu_data_master_readdata));
-  --actual waitrequest port, which is an e_register
-  process (clk, reset_n)
-  begin
-    if reset_n = '0' then
-      internal_cpu_data_master_waitrequest <= Vector_To_Std_Logic(NOT std_logic_vector'("00000000000000000000000000000000"));
-    elsif clk'event and clk = '1' then
-      if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
-        internal_cpu_data_master_waitrequest <= Vector_To_Std_Logic(NOT (A_WE_StdLogicVector((std_logic'((NOT ((cpu_data_master_read OR cpu_data_master_write)))) = '1'), std_logic_vector'("00000000000000000000000000000000"), (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_run AND internal_cpu_data_master_waitrequest))))))));
-      end if;
-    end if;
-
-  end process;
-
   --unpredictable registered wait state incoming data, which is an e_register
   process (clk, reset_n)
   begin
@@ -539,9 +1476,22 @@ begin
   end process;
 
   --registered readdata mux, which is an e_mux
-  p1_registered_cpu_data_master_readdata <= ((A_REP(NOT cpu_data_master_requests_jtag_uart_avalon_jtag_slave, 32) OR jtag_uart_avalon_jtag_slave_readdata_from_sa)) AND ((A_REP(NOT cpu_data_master_requests_sdram_s1, 32) OR Std_Logic_Vector'(sdram_s1_readdata_from_sa(15 DOWNTO 0) & dbs_16_reg_segment_0)));
-  --irq assign, which is an e_assign
-  cpu_data_master_irq <= Std_Logic_Vector'(A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(jtag_uart_avalon_jtag_slave_irq_from_sa));
+  p1_registered_cpu_data_master_readdata <= ((((A_REP(NOT cpu_data_master_requests_clock_0_in, 32) OR clock_0_in_readdata_from_sa)) AND ((A_REP(NOT cpu_data_master_requests_clock_1_in, 32) OR Std_Logic_Vector'(clock_1_in_readdata_from_sa(7 DOWNTO 0) & dbs_8_reg_segment_2 & dbs_8_reg_segment_1 & dbs_8_reg_segment_0)))) AND ((A_REP(NOT cpu_data_master_requests_jtag_uart_avalon_jtag_slave, 32) OR jtag_uart_avalon_jtag_slave_readdata_from_sa))) AND ((A_REP(NOT cpu_data_master_requests_sdram_s1, 32) OR Std_Logic_Vector'(sdram_s1_readdata_from_sa(15 DOWNTO 0) & dbs_16_reg_segment_0)));
+  --cpu/data_master readdata mux, which is an e_mux
+  cpu_data_master_readdata <= (((((A_REP(NOT cpu_data_master_requests_clock_0_in, 32) OR registered_cpu_data_master_readdata)) AND ((A_REP(NOT cpu_data_master_requests_clock_1_in, 32) OR registered_cpu_data_master_readdata))) AND ((A_REP(NOT cpu_data_master_requests_cpu_jtag_debug_module, 32) OR cpu_jtag_debug_module_readdata_from_sa))) AND ((A_REP(NOT cpu_data_master_requests_jtag_uart_avalon_jtag_slave, 32) OR registered_cpu_data_master_readdata))) AND ((A_REP(NOT cpu_data_master_requests_sdram_s1, 32) OR registered_cpu_data_master_readdata));
+  --actual waitrequest port, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      internal_cpu_data_master_waitrequest <= Vector_To_Std_Logic(NOT std_logic_vector'("00000000000000000000000000000000"));
+    elsif clk'event and clk = '1' then
+      if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+        internal_cpu_data_master_waitrequest <= Vector_To_Std_Logic(NOT (A_WE_StdLogicVector((std_logic'((NOT ((cpu_data_master_read OR cpu_data_master_write)))) = '1'), std_logic_vector'("00000000000000000000000000000000"), (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_data_master_run AND internal_cpu_data_master_waitrequest))))))));
+      end if;
+    end if;
+
+  end process;
+
   --no_byte_enables_and_last_term, which is an e_register
   process (clk, reset_n)
   begin
@@ -556,9 +1506,79 @@ begin
   end process;
 
   --compute the last dbs term, which is an e_mux
-  last_dbs_term_and_run <= (to_std_logic(((internal_cpu_data_master_dbs_address = std_logic_vector'("10")))) AND cpu_data_master_write) AND NOT(or_reduce(cpu_data_master_byteenable_sdram_s1));
+  last_dbs_term_and_run <= A_WE_StdLogic((std_logic'((cpu_data_master_requests_clock_1_in)) = '1'), (((to_std_logic(((internal_cpu_data_master_dbs_address = std_logic_vector'("11")))) AND cpu_data_master_write) AND NOT(cpu_data_master_byteenable_clock_1_in))), (((to_std_logic(((internal_cpu_data_master_dbs_address = std_logic_vector'("10")))) AND cpu_data_master_write) AND NOT(or_reduce(cpu_data_master_byteenable_sdram_s1)))));
   --pre dbs count enable, which is an e_mux
-  pre_dbs_count_enable <= Vector_To_Std_Logic(((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((((((NOT internal_cpu_data_master_no_byte_enables_and_last_term) AND cpu_data_master_requests_sdram_s1) AND cpu_data_master_write) AND NOT(or_reduce(cpu_data_master_byteenable_sdram_s1)))) OR cpu_data_master_read_data_valid_sdram_s1)))) OR (((((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((cpu_data_master_granted_sdram_s1 AND cpu_data_master_write)))) AND std_logic_vector'("00000000000000000000000000000001")) AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT sdram_s1_waitrequest_from_sa)))))));
+  pre_dbs_count_enable <= Vector_To_Std_Logic(((((((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((((((NOT internal_cpu_data_master_no_byte_enables_and_last_term) AND cpu_data_master_requests_clock_1_in) AND cpu_data_master_write) AND NOT(cpu_data_master_byteenable_clock_1_in)))))) OR (((((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((cpu_data_master_granted_clock_1_in AND cpu_data_master_read)))) AND std_logic_vector'("00000000000000000000000000000001")) AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT clock_1_in_waitrequest_from_sa)))))) OR (((((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((cpu_data_master_granted_clock_1_in AND cpu_data_master_write)))) AND std_logic_vector'("00000000000000000000000000000001")) AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT clock_1_in_waitrequest_from_sa)))))) OR (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((((((NOT internal_cpu_data_master_no_byte_enables_and_last_term) AND cpu_data_master_requests_sdram_s1) AND cpu_data_master_write) AND NOT(or_reduce(cpu_data_master_byteenable_sdram_s1)))))))) OR (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_data_master_read_data_valid_sdram_s1)))) OR (((((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((cpu_data_master_granted_sdram_s1 AND cpu_data_master_write)))) AND std_logic_vector'("00000000000000000000000000000001")) AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT sdram_s1_waitrequest_from_sa)))))));
+  --input to dbs-8 stored 0, which is an e_mux
+  p1_dbs_8_reg_segment_0 <= clock_1_in_readdata_from_sa;
+  --dbs register for dbs-8 segment 0, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      dbs_8_reg_segment_0 <= std_logic_vector'("00000000");
+    elsif clk'event and clk = '1' then
+      if std_logic'((dbs_count_enable AND to_std_logic((((std_logic_vector'("000000000000000000000000000000") & ((internal_cpu_data_master_dbs_address(1 DOWNTO 0)))) = std_logic_vector'("00000000000000000000000000000000")))))) = '1' then 
+        dbs_8_reg_segment_0 <= p1_dbs_8_reg_segment_0;
+      end if;
+    end if;
+
+  end process;
+
+  --input to dbs-8 stored 1, which is an e_mux
+  p1_dbs_8_reg_segment_1 <= clock_1_in_readdata_from_sa;
+  --dbs register for dbs-8 segment 1, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      dbs_8_reg_segment_1 <= std_logic_vector'("00000000");
+    elsif clk'event and clk = '1' then
+      if std_logic'((dbs_count_enable AND to_std_logic((((std_logic_vector'("000000000000000000000000000000") & ((internal_cpu_data_master_dbs_address(1 DOWNTO 0)))) = std_logic_vector'("00000000000000000000000000000001")))))) = '1' then 
+        dbs_8_reg_segment_1 <= p1_dbs_8_reg_segment_1;
+      end if;
+    end if;
+
+  end process;
+
+  --input to dbs-8 stored 2, which is an e_mux
+  p1_dbs_8_reg_segment_2 <= clock_1_in_readdata_from_sa;
+  --dbs register for dbs-8 segment 2, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      dbs_8_reg_segment_2 <= std_logic_vector'("00000000");
+    elsif clk'event and clk = '1' then
+      if std_logic'((dbs_count_enable AND to_std_logic((((std_logic_vector'("000000000000000000000000000000") & ((internal_cpu_data_master_dbs_address(1 DOWNTO 0)))) = std_logic_vector'("00000000000000000000000000000010")))))) = '1' then 
+        dbs_8_reg_segment_2 <= p1_dbs_8_reg_segment_2;
+      end if;
+    end if;
+
+  end process;
+
+  --mux write dbs 2, which is an e_mux
+  cpu_data_master_dbs_write_8 <= A_WE_StdLogicVector((((std_logic_vector'("000000000000000000000000000000") & (internal_cpu_data_master_dbs_address(1 DOWNTO 0))) = std_logic_vector'("00000000000000000000000000000000"))), cpu_data_master_writedata(7 DOWNTO 0), A_WE_StdLogicVector((((std_logic_vector'("000000000000000000000000000000") & (internal_cpu_data_master_dbs_address(1 DOWNTO 0))) = std_logic_vector'("00000000000000000000000000000001"))), cpu_data_master_writedata(15 DOWNTO 8), A_WE_StdLogicVector((((std_logic_vector'("000000000000000000000000000000") & (internal_cpu_data_master_dbs_address(1 DOWNTO 0))) = std_logic_vector'("00000000000000000000000000000010"))), cpu_data_master_writedata(23 DOWNTO 16), cpu_data_master_writedata(31 DOWNTO 24))));
+  --dbs count increment, which is an e_mux
+  cpu_data_master_dbs_increment <= A_EXT (A_WE_StdLogicVector((std_logic'((cpu_data_master_requests_clock_1_in)) = '1'), std_logic_vector'("00000000000000000000000000000001"), A_WE_StdLogicVector((std_logic'((cpu_data_master_requests_sdram_s1)) = '1'), std_logic_vector'("00000000000000000000000000000010"), std_logic_vector'("00000000000000000000000000000000"))), 2);
+  --dbs counter overflow, which is an e_assign
+  dbs_counter_overflow <= internal_cpu_data_master_dbs_address(1) AND NOT((next_dbs_address(1)));
+  --next master address, which is an e_assign
+  next_dbs_address <= A_EXT (((std_logic_vector'("0") & (internal_cpu_data_master_dbs_address)) + (std_logic_vector'("0") & (cpu_data_master_dbs_increment))), 2);
+  --dbs count enable, which is an e_mux
+  dbs_count_enable <= (pre_dbs_count_enable AND (NOT ((cpu_data_master_requests_clock_1_in AND NOT internal_cpu_data_master_waitrequest)))) AND (NOT ((cpu_data_master_requests_sdram_s1 AND NOT internal_cpu_data_master_waitrequest)));
+  --dbs counter, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      internal_cpu_data_master_dbs_address <= std_logic_vector'("00");
+    elsif clk'event and clk = '1' then
+      if std_logic'(dbs_count_enable) = '1' then 
+        internal_cpu_data_master_dbs_address <= next_dbs_address;
+      end if;
+    end if;
+
+  end process;
+
+  --irq assign, which is an e_assign
+  cpu_data_master_irq <= Std_Logic_Vector'(A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(std_logic'('0')) & A_ToStdLogicVector(jtag_uart_avalon_jtag_slave_irq_from_sa));
   --input to dbs-16 stored 0, which is an e_mux
   p1_dbs_16_reg_segment_0 <= sdram_s1_readdata_from_sa;
   --dbs register for dbs-16 segment 0, which is an e_register
@@ -576,27 +1596,6 @@ begin
 
   --mux write dbs 1, which is an e_mux
   cpu_data_master_dbs_write_16 <= A_WE_StdLogicVector((std_logic'((internal_cpu_data_master_dbs_address(1))) = '1'), cpu_data_master_writedata(31 DOWNTO 16), cpu_data_master_writedata(15 DOWNTO 0));
-  --dbs count increment, which is an e_mux
-  cpu_data_master_dbs_increment <= A_EXT (A_WE_StdLogicVector((std_logic'((cpu_data_master_requests_sdram_s1)) = '1'), std_logic_vector'("00000000000000000000000000000010"), std_logic_vector'("00000000000000000000000000000000")), 2);
-  --dbs counter overflow, which is an e_assign
-  dbs_counter_overflow <= internal_cpu_data_master_dbs_address(1) AND NOT((next_dbs_address(1)));
-  --next master address, which is an e_assign
-  next_dbs_address <= A_EXT (((std_logic_vector'("0") & (internal_cpu_data_master_dbs_address)) + (std_logic_vector'("0") & (cpu_data_master_dbs_increment))), 2);
-  --dbs count enable, which is an e_mux
-  dbs_count_enable <= pre_dbs_count_enable AND (NOT ((cpu_data_master_requests_sdram_s1 AND NOT internal_cpu_data_master_waitrequest)));
-  --dbs counter, which is an e_register
-  process (clk, reset_n)
-  begin
-    if reset_n = '0' then
-      internal_cpu_data_master_dbs_address <= std_logic_vector'("00");
-    elsif clk'event and clk = '1' then
-      if std_logic'(dbs_count_enable) = '1' then 
-        internal_cpu_data_master_dbs_address <= next_dbs_address;
-      end if;
-    end if;
-
-  end process;
-
   --vhdl renameroo for output signals
   cpu_data_master_address_to_slave <= internal_cpu_data_master_address_to_slave;
   --vhdl renameroo for output signals
@@ -674,13 +1673,16 @@ architecture europa of cpu_instruction_master_arbitrator is
                 signal p1_dbs_16_reg_segment_0 :  STD_LOGIC_VECTOR (15 DOWNTO 0);
                 signal pre_dbs_count_enable :  STD_LOGIC;
                 signal r_0 :  STD_LOGIC;
+                signal r_1 :  STD_LOGIC;
 
 begin
 
   --r_0 master_run cascaded wait assignment, which is an e_assign
-  r_0 <= Vector_To_Std_Logic((((((((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_instruction_master_qualified_request_cpu_jtag_debug_module OR NOT cpu_instruction_master_requests_cpu_jtag_debug_module)))))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_instruction_master_granted_cpu_jtag_debug_module OR NOT cpu_instruction_master_qualified_request_cpu_jtag_debug_module)))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_instruction_master_qualified_request_cpu_jtag_debug_module OR NOT cpu_instruction_master_read)))) OR (((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT d1_cpu_jtag_debug_module_end_xfer)))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_instruction_master_read)))))))) AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((((cpu_instruction_master_qualified_request_sdram_s1 OR ((cpu_instruction_master_read_data_valid_sdram_s1 AND internal_cpu_instruction_master_dbs_address(1)))) OR NOT cpu_instruction_master_requests_sdram_s1)))))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_instruction_master_granted_sdram_s1 OR NOT cpu_instruction_master_qualified_request_sdram_s1)))))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((((NOT cpu_instruction_master_qualified_request_sdram_s1 OR NOT cpu_instruction_master_read) OR (((cpu_instruction_master_read_data_valid_sdram_s1 AND (internal_cpu_instruction_master_dbs_address(1))) AND cpu_instruction_master_read)))))))));
+  r_0 <= Vector_To_Std_Logic((((((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_instruction_master_qualified_request_cpu_jtag_debug_module OR NOT cpu_instruction_master_requests_cpu_jtag_debug_module)))))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((cpu_instruction_master_granted_cpu_jtag_debug_module OR NOT cpu_instruction_master_qualified_request_cpu_jtag_debug_module)))))) AND (((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((NOT cpu_instruction_master_qualified_request_cpu_jtag_debug_module OR NOT cpu_instruction_master_read)))) OR (((std_logic_vector'("00000000000000000000000000000001") AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT d1_cpu_jtag_debug_module_end_xfer)))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_instruction_master_read)))))))) AND std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR((((cpu_instruction_master_qualified_request_sdram_s1 OR ((cpu_instruction_master_read_data_valid_sdram_s1 AND internal_cpu_instruction_master_dbs_address(1)))) OR NOT cpu_instruction_master_requests_sdram_s1)))))));
   --cascaded wait assignment, which is an e_assign
-  cpu_instruction_master_run <= r_0;
+  cpu_instruction_master_run <= r_0 AND r_1;
+  --r_1 master_run cascaded wait assignment, which is an e_assign
+  r_1 <= ((cpu_instruction_master_granted_sdram_s1 OR NOT cpu_instruction_master_qualified_request_sdram_s1)) AND (((NOT cpu_instruction_master_qualified_request_sdram_s1 OR NOT cpu_instruction_master_read) OR (((cpu_instruction_master_read_data_valid_sdram_s1 AND (internal_cpu_instruction_master_dbs_address(1))) AND cpu_instruction_master_read))));
   --optimize select-logic by passing only those address bits which matter.
   internal_cpu_instruction_master_address_to_slave <= cpu_instruction_master_address(24 DOWNTO 0);
   --cpu/instruction_master readdata mux, which is an e_mux
@@ -760,14 +1762,14 @@ begin
 
     --cpu_instruction_master_address matches last port_name, which is an e_process
     process (active_and_waiting_last_time, cpu_instruction_master_address, cpu_instruction_master_address_last_time)
-    VARIABLE write_line2 : line;
+    VARIABLE write_line10 : line;
     begin
         if std_logic'((active_and_waiting_last_time AND to_std_logic(((cpu_instruction_master_address /= cpu_instruction_master_address_last_time))))) = '1' then 
-          write(write_line2, now);
-          write(write_line2, string'(": "));
-          write(write_line2, string'("cpu_instruction_master_address did not heed wait!!!"));
-          write(output, write_line2.all);
-          deallocate (write_line2);
+          write(write_line10, now);
+          write(write_line10, string'(": "));
+          write(write_line10, string'("cpu_instruction_master_address did not heed wait!!!"));
+          write(output, write_line10.all);
+          deallocate (write_line10);
           assert false report "VHDL STOP" severity failure;
         end if;
 
@@ -788,14 +1790,14 @@ begin
 
     --cpu_instruction_master_read matches last port_name, which is an e_process
     process (active_and_waiting_last_time, cpu_instruction_master_read, cpu_instruction_master_read_last_time)
-    VARIABLE write_line3 : line;
+    VARIABLE write_line11 : line;
     begin
         if std_logic'((active_and_waiting_last_time AND to_std_logic(((std_logic'(cpu_instruction_master_read) /= std_logic'(cpu_instruction_master_read_last_time)))))) = '1' then 
-          write(write_line3, now);
-          write(write_line3, string'(": "));
-          write(write_line3, string'("cpu_instruction_master_read did not heed wait!!!"));
-          write(output, write_line3.all);
-          deallocate (write_line3);
+          write(write_line11, now);
+          write(write_line11, string'(": "));
+          write(write_line11, string'("cpu_instruction_master_read did not heed wait!!!"));
+          write(output, write_line11.all);
+          deallocate (write_line11);
           assert false report "VHDL STOP" severity failure;
         end if;
 
@@ -877,9 +1879,9 @@ architecture europa of jtag_uart_avalon_jtag_slave_arbitrator is
                 signal jtag_uart_avalon_jtag_slave_any_bursting_master_saved_grant :  STD_LOGIC;
                 signal jtag_uart_avalon_jtag_slave_any_continuerequest :  STD_LOGIC;
                 signal jtag_uart_avalon_jtag_slave_arb_counter_enable :  STD_LOGIC;
-                signal jtag_uart_avalon_jtag_slave_arb_share_counter :  STD_LOGIC_VECTOR (1 DOWNTO 0);
-                signal jtag_uart_avalon_jtag_slave_arb_share_counter_next_value :  STD_LOGIC_VECTOR (1 DOWNTO 0);
-                signal jtag_uart_avalon_jtag_slave_arb_share_set_values :  STD_LOGIC_VECTOR (1 DOWNTO 0);
+                signal jtag_uart_avalon_jtag_slave_arb_share_counter :  STD_LOGIC_VECTOR (2 DOWNTO 0);
+                signal jtag_uart_avalon_jtag_slave_arb_share_counter_next_value :  STD_LOGIC_VECTOR (2 DOWNTO 0);
+                signal jtag_uart_avalon_jtag_slave_arb_share_set_values :  STD_LOGIC_VECTOR (2 DOWNTO 0);
                 signal jtag_uart_avalon_jtag_slave_beginbursttransfer_internal :  STD_LOGIC;
                 signal jtag_uart_avalon_jtag_slave_begins_xfer :  STD_LOGIC;
                 signal jtag_uart_avalon_jtag_slave_end_xfer :  STD_LOGIC;
@@ -923,13 +1925,13 @@ begin
   --assign jtag_uart_avalon_jtag_slave_waitrequest_from_sa = jtag_uart_avalon_jtag_slave_waitrequest so that symbol knows where to group signals which may go to master only, which is an e_assign
   internal_jtag_uart_avalon_jtag_slave_waitrequest_from_sa <= jtag_uart_avalon_jtag_slave_waitrequest;
   --jtag_uart_avalon_jtag_slave_arb_share_counter set values, which is an e_mux
-  jtag_uart_avalon_jtag_slave_arb_share_set_values <= std_logic_vector'("01");
+  jtag_uart_avalon_jtag_slave_arb_share_set_values <= std_logic_vector'("001");
   --jtag_uart_avalon_jtag_slave_non_bursting_master_requests mux, which is an e_mux
   jtag_uart_avalon_jtag_slave_non_bursting_master_requests <= internal_cpu_data_master_requests_jtag_uart_avalon_jtag_slave;
   --jtag_uart_avalon_jtag_slave_any_bursting_master_saved_grant mux, which is an e_mux
   jtag_uart_avalon_jtag_slave_any_bursting_master_saved_grant <= std_logic'('0');
   --jtag_uart_avalon_jtag_slave_arb_share_counter_next_value assignment, which is an e_assign
-  jtag_uart_avalon_jtag_slave_arb_share_counter_next_value <= A_EXT (A_WE_StdLogicVector((std_logic'(jtag_uart_avalon_jtag_slave_firsttransfer) = '1'), (((std_logic_vector'("0000000000000000000000000000000") & (jtag_uart_avalon_jtag_slave_arb_share_set_values)) - std_logic_vector'("000000000000000000000000000000001"))), A_WE_StdLogicVector((std_logic'(or_reduce(jtag_uart_avalon_jtag_slave_arb_share_counter)) = '1'), (((std_logic_vector'("0000000000000000000000000000000") & (jtag_uart_avalon_jtag_slave_arb_share_counter)) - std_logic_vector'("000000000000000000000000000000001"))), std_logic_vector'("000000000000000000000000000000000"))), 2);
+  jtag_uart_avalon_jtag_slave_arb_share_counter_next_value <= A_EXT (A_WE_StdLogicVector((std_logic'(jtag_uart_avalon_jtag_slave_firsttransfer) = '1'), (((std_logic_vector'("000000000000000000000000000000") & (jtag_uart_avalon_jtag_slave_arb_share_set_values)) - std_logic_vector'("000000000000000000000000000000001"))), A_WE_StdLogicVector((std_logic'(or_reduce(jtag_uart_avalon_jtag_slave_arb_share_counter)) = '1'), (((std_logic_vector'("000000000000000000000000000000") & (jtag_uart_avalon_jtag_slave_arb_share_counter)) - std_logic_vector'("000000000000000000000000000000001"))), std_logic_vector'("000000000000000000000000000000000"))), 3);
   --jtag_uart_avalon_jtag_slave_allgrants all slave grants, which is an e_mux
   jtag_uart_avalon_jtag_slave_allgrants <= jtag_uart_avalon_jtag_slave_grant_vector;
   --jtag_uart_avalon_jtag_slave_end_xfer assignment, which is an e_assign
@@ -942,7 +1944,7 @@ begin
   process (clk, reset_n)
   begin
     if reset_n = '0' then
-      jtag_uart_avalon_jtag_slave_arb_share_counter <= std_logic_vector'("00");
+      jtag_uart_avalon_jtag_slave_arb_share_counter <= std_logic_vector'("000");
     elsif clk'event and clk = '1' then
       if std_logic'(jtag_uart_avalon_jtag_slave_arb_counter_enable) = '1' then 
         jtag_uart_avalon_jtag_slave_arb_share_counter <= jtag_uart_avalon_jtag_slave_arb_share_counter_next_value;
@@ -1088,18 +2090,17 @@ entity ram_avalon_slave_0_arbitrator is
         port (
               -- inputs:
                  signal clk : IN STD_LOGIC;
-                 signal cpu_data_master_address_to_slave : IN STD_LOGIC_VECTOR (24 DOWNTO 0);
-                 signal cpu_data_master_read : IN STD_LOGIC;
-                 signal cpu_data_master_waitrequest : IN STD_LOGIC;
-                 signal cpu_data_master_write : IN STD_LOGIC;
-                 signal cpu_data_master_writedata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                 signal clock_0_out_address_to_slave : IN STD_LOGIC_VECTOR (5 DOWNTO 0);
+                 signal clock_0_out_read : IN STD_LOGIC;
+                 signal clock_0_out_write : IN STD_LOGIC;
+                 signal clock_0_out_writedata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
                  signal reset_n : IN STD_LOGIC;
 
               -- outputs:
-                 signal cpu_data_master_granted_ram_avalon_slave_0 : OUT STD_LOGIC;
-                 signal cpu_data_master_qualified_request_ram_avalon_slave_0 : OUT STD_LOGIC;
-                 signal cpu_data_master_read_data_valid_ram_avalon_slave_0 : OUT STD_LOGIC;
-                 signal cpu_data_master_requests_ram_avalon_slave_0 : OUT STD_LOGIC;
+                 signal clock_0_out_granted_ram_avalon_slave_0 : OUT STD_LOGIC;
+                 signal clock_0_out_qualified_request_ram_avalon_slave_0 : OUT STD_LOGIC;
+                 signal clock_0_out_read_data_valid_ram_avalon_slave_0 : OUT STD_LOGIC;
+                 signal clock_0_out_requests_ram_avalon_slave_0 : OUT STD_LOGIC;
                  signal d1_ram_avalon_slave_0_end_xfer : OUT STD_LOGIC;
                  signal ram_avalon_slave_0_address : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
                  signal ram_avalon_slave_0_chipselect : OUT STD_LOGIC;
@@ -1113,26 +2114,26 @@ end entity ram_avalon_slave_0_arbitrator;
 
 
 architecture europa of ram_avalon_slave_0_arbitrator is
-                signal cpu_data_master_arbiterlock :  STD_LOGIC;
-                signal cpu_data_master_arbiterlock2 :  STD_LOGIC;
-                signal cpu_data_master_continuerequest :  STD_LOGIC;
-                signal cpu_data_master_saved_grant_ram_avalon_slave_0 :  STD_LOGIC;
+                signal clock_0_out_arbiterlock :  STD_LOGIC;
+                signal clock_0_out_arbiterlock2 :  STD_LOGIC;
+                signal clock_0_out_continuerequest :  STD_LOGIC;
+                signal clock_0_out_saved_grant_ram_avalon_slave_0 :  STD_LOGIC;
                 signal d1_reasons_to_wait :  STD_LOGIC;
                 signal enable_nonzero_assertions :  STD_LOGIC;
                 signal end_xfer_arb_share_counter_term_ram_avalon_slave_0 :  STD_LOGIC;
                 signal in_a_read_cycle :  STD_LOGIC;
                 signal in_a_write_cycle :  STD_LOGIC;
-                signal internal_cpu_data_master_granted_ram_avalon_slave_0 :  STD_LOGIC;
-                signal internal_cpu_data_master_qualified_request_ram_avalon_slave_0 :  STD_LOGIC;
-                signal internal_cpu_data_master_requests_ram_avalon_slave_0 :  STD_LOGIC;
+                signal internal_clock_0_out_granted_ram_avalon_slave_0 :  STD_LOGIC;
+                signal internal_clock_0_out_qualified_request_ram_avalon_slave_0 :  STD_LOGIC;
+                signal internal_clock_0_out_requests_ram_avalon_slave_0 :  STD_LOGIC;
                 signal ram_avalon_slave_0_allgrants :  STD_LOGIC;
                 signal ram_avalon_slave_0_allow_new_arb_cycle :  STD_LOGIC;
                 signal ram_avalon_slave_0_any_bursting_master_saved_grant :  STD_LOGIC;
                 signal ram_avalon_slave_0_any_continuerequest :  STD_LOGIC;
                 signal ram_avalon_slave_0_arb_counter_enable :  STD_LOGIC;
-                signal ram_avalon_slave_0_arb_share_counter :  STD_LOGIC_VECTOR (1 DOWNTO 0);
-                signal ram_avalon_slave_0_arb_share_counter_next_value :  STD_LOGIC_VECTOR (1 DOWNTO 0);
-                signal ram_avalon_slave_0_arb_share_set_values :  STD_LOGIC_VECTOR (1 DOWNTO 0);
+                signal ram_avalon_slave_0_arb_share_counter :  STD_LOGIC;
+                signal ram_avalon_slave_0_arb_share_counter_next_value :  STD_LOGIC;
+                signal ram_avalon_slave_0_arb_share_set_values :  STD_LOGIC;
                 signal ram_avalon_slave_0_beginbursttransfer_internal :  STD_LOGIC;
                 signal ram_avalon_slave_0_begins_xfer :  STD_LOGIC;
                 signal ram_avalon_slave_0_end_xfer :  STD_LOGIC;
@@ -1148,7 +2149,7 @@ architecture europa of ram_avalon_slave_0_arbitrator is
                 signal ram_avalon_slave_0_unreg_firsttransfer :  STD_LOGIC;
                 signal ram_avalon_slave_0_waits_for_read :  STD_LOGIC;
                 signal ram_avalon_slave_0_waits_for_write :  STD_LOGIC;
-                signal shifted_address_to_ram_avalon_slave_0_from_cpu_data_master :  STD_LOGIC_VECTOR (24 DOWNTO 0);
+                signal shifted_address_to_ram_avalon_slave_0_from_clock_0_out :  STD_LOGIC_VECTOR (5 DOWNTO 0);
                 signal wait_for_ram_avalon_slave_0_counter :  STD_LOGIC;
 
 begin
@@ -1165,16 +2166,16 @@ begin
 
   end process;
 
-  ram_avalon_slave_0_begins_xfer <= NOT d1_reasons_to_wait AND (internal_cpu_data_master_qualified_request_ram_avalon_slave_0);
-  internal_cpu_data_master_requests_ram_avalon_slave_0 <= ((to_std_logic(((Std_Logic_Vector'(cpu_data_master_address_to_slave(24 DOWNTO 6) & std_logic_vector'("000000")) = std_logic_vector'("0000000000000000000000000")))) AND ((cpu_data_master_read OR cpu_data_master_write)))) AND cpu_data_master_write;
+  ram_avalon_slave_0_begins_xfer <= NOT d1_reasons_to_wait AND (internal_clock_0_out_qualified_request_ram_avalon_slave_0);
+  internal_clock_0_out_requests_ram_avalon_slave_0 <= Vector_To_Std_Logic(((((std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((clock_0_out_read OR clock_0_out_write))))))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(clock_0_out_write)))));
   --ram_avalon_slave_0_arb_share_counter set values, which is an e_mux
-  ram_avalon_slave_0_arb_share_set_values <= std_logic_vector'("01");
+  ram_avalon_slave_0_arb_share_set_values <= std_logic'('1');
   --ram_avalon_slave_0_non_bursting_master_requests mux, which is an e_mux
-  ram_avalon_slave_0_non_bursting_master_requests <= internal_cpu_data_master_requests_ram_avalon_slave_0;
+  ram_avalon_slave_0_non_bursting_master_requests <= internal_clock_0_out_requests_ram_avalon_slave_0;
   --ram_avalon_slave_0_any_bursting_master_saved_grant mux, which is an e_mux
   ram_avalon_slave_0_any_bursting_master_saved_grant <= std_logic'('0');
   --ram_avalon_slave_0_arb_share_counter_next_value assignment, which is an e_assign
-  ram_avalon_slave_0_arb_share_counter_next_value <= A_EXT (A_WE_StdLogicVector((std_logic'(ram_avalon_slave_0_firsttransfer) = '1'), (((std_logic_vector'("0000000000000000000000000000000") & (ram_avalon_slave_0_arb_share_set_values)) - std_logic_vector'("000000000000000000000000000000001"))), A_WE_StdLogicVector((std_logic'(or_reduce(ram_avalon_slave_0_arb_share_counter)) = '1'), (((std_logic_vector'("0000000000000000000000000000000") & (ram_avalon_slave_0_arb_share_counter)) - std_logic_vector'("000000000000000000000000000000001"))), std_logic_vector'("000000000000000000000000000000000"))), 2);
+  ram_avalon_slave_0_arb_share_counter_next_value <= Vector_To_Std_Logic(A_WE_StdLogicVector((std_logic'(ram_avalon_slave_0_firsttransfer) = '1'), (((std_logic_vector'("00000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(ram_avalon_slave_0_arb_share_set_values))) - std_logic_vector'("000000000000000000000000000000001"))), A_WE_StdLogicVector((std_logic'(ram_avalon_slave_0_arb_share_counter) = '1'), (((std_logic_vector'("00000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(ram_avalon_slave_0_arb_share_counter))) - std_logic_vector'("000000000000000000000000000000001"))), std_logic_vector'("000000000000000000000000000000000"))));
   --ram_avalon_slave_0_allgrants all slave grants, which is an e_mux
   ram_avalon_slave_0_allgrants <= ram_avalon_slave_0_grant_vector;
   --ram_avalon_slave_0_end_xfer assignment, which is an e_assign
@@ -1187,7 +2188,7 @@ begin
   process (clk, reset_n)
   begin
     if reset_n = '0' then
-      ram_avalon_slave_0_arb_share_counter <= std_logic_vector'("00");
+      ram_avalon_slave_0_arb_share_counter <= std_logic'('0');
     elsif clk'event and clk = '1' then
       if std_logic'(ram_avalon_slave_0_arb_counter_enable) = '1' then 
         ram_avalon_slave_0_arb_share_counter <= ram_avalon_slave_0_arb_share_counter_next_value;
@@ -1203,29 +2204,29 @@ begin
       ram_avalon_slave_0_slavearbiterlockenable <= std_logic'('0');
     elsif clk'event and clk = '1' then
       if std_logic'((((ram_avalon_slave_0_master_qreq_vector AND end_xfer_arb_share_counter_term_ram_avalon_slave_0)) OR ((end_xfer_arb_share_counter_term_ram_avalon_slave_0 AND NOT ram_avalon_slave_0_non_bursting_master_requests)))) = '1' then 
-        ram_avalon_slave_0_slavearbiterlockenable <= or_reduce(ram_avalon_slave_0_arb_share_counter_next_value);
+        ram_avalon_slave_0_slavearbiterlockenable <= ram_avalon_slave_0_arb_share_counter_next_value;
       end if;
     end if;
 
   end process;
 
-  --cpu/data_master ram/avalon_slave_0 arbiterlock, which is an e_assign
-  cpu_data_master_arbiterlock <= ram_avalon_slave_0_slavearbiterlockenable AND cpu_data_master_continuerequest;
+  --clock_0/out ram/avalon_slave_0 arbiterlock, which is an e_assign
+  clock_0_out_arbiterlock <= ram_avalon_slave_0_slavearbiterlockenable AND clock_0_out_continuerequest;
   --ram_avalon_slave_0_slavearbiterlockenable2 slave enables arbiterlock2, which is an e_assign
-  ram_avalon_slave_0_slavearbiterlockenable2 <= or_reduce(ram_avalon_slave_0_arb_share_counter_next_value);
-  --cpu/data_master ram/avalon_slave_0 arbiterlock2, which is an e_assign
-  cpu_data_master_arbiterlock2 <= ram_avalon_slave_0_slavearbiterlockenable2 AND cpu_data_master_continuerequest;
+  ram_avalon_slave_0_slavearbiterlockenable2 <= ram_avalon_slave_0_arb_share_counter_next_value;
+  --clock_0/out ram/avalon_slave_0 arbiterlock2, which is an e_assign
+  clock_0_out_arbiterlock2 <= ram_avalon_slave_0_slavearbiterlockenable2 AND clock_0_out_continuerequest;
   --ram_avalon_slave_0_any_continuerequest at least one master continues requesting, which is an e_assign
   ram_avalon_slave_0_any_continuerequest <= std_logic'('1');
-  --cpu_data_master_continuerequest continued request, which is an e_assign
-  cpu_data_master_continuerequest <= std_logic'('1');
-  internal_cpu_data_master_qualified_request_ram_avalon_slave_0 <= internal_cpu_data_master_requests_ram_avalon_slave_0 AND NOT (((NOT cpu_data_master_waitrequest) AND cpu_data_master_write));
+  --clock_0_out_continuerequest continued request, which is an e_assign
+  clock_0_out_continuerequest <= std_logic'('1');
+  internal_clock_0_out_qualified_request_ram_avalon_slave_0 <= internal_clock_0_out_requests_ram_avalon_slave_0;
   --ram_avalon_slave_0_writedata mux, which is an e_mux
-  ram_avalon_slave_0_writedata <= cpu_data_master_writedata;
+  ram_avalon_slave_0_writedata <= clock_0_out_writedata;
   --master is always granted when requested
-  internal_cpu_data_master_granted_ram_avalon_slave_0 <= internal_cpu_data_master_qualified_request_ram_avalon_slave_0;
-  --cpu/data_master saved-grant ram/avalon_slave_0, which is an e_assign
-  cpu_data_master_saved_grant_ram_avalon_slave_0 <= internal_cpu_data_master_requests_ram_avalon_slave_0;
+  internal_clock_0_out_granted_ram_avalon_slave_0 <= internal_clock_0_out_qualified_request_ram_avalon_slave_0;
+  --clock_0/out saved-grant ram/avalon_slave_0, which is an e_assign
+  clock_0_out_saved_grant_ram_avalon_slave_0 <= internal_clock_0_out_requests_ram_avalon_slave_0;
   --allow new arb cycle for ram/avalon_slave_0, which is an e_assign
   ram_avalon_slave_0_allow_new_arb_cycle <= std_logic'('1');
   --placeholder chosen master
@@ -1234,7 +2235,7 @@ begin
   ram_avalon_slave_0_master_qreq_vector <= std_logic'('1');
   --ram_avalon_slave_0_reset_n assignment, which is an e_assign
   ram_avalon_slave_0_reset_n <= reset_n;
-  ram_avalon_slave_0_chipselect <= internal_cpu_data_master_granted_ram_avalon_slave_0;
+  ram_avalon_slave_0_chipselect <= internal_clock_0_out_granted_ram_avalon_slave_0;
   --ram_avalon_slave_0_firsttransfer first transaction, which is an e_assign
   ram_avalon_slave_0_firsttransfer <= A_WE_StdLogic((std_logic'(ram_avalon_slave_0_begins_xfer) = '1'), ram_avalon_slave_0_unreg_firsttransfer, ram_avalon_slave_0_reg_firsttransfer);
   --ram_avalon_slave_0_unreg_firsttransfer first transaction, which is an e_assign
@@ -1255,10 +2256,10 @@ begin
   --ram_avalon_slave_0_beginbursttransfer_internal begin burst transfer, which is an e_assign
   ram_avalon_slave_0_beginbursttransfer_internal <= ram_avalon_slave_0_begins_xfer;
   --ram_avalon_slave_0_write assignment, which is an e_mux
-  ram_avalon_slave_0_write <= internal_cpu_data_master_granted_ram_avalon_slave_0 AND cpu_data_master_write;
-  shifted_address_to_ram_avalon_slave_0_from_cpu_data_master <= cpu_data_master_address_to_slave;
+  ram_avalon_slave_0_write <= internal_clock_0_out_granted_ram_avalon_slave_0 AND clock_0_out_write;
+  shifted_address_to_ram_avalon_slave_0_from_clock_0_out <= clock_0_out_address_to_slave;
   --ram_avalon_slave_0_address mux, which is an e_mux
-  ram_avalon_slave_0_address <= A_EXT (A_SRL(shifted_address_to_ram_avalon_slave_0_from_cpu_data_master,std_logic_vector'("00000000000000000000000000000010")), 4);
+  ram_avalon_slave_0_address <= A_EXT (A_SRL(shifted_address_to_ram_avalon_slave_0_from_clock_0_out,std_logic_vector'("00000000000000000000000000000010")), 4);
   --d1_ram_avalon_slave_0_end_xfer register, which is an e_register
   process (clk, reset_n)
   begin
@@ -1275,24 +2276,263 @@ begin
   --ram_avalon_slave_0_waits_for_read in a cycle, which is an e_mux
   ram_avalon_slave_0_waits_for_read <= ram_avalon_slave_0_in_a_read_cycle AND ram_avalon_slave_0_begins_xfer;
   --ram_avalon_slave_0_in_a_read_cycle assignment, which is an e_assign
-  ram_avalon_slave_0_in_a_read_cycle <= internal_cpu_data_master_granted_ram_avalon_slave_0 AND cpu_data_master_read;
+  ram_avalon_slave_0_in_a_read_cycle <= internal_clock_0_out_granted_ram_avalon_slave_0 AND clock_0_out_read;
   --in_a_read_cycle assignment, which is an e_mux
   in_a_read_cycle <= ram_avalon_slave_0_in_a_read_cycle;
   --ram_avalon_slave_0_waits_for_write in a cycle, which is an e_mux
   ram_avalon_slave_0_waits_for_write <= Vector_To_Std_Logic(((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(ram_avalon_slave_0_in_a_write_cycle))) AND std_logic_vector'("00000000000000000000000000000000")));
   --ram_avalon_slave_0_in_a_write_cycle assignment, which is an e_assign
-  ram_avalon_slave_0_in_a_write_cycle <= internal_cpu_data_master_granted_ram_avalon_slave_0 AND cpu_data_master_write;
+  ram_avalon_slave_0_in_a_write_cycle <= internal_clock_0_out_granted_ram_avalon_slave_0 AND clock_0_out_write;
   --in_a_write_cycle assignment, which is an e_mux
   in_a_write_cycle <= ram_avalon_slave_0_in_a_write_cycle;
   wait_for_ram_avalon_slave_0_counter <= std_logic'('0');
   --vhdl renameroo for output signals
-  cpu_data_master_granted_ram_avalon_slave_0 <= internal_cpu_data_master_granted_ram_avalon_slave_0;
+  clock_0_out_granted_ram_avalon_slave_0 <= internal_clock_0_out_granted_ram_avalon_slave_0;
   --vhdl renameroo for output signals
-  cpu_data_master_qualified_request_ram_avalon_slave_0 <= internal_cpu_data_master_qualified_request_ram_avalon_slave_0;
+  clock_0_out_qualified_request_ram_avalon_slave_0 <= internal_clock_0_out_qualified_request_ram_avalon_slave_0;
   --vhdl renameroo for output signals
-  cpu_data_master_requests_ram_avalon_slave_0 <= internal_cpu_data_master_requests_ram_avalon_slave_0;
+  clock_0_out_requests_ram_avalon_slave_0 <= internal_clock_0_out_requests_ram_avalon_slave_0;
 --synthesis translate_off
     --ram/avalon_slave_0 enable non-zero assertions, which is an e_register
+    process (clk, reset_n)
+    begin
+      if reset_n = '0' then
+        enable_nonzero_assertions <= std_logic'('0');
+      elsif clk'event and clk = '1' then
+        if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+          enable_nonzero_assertions <= std_logic'('1');
+        end if;
+      end if;
+
+    end process;
+
+--synthesis translate_on
+
+end europa;
+
+
+
+-- turn off superfluous VHDL processor warnings 
+-- altera message_level Level1 
+-- altera message_off 10034 10035 10036 10037 10230 10240 10030 
+
+library altera;
+use altera.altera_europa_support_lib.all;
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
+
+entity ram_signal_avalon_slave_0_arbitrator is 
+        port (
+              -- inputs:
+                 signal clk : IN STD_LOGIC;
+                 signal clock_1_out_address_to_slave : IN STD_LOGIC;
+                 signal clock_1_out_read : IN STD_LOGIC;
+                 signal clock_1_out_write : IN STD_LOGIC;
+                 signal clock_1_out_writedata : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+                 signal reset_n : IN STD_LOGIC;
+
+              -- outputs:
+                 signal clock_1_out_granted_ram_signal_avalon_slave_0 : OUT STD_LOGIC;
+                 signal clock_1_out_qualified_request_ram_signal_avalon_slave_0 : OUT STD_LOGIC;
+                 signal clock_1_out_read_data_valid_ram_signal_avalon_slave_0 : OUT STD_LOGIC;
+                 signal clock_1_out_requests_ram_signal_avalon_slave_0 : OUT STD_LOGIC;
+                 signal d1_ram_signal_avalon_slave_0_end_xfer : OUT STD_LOGIC;
+                 signal ram_signal_avalon_slave_0_address : OUT STD_LOGIC;
+                 signal ram_signal_avalon_slave_0_chipselect : OUT STD_LOGIC;
+                 signal ram_signal_avalon_slave_0_reset_n : OUT STD_LOGIC;
+                 signal ram_signal_avalon_slave_0_write : OUT STD_LOGIC;
+                 signal ram_signal_avalon_slave_0_writedata : OUT STD_LOGIC_VECTOR (7 DOWNTO 0)
+              );
+attribute auto_dissolve : boolean;
+attribute auto_dissolve of ram_signal_avalon_slave_0_arbitrator : entity is FALSE;
+end entity ram_signal_avalon_slave_0_arbitrator;
+
+
+architecture europa of ram_signal_avalon_slave_0_arbitrator is
+                signal clock_1_out_arbiterlock :  STD_LOGIC;
+                signal clock_1_out_arbiterlock2 :  STD_LOGIC;
+                signal clock_1_out_continuerequest :  STD_LOGIC;
+                signal clock_1_out_saved_grant_ram_signal_avalon_slave_0 :  STD_LOGIC;
+                signal d1_reasons_to_wait :  STD_LOGIC;
+                signal enable_nonzero_assertions :  STD_LOGIC;
+                signal end_xfer_arb_share_counter_term_ram_signal_avalon_slave_0 :  STD_LOGIC;
+                signal in_a_read_cycle :  STD_LOGIC;
+                signal in_a_write_cycle :  STD_LOGIC;
+                signal internal_clock_1_out_granted_ram_signal_avalon_slave_0 :  STD_LOGIC;
+                signal internal_clock_1_out_qualified_request_ram_signal_avalon_slave_0 :  STD_LOGIC;
+                signal internal_clock_1_out_requests_ram_signal_avalon_slave_0 :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_allgrants :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_allow_new_arb_cycle :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_any_bursting_master_saved_grant :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_any_continuerequest :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_arb_counter_enable :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_arb_share_counter :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_arb_share_counter_next_value :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_arb_share_set_values :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_beginbursttransfer_internal :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_begins_xfer :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_end_xfer :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_firsttransfer :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_grant_vector :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_in_a_read_cycle :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_in_a_write_cycle :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_master_qreq_vector :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_non_bursting_master_requests :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_pretend_byte_enable :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_reg_firsttransfer :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_slavearbiterlockenable :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_slavearbiterlockenable2 :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_unreg_firsttransfer :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_waits_for_read :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_waits_for_write :  STD_LOGIC;
+                signal wait_for_ram_signal_avalon_slave_0_counter :  STD_LOGIC;
+
+begin
+
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      d1_reasons_to_wait <= std_logic'('0');
+    elsif clk'event and clk = '1' then
+      if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+        d1_reasons_to_wait <= NOT ram_signal_avalon_slave_0_end_xfer;
+      end if;
+    end if;
+
+  end process;
+
+  ram_signal_avalon_slave_0_begins_xfer <= NOT d1_reasons_to_wait AND (internal_clock_1_out_qualified_request_ram_signal_avalon_slave_0);
+  internal_clock_1_out_requests_ram_signal_avalon_slave_0 <= Vector_To_Std_Logic(((((std_logic_vector'("00000000000000000000000000000001")) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(((clock_1_out_read OR clock_1_out_write))))))) AND (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(clock_1_out_write)))));
+  --ram_signal_avalon_slave_0_arb_share_counter set values, which is an e_mux
+  ram_signal_avalon_slave_0_arb_share_set_values <= std_logic'('1');
+  --ram_signal_avalon_slave_0_non_bursting_master_requests mux, which is an e_mux
+  ram_signal_avalon_slave_0_non_bursting_master_requests <= internal_clock_1_out_requests_ram_signal_avalon_slave_0;
+  --ram_signal_avalon_slave_0_any_bursting_master_saved_grant mux, which is an e_mux
+  ram_signal_avalon_slave_0_any_bursting_master_saved_grant <= std_logic'('0');
+  --ram_signal_avalon_slave_0_arb_share_counter_next_value assignment, which is an e_assign
+  ram_signal_avalon_slave_0_arb_share_counter_next_value <= Vector_To_Std_Logic(A_WE_StdLogicVector((std_logic'(ram_signal_avalon_slave_0_firsttransfer) = '1'), (((std_logic_vector'("00000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(ram_signal_avalon_slave_0_arb_share_set_values))) - std_logic_vector'("000000000000000000000000000000001"))), A_WE_StdLogicVector((std_logic'(ram_signal_avalon_slave_0_arb_share_counter) = '1'), (((std_logic_vector'("00000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(ram_signal_avalon_slave_0_arb_share_counter))) - std_logic_vector'("000000000000000000000000000000001"))), std_logic_vector'("000000000000000000000000000000000"))));
+  --ram_signal_avalon_slave_0_allgrants all slave grants, which is an e_mux
+  ram_signal_avalon_slave_0_allgrants <= ram_signal_avalon_slave_0_grant_vector;
+  --ram_signal_avalon_slave_0_end_xfer assignment, which is an e_assign
+  ram_signal_avalon_slave_0_end_xfer <= NOT ((ram_signal_avalon_slave_0_waits_for_read OR ram_signal_avalon_slave_0_waits_for_write));
+  --end_xfer_arb_share_counter_term_ram_signal_avalon_slave_0 arb share counter enable term, which is an e_assign
+  end_xfer_arb_share_counter_term_ram_signal_avalon_slave_0 <= ram_signal_avalon_slave_0_end_xfer AND (((NOT ram_signal_avalon_slave_0_any_bursting_master_saved_grant OR in_a_read_cycle) OR in_a_write_cycle));
+  --ram_signal_avalon_slave_0_arb_share_counter arbitration counter enable, which is an e_assign
+  ram_signal_avalon_slave_0_arb_counter_enable <= ((end_xfer_arb_share_counter_term_ram_signal_avalon_slave_0 AND ram_signal_avalon_slave_0_allgrants)) OR ((end_xfer_arb_share_counter_term_ram_signal_avalon_slave_0 AND NOT ram_signal_avalon_slave_0_non_bursting_master_requests));
+  --ram_signal_avalon_slave_0_arb_share_counter counter, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      ram_signal_avalon_slave_0_arb_share_counter <= std_logic'('0');
+    elsif clk'event and clk = '1' then
+      if std_logic'(ram_signal_avalon_slave_0_arb_counter_enable) = '1' then 
+        ram_signal_avalon_slave_0_arb_share_counter <= ram_signal_avalon_slave_0_arb_share_counter_next_value;
+      end if;
+    end if;
+
+  end process;
+
+  --ram_signal_avalon_slave_0_slavearbiterlockenable slave enables arbiterlock, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      ram_signal_avalon_slave_0_slavearbiterlockenable <= std_logic'('0');
+    elsif clk'event and clk = '1' then
+      if std_logic'((((ram_signal_avalon_slave_0_master_qreq_vector AND end_xfer_arb_share_counter_term_ram_signal_avalon_slave_0)) OR ((end_xfer_arb_share_counter_term_ram_signal_avalon_slave_0 AND NOT ram_signal_avalon_slave_0_non_bursting_master_requests)))) = '1' then 
+        ram_signal_avalon_slave_0_slavearbiterlockenable <= ram_signal_avalon_slave_0_arb_share_counter_next_value;
+      end if;
+    end if;
+
+  end process;
+
+  --clock_1/out ram_signal/avalon_slave_0 arbiterlock, which is an e_assign
+  clock_1_out_arbiterlock <= ram_signal_avalon_slave_0_slavearbiterlockenable AND clock_1_out_continuerequest;
+  --ram_signal_avalon_slave_0_slavearbiterlockenable2 slave enables arbiterlock2, which is an e_assign
+  ram_signal_avalon_slave_0_slavearbiterlockenable2 <= ram_signal_avalon_slave_0_arb_share_counter_next_value;
+  --clock_1/out ram_signal/avalon_slave_0 arbiterlock2, which is an e_assign
+  clock_1_out_arbiterlock2 <= ram_signal_avalon_slave_0_slavearbiterlockenable2 AND clock_1_out_continuerequest;
+  --ram_signal_avalon_slave_0_any_continuerequest at least one master continues requesting, which is an e_assign
+  ram_signal_avalon_slave_0_any_continuerequest <= std_logic'('1');
+  --clock_1_out_continuerequest continued request, which is an e_assign
+  clock_1_out_continuerequest <= std_logic'('1');
+  internal_clock_1_out_qualified_request_ram_signal_avalon_slave_0 <= internal_clock_1_out_requests_ram_signal_avalon_slave_0;
+  --ram_signal_avalon_slave_0_writedata mux, which is an e_mux
+  ram_signal_avalon_slave_0_writedata <= clock_1_out_writedata;
+  --master is always granted when requested
+  internal_clock_1_out_granted_ram_signal_avalon_slave_0 <= internal_clock_1_out_qualified_request_ram_signal_avalon_slave_0;
+  --clock_1/out saved-grant ram_signal/avalon_slave_0, which is an e_assign
+  clock_1_out_saved_grant_ram_signal_avalon_slave_0 <= internal_clock_1_out_requests_ram_signal_avalon_slave_0;
+  --allow new arb cycle for ram_signal/avalon_slave_0, which is an e_assign
+  ram_signal_avalon_slave_0_allow_new_arb_cycle <= std_logic'('1');
+  --placeholder chosen master
+  ram_signal_avalon_slave_0_grant_vector <= std_logic'('1');
+  --placeholder vector of master qualified-requests
+  ram_signal_avalon_slave_0_master_qreq_vector <= std_logic'('1');
+  --ram_signal_avalon_slave_0_reset_n assignment, which is an e_assign
+  ram_signal_avalon_slave_0_reset_n <= reset_n;
+  ram_signal_avalon_slave_0_chipselect <= internal_clock_1_out_granted_ram_signal_avalon_slave_0;
+  --ram_signal_avalon_slave_0_firsttransfer first transaction, which is an e_assign
+  ram_signal_avalon_slave_0_firsttransfer <= A_WE_StdLogic((std_logic'(ram_signal_avalon_slave_0_begins_xfer) = '1'), ram_signal_avalon_slave_0_unreg_firsttransfer, ram_signal_avalon_slave_0_reg_firsttransfer);
+  --ram_signal_avalon_slave_0_unreg_firsttransfer first transaction, which is an e_assign
+  ram_signal_avalon_slave_0_unreg_firsttransfer <= NOT ((ram_signal_avalon_slave_0_slavearbiterlockenable AND ram_signal_avalon_slave_0_any_continuerequest));
+  --ram_signal_avalon_slave_0_reg_firsttransfer first transaction, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      ram_signal_avalon_slave_0_reg_firsttransfer <= std_logic'('1');
+    elsif clk'event and clk = '1' then
+      if std_logic'(ram_signal_avalon_slave_0_begins_xfer) = '1' then 
+        ram_signal_avalon_slave_0_reg_firsttransfer <= ram_signal_avalon_slave_0_unreg_firsttransfer;
+      end if;
+    end if;
+
+  end process;
+
+  --ram_signal_avalon_slave_0_beginbursttransfer_internal begin burst transfer, which is an e_assign
+  ram_signal_avalon_slave_0_beginbursttransfer_internal <= ram_signal_avalon_slave_0_begins_xfer;
+  --ram_signal_avalon_slave_0_write assignment, which is an e_mux
+  ram_signal_avalon_slave_0_write <= ((internal_clock_1_out_granted_ram_signal_avalon_slave_0 AND clock_1_out_write)) AND ram_signal_avalon_slave_0_pretend_byte_enable;
+  --ram_signal_avalon_slave_0_address mux, which is an e_mux
+  ram_signal_avalon_slave_0_address <= clock_1_out_address_to_slave;
+  --d1_ram_signal_avalon_slave_0_end_xfer register, which is an e_register
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      d1_ram_signal_avalon_slave_0_end_xfer <= std_logic'('1');
+    elsif clk'event and clk = '1' then
+      if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+        d1_ram_signal_avalon_slave_0_end_xfer <= ram_signal_avalon_slave_0_end_xfer;
+      end if;
+    end if;
+
+  end process;
+
+  --ram_signal_avalon_slave_0_waits_for_read in a cycle, which is an e_mux
+  ram_signal_avalon_slave_0_waits_for_read <= ram_signal_avalon_slave_0_in_a_read_cycle AND ram_signal_avalon_slave_0_begins_xfer;
+  --ram_signal_avalon_slave_0_in_a_read_cycle assignment, which is an e_assign
+  ram_signal_avalon_slave_0_in_a_read_cycle <= internal_clock_1_out_granted_ram_signal_avalon_slave_0 AND clock_1_out_read;
+  --in_a_read_cycle assignment, which is an e_mux
+  in_a_read_cycle <= ram_signal_avalon_slave_0_in_a_read_cycle;
+  --ram_signal_avalon_slave_0_waits_for_write in a cycle, which is an e_mux
+  ram_signal_avalon_slave_0_waits_for_write <= Vector_To_Std_Logic(((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(ram_signal_avalon_slave_0_in_a_write_cycle))) AND std_logic_vector'("00000000000000000000000000000000")));
+  --ram_signal_avalon_slave_0_in_a_write_cycle assignment, which is an e_assign
+  ram_signal_avalon_slave_0_in_a_write_cycle <= internal_clock_1_out_granted_ram_signal_avalon_slave_0 AND clock_1_out_write;
+  --in_a_write_cycle assignment, which is an e_mux
+  in_a_write_cycle <= ram_signal_avalon_slave_0_in_a_write_cycle;
+  wait_for_ram_signal_avalon_slave_0_counter <= std_logic'('0');
+  --ram_signal_avalon_slave_0_pretend_byte_enable byte enable port mux, which is an e_mux
+  ram_signal_avalon_slave_0_pretend_byte_enable <= Vector_To_Std_Logic(A_WE_StdLogicVector((std_logic'((internal_clock_1_out_granted_ram_signal_avalon_slave_0)) = '1'), (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(std_logic'('1')))), -SIGNED(std_logic_vector'("00000000000000000000000000000001"))));
+  --vhdl renameroo for output signals
+  clock_1_out_granted_ram_signal_avalon_slave_0 <= internal_clock_1_out_granted_ram_signal_avalon_slave_0;
+  --vhdl renameroo for output signals
+  clock_1_out_qualified_request_ram_signal_avalon_slave_0 <= internal_clock_1_out_qualified_request_ram_signal_avalon_slave_0;
+  --vhdl renameroo for output signals
+  clock_1_out_requests_ram_signal_avalon_slave_0 <= internal_clock_1_out_requests_ram_signal_avalon_slave_0;
+--synthesis translate_off
+    --ram_signal/avalon_slave_0 enable non-zero assertions, which is an e_register
     process (clk, reset_n)
     begin
       if reset_n = '0' then
@@ -2204,9 +3444,9 @@ end component rdv_fifo_for_cpu_instruction_master_to_sdram_s1_module;
                 signal sdram_s1_any_continuerequest :  STD_LOGIC;
                 signal sdram_s1_arb_addend :  STD_LOGIC_VECTOR (1 DOWNTO 0);
                 signal sdram_s1_arb_counter_enable :  STD_LOGIC;
-                signal sdram_s1_arb_share_counter :  STD_LOGIC_VECTOR (1 DOWNTO 0);
-                signal sdram_s1_arb_share_counter_next_value :  STD_LOGIC_VECTOR (1 DOWNTO 0);
-                signal sdram_s1_arb_share_set_values :  STD_LOGIC_VECTOR (1 DOWNTO 0);
+                signal sdram_s1_arb_share_counter :  STD_LOGIC_VECTOR (2 DOWNTO 0);
+                signal sdram_s1_arb_share_counter_next_value :  STD_LOGIC_VECTOR (2 DOWNTO 0);
+                signal sdram_s1_arb_share_set_values :  STD_LOGIC_VECTOR (2 DOWNTO 0);
                 signal sdram_s1_arb_winner :  STD_LOGIC_VECTOR (1 DOWNTO 0);
                 signal sdram_s1_arbitration_holdoff_internal :  STD_LOGIC;
                 signal sdram_s1_beginbursttransfer_internal :  STD_LOGIC;
@@ -2256,13 +3496,13 @@ begin
   --assign sdram_s1_readdatavalid_from_sa = sdram_s1_readdatavalid so that symbol knows where to group signals which may go to master only, which is an e_assign
   sdram_s1_readdatavalid_from_sa <= sdram_s1_readdatavalid;
   --sdram_s1_arb_share_counter set values, which is an e_mux
-  sdram_s1_arb_share_set_values <= A_EXT (A_WE_StdLogicVector((std_logic'((internal_cpu_data_master_granted_sdram_s1)) = '1'), std_logic_vector'("00000000000000000000000000000010"), A_WE_StdLogicVector((std_logic'((internal_cpu_instruction_master_granted_sdram_s1)) = '1'), std_logic_vector'("00000000000000000000000000000010"), A_WE_StdLogicVector((std_logic'((internal_cpu_data_master_granted_sdram_s1)) = '1'), std_logic_vector'("00000000000000000000000000000010"), A_WE_StdLogicVector((std_logic'((internal_cpu_instruction_master_granted_sdram_s1)) = '1'), std_logic_vector'("00000000000000000000000000000010"), std_logic_vector'("00000000000000000000000000000001"))))), 2);
+  sdram_s1_arb_share_set_values <= A_EXT (A_WE_StdLogicVector((std_logic'((internal_cpu_data_master_granted_sdram_s1)) = '1'), std_logic_vector'("00000000000000000000000000000010"), A_WE_StdLogicVector((std_logic'((internal_cpu_instruction_master_granted_sdram_s1)) = '1'), std_logic_vector'("00000000000000000000000000000010"), A_WE_StdLogicVector((std_logic'((internal_cpu_data_master_granted_sdram_s1)) = '1'), std_logic_vector'("00000000000000000000000000000010"), A_WE_StdLogicVector((std_logic'((internal_cpu_instruction_master_granted_sdram_s1)) = '1'), std_logic_vector'("00000000000000000000000000000010"), std_logic_vector'("00000000000000000000000000000001"))))), 3);
   --sdram_s1_non_bursting_master_requests mux, which is an e_mux
   sdram_s1_non_bursting_master_requests <= ((internal_cpu_data_master_requests_sdram_s1 OR internal_cpu_instruction_master_requests_sdram_s1) OR internal_cpu_data_master_requests_sdram_s1) OR internal_cpu_instruction_master_requests_sdram_s1;
   --sdram_s1_any_bursting_master_saved_grant mux, which is an e_mux
   sdram_s1_any_bursting_master_saved_grant <= std_logic'('0');
   --sdram_s1_arb_share_counter_next_value assignment, which is an e_assign
-  sdram_s1_arb_share_counter_next_value <= A_EXT (A_WE_StdLogicVector((std_logic'(sdram_s1_firsttransfer) = '1'), (((std_logic_vector'("0000000000000000000000000000000") & (sdram_s1_arb_share_set_values)) - std_logic_vector'("000000000000000000000000000000001"))), A_WE_StdLogicVector((std_logic'(or_reduce(sdram_s1_arb_share_counter)) = '1'), (((std_logic_vector'("0000000000000000000000000000000") & (sdram_s1_arb_share_counter)) - std_logic_vector'("000000000000000000000000000000001"))), std_logic_vector'("000000000000000000000000000000000"))), 2);
+  sdram_s1_arb_share_counter_next_value <= A_EXT (A_WE_StdLogicVector((std_logic'(sdram_s1_firsttransfer) = '1'), (((std_logic_vector'("000000000000000000000000000000") & (sdram_s1_arb_share_set_values)) - std_logic_vector'("000000000000000000000000000000001"))), A_WE_StdLogicVector((std_logic'(or_reduce(sdram_s1_arb_share_counter)) = '1'), (((std_logic_vector'("000000000000000000000000000000") & (sdram_s1_arb_share_counter)) - std_logic_vector'("000000000000000000000000000000001"))), std_logic_vector'("000000000000000000000000000000000"))), 3);
   --sdram_s1_allgrants all slave grants, which is an e_mux
   sdram_s1_allgrants <= ((or_reduce(sdram_s1_grant_vector) OR or_reduce(sdram_s1_grant_vector)) OR or_reduce(sdram_s1_grant_vector)) OR or_reduce(sdram_s1_grant_vector);
   --sdram_s1_end_xfer assignment, which is an e_assign
@@ -2275,7 +3515,7 @@ begin
   process (clk, reset_n)
   begin
     if reset_n = '0' then
-      sdram_s1_arb_share_counter <= std_logic_vector'("00");
+      sdram_s1_arb_share_counter <= std_logic_vector'("000");
     elsif clk'event and clk = '1' then
       if std_logic'(sdram_s1_arb_counter_enable) = '1' then 
         sdram_s1_arb_share_counter <= sdram_s1_arb_share_counter_next_value;
@@ -2538,15 +3778,15 @@ begin
 
     --grant signals are active simultaneously, which is an e_process
     process (clk)
-    VARIABLE write_line4 : line;
+    VARIABLE write_line12 : line;
     begin
       if clk'event and clk = '1' then
         if (std_logic_vector'("000000000000000000000000000000") & (((std_logic_vector'("0") & (A_TOSTDLOGICVECTOR(internal_cpu_data_master_granted_sdram_s1))) + (std_logic_vector'("0") & (A_TOSTDLOGICVECTOR(internal_cpu_instruction_master_granted_sdram_s1))))))>std_logic_vector'("00000000000000000000000000000001") then 
-          write(write_line4, now);
-          write(write_line4, string'(": "));
-          write(write_line4, string'("> 1 of grant signals are active simultaneously"));
-          write(output, write_line4.all);
-          deallocate (write_line4);
+          write(write_line12, now);
+          write(write_line12, string'(": "));
+          write(write_line12, string'("> 1 of grant signals are active simultaneously"));
+          write(output, write_line12.all);
+          deallocate (write_line12);
           assert false report "VHDL STOP" severity failure;
         end if;
       end if;
@@ -2555,15 +3795,15 @@ begin
 
     --saved_grant signals are active simultaneously, which is an e_process
     process (clk)
-    VARIABLE write_line5 : line;
+    VARIABLE write_line13 : line;
     begin
       if clk'event and clk = '1' then
         if (std_logic_vector'("000000000000000000000000000000") & (((std_logic_vector'("0") & (A_TOSTDLOGICVECTOR(cpu_data_master_saved_grant_sdram_s1))) + (std_logic_vector'("0") & (A_TOSTDLOGICVECTOR(cpu_instruction_master_saved_grant_sdram_s1))))))>std_logic_vector'("00000000000000000000000000000001") then 
-          write(write_line5, now);
-          write(write_line5, string'(": "));
-          write(write_line5, string'("> 1 of saved_grant signals are active simultaneously"));
-          write(output, write_line5.all);
-          deallocate (write_line5);
+          write(write_line13, now);
+          write(write_line13, string'(": "));
+          write(write_line13, string'("> 1 of saved_grant signals are active simultaneously"));
+          write(output, write_line13.all);
+          deallocate (write_line13);
           assert false report "VHDL STOP" severity failure;
         end if;
       end if;
@@ -2650,10 +3890,73 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
+entity nios_reset_clk_25_domain_synch_module is 
+        port (
+              -- inputs:
+                 signal clk : IN STD_LOGIC;
+                 signal data_in : IN STD_LOGIC;
+                 signal reset_n : IN STD_LOGIC;
+
+              -- outputs:
+                 signal data_out : OUT STD_LOGIC
+              );
+end entity nios_reset_clk_25_domain_synch_module;
+
+
+architecture europa of nios_reset_clk_25_domain_synch_module is
+                signal data_in_d1 :  STD_LOGIC;
+attribute ALTERA_ATTRIBUTE : string;
+attribute ALTERA_ATTRIBUTE of data_in_d1 : signal is "MAX_DELAY=100ns ; PRESERVE_REGISTER=ON ; SUPPRESS_DA_RULE_INTERNAL=R101";
+attribute ALTERA_ATTRIBUTE of data_out : signal is "PRESERVE_REGISTER=ON ; SUPPRESS_DA_RULE_INTERNAL=R101";
+
+begin
+
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      data_in_d1 <= std_logic'('0');
+    elsif clk'event and clk = '1' then
+      if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+        data_in_d1 <= data_in;
+      end if;
+    end if;
+
+  end process;
+
+  process (clk, reset_n)
+  begin
+    if reset_n = '0' then
+      data_out <= std_logic'('0');
+    elsif clk'event and clk = '1' then
+      if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
+        data_out <= data_in_d1;
+      end if;
+    end if;
+
+  end process;
+
+
+end europa;
+
+
+
+-- turn off superfluous VHDL processor warnings 
+-- altera message_level Level1 
+-- altera message_off 10034 10035 10036 10037 10230 10240 10030 
+
+library altera;
+use altera.altera_europa_support_lib.all;
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
+
 entity nios is 
         port (
               -- 1) global signals:
                  signal clk : IN STD_LOGIC;
+                 signal clk_25 : IN STD_LOGIC;
                  signal reset_n : IN STD_LOGIC;
 
               -- the_ram
@@ -2661,6 +3964,10 @@ entity nios is
                  signal read_to_the_ram : IN STD_LOGIC;
                  signal readaddr_from_the_ram : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
                  signal readdata_from_the_ram : OUT STD_LOGIC_VECTOR (17 DOWNTO 0);
+
+              -- the_ram_signal
+                 signal read_addr_to_the_ram_signal : IN STD_LOGIC;
+                 signal read_data_from_the_ram_signal : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
 
               -- the_sdram
                  signal zs_addr_from_the_sdram : OUT STD_LOGIC_VECTOR (11 DOWNTO 0);
@@ -2677,6 +3984,180 @@ end entity nios;
 
 
 architecture europa of nios is
+component clock_0_in_arbitrator is 
+           port (
+                 -- inputs:
+                    signal clk : IN STD_LOGIC;
+                    signal clock_0_in_endofpacket : IN STD_LOGIC;
+                    signal clock_0_in_readdata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                    signal clock_0_in_waitrequest : IN STD_LOGIC;
+                    signal cpu_data_master_address_to_slave : IN STD_LOGIC_VECTOR (24 DOWNTO 0);
+                    signal cpu_data_master_byteenable : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+                    signal cpu_data_master_read : IN STD_LOGIC;
+                    signal cpu_data_master_waitrequest : IN STD_LOGIC;
+                    signal cpu_data_master_write : IN STD_LOGIC;
+                    signal cpu_data_master_writedata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                    signal reset_n : IN STD_LOGIC;
+
+                 -- outputs:
+                    signal clock_0_in_address : OUT STD_LOGIC_VECTOR (5 DOWNTO 0);
+                    signal clock_0_in_byteenable : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+                    signal clock_0_in_endofpacket_from_sa : OUT STD_LOGIC;
+                    signal clock_0_in_nativeaddress : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+                    signal clock_0_in_read : OUT STD_LOGIC;
+                    signal clock_0_in_readdata_from_sa : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+                    signal clock_0_in_reset_n : OUT STD_LOGIC;
+                    signal clock_0_in_waitrequest_from_sa : OUT STD_LOGIC;
+                    signal clock_0_in_write : OUT STD_LOGIC;
+                    signal clock_0_in_writedata : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+                    signal cpu_data_master_granted_clock_0_in : OUT STD_LOGIC;
+                    signal cpu_data_master_qualified_request_clock_0_in : OUT STD_LOGIC;
+                    signal cpu_data_master_read_data_valid_clock_0_in : OUT STD_LOGIC;
+                    signal cpu_data_master_requests_clock_0_in : OUT STD_LOGIC;
+                    signal d1_clock_0_in_end_xfer : OUT STD_LOGIC
+                 );
+end component clock_0_in_arbitrator;
+
+component clock_0_out_arbitrator is 
+           port (
+                 -- inputs:
+                    signal clk : IN STD_LOGIC;
+                    signal clock_0_out_address : IN STD_LOGIC_VECTOR (5 DOWNTO 0);
+                    signal clock_0_out_granted_ram_avalon_slave_0 : IN STD_LOGIC;
+                    signal clock_0_out_qualified_request_ram_avalon_slave_0 : IN STD_LOGIC;
+                    signal clock_0_out_read : IN STD_LOGIC;
+                    signal clock_0_out_read_data_valid_ram_avalon_slave_0 : IN STD_LOGIC;
+                    signal clock_0_out_requests_ram_avalon_slave_0 : IN STD_LOGIC;
+                    signal clock_0_out_write : IN STD_LOGIC;
+                    signal clock_0_out_writedata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                    signal d1_ram_avalon_slave_0_end_xfer : IN STD_LOGIC;
+                    signal reset_n : IN STD_LOGIC;
+
+                 -- outputs:
+                    signal clock_0_out_address_to_slave : OUT STD_LOGIC_VECTOR (5 DOWNTO 0);
+                    signal clock_0_out_readdata : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+                    signal clock_0_out_reset_n : OUT STD_LOGIC;
+                    signal clock_0_out_waitrequest : OUT STD_LOGIC
+                 );
+end component clock_0_out_arbitrator;
+
+component clock_0 is 
+           port (
+                 -- inputs:
+                    signal master_clk : IN STD_LOGIC;
+                    signal master_endofpacket : IN STD_LOGIC;
+                    signal master_readdata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                    signal master_reset_n : IN STD_LOGIC;
+                    signal master_waitrequest : IN STD_LOGIC;
+                    signal slave_address : IN STD_LOGIC_VECTOR (5 DOWNTO 0);
+                    signal slave_byteenable : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+                    signal slave_clk : IN STD_LOGIC;
+                    signal slave_nativeaddress : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+                    signal slave_read : IN STD_LOGIC;
+                    signal slave_reset_n : IN STD_LOGIC;
+                    signal slave_write : IN STD_LOGIC;
+                    signal slave_writedata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+
+                 -- outputs:
+                    signal master_address : OUT STD_LOGIC_VECTOR (5 DOWNTO 0);
+                    signal master_byteenable : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+                    signal master_nativeaddress : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+                    signal master_read : OUT STD_LOGIC;
+                    signal master_write : OUT STD_LOGIC;
+                    signal master_writedata : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+                    signal slave_endofpacket : OUT STD_LOGIC;
+                    signal slave_readdata : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+                    signal slave_waitrequest : OUT STD_LOGIC
+                 );
+end component clock_0;
+
+component clock_1_in_arbitrator is 
+           port (
+                 -- inputs:
+                    signal clk : IN STD_LOGIC;
+                    signal clock_1_in_endofpacket : IN STD_LOGIC;
+                    signal clock_1_in_readdata : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+                    signal clock_1_in_waitrequest : IN STD_LOGIC;
+                    signal cpu_data_master_address_to_slave : IN STD_LOGIC_VECTOR (24 DOWNTO 0);
+                    signal cpu_data_master_byteenable : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+                    signal cpu_data_master_dbs_address : IN STD_LOGIC_VECTOR (1 DOWNTO 0);
+                    signal cpu_data_master_dbs_write_8 : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+                    signal cpu_data_master_no_byte_enables_and_last_term : IN STD_LOGIC;
+                    signal cpu_data_master_read : IN STD_LOGIC;
+                    signal cpu_data_master_waitrequest : IN STD_LOGIC;
+                    signal cpu_data_master_write : IN STD_LOGIC;
+                    signal reset_n : IN STD_LOGIC;
+
+                 -- outputs:
+                    signal clock_1_in_address : OUT STD_LOGIC;
+                    signal clock_1_in_endofpacket_from_sa : OUT STD_LOGIC;
+                    signal clock_1_in_nativeaddress : OUT STD_LOGIC;
+                    signal clock_1_in_read : OUT STD_LOGIC;
+                    signal clock_1_in_readdata_from_sa : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+                    signal clock_1_in_reset_n : OUT STD_LOGIC;
+                    signal clock_1_in_waitrequest_from_sa : OUT STD_LOGIC;
+                    signal clock_1_in_write : OUT STD_LOGIC;
+                    signal clock_1_in_writedata : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+                    signal cpu_data_master_byteenable_clock_1_in : OUT STD_LOGIC;
+                    signal cpu_data_master_granted_clock_1_in : OUT STD_LOGIC;
+                    signal cpu_data_master_qualified_request_clock_1_in : OUT STD_LOGIC;
+                    signal cpu_data_master_read_data_valid_clock_1_in : OUT STD_LOGIC;
+                    signal cpu_data_master_requests_clock_1_in : OUT STD_LOGIC;
+                    signal d1_clock_1_in_end_xfer : OUT STD_LOGIC
+                 );
+end component clock_1_in_arbitrator;
+
+component clock_1_out_arbitrator is 
+           port (
+                 -- inputs:
+                    signal clk : IN STD_LOGIC;
+                    signal clock_1_out_address : IN STD_LOGIC;
+                    signal clock_1_out_granted_ram_signal_avalon_slave_0 : IN STD_LOGIC;
+                    signal clock_1_out_qualified_request_ram_signal_avalon_slave_0 : IN STD_LOGIC;
+                    signal clock_1_out_read : IN STD_LOGIC;
+                    signal clock_1_out_read_data_valid_ram_signal_avalon_slave_0 : IN STD_LOGIC;
+                    signal clock_1_out_requests_ram_signal_avalon_slave_0 : IN STD_LOGIC;
+                    signal clock_1_out_write : IN STD_LOGIC;
+                    signal clock_1_out_writedata : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+                    signal d1_ram_signal_avalon_slave_0_end_xfer : IN STD_LOGIC;
+                    signal reset_n : IN STD_LOGIC;
+
+                 -- outputs:
+                    signal clock_1_out_address_to_slave : OUT STD_LOGIC;
+                    signal clock_1_out_readdata : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+                    signal clock_1_out_reset_n : OUT STD_LOGIC;
+                    signal clock_1_out_waitrequest : OUT STD_LOGIC
+                 );
+end component clock_1_out_arbitrator;
+
+component clock_1 is 
+           port (
+                 -- inputs:
+                    signal master_clk : IN STD_LOGIC;
+                    signal master_endofpacket : IN STD_LOGIC;
+                    signal master_readdata : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+                    signal master_reset_n : IN STD_LOGIC;
+                    signal master_waitrequest : IN STD_LOGIC;
+                    signal slave_address : IN STD_LOGIC;
+                    signal slave_clk : IN STD_LOGIC;
+                    signal slave_nativeaddress : IN STD_LOGIC;
+                    signal slave_read : IN STD_LOGIC;
+                    signal slave_reset_n : IN STD_LOGIC;
+                    signal slave_write : IN STD_LOGIC;
+                    signal slave_writedata : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+
+                 -- outputs:
+                    signal master_address : OUT STD_LOGIC;
+                    signal master_nativeaddress : OUT STD_LOGIC;
+                    signal master_read : OUT STD_LOGIC;
+                    signal master_write : OUT STD_LOGIC;
+                    signal master_writedata : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+                    signal slave_endofpacket : OUT STD_LOGIC;
+                    signal slave_readdata : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
+                    signal slave_waitrequest : OUT STD_LOGIC
+                 );
+end component clock_1;
+
 component cpu_jtag_debug_module_arbitrator is 
            port (
                  -- inputs:
@@ -2722,33 +4203,43 @@ component cpu_data_master_arbitrator is
            port (
                  -- inputs:
                     signal clk : IN STD_LOGIC;
+                    signal clock_0_in_readdata_from_sa : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                    signal clock_0_in_waitrequest_from_sa : IN STD_LOGIC;
+                    signal clock_1_in_readdata_from_sa : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+                    signal clock_1_in_waitrequest_from_sa : IN STD_LOGIC;
                     signal cpu_data_master_address : IN STD_LOGIC_VECTOR (24 DOWNTO 0);
+                    signal cpu_data_master_byteenable_clock_1_in : IN STD_LOGIC;
                     signal cpu_data_master_byteenable_sdram_s1 : IN STD_LOGIC_VECTOR (1 DOWNTO 0);
                     signal cpu_data_master_debugaccess : IN STD_LOGIC;
+                    signal cpu_data_master_granted_clock_0_in : IN STD_LOGIC;
+                    signal cpu_data_master_granted_clock_1_in : IN STD_LOGIC;
                     signal cpu_data_master_granted_cpu_jtag_debug_module : IN STD_LOGIC;
                     signal cpu_data_master_granted_jtag_uart_avalon_jtag_slave : IN STD_LOGIC;
-                    signal cpu_data_master_granted_ram_avalon_slave_0 : IN STD_LOGIC;
                     signal cpu_data_master_granted_sdram_s1 : IN STD_LOGIC;
+                    signal cpu_data_master_qualified_request_clock_0_in : IN STD_LOGIC;
+                    signal cpu_data_master_qualified_request_clock_1_in : IN STD_LOGIC;
                     signal cpu_data_master_qualified_request_cpu_jtag_debug_module : IN STD_LOGIC;
                     signal cpu_data_master_qualified_request_jtag_uart_avalon_jtag_slave : IN STD_LOGIC;
-                    signal cpu_data_master_qualified_request_ram_avalon_slave_0 : IN STD_LOGIC;
                     signal cpu_data_master_qualified_request_sdram_s1 : IN STD_LOGIC;
                     signal cpu_data_master_read : IN STD_LOGIC;
+                    signal cpu_data_master_read_data_valid_clock_0_in : IN STD_LOGIC;
+                    signal cpu_data_master_read_data_valid_clock_1_in : IN STD_LOGIC;
                     signal cpu_data_master_read_data_valid_cpu_jtag_debug_module : IN STD_LOGIC;
                     signal cpu_data_master_read_data_valid_jtag_uart_avalon_jtag_slave : IN STD_LOGIC;
-                    signal cpu_data_master_read_data_valid_ram_avalon_slave_0 : IN STD_LOGIC;
                     signal cpu_data_master_read_data_valid_sdram_s1 : IN STD_LOGIC;
                     signal cpu_data_master_read_data_valid_sdram_s1_shift_register : IN STD_LOGIC;
+                    signal cpu_data_master_requests_clock_0_in : IN STD_LOGIC;
+                    signal cpu_data_master_requests_clock_1_in : IN STD_LOGIC;
                     signal cpu_data_master_requests_cpu_jtag_debug_module : IN STD_LOGIC;
                     signal cpu_data_master_requests_jtag_uart_avalon_jtag_slave : IN STD_LOGIC;
-                    signal cpu_data_master_requests_ram_avalon_slave_0 : IN STD_LOGIC;
                     signal cpu_data_master_requests_sdram_s1 : IN STD_LOGIC;
                     signal cpu_data_master_write : IN STD_LOGIC;
                     signal cpu_data_master_writedata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
                     signal cpu_jtag_debug_module_readdata_from_sa : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                    signal d1_clock_0_in_end_xfer : IN STD_LOGIC;
+                    signal d1_clock_1_in_end_xfer : IN STD_LOGIC;
                     signal d1_cpu_jtag_debug_module_end_xfer : IN STD_LOGIC;
                     signal d1_jtag_uart_avalon_jtag_slave_end_xfer : IN STD_LOGIC;
-                    signal d1_ram_avalon_slave_0_end_xfer : IN STD_LOGIC;
                     signal d1_sdram_s1_end_xfer : IN STD_LOGIC;
                     signal jtag_uart_avalon_jtag_slave_irq_from_sa : IN STD_LOGIC;
                     signal jtag_uart_avalon_jtag_slave_readdata_from_sa : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
@@ -2761,6 +4252,7 @@ component cpu_data_master_arbitrator is
                     signal cpu_data_master_address_to_slave : OUT STD_LOGIC_VECTOR (24 DOWNTO 0);
                     signal cpu_data_master_dbs_address : OUT STD_LOGIC_VECTOR (1 DOWNTO 0);
                     signal cpu_data_master_dbs_write_16 : OUT STD_LOGIC_VECTOR (15 DOWNTO 0);
+                    signal cpu_data_master_dbs_write_8 : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
                     signal cpu_data_master_irq : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
                     signal cpu_data_master_no_byte_enables_and_last_term : OUT STD_LOGIC;
                     signal cpu_data_master_readdata : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
@@ -2892,18 +4384,17 @@ component ram_avalon_slave_0_arbitrator is
            port (
                  -- inputs:
                     signal clk : IN STD_LOGIC;
-                    signal cpu_data_master_address_to_slave : IN STD_LOGIC_VECTOR (24 DOWNTO 0);
-                    signal cpu_data_master_read : IN STD_LOGIC;
-                    signal cpu_data_master_waitrequest : IN STD_LOGIC;
-                    signal cpu_data_master_write : IN STD_LOGIC;
-                    signal cpu_data_master_writedata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                    signal clock_0_out_address_to_slave : IN STD_LOGIC_VECTOR (5 DOWNTO 0);
+                    signal clock_0_out_read : IN STD_LOGIC;
+                    signal clock_0_out_write : IN STD_LOGIC;
+                    signal clock_0_out_writedata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
                     signal reset_n : IN STD_LOGIC;
 
                  -- outputs:
-                    signal cpu_data_master_granted_ram_avalon_slave_0 : OUT STD_LOGIC;
-                    signal cpu_data_master_qualified_request_ram_avalon_slave_0 : OUT STD_LOGIC;
-                    signal cpu_data_master_read_data_valid_ram_avalon_slave_0 : OUT STD_LOGIC;
-                    signal cpu_data_master_requests_ram_avalon_slave_0 : OUT STD_LOGIC;
+                    signal clock_0_out_granted_ram_avalon_slave_0 : OUT STD_LOGIC;
+                    signal clock_0_out_qualified_request_ram_avalon_slave_0 : OUT STD_LOGIC;
+                    signal clock_0_out_read_data_valid_ram_avalon_slave_0 : OUT STD_LOGIC;
+                    signal clock_0_out_requests_ram_avalon_slave_0 : OUT STD_LOGIC;
                     signal d1_ram_avalon_slave_0_end_xfer : OUT STD_LOGIC;
                     signal ram_avalon_slave_0_address : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
                     signal ram_avalon_slave_0_chipselect : OUT STD_LOGIC;
@@ -2930,6 +4421,46 @@ component ram is
                     signal readdata : OUT STD_LOGIC_VECTOR (17 DOWNTO 0)
                  );
 end component ram;
+
+component ram_signal_avalon_slave_0_arbitrator is 
+           port (
+                 -- inputs:
+                    signal clk : IN STD_LOGIC;
+                    signal clock_1_out_address_to_slave : IN STD_LOGIC;
+                    signal clock_1_out_read : IN STD_LOGIC;
+                    signal clock_1_out_write : IN STD_LOGIC;
+                    signal clock_1_out_writedata : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+                    signal reset_n : IN STD_LOGIC;
+
+                 -- outputs:
+                    signal clock_1_out_granted_ram_signal_avalon_slave_0 : OUT STD_LOGIC;
+                    signal clock_1_out_qualified_request_ram_signal_avalon_slave_0 : OUT STD_LOGIC;
+                    signal clock_1_out_read_data_valid_ram_signal_avalon_slave_0 : OUT STD_LOGIC;
+                    signal clock_1_out_requests_ram_signal_avalon_slave_0 : OUT STD_LOGIC;
+                    signal d1_ram_signal_avalon_slave_0_end_xfer : OUT STD_LOGIC;
+                    signal ram_signal_avalon_slave_0_address : OUT STD_LOGIC;
+                    signal ram_signal_avalon_slave_0_chipselect : OUT STD_LOGIC;
+                    signal ram_signal_avalon_slave_0_reset_n : OUT STD_LOGIC;
+                    signal ram_signal_avalon_slave_0_write : OUT STD_LOGIC;
+                    signal ram_signal_avalon_slave_0_writedata : OUT STD_LOGIC_VECTOR (7 DOWNTO 0)
+                 );
+end component ram_signal_avalon_slave_0_arbitrator;
+
+component ram_signal is 
+           port (
+                 -- inputs:
+                    signal address : IN STD_LOGIC;
+                    signal chipselect : IN STD_LOGIC;
+                    signal clk : IN STD_LOGIC;
+                    signal read_addr : IN STD_LOGIC;
+                    signal reset_n : IN STD_LOGIC;
+                    signal write : IN STD_LOGIC;
+                    signal writedata : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
+
+                 -- outputs:
+                    signal read_data : OUT STD_LOGIC_VECTOR (7 DOWNTO 0)
+                 );
+end component ram_signal;
 
 component sdram_s1_arbitrator is 
            port (
@@ -3016,34 +4547,107 @@ component nios_reset_clk_domain_synch_module is
                  );
 end component nios_reset_clk_domain_synch_module;
 
+component nios_reset_clk_25_domain_synch_module is 
+           port (
+                 -- inputs:
+                    signal clk : IN STD_LOGIC;
+                    signal data_in : IN STD_LOGIC;
+                    signal reset_n : IN STD_LOGIC;
+
+                 -- outputs:
+                    signal data_out : OUT STD_LOGIC
+                 );
+end component nios_reset_clk_25_domain_synch_module;
+
+                signal clk_25_reset_n :  STD_LOGIC;
                 signal clk_reset_n :  STD_LOGIC;
+                signal clock_0_in_address :  STD_LOGIC_VECTOR (5 DOWNTO 0);
+                signal clock_0_in_byteenable :  STD_LOGIC_VECTOR (3 DOWNTO 0);
+                signal clock_0_in_endofpacket :  STD_LOGIC;
+                signal clock_0_in_endofpacket_from_sa :  STD_LOGIC;
+                signal clock_0_in_nativeaddress :  STD_LOGIC_VECTOR (3 DOWNTO 0);
+                signal clock_0_in_read :  STD_LOGIC;
+                signal clock_0_in_readdata :  STD_LOGIC_VECTOR (31 DOWNTO 0);
+                signal clock_0_in_readdata_from_sa :  STD_LOGIC_VECTOR (31 DOWNTO 0);
+                signal clock_0_in_reset_n :  STD_LOGIC;
+                signal clock_0_in_waitrequest :  STD_LOGIC;
+                signal clock_0_in_waitrequest_from_sa :  STD_LOGIC;
+                signal clock_0_in_write :  STD_LOGIC;
+                signal clock_0_in_writedata :  STD_LOGIC_VECTOR (31 DOWNTO 0);
+                signal clock_0_out_address :  STD_LOGIC_VECTOR (5 DOWNTO 0);
+                signal clock_0_out_address_to_slave :  STD_LOGIC_VECTOR (5 DOWNTO 0);
+                signal clock_0_out_byteenable :  STD_LOGIC_VECTOR (3 DOWNTO 0);
+                signal clock_0_out_endofpacket :  STD_LOGIC;
+                signal clock_0_out_granted_ram_avalon_slave_0 :  STD_LOGIC;
+                signal clock_0_out_nativeaddress :  STD_LOGIC_VECTOR (3 DOWNTO 0);
+                signal clock_0_out_qualified_request_ram_avalon_slave_0 :  STD_LOGIC;
+                signal clock_0_out_read :  STD_LOGIC;
+                signal clock_0_out_read_data_valid_ram_avalon_slave_0 :  STD_LOGIC;
+                signal clock_0_out_readdata :  STD_LOGIC_VECTOR (31 DOWNTO 0);
+                signal clock_0_out_requests_ram_avalon_slave_0 :  STD_LOGIC;
+                signal clock_0_out_reset_n :  STD_LOGIC;
+                signal clock_0_out_waitrequest :  STD_LOGIC;
+                signal clock_0_out_write :  STD_LOGIC;
+                signal clock_0_out_writedata :  STD_LOGIC_VECTOR (31 DOWNTO 0);
+                signal clock_1_in_address :  STD_LOGIC;
+                signal clock_1_in_endofpacket :  STD_LOGIC;
+                signal clock_1_in_endofpacket_from_sa :  STD_LOGIC;
+                signal clock_1_in_nativeaddress :  STD_LOGIC;
+                signal clock_1_in_read :  STD_LOGIC;
+                signal clock_1_in_readdata :  STD_LOGIC_VECTOR (7 DOWNTO 0);
+                signal clock_1_in_readdata_from_sa :  STD_LOGIC_VECTOR (7 DOWNTO 0);
+                signal clock_1_in_reset_n :  STD_LOGIC;
+                signal clock_1_in_waitrequest :  STD_LOGIC;
+                signal clock_1_in_waitrequest_from_sa :  STD_LOGIC;
+                signal clock_1_in_write :  STD_LOGIC;
+                signal clock_1_in_writedata :  STD_LOGIC_VECTOR (7 DOWNTO 0);
+                signal clock_1_out_address :  STD_LOGIC;
+                signal clock_1_out_address_to_slave :  STD_LOGIC;
+                signal clock_1_out_endofpacket :  STD_LOGIC;
+                signal clock_1_out_granted_ram_signal_avalon_slave_0 :  STD_LOGIC;
+                signal clock_1_out_nativeaddress :  STD_LOGIC;
+                signal clock_1_out_qualified_request_ram_signal_avalon_slave_0 :  STD_LOGIC;
+                signal clock_1_out_read :  STD_LOGIC;
+                signal clock_1_out_read_data_valid_ram_signal_avalon_slave_0 :  STD_LOGIC;
+                signal clock_1_out_readdata :  STD_LOGIC_VECTOR (7 DOWNTO 0);
+                signal clock_1_out_requests_ram_signal_avalon_slave_0 :  STD_LOGIC;
+                signal clock_1_out_reset_n :  STD_LOGIC;
+                signal clock_1_out_waitrequest :  STD_LOGIC;
+                signal clock_1_out_write :  STD_LOGIC;
+                signal clock_1_out_writedata :  STD_LOGIC_VECTOR (7 DOWNTO 0);
                 signal cpu_data_master_address :  STD_LOGIC_VECTOR (24 DOWNTO 0);
                 signal cpu_data_master_address_to_slave :  STD_LOGIC_VECTOR (24 DOWNTO 0);
                 signal cpu_data_master_byteenable :  STD_LOGIC_VECTOR (3 DOWNTO 0);
+                signal cpu_data_master_byteenable_clock_1_in :  STD_LOGIC;
                 signal cpu_data_master_byteenable_sdram_s1 :  STD_LOGIC_VECTOR (1 DOWNTO 0);
                 signal cpu_data_master_dbs_address :  STD_LOGIC_VECTOR (1 DOWNTO 0);
                 signal cpu_data_master_dbs_write_16 :  STD_LOGIC_VECTOR (15 DOWNTO 0);
+                signal cpu_data_master_dbs_write_8 :  STD_LOGIC_VECTOR (7 DOWNTO 0);
                 signal cpu_data_master_debugaccess :  STD_LOGIC;
+                signal cpu_data_master_granted_clock_0_in :  STD_LOGIC;
+                signal cpu_data_master_granted_clock_1_in :  STD_LOGIC;
                 signal cpu_data_master_granted_cpu_jtag_debug_module :  STD_LOGIC;
                 signal cpu_data_master_granted_jtag_uart_avalon_jtag_slave :  STD_LOGIC;
-                signal cpu_data_master_granted_ram_avalon_slave_0 :  STD_LOGIC;
                 signal cpu_data_master_granted_sdram_s1 :  STD_LOGIC;
                 signal cpu_data_master_irq :  STD_LOGIC_VECTOR (31 DOWNTO 0);
                 signal cpu_data_master_no_byte_enables_and_last_term :  STD_LOGIC;
+                signal cpu_data_master_qualified_request_clock_0_in :  STD_LOGIC;
+                signal cpu_data_master_qualified_request_clock_1_in :  STD_LOGIC;
                 signal cpu_data_master_qualified_request_cpu_jtag_debug_module :  STD_LOGIC;
                 signal cpu_data_master_qualified_request_jtag_uart_avalon_jtag_slave :  STD_LOGIC;
-                signal cpu_data_master_qualified_request_ram_avalon_slave_0 :  STD_LOGIC;
                 signal cpu_data_master_qualified_request_sdram_s1 :  STD_LOGIC;
                 signal cpu_data_master_read :  STD_LOGIC;
+                signal cpu_data_master_read_data_valid_clock_0_in :  STD_LOGIC;
+                signal cpu_data_master_read_data_valid_clock_1_in :  STD_LOGIC;
                 signal cpu_data_master_read_data_valid_cpu_jtag_debug_module :  STD_LOGIC;
                 signal cpu_data_master_read_data_valid_jtag_uart_avalon_jtag_slave :  STD_LOGIC;
-                signal cpu_data_master_read_data_valid_ram_avalon_slave_0 :  STD_LOGIC;
                 signal cpu_data_master_read_data_valid_sdram_s1 :  STD_LOGIC;
                 signal cpu_data_master_read_data_valid_sdram_s1_shift_register :  STD_LOGIC;
                 signal cpu_data_master_readdata :  STD_LOGIC_VECTOR (31 DOWNTO 0);
+                signal cpu_data_master_requests_clock_0_in :  STD_LOGIC;
+                signal cpu_data_master_requests_clock_1_in :  STD_LOGIC;
                 signal cpu_data_master_requests_cpu_jtag_debug_module :  STD_LOGIC;
                 signal cpu_data_master_requests_jtag_uart_avalon_jtag_slave :  STD_LOGIC;
-                signal cpu_data_master_requests_ram_avalon_slave_0 :  STD_LOGIC;
                 signal cpu_data_master_requests_sdram_s1 :  STD_LOGIC;
                 signal cpu_data_master_waitrequest :  STD_LOGIC;
                 signal cpu_data_master_write :  STD_LOGIC;
@@ -3076,10 +4680,14 @@ end component nios_reset_clk_domain_synch_module;
                 signal cpu_jtag_debug_module_resetrequest_from_sa :  STD_LOGIC;
                 signal cpu_jtag_debug_module_write :  STD_LOGIC;
                 signal cpu_jtag_debug_module_writedata :  STD_LOGIC_VECTOR (31 DOWNTO 0);
+                signal d1_clock_0_in_end_xfer :  STD_LOGIC;
+                signal d1_clock_1_in_end_xfer :  STD_LOGIC;
                 signal d1_cpu_jtag_debug_module_end_xfer :  STD_LOGIC;
                 signal d1_jtag_uart_avalon_jtag_slave_end_xfer :  STD_LOGIC;
                 signal d1_ram_avalon_slave_0_end_xfer :  STD_LOGIC;
+                signal d1_ram_signal_avalon_slave_0_end_xfer :  STD_LOGIC;
                 signal d1_sdram_s1_end_xfer :  STD_LOGIC;
+                signal internal_read_data_from_the_ram_signal :  STD_LOGIC_VECTOR (7 DOWNTO 0);
                 signal internal_readaddr_from_the_ram :  STD_LOGIC_VECTOR (3 DOWNTO 0);
                 signal internal_readdata_from_the_ram :  STD_LOGIC_VECTOR (17 DOWNTO 0);
                 signal internal_zs_addr_from_the_sdram :  STD_LOGIC_VECTOR (11 DOWNTO 0);
@@ -3107,11 +4715,17 @@ end component nios_reset_clk_domain_synch_module;
                 signal jtag_uart_avalon_jtag_slave_write_n :  STD_LOGIC;
                 signal jtag_uart_avalon_jtag_slave_writedata :  STD_LOGIC_VECTOR (31 DOWNTO 0);
                 signal module_input6 :  STD_LOGIC;
+                signal module_input7 :  STD_LOGIC;
                 signal ram_avalon_slave_0_address :  STD_LOGIC_VECTOR (3 DOWNTO 0);
                 signal ram_avalon_slave_0_chipselect :  STD_LOGIC;
                 signal ram_avalon_slave_0_reset_n :  STD_LOGIC;
                 signal ram_avalon_slave_0_write :  STD_LOGIC;
                 signal ram_avalon_slave_0_writedata :  STD_LOGIC_VECTOR (31 DOWNTO 0);
+                signal ram_signal_avalon_slave_0_address :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_chipselect :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_reset_n :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_write :  STD_LOGIC;
+                signal ram_signal_avalon_slave_0_writedata :  STD_LOGIC_VECTOR (7 DOWNTO 0);
                 signal reset_n_sources :  STD_LOGIC;
                 signal sdram_s1_address :  STD_LOGIC_VECTOR (21 DOWNTO 0);
                 signal sdram_s1_byteenable_n :  STD_LOGIC_VECTOR (1 DOWNTO 0);
@@ -3127,6 +4741,168 @@ end component nios_reset_clk_domain_synch_module;
                 signal sdram_s1_writedata :  STD_LOGIC_VECTOR (15 DOWNTO 0);
 
 begin
+
+  --the_clock_0_in, which is an e_instance
+  the_clock_0_in : clock_0_in_arbitrator
+    port map(
+      clock_0_in_address => clock_0_in_address,
+      clock_0_in_byteenable => clock_0_in_byteenable,
+      clock_0_in_endofpacket_from_sa => clock_0_in_endofpacket_from_sa,
+      clock_0_in_nativeaddress => clock_0_in_nativeaddress,
+      clock_0_in_read => clock_0_in_read,
+      clock_0_in_readdata_from_sa => clock_0_in_readdata_from_sa,
+      clock_0_in_reset_n => clock_0_in_reset_n,
+      clock_0_in_waitrequest_from_sa => clock_0_in_waitrequest_from_sa,
+      clock_0_in_write => clock_0_in_write,
+      clock_0_in_writedata => clock_0_in_writedata,
+      cpu_data_master_granted_clock_0_in => cpu_data_master_granted_clock_0_in,
+      cpu_data_master_qualified_request_clock_0_in => cpu_data_master_qualified_request_clock_0_in,
+      cpu_data_master_read_data_valid_clock_0_in => cpu_data_master_read_data_valid_clock_0_in,
+      cpu_data_master_requests_clock_0_in => cpu_data_master_requests_clock_0_in,
+      d1_clock_0_in_end_xfer => d1_clock_0_in_end_xfer,
+      clk => clk,
+      clock_0_in_endofpacket => clock_0_in_endofpacket,
+      clock_0_in_readdata => clock_0_in_readdata,
+      clock_0_in_waitrequest => clock_0_in_waitrequest,
+      cpu_data_master_address_to_slave => cpu_data_master_address_to_slave,
+      cpu_data_master_byteenable => cpu_data_master_byteenable,
+      cpu_data_master_read => cpu_data_master_read,
+      cpu_data_master_waitrequest => cpu_data_master_waitrequest,
+      cpu_data_master_write => cpu_data_master_write,
+      cpu_data_master_writedata => cpu_data_master_writedata,
+      reset_n => clk_reset_n
+    );
+
+
+  --the_clock_0_out, which is an e_instance
+  the_clock_0_out : clock_0_out_arbitrator
+    port map(
+      clock_0_out_address_to_slave => clock_0_out_address_to_slave,
+      clock_0_out_readdata => clock_0_out_readdata,
+      clock_0_out_reset_n => clock_0_out_reset_n,
+      clock_0_out_waitrequest => clock_0_out_waitrequest,
+      clk => clk_25,
+      clock_0_out_address => clock_0_out_address,
+      clock_0_out_granted_ram_avalon_slave_0 => clock_0_out_granted_ram_avalon_slave_0,
+      clock_0_out_qualified_request_ram_avalon_slave_0 => clock_0_out_qualified_request_ram_avalon_slave_0,
+      clock_0_out_read => clock_0_out_read,
+      clock_0_out_read_data_valid_ram_avalon_slave_0 => clock_0_out_read_data_valid_ram_avalon_slave_0,
+      clock_0_out_requests_ram_avalon_slave_0 => clock_0_out_requests_ram_avalon_slave_0,
+      clock_0_out_write => clock_0_out_write,
+      clock_0_out_writedata => clock_0_out_writedata,
+      d1_ram_avalon_slave_0_end_xfer => d1_ram_avalon_slave_0_end_xfer,
+      reset_n => clk_25_reset_n
+    );
+
+
+  --the_clock_0, which is an e_ptf_instance
+  the_clock_0 : clock_0
+    port map(
+      master_address => clock_0_out_address,
+      master_byteenable => clock_0_out_byteenable,
+      master_nativeaddress => clock_0_out_nativeaddress,
+      master_read => clock_0_out_read,
+      master_write => clock_0_out_write,
+      master_writedata => clock_0_out_writedata,
+      slave_endofpacket => clock_0_in_endofpacket,
+      slave_readdata => clock_0_in_readdata,
+      slave_waitrequest => clock_0_in_waitrequest,
+      master_clk => clk_25,
+      master_endofpacket => clock_0_out_endofpacket,
+      master_readdata => clock_0_out_readdata,
+      master_reset_n => clock_0_out_reset_n,
+      master_waitrequest => clock_0_out_waitrequest,
+      slave_address => clock_0_in_address,
+      slave_byteenable => clock_0_in_byteenable,
+      slave_clk => clk,
+      slave_nativeaddress => clock_0_in_nativeaddress,
+      slave_read => clock_0_in_read,
+      slave_reset_n => clock_0_in_reset_n,
+      slave_write => clock_0_in_write,
+      slave_writedata => clock_0_in_writedata
+    );
+
+
+  --the_clock_1_in, which is an e_instance
+  the_clock_1_in : clock_1_in_arbitrator
+    port map(
+      clock_1_in_address => clock_1_in_address,
+      clock_1_in_endofpacket_from_sa => clock_1_in_endofpacket_from_sa,
+      clock_1_in_nativeaddress => clock_1_in_nativeaddress,
+      clock_1_in_read => clock_1_in_read,
+      clock_1_in_readdata_from_sa => clock_1_in_readdata_from_sa,
+      clock_1_in_reset_n => clock_1_in_reset_n,
+      clock_1_in_waitrequest_from_sa => clock_1_in_waitrequest_from_sa,
+      clock_1_in_write => clock_1_in_write,
+      clock_1_in_writedata => clock_1_in_writedata,
+      cpu_data_master_byteenable_clock_1_in => cpu_data_master_byteenable_clock_1_in,
+      cpu_data_master_granted_clock_1_in => cpu_data_master_granted_clock_1_in,
+      cpu_data_master_qualified_request_clock_1_in => cpu_data_master_qualified_request_clock_1_in,
+      cpu_data_master_read_data_valid_clock_1_in => cpu_data_master_read_data_valid_clock_1_in,
+      cpu_data_master_requests_clock_1_in => cpu_data_master_requests_clock_1_in,
+      d1_clock_1_in_end_xfer => d1_clock_1_in_end_xfer,
+      clk => clk,
+      clock_1_in_endofpacket => clock_1_in_endofpacket,
+      clock_1_in_readdata => clock_1_in_readdata,
+      clock_1_in_waitrequest => clock_1_in_waitrequest,
+      cpu_data_master_address_to_slave => cpu_data_master_address_to_slave,
+      cpu_data_master_byteenable => cpu_data_master_byteenable,
+      cpu_data_master_dbs_address => cpu_data_master_dbs_address,
+      cpu_data_master_dbs_write_8 => cpu_data_master_dbs_write_8,
+      cpu_data_master_no_byte_enables_and_last_term => cpu_data_master_no_byte_enables_and_last_term,
+      cpu_data_master_read => cpu_data_master_read,
+      cpu_data_master_waitrequest => cpu_data_master_waitrequest,
+      cpu_data_master_write => cpu_data_master_write,
+      reset_n => clk_reset_n
+    );
+
+
+  --the_clock_1_out, which is an e_instance
+  the_clock_1_out : clock_1_out_arbitrator
+    port map(
+      clock_1_out_address_to_slave => clock_1_out_address_to_slave,
+      clock_1_out_readdata => clock_1_out_readdata,
+      clock_1_out_reset_n => clock_1_out_reset_n,
+      clock_1_out_waitrequest => clock_1_out_waitrequest,
+      clk => clk_25,
+      clock_1_out_address => clock_1_out_address,
+      clock_1_out_granted_ram_signal_avalon_slave_0 => clock_1_out_granted_ram_signal_avalon_slave_0,
+      clock_1_out_qualified_request_ram_signal_avalon_slave_0 => clock_1_out_qualified_request_ram_signal_avalon_slave_0,
+      clock_1_out_read => clock_1_out_read,
+      clock_1_out_read_data_valid_ram_signal_avalon_slave_0 => clock_1_out_read_data_valid_ram_signal_avalon_slave_0,
+      clock_1_out_requests_ram_signal_avalon_slave_0 => clock_1_out_requests_ram_signal_avalon_slave_0,
+      clock_1_out_write => clock_1_out_write,
+      clock_1_out_writedata => clock_1_out_writedata,
+      d1_ram_signal_avalon_slave_0_end_xfer => d1_ram_signal_avalon_slave_0_end_xfer,
+      reset_n => clk_25_reset_n
+    );
+
+
+  --the_clock_1, which is an e_ptf_instance
+  the_clock_1 : clock_1
+    port map(
+      master_address => clock_1_out_address,
+      master_nativeaddress => clock_1_out_nativeaddress,
+      master_read => clock_1_out_read,
+      master_write => clock_1_out_write,
+      master_writedata => clock_1_out_writedata,
+      slave_endofpacket => clock_1_in_endofpacket,
+      slave_readdata => clock_1_in_readdata,
+      slave_waitrequest => clock_1_in_waitrequest,
+      master_clk => clk_25,
+      master_endofpacket => clock_1_out_endofpacket,
+      master_readdata => clock_1_out_readdata,
+      master_reset_n => clock_1_out_reset_n,
+      master_waitrequest => clock_1_out_waitrequest,
+      slave_address => clock_1_in_address,
+      slave_clk => clk,
+      slave_nativeaddress => clock_1_in_nativeaddress,
+      slave_read => clock_1_in_read,
+      slave_reset_n => clock_1_in_reset_n,
+      slave_write => clock_1_in_write,
+      slave_writedata => clock_1_in_writedata
+    );
+
 
   --the_cpu_jtag_debug_module, which is an e_instance
   the_cpu_jtag_debug_module : cpu_jtag_debug_module_arbitrator
@@ -3173,38 +4949,49 @@ begin
       cpu_data_master_address_to_slave => cpu_data_master_address_to_slave,
       cpu_data_master_dbs_address => cpu_data_master_dbs_address,
       cpu_data_master_dbs_write_16 => cpu_data_master_dbs_write_16,
+      cpu_data_master_dbs_write_8 => cpu_data_master_dbs_write_8,
       cpu_data_master_irq => cpu_data_master_irq,
       cpu_data_master_no_byte_enables_and_last_term => cpu_data_master_no_byte_enables_and_last_term,
       cpu_data_master_readdata => cpu_data_master_readdata,
       cpu_data_master_waitrequest => cpu_data_master_waitrequest,
       clk => clk,
+      clock_0_in_readdata_from_sa => clock_0_in_readdata_from_sa,
+      clock_0_in_waitrequest_from_sa => clock_0_in_waitrequest_from_sa,
+      clock_1_in_readdata_from_sa => clock_1_in_readdata_from_sa,
+      clock_1_in_waitrequest_from_sa => clock_1_in_waitrequest_from_sa,
       cpu_data_master_address => cpu_data_master_address,
+      cpu_data_master_byteenable_clock_1_in => cpu_data_master_byteenable_clock_1_in,
       cpu_data_master_byteenable_sdram_s1 => cpu_data_master_byteenable_sdram_s1,
       cpu_data_master_debugaccess => cpu_data_master_debugaccess,
+      cpu_data_master_granted_clock_0_in => cpu_data_master_granted_clock_0_in,
+      cpu_data_master_granted_clock_1_in => cpu_data_master_granted_clock_1_in,
       cpu_data_master_granted_cpu_jtag_debug_module => cpu_data_master_granted_cpu_jtag_debug_module,
       cpu_data_master_granted_jtag_uart_avalon_jtag_slave => cpu_data_master_granted_jtag_uart_avalon_jtag_slave,
-      cpu_data_master_granted_ram_avalon_slave_0 => cpu_data_master_granted_ram_avalon_slave_0,
       cpu_data_master_granted_sdram_s1 => cpu_data_master_granted_sdram_s1,
+      cpu_data_master_qualified_request_clock_0_in => cpu_data_master_qualified_request_clock_0_in,
+      cpu_data_master_qualified_request_clock_1_in => cpu_data_master_qualified_request_clock_1_in,
       cpu_data_master_qualified_request_cpu_jtag_debug_module => cpu_data_master_qualified_request_cpu_jtag_debug_module,
       cpu_data_master_qualified_request_jtag_uart_avalon_jtag_slave => cpu_data_master_qualified_request_jtag_uart_avalon_jtag_slave,
-      cpu_data_master_qualified_request_ram_avalon_slave_0 => cpu_data_master_qualified_request_ram_avalon_slave_0,
       cpu_data_master_qualified_request_sdram_s1 => cpu_data_master_qualified_request_sdram_s1,
       cpu_data_master_read => cpu_data_master_read,
+      cpu_data_master_read_data_valid_clock_0_in => cpu_data_master_read_data_valid_clock_0_in,
+      cpu_data_master_read_data_valid_clock_1_in => cpu_data_master_read_data_valid_clock_1_in,
       cpu_data_master_read_data_valid_cpu_jtag_debug_module => cpu_data_master_read_data_valid_cpu_jtag_debug_module,
       cpu_data_master_read_data_valid_jtag_uart_avalon_jtag_slave => cpu_data_master_read_data_valid_jtag_uart_avalon_jtag_slave,
-      cpu_data_master_read_data_valid_ram_avalon_slave_0 => cpu_data_master_read_data_valid_ram_avalon_slave_0,
       cpu_data_master_read_data_valid_sdram_s1 => cpu_data_master_read_data_valid_sdram_s1,
       cpu_data_master_read_data_valid_sdram_s1_shift_register => cpu_data_master_read_data_valid_sdram_s1_shift_register,
+      cpu_data_master_requests_clock_0_in => cpu_data_master_requests_clock_0_in,
+      cpu_data_master_requests_clock_1_in => cpu_data_master_requests_clock_1_in,
       cpu_data_master_requests_cpu_jtag_debug_module => cpu_data_master_requests_cpu_jtag_debug_module,
       cpu_data_master_requests_jtag_uart_avalon_jtag_slave => cpu_data_master_requests_jtag_uart_avalon_jtag_slave,
-      cpu_data_master_requests_ram_avalon_slave_0 => cpu_data_master_requests_ram_avalon_slave_0,
       cpu_data_master_requests_sdram_s1 => cpu_data_master_requests_sdram_s1,
       cpu_data_master_write => cpu_data_master_write,
       cpu_data_master_writedata => cpu_data_master_writedata,
       cpu_jtag_debug_module_readdata_from_sa => cpu_jtag_debug_module_readdata_from_sa,
+      d1_clock_0_in_end_xfer => d1_clock_0_in_end_xfer,
+      d1_clock_1_in_end_xfer => d1_clock_1_in_end_xfer,
       d1_cpu_jtag_debug_module_end_xfer => d1_cpu_jtag_debug_module_end_xfer,
       d1_jtag_uart_avalon_jtag_slave_end_xfer => d1_jtag_uart_avalon_jtag_slave_end_xfer,
-      d1_ram_avalon_slave_0_end_xfer => d1_ram_avalon_slave_0_end_xfer,
       d1_sdram_s1_end_xfer => d1_sdram_s1_end_xfer,
       jtag_uart_avalon_jtag_slave_irq_from_sa => jtag_uart_avalon_jtag_slave_irq_from_sa,
       jtag_uart_avalon_jtag_slave_readdata_from_sa => jtag_uart_avalon_jtag_slave_readdata_from_sa,
@@ -3330,23 +5117,22 @@ begin
   --the_ram_avalon_slave_0, which is an e_instance
   the_ram_avalon_slave_0 : ram_avalon_slave_0_arbitrator
     port map(
-      cpu_data_master_granted_ram_avalon_slave_0 => cpu_data_master_granted_ram_avalon_slave_0,
-      cpu_data_master_qualified_request_ram_avalon_slave_0 => cpu_data_master_qualified_request_ram_avalon_slave_0,
-      cpu_data_master_read_data_valid_ram_avalon_slave_0 => cpu_data_master_read_data_valid_ram_avalon_slave_0,
-      cpu_data_master_requests_ram_avalon_slave_0 => cpu_data_master_requests_ram_avalon_slave_0,
+      clock_0_out_granted_ram_avalon_slave_0 => clock_0_out_granted_ram_avalon_slave_0,
+      clock_0_out_qualified_request_ram_avalon_slave_0 => clock_0_out_qualified_request_ram_avalon_slave_0,
+      clock_0_out_read_data_valid_ram_avalon_slave_0 => clock_0_out_read_data_valid_ram_avalon_slave_0,
+      clock_0_out_requests_ram_avalon_slave_0 => clock_0_out_requests_ram_avalon_slave_0,
       d1_ram_avalon_slave_0_end_xfer => d1_ram_avalon_slave_0_end_xfer,
       ram_avalon_slave_0_address => ram_avalon_slave_0_address,
       ram_avalon_slave_0_chipselect => ram_avalon_slave_0_chipselect,
       ram_avalon_slave_0_reset_n => ram_avalon_slave_0_reset_n,
       ram_avalon_slave_0_write => ram_avalon_slave_0_write,
       ram_avalon_slave_0_writedata => ram_avalon_slave_0_writedata,
-      clk => clk,
-      cpu_data_master_address_to_slave => cpu_data_master_address_to_slave,
-      cpu_data_master_read => cpu_data_master_read,
-      cpu_data_master_waitrequest => cpu_data_master_waitrequest,
-      cpu_data_master_write => cpu_data_master_write,
-      cpu_data_master_writedata => cpu_data_master_writedata,
-      reset_n => clk_reset_n
+      clk => clk_25,
+      clock_0_out_address_to_slave => clock_0_out_address_to_slave,
+      clock_0_out_read => clock_0_out_read,
+      clock_0_out_write => clock_0_out_write,
+      clock_0_out_writedata => clock_0_out_writedata,
+      reset_n => clk_25_reset_n
     );
 
 
@@ -3358,11 +5144,47 @@ begin
       address => ram_avalon_slave_0_address,
       addressout => addressout_to_the_ram,
       chipselect => ram_avalon_slave_0_chipselect,
-      clk => clk,
+      clk => clk_25,
       read => read_to_the_ram,
       reset_n => ram_avalon_slave_0_reset_n,
       write => ram_avalon_slave_0_write,
       writedata => ram_avalon_slave_0_writedata
+    );
+
+
+  --the_ram_signal_avalon_slave_0, which is an e_instance
+  the_ram_signal_avalon_slave_0 : ram_signal_avalon_slave_0_arbitrator
+    port map(
+      clock_1_out_granted_ram_signal_avalon_slave_0 => clock_1_out_granted_ram_signal_avalon_slave_0,
+      clock_1_out_qualified_request_ram_signal_avalon_slave_0 => clock_1_out_qualified_request_ram_signal_avalon_slave_0,
+      clock_1_out_read_data_valid_ram_signal_avalon_slave_0 => clock_1_out_read_data_valid_ram_signal_avalon_slave_0,
+      clock_1_out_requests_ram_signal_avalon_slave_0 => clock_1_out_requests_ram_signal_avalon_slave_0,
+      d1_ram_signal_avalon_slave_0_end_xfer => d1_ram_signal_avalon_slave_0_end_xfer,
+      ram_signal_avalon_slave_0_address => ram_signal_avalon_slave_0_address,
+      ram_signal_avalon_slave_0_chipselect => ram_signal_avalon_slave_0_chipselect,
+      ram_signal_avalon_slave_0_reset_n => ram_signal_avalon_slave_0_reset_n,
+      ram_signal_avalon_slave_0_write => ram_signal_avalon_slave_0_write,
+      ram_signal_avalon_slave_0_writedata => ram_signal_avalon_slave_0_writedata,
+      clk => clk_25,
+      clock_1_out_address_to_slave => clock_1_out_address_to_slave,
+      clock_1_out_read => clock_1_out_read,
+      clock_1_out_write => clock_1_out_write,
+      clock_1_out_writedata => clock_1_out_writedata,
+      reset_n => clk_25_reset_n
+    );
+
+
+  --the_ram_signal, which is an e_ptf_instance
+  the_ram_signal : ram_signal
+    port map(
+      read_data => internal_read_data_from_the_ram_signal,
+      address => ram_signal_avalon_slave_0_address,
+      chipselect => ram_signal_avalon_slave_0_chipselect,
+      clk => clk_25,
+      read_addr => read_addr_to_the_ram_signal,
+      reset_n => ram_signal_avalon_slave_0_reset_n,
+      write => ram_signal_avalon_slave_0_write,
+      writedata => ram_signal_avalon_slave_0_writedata
     );
 
 
@@ -3447,7 +5269,24 @@ begin
   module_input6 <= std_logic'('1');
 
   --reset sources mux, which is an e_mux
-  reset_n_sources <= Vector_To_Std_Logic(NOT (((((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT reset_n))) OR std_logic_vector'("00000000000000000000000000000000")) OR (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_jtag_debug_module_resetrequest_from_sa)))) OR (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_jtag_debug_module_resetrequest_from_sa))))));
+  reset_n_sources <= Vector_To_Std_Logic(NOT ((((((std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(NOT reset_n))) OR std_logic_vector'("00000000000000000000000000000000")) OR (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_jtag_debug_module_resetrequest_from_sa)))) OR (std_logic_vector'("0000000000000000000000000000000") & (A_TOSTDLOGICVECTOR(cpu_jtag_debug_module_resetrequest_from_sa)))) OR std_logic_vector'("00000000000000000000000000000000"))));
+  --reset is asserted asynchronously and deasserted synchronously
+  nios_reset_clk_25_domain_synch : nios_reset_clk_25_domain_synch_module
+    port map(
+      data_out => clk_25_reset_n,
+      clk => clk_25,
+      data_in => module_input7,
+      reset_n => reset_n_sources
+    );
+
+  module_input7 <= std_logic'('1');
+
+  --clock_0_out_endofpacket of type endofpacket does not connect to anything so wire it to default (0)
+  clock_0_out_endofpacket <= std_logic'('0');
+  --clock_1_out_endofpacket of type endofpacket does not connect to anything so wire it to default (0)
+  clock_1_out_endofpacket <= std_logic'('0');
+  --vhdl renameroo for output signals
+  read_data_from_the_ram_signal <= internal_read_data_from_the_ram_signal;
   --vhdl renameroo for output signals
   readaddr_from_the_ram <= internal_readaddr_from_the_ram;
   --vhdl renameroo for output signals
@@ -3497,6 +5336,7 @@ component nios is
            port (
                  -- 1) global signals:
                     signal clk : IN STD_LOGIC;
+                    signal clk_25 : IN STD_LOGIC;
                     signal reset_n : IN STD_LOGIC;
 
                  -- the_ram
@@ -3504,6 +5344,10 @@ component nios is
                     signal read_to_the_ram : IN STD_LOGIC;
                     signal readaddr_from_the_ram : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
                     signal readdata_from_the_ram : OUT STD_LOGIC_VECTOR (17 DOWNTO 0);
+
+                 -- the_ram_signal
+                    signal read_addr_to_the_ram_signal : IN STD_LOGIC;
+                    signal read_data_from_the_ram_signal : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
 
                  -- the_sdram
                     signal zs_addr_from_the_sdram : OUT STD_LOGIC_VECTOR (11 DOWNTO 0);
@@ -3520,8 +5364,18 @@ end component nios;
 
                 signal addressout_to_the_ram :  STD_LOGIC_VECTOR (3 DOWNTO 0);
                 signal clk :  STD_LOGIC;
+                signal clk_25 :  STD_LOGIC;
+                signal clock_0_in_endofpacket_from_sa :  STD_LOGIC;
+                signal clock_0_out_byteenable :  STD_LOGIC_VECTOR (3 DOWNTO 0);
+                signal clock_0_out_endofpacket :  STD_LOGIC;
+                signal clock_0_out_nativeaddress :  STD_LOGIC_VECTOR (3 DOWNTO 0);
+                signal clock_1_in_endofpacket_from_sa :  STD_LOGIC;
+                signal clock_1_out_endofpacket :  STD_LOGIC;
+                signal clock_1_out_nativeaddress :  STD_LOGIC;
                 signal jtag_uart_avalon_jtag_slave_dataavailable_from_sa :  STD_LOGIC;
                 signal jtag_uart_avalon_jtag_slave_readyfordata_from_sa :  STD_LOGIC;
+                signal read_addr_to_the_ram_signal :  STD_LOGIC;
+                signal read_data_from_the_ram_signal :  STD_LOGIC_VECTOR (7 DOWNTO 0);
                 signal read_to_the_ram :  STD_LOGIC;
                 signal readaddr_from_the_ram :  STD_LOGIC_VECTOR (3 DOWNTO 0);
                 signal readdata_from_the_ram :  STD_LOGIC_VECTOR (17 DOWNTO 0);
@@ -3547,6 +5401,7 @@ begin
   --Set us up the Dut
   DUT : nios
     port map(
+      read_data_from_the_ram_signal => read_data_from_the_ram_signal,
       readaddr_from_the_ram => readaddr_from_the_ram,
       readdata_from_the_ram => readdata_from_the_ram,
       zs_addr_from_the_sdram => zs_addr_from_the_sdram,
@@ -3560,6 +5415,8 @@ begin
       zs_we_n_from_the_sdram => zs_we_n_from_the_sdram,
       addressout_to_the_ram => addressout_to_the_ram,
       clk => clk,
+      clk_25 => clk_25,
+      read_addr_to_the_ram_signal => read_addr_to_the_ram_signal,
       read_to_the_ram => read_to_the_ram,
       reset_n => reset_n
     );
@@ -3571,6 +5428,14 @@ begin
     loop
        wait for 10 ns;
        clk <= not clk;
+    end loop;
+  end process;
+  process
+  begin
+    clk_25 <= '0';
+    loop
+       wait for 20 ns;
+       clk_25 <= not clk_25;
     end loop;
   end process;
   PROCESS

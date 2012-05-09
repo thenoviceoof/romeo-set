@@ -2,59 +2,68 @@ Altera SOPC Builder Version 7.20 Build 151
 Copyright (c) 1999-2007 Altera Corporation.  All rights reserved.
 
 
-# 2012.05.08 00:21:45 (*) mk_custom_sdk starting
-# 2012.05.08 00:21:45 (*) Reading project /home/user4/spring12/lep2141/4840/romeo-set/src/nios.ptf.
+# 2012.05.09 06:47:40 (*) mk_custom_sdk starting
+# 2012.05.09 06:47:40 (*) Reading project /home/user4/spring12/nyh2105/embedded/qqq/src/nios.ptf.
 
-# 2012.05.08 00:21:45 (*) Finding all CPUs
-# 2012.05.08 00:21:45 (*) Finding all available components
-# 2012.05.08 00:21:45 (*) Reading /home/user4/spring12/lep2141/4840/romeo-set/src/.sopc_builder/install.ptf
+# 2012.05.09 06:47:40 (*) Finding all CPUs
+# 2012.05.09 06:47:40 (*) Finding all available components
+# 2012.05.09 06:47:40 (*) Reading /home/user4/spring12/nyh2105/embedded/qqq/src/.sopc_builder/install.ptf
 
-# 2012.05.08 00:21:46 (*) Found 67 components
+# 2012.05.09 06:47:40 (*) Found 67 components
 
-# 2012.05.08 00:21:46 (*) Finding all peripherals
+# 2012.05.09 06:47:41 (*) Finding all peripherals
 
-# 2012.05.08 00:21:46 (*) Finding software components
+# 2012.05.09 06:47:41 (*) Finding software components
 
-# 2012.05.08 00:21:47 (*) (Legacy SDK Generation Skipped)
-# 2012.05.08 00:21:47 (*) (All TCL Script Generation Skipped)
-# 2012.05.08 00:21:47 (*) (No Libraries Built)
-# 2012.05.08 00:21:47 (*) (Contents Generation Skipped)
-# 2012.05.08 00:21:47 (*) mk_custom_sdk finishing
+# 2012.05.09 06:47:41 (*) (Legacy SDK Generation Skipped)
+# 2012.05.09 06:47:41 (*) (All TCL Script Generation Skipped)
+# 2012.05.09 06:47:41 (*) (No Libraries Built)
+# 2012.05.09 06:47:41 (*) (Contents Generation Skipped)
+# 2012.05.09 06:47:41 (*) mk_custom_sdk finishing
 
-# 2012.05.08 00:21:47 (*) Starting generation for system: nios.
-
-.
-.
-.
-
-# 2012.05.08 00:21:48 (*) Running Generator Program for cpu
-
-# 2012.05.08 00:21:49 (*)   Checking for plaintext license.
-# 2012.05.08 00:21:49 (*)   Plaintext license not found.
-# 2012.05.08 00:21:49 (*)   Checking for encrypted license (non-evaluation).
-# 2012.05.08 00:21:49 (*)   Encrypted license found.  SOF will not be time-limited.
-# 2012.05.08 00:21:58 (*)   Creating encrypted HDL
-
-# 2012.05.08 00:21:59 (*) Running Generator Program for jtag_uart
-
-# 2012.05.08 00:22:00 (*) Running Generator Program for sdram
+# 2012.05.09 06:47:41 (*) Starting generation for system: nios.
 
 .
+.
+.
+..
 
-# 2012.05.08 00:22:02 (*) Running Test Generator Program for sdram
+# 2012.05.09 06:47:43 (*) Running Generator Program for cpu
 
-# 2012.05.08 00:22:02 (*) Making arbitration and system (top) modules.
+# 2012.05.09 06:47:44 (*)   Checking for plaintext license.
+# 2012.05.09 06:47:44 (*)   Couldn't query license setup in Quartus directory /opt/altera/altera7.2/quartus
+# 2012.05.09 06:47:44 (*)   Defaulting to contents of LM_LICENSE_FILE environment variable
+# 2012.05.09 06:47:44 (*)   Plaintext license not found.
+# 2012.05.09 06:47:44 (*)   Checking for encrypted license (non-evaluation).
+# 2012.05.09 06:47:44 (*)   Couldn't query license setup in Quartus directory /opt/altera/altera7.2/quartus
+# 2012.05.09 06:47:44 (*)   Defaulting to contents of LM_LICENSE_FILE environment variable
+# 2012.05.09 06:47:44 (*)   Encrypted license found.  SOF will not be time-limited.
+# 2012.05.09 06:47:52 (*)   Creating encrypted HDL
 
-# 2012.05.08 00:22:06 (*) Generating Quartus symbol for top level: nios
+# 2012.05.09 06:47:54 (*) Running Generator Program for jtag_uart
 
-# 2012.05.08 00:22:06 (*) Generating Symbol /home/user4/spring12/lep2141/4840/romeo-set/src/nios.bsf
+# 2012.05.09 06:47:55 (*) Running Generator Program for sdram
 
-# 2012.05.08 00:22:06 (*) Creating command-line system-generation script: /home/user4/spring12/lep2141/4840/romeo-set/src/nios_generation_script
+# 2012.05.09 06:47:56 (*) Running Generator Program for clock_0
 
-# 2012.05.08 00:22:06 (*) Running setup for HDL simulator: modelsim
+# 2012.05.09 06:47:57 (*) Running Generator Program for clock_1
+
+.
+
+# 2012.05.09 06:47:58 (*) Running Test Generator Program for sdram
+
+# 2012.05.09 06:47:59 (*) Making arbitration and system (top) modules.
+
+# 2012.05.09 06:48:05 (*) Generating Quartus symbol for top level: nios
+
+# 2012.05.09 06:48:05 (*) Generating Symbol /home/user4/spring12/nyh2105/embedded/qqq/src/nios.bsf
+
+# 2012.05.09 06:48:05 (*) Creating command-line system-generation script: /home/user4/spring12/nyh2105/embedded/qqq/src/nios_generation_script
+
+# 2012.05.09 06:48:05 (*) Running setup for HDL simulator: modelsim
 
 
-# 2012.05.08 00:22:06 (*) Setting up Quartus with nios_setup_quartus.tcl
+# 2012.05.09 06:48:05 (*) Setting up Quartus with nios_setup_quartus.tcl
 /opt/altera/altera7.2/quartus/bin/quartus_sh -t nios_setup_quartus.tcl
 
 
@@ -75,20 +84,20 @@ Info: Running Quartus II Shell
     Info: Altera or its authorized distributors.  Please refer to the 
     In
 fo: applicable agreement for further details.
-    Info: Processing started: Tue May  8 00:22:06 2012
+    Info: Processing started: Wed May  9 06:48:05 2012
 Info: Command: quartus_sh -t nios_setup_quartus.tcl
 Info: Evaluation of Tcl script nios_setup_quartus.tcl was successful
 Info: Quartus II Shell was successful. 0 errors, 0 warnings
-    Info: Processing ended: Tue May  8 00:22:06 2012
+    Info: Processing ended: Wed May  9 06:48:05 2012
     Info: Elapsed time: 00:00:00
 
-# 2012.05.08 00:22:06 (*) Completed generation for system: nios.
-# 2012.05.08 00:22:06 (*) THE FOLLOWING SYSTEM ITEMS HAVE BEEN GENERATED:
-  SOPC Builder database : /home/user4/spring12/lep2141/4840/romeo-set/src/nios.ptf 
-  System HDL Model : /home/user4/spring12/lep2141/4840/romeo-set/src/nios.vhd 
-  System Generation Script : /home/user4/spring12/lep2141/4840/romeo-set/src/nios_generation_script 
+# 2012.05.09 06:48:05 (*) Completed generation for system: nios.
+# 2012.05.09 06:48:05 (*) THE FOLLOWING SYSTEM ITEMS HAVE BEEN GENERATED:
+  SOPC Builder database : /home/user4/spring12/nyh2105/embedded/qqq/src/nios.ptf 
+  System HDL Model : /home/user4/spring12/nyh2105/embedded/qqq/src/nios.vhd 
+  System Generation Script : /home/user4/spring12/nyh2105/embedded/qqq/src/nios_generation_script 
 
-# 2012.05.08 00:22:06 (*) SUCCESS: SYSTEM GENERATION COMPLETED.
+# 2012.05.09 06:48:05 (*) SUCCESS: SYSTEM GENERATION COMPLETED.
 
 
 Press 'Exit' to exit.

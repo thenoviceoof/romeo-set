@@ -23,7 +23,7 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
-entity clock_0_master_read_done_sync_module is 
+entity clock_1_master_read_done_sync_module is 
         port (
               -- inputs:
                  signal clk : IN STD_LOGIC;
@@ -33,10 +33,10 @@ entity clock_0_master_read_done_sync_module is
               -- outputs:
                  signal data_out : OUT STD_LOGIC
               );
-end entity clock_0_master_read_done_sync_module;
+end entity clock_1_master_read_done_sync_module;
 
 
-architecture europa of clock_0_master_read_done_sync_module is
+architecture europa of clock_1_master_read_done_sync_module is
                 signal data_in_d1 :  STD_LOGIC;
 attribute ALTERA_ATTRIBUTE : string;
 attribute ALTERA_ATTRIBUTE of data_in_d1 : signal is "MAX_DELAY=100ns ; PRESERVE_REGISTER=ON";
@@ -85,7 +85,7 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
-entity clock_0_master_write_done_sync_module is 
+entity clock_1_master_write_done_sync_module is 
         port (
               -- inputs:
                  signal clk : IN STD_LOGIC;
@@ -95,10 +95,10 @@ entity clock_0_master_write_done_sync_module is
               -- outputs:
                  signal data_out : OUT STD_LOGIC
               );
-end entity clock_0_master_write_done_sync_module;
+end entity clock_1_master_write_done_sync_module;
 
 
-architecture europa of clock_0_master_write_done_sync_module is
+architecture europa of clock_1_master_write_done_sync_module is
                 signal data_in_d1 :  STD_LOGIC;
 attribute ALTERA_ATTRIBUTE : string;
 attribute ALTERA_ATTRIBUTE of data_in_d1 : signal is "MAX_DELAY=100ns ; PRESERVE_REGISTER=ON";
@@ -147,7 +147,7 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
-entity clock_0_edge_to_pulse is 
+entity clock_1_edge_to_pulse is 
         port (
               -- inputs:
                  signal clock : IN STD_LOGIC;
@@ -157,10 +157,10 @@ entity clock_0_edge_to_pulse is
               -- outputs:
                  signal data_out : OUT STD_LOGIC
               );
-end entity clock_0_edge_to_pulse;
+end entity clock_1_edge_to_pulse;
 
 
-architecture europa of clock_0_edge_to_pulse is
+architecture europa of clock_1_edge_to_pulse is
                 signal data_in_d1 :  STD_LOGIC;
 
 begin
@@ -195,7 +195,7 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
-entity clock_0_slave_FSM is 
+entity clock_1_slave_FSM is 
         port (
               -- inputs:
                  signal master_read_done_token : IN STD_LOGIC;
@@ -210,10 +210,10 @@ entity clock_0_slave_FSM is
                  signal slave_waitrequest : OUT STD_LOGIC;
                  signal slave_write_request : OUT STD_LOGIC
               );
-end entity clock_0_slave_FSM;
+end entity clock_1_slave_FSM;
 
 
-architecture europa of clock_0_slave_FSM is
+architecture europa of clock_1_slave_FSM is
                 signal internal_slave_read_request :  STD_LOGIC;
                 signal internal_slave_write_request :  STD_LOGIC;
                 signal next_slave_read_request :  STD_LOGIC;
@@ -340,7 +340,7 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
-entity clock_0_slave_read_request_sync_module is 
+entity clock_1_slave_read_request_sync_module is 
         port (
               -- inputs:
                  signal clk : IN STD_LOGIC;
@@ -350,10 +350,10 @@ entity clock_0_slave_read_request_sync_module is
               -- outputs:
                  signal data_out : OUT STD_LOGIC
               );
-end entity clock_0_slave_read_request_sync_module;
+end entity clock_1_slave_read_request_sync_module;
 
 
-architecture europa of clock_0_slave_read_request_sync_module is
+architecture europa of clock_1_slave_read_request_sync_module is
                 signal data_in_d1 :  STD_LOGIC;
 attribute ALTERA_ATTRIBUTE : string;
 attribute ALTERA_ATTRIBUTE of data_in_d1 : signal is "MAX_DELAY=100ns ; PRESERVE_REGISTER=ON";
@@ -402,7 +402,7 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
-entity clock_0_slave_write_request_sync_module is 
+entity clock_1_slave_write_request_sync_module is 
         port (
               -- inputs:
                  signal clk : IN STD_LOGIC;
@@ -412,10 +412,10 @@ entity clock_0_slave_write_request_sync_module is
               -- outputs:
                  signal data_out : OUT STD_LOGIC
               );
-end entity clock_0_slave_write_request_sync_module;
+end entity clock_1_slave_write_request_sync_module;
 
 
-architecture europa of clock_0_slave_write_request_sync_module is
+architecture europa of clock_1_slave_write_request_sync_module is
                 signal data_in_d1 :  STD_LOGIC;
 attribute ALTERA_ATTRIBUTE : string;
 attribute ALTERA_ATTRIBUTE of data_in_d1 : signal is "MAX_DELAY=100ns ; PRESERVE_REGISTER=ON";
@@ -464,7 +464,7 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
-entity clock_0_master_FSM is 
+entity clock_1_master_FSM is 
         port (
               -- inputs:
                  signal master_clk : IN STD_LOGIC;
@@ -479,10 +479,10 @@ entity clock_0_master_FSM is
                  signal master_write : OUT STD_LOGIC;
                  signal master_write_done : OUT STD_LOGIC
               );
-end entity clock_0_master_FSM;
+end entity clock_1_master_FSM;
 
 
-architecture europa of clock_0_master_FSM is
+architecture europa of clock_1_master_FSM is
                 signal internal_master_read1 :  STD_LOGIC;
                 signal internal_master_read_done :  STD_LOGIC;
                 signal internal_master_write1 :  STD_LOGIC;
@@ -645,7 +645,7 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
-entity clock_0_bit_pipe is 
+entity clock_1_bit_pipe is 
         port (
               -- inputs:
                  signal clk1 : IN STD_LOGIC;
@@ -657,10 +657,10 @@ entity clock_0_bit_pipe is
               -- outputs:
                  signal data_out : OUT STD_LOGIC
               );
-end entity clock_0_bit_pipe;
+end entity clock_1_bit_pipe;
 
 
-architecture europa of clock_0_bit_pipe is
+architecture europa of clock_1_bit_pipe is
                 signal data_in_d1 :  STD_LOGIC;
 attribute ALTERA_ATTRIBUTE : string;
 attribute ALTERA_ATTRIBUTE of data_in_d1 : signal is "{-to ""*""} CUT=ON ; PRESERVE_REGISTER=ON";
@@ -709,42 +709,40 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
---Clock Domain Crossing Adapterclock_0
+--Clock Domain Crossing Adapterclock_1
 
 
-entity clock_0 is 
+entity clock_1 is 
         port (
               -- inputs:
                  signal master_clk : IN STD_LOGIC;
                  signal master_endofpacket : IN STD_LOGIC;
-                 signal master_readdata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                 signal master_readdata : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
                  signal master_reset_n : IN STD_LOGIC;
                  signal master_waitrequest : IN STD_LOGIC;
-                 signal slave_address : IN STD_LOGIC_VECTOR (5 DOWNTO 0);
-                 signal slave_byteenable : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+                 signal slave_address : IN STD_LOGIC;
                  signal slave_clk : IN STD_LOGIC;
-                 signal slave_nativeaddress : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+                 signal slave_nativeaddress : IN STD_LOGIC;
                  signal slave_read : IN STD_LOGIC;
                  signal slave_reset_n : IN STD_LOGIC;
                  signal slave_write : IN STD_LOGIC;
-                 signal slave_writedata : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+                 signal slave_writedata : IN STD_LOGIC_VECTOR (7 DOWNTO 0);
 
               -- outputs:
-                 signal master_address : OUT STD_LOGIC_VECTOR (5 DOWNTO 0);
-                 signal master_byteenable : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
-                 signal master_nativeaddress : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+                 signal master_address : OUT STD_LOGIC;
+                 signal master_nativeaddress : OUT STD_LOGIC;
                  signal master_read : OUT STD_LOGIC;
                  signal master_write : OUT STD_LOGIC;
-                 signal master_writedata : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+                 signal master_writedata : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
                  signal slave_endofpacket : OUT STD_LOGIC;
-                 signal slave_readdata : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+                 signal slave_readdata : OUT STD_LOGIC_VECTOR (7 DOWNTO 0);
                  signal slave_waitrequest : OUT STD_LOGIC
               );
-end entity clock_0;
+end entity clock_1;
 
 
-architecture europa of clock_0 is
-component clock_0_master_read_done_sync_module is 
+architecture europa of clock_1 is
+component clock_1_master_read_done_sync_module is 
            port (
                  -- inputs:
                     signal clk : IN STD_LOGIC;
@@ -754,9 +752,9 @@ component clock_0_master_read_done_sync_module is
                  -- outputs:
                     signal data_out : OUT STD_LOGIC
                  );
-end component clock_0_master_read_done_sync_module;
+end component clock_1_master_read_done_sync_module;
 
-component clock_0_master_write_done_sync_module is 
+component clock_1_master_write_done_sync_module is 
            port (
                  -- inputs:
                     signal clk : IN STD_LOGIC;
@@ -766,9 +764,9 @@ component clock_0_master_write_done_sync_module is
                  -- outputs:
                     signal data_out : OUT STD_LOGIC
                  );
-end component clock_0_master_write_done_sync_module;
+end component clock_1_master_write_done_sync_module;
 
-component clock_0_edge_to_pulse is 
+component clock_1_edge_to_pulse is 
            port (
                  -- inputs:
                     signal clock : IN STD_LOGIC;
@@ -778,9 +776,9 @@ component clock_0_edge_to_pulse is
                  -- outputs:
                     signal data_out : OUT STD_LOGIC
                  );
-end component clock_0_edge_to_pulse;
+end component clock_1_edge_to_pulse;
 
-component clock_0_slave_FSM is 
+component clock_1_slave_FSM is 
            port (
                  -- inputs:
                     signal master_read_done_token : IN STD_LOGIC;
@@ -795,9 +793,9 @@ component clock_0_slave_FSM is
                     signal slave_waitrequest : OUT STD_LOGIC;
                     signal slave_write_request : OUT STD_LOGIC
                  );
-end component clock_0_slave_FSM;
+end component clock_1_slave_FSM;
 
-component clock_0_slave_read_request_sync_module is 
+component clock_1_slave_read_request_sync_module is 
            port (
                  -- inputs:
                     signal clk : IN STD_LOGIC;
@@ -807,9 +805,9 @@ component clock_0_slave_read_request_sync_module is
                  -- outputs:
                     signal data_out : OUT STD_LOGIC
                  );
-end component clock_0_slave_read_request_sync_module;
+end component clock_1_slave_read_request_sync_module;
 
-component clock_0_slave_write_request_sync_module is 
+component clock_1_slave_write_request_sync_module is 
            port (
                  -- inputs:
                     signal clk : IN STD_LOGIC;
@@ -819,9 +817,9 @@ component clock_0_slave_write_request_sync_module is
                  -- outputs:
                     signal data_out : OUT STD_LOGIC
                  );
-end component clock_0_slave_write_request_sync_module;
+end component clock_1_slave_write_request_sync_module;
 
-component clock_0_master_FSM is 
+component clock_1_master_FSM is 
            port (
                  -- inputs:
                     signal master_clk : IN STD_LOGIC;
@@ -836,9 +834,9 @@ component clock_0_master_FSM is
                     signal master_write : OUT STD_LOGIC;
                     signal master_write_done : OUT STD_LOGIC
                  );
-end component clock_0_master_FSM;
+end component clock_1_master_FSM;
 
-component clock_0_bit_pipe is 
+component clock_1_bit_pipe is 
            port (
                  -- inputs:
                     signal clk1 : IN STD_LOGIC;
@@ -850,7 +848,7 @@ component clock_0_bit_pipe is
                  -- outputs:
                     signal data_out : OUT STD_LOGIC
                  );
-end component clock_0_bit_pipe;
+end component clock_1_bit_pipe;
 
                 signal internal_master_read :  STD_LOGIC;
                 signal internal_master_write :  STD_LOGIC;
@@ -862,24 +860,21 @@ end component clock_0_bit_pipe;
                 signal master_write_done :  STD_LOGIC;
                 signal master_write_done_sync :  STD_LOGIC;
                 signal master_write_done_token :  STD_LOGIC;
-                signal slave_address_d1 :  STD_LOGIC_VECTOR (5 DOWNTO 0);
-                signal slave_byteenable_d1 :  STD_LOGIC_VECTOR (3 DOWNTO 0);
-                signal slave_nativeaddress_d1 :  STD_LOGIC_VECTOR (3 DOWNTO 0);
+                signal slave_address_d1 :  STD_LOGIC;
+                signal slave_nativeaddress_d1 :  STD_LOGIC;
                 signal slave_read_request :  STD_LOGIC;
                 signal slave_read_request_sync :  STD_LOGIC;
                 signal slave_read_request_token :  STD_LOGIC;
-                signal slave_readdata_p1 :  STD_LOGIC_VECTOR (31 DOWNTO 0);
+                signal slave_readdata_p1 :  STD_LOGIC_VECTOR (7 DOWNTO 0);
                 signal slave_write_request :  STD_LOGIC;
                 signal slave_write_request_sync :  STD_LOGIC;
                 signal slave_write_request_token :  STD_LOGIC;
-                signal slave_writedata_d1 :  STD_LOGIC_VECTOR (31 DOWNTO 0);
+                signal slave_writedata_d1 :  STD_LOGIC_VECTOR (7 DOWNTO 0);
 attribute ALTERA_ATTRIBUTE : string;
 attribute ALTERA_ATTRIBUTE of master_address : signal is "PRESERVE_REGISTER=ON";
-attribute ALTERA_ATTRIBUTE of master_byteenable : signal is "PRESERVE_REGISTER=ON";
 attribute ALTERA_ATTRIBUTE of master_nativeaddress : signal is "PRESERVE_REGISTER=ON";
 attribute ALTERA_ATTRIBUTE of master_writedata : signal is "PRESERVE_REGISTER=ON";
 attribute ALTERA_ATTRIBUTE of slave_address_d1 : signal is "{-to ""*""} CUT=ON ; PRESERVE_REGISTER=ON";
-attribute ALTERA_ATTRIBUTE of slave_byteenable_d1 : signal is "{-to ""*""} CUT=ON ; PRESERVE_REGISTER=ON";
 attribute ALTERA_ATTRIBUTE of slave_nativeaddress_d1 : signal is "{-to ""*""} CUT=ON ; PRESERVE_REGISTER=ON";
 attribute ALTERA_ATTRIBUTE of slave_readdata : signal is "{-from ""*""} CUT=ON";
 attribute ALTERA_ATTRIBUTE of slave_writedata_d1 : signal is "{-to ""*""} CUT=ON ; PRESERVE_REGISTER=ON";
@@ -888,8 +883,8 @@ begin
 
   --in, which is an e_avalon_slave
   --out, which is an e_avalon_master
-  --clock_0_master_read_done_sync, which is an e_synchronizer
-  clock_0_master_read_done_sync : clock_0_master_read_done_sync_module
+  --clock_1_master_read_done_sync, which is an e_synchronizer
+  clock_1_master_read_done_sync : clock_1_master_read_done_sync_module
     port map(
       data_out => master_read_done_sync,
       clk => slave_clk,
@@ -898,8 +893,8 @@ begin
     );
 
 
-  --clock_0_master_write_done_sync, which is an e_synchronizer
-  clock_0_master_write_done_sync : clock_0_master_write_done_sync_module
+  --clock_1_master_write_done_sync, which is an e_synchronizer
+  clock_1_master_write_done_sync : clock_1_master_write_done_sync_module
     port map(
       data_out => master_write_done_sync,
       clk => slave_clk,
@@ -909,7 +904,7 @@ begin
 
 
   --read_done_edge_to_pulse, which is an e_instance
-  read_done_edge_to_pulse : clock_0_edge_to_pulse
+  read_done_edge_to_pulse : clock_1_edge_to_pulse
     port map(
       data_out => master_read_done_token,
       clock => slave_clk,
@@ -919,7 +914,7 @@ begin
 
 
   --write_done_edge_to_pulse, which is an e_instance
-  write_done_edge_to_pulse : clock_0_edge_to_pulse
+  write_done_edge_to_pulse : clock_1_edge_to_pulse
     port map(
       data_out => master_write_done_token,
       clock => slave_clk,
@@ -929,7 +924,7 @@ begin
 
 
   --slave_FSM, which is an e_instance
-  slave_FSM : clock_0_slave_FSM
+  slave_FSM : clock_1_slave_FSM
     port map(
       slave_read_request => slave_read_request,
       slave_waitrequest => internal_slave_waitrequest,
@@ -943,8 +938,8 @@ begin
     );
 
 
-  --clock_0_slave_read_request_sync, which is an e_synchronizer
-  clock_0_slave_read_request_sync : clock_0_slave_read_request_sync_module
+  --clock_1_slave_read_request_sync, which is an e_synchronizer
+  clock_1_slave_read_request_sync : clock_1_slave_read_request_sync_module
     port map(
       data_out => slave_read_request_sync,
       clk => master_clk,
@@ -953,8 +948,8 @@ begin
     );
 
 
-  --clock_0_slave_write_request_sync, which is an e_synchronizer
-  clock_0_slave_write_request_sync : clock_0_slave_write_request_sync_module
+  --clock_1_slave_write_request_sync, which is an e_synchronizer
+  clock_1_slave_write_request_sync : clock_1_slave_write_request_sync_module
     port map(
       data_out => slave_write_request_sync,
       clk => master_clk,
@@ -964,7 +959,7 @@ begin
 
 
   --read_request_edge_to_pulse, which is an e_instance
-  read_request_edge_to_pulse : clock_0_edge_to_pulse
+  read_request_edge_to_pulse : clock_1_edge_to_pulse
     port map(
       data_out => slave_read_request_token,
       clock => master_clk,
@@ -974,7 +969,7 @@ begin
 
 
   --write_request_edge_to_pulse, which is an e_instance
-  write_request_edge_to_pulse : clock_0_edge_to_pulse
+  write_request_edge_to_pulse : clock_1_edge_to_pulse
     port map(
       data_out => slave_write_request_token,
       clock => master_clk,
@@ -984,7 +979,7 @@ begin
 
 
   --master_FSM, which is an e_instance
-  master_FSM : clock_0_master_FSM
+  master_FSM : clock_1_master_FSM
     port map(
       master_read => internal_master_read,
       master_read_done => master_read_done,
@@ -999,7 +994,7 @@ begin
 
 
   --endofpacket_bit_pipe, which is an e_instance
-  endofpacket_bit_pipe : clock_0_bit_pipe
+  endofpacket_bit_pipe : clock_1_bit_pipe
     port map(
       data_out => internal_slave_endofpacket,
       clk1 => slave_clk,
@@ -1013,7 +1008,7 @@ begin
   process (master_clk, master_reset_n)
   begin
     if master_reset_n = '0' then
-      slave_readdata_p1 <= std_logic_vector'("00000000000000000000000000000000");
+      slave_readdata_p1 <= std_logic_vector'("00000000");
     elsif master_clk'event and master_clk = '1' then
       if std_logic'((internal_master_read AND NOT master_waitrequest)) = '1' then 
         slave_readdata_p1 <= master_readdata;
@@ -1025,7 +1020,7 @@ begin
   process (slave_clk, slave_reset_n)
   begin
     if slave_reset_n = '0' then
-      slave_readdata <= std_logic_vector'("00000000000000000000000000000000");
+      slave_readdata <= std_logic_vector'("00000000");
     elsif slave_clk'event and slave_clk = '1' then
       if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
         slave_readdata <= slave_readdata_p1;
@@ -1037,7 +1032,7 @@ begin
   process (slave_clk, slave_reset_n)
   begin
     if slave_reset_n = '0' then
-      slave_writedata_d1 <= std_logic_vector'("00000000000000000000000000000000");
+      slave_writedata_d1 <= std_logic_vector'("00000000");
     elsif slave_clk'event and slave_clk = '1' then
       if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
         slave_writedata_d1 <= slave_writedata;
@@ -1049,7 +1044,7 @@ begin
   process (master_clk, master_reset_n)
   begin
     if master_reset_n = '0' then
-      master_writedata <= std_logic_vector'("00000000000000000000000000000000");
+      master_writedata <= std_logic_vector'("00000000");
     elsif master_clk'event and master_clk = '1' then
       if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
         master_writedata <= slave_writedata_d1;
@@ -1061,7 +1056,7 @@ begin
   process (slave_clk, slave_reset_n)
   begin
     if slave_reset_n = '0' then
-      slave_address_d1 <= std_logic_vector'("000000");
+      slave_address_d1 <= std_logic'('0');
     elsif slave_clk'event and slave_clk = '1' then
       if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
         slave_address_d1 <= slave_address;
@@ -1073,7 +1068,7 @@ begin
   process (master_clk, master_reset_n)
   begin
     if master_reset_n = '0' then
-      master_address <= std_logic_vector'("000000");
+      master_address <= std_logic'('0');
     elsif master_clk'event and master_clk = '1' then
       if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
         master_address <= slave_address_d1;
@@ -1085,7 +1080,7 @@ begin
   process (slave_clk, slave_reset_n)
   begin
     if slave_reset_n = '0' then
-      slave_nativeaddress_d1 <= std_logic_vector'("0000");
+      slave_nativeaddress_d1 <= std_logic'('0');
     elsif slave_clk'event and slave_clk = '1' then
       if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
         slave_nativeaddress_d1 <= slave_nativeaddress;
@@ -1097,34 +1092,10 @@ begin
   process (master_clk, master_reset_n)
   begin
     if master_reset_n = '0' then
-      master_nativeaddress <= std_logic_vector'("0000");
+      master_nativeaddress <= std_logic'('0');
     elsif master_clk'event and master_clk = '1' then
       if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
         master_nativeaddress <= slave_nativeaddress_d1;
-      end if;
-    end if;
-
-  end process;
-
-  process (slave_clk, slave_reset_n)
-  begin
-    if slave_reset_n = '0' then
-      slave_byteenable_d1 <= std_logic_vector'("0000");
-    elsif slave_clk'event and slave_clk = '1' then
-      if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
-        slave_byteenable_d1 <= slave_byteenable;
-      end if;
-    end if;
-
-  end process;
-
-  process (master_clk, master_reset_n)
-  begin
-    if master_reset_n = '0' then
-      master_byteenable <= std_logic_vector'("0000");
-    elsif master_clk'event and master_clk = '1' then
-      if (std_logic_vector'("00000000000000000000000000000001")) /= std_logic_vector'("00000000000000000000000000000000") then 
-        master_byteenable <= slave_byteenable_d1;
       end if;
     end if;
 

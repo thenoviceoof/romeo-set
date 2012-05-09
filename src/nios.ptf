@@ -22,6 +22,15 @@ SYSTEM nios
             pipeline = "0";
             clock_module_connection_point_for_c2h = "clk.clk";
          }
+         CLOCK clk_25
+         {
+            frequency = "25000000";
+            source = "External";
+            Is_Clock_Source = "0";
+            display_name = "clk_25";
+            pipeline = "0";
+            clock_module_connection_point_for_c2h = "clk_25.clk";
+         }
       }
       clock_freq = "50000000";
       clock_freq = "50000000";
@@ -501,8 +510,13 @@ SYSTEM nios
             }
             Entry ram/avalon_slave_0
             {
-               address = "0x00000000";
+               address = "0x01001000";
                span = "0x00000040";
+            }
+            Entry ram_signal/avalon_slave_0
+            {
+               address = "0x01001048";
+               span = "0x00000002";
             }
          }
       }
@@ -2032,9 +2046,9 @@ SYSTEM nios
             MASTERED_BY cpu/data_master
             {
                priority = "1";
-               Offset_Address = "0x00000000";
+               Offset_Address = "0x01001000";
             }
-            Base_Address = "0x00000000";
+            Base_Address = "0x01001000";
             Address_Group = "0";
             IRQ_MASTER cpu/data_master
             {
@@ -2082,7 +2096,7 @@ SYSTEM nios
          Do_Not_Generate = "1";
          Instantiate_In_System_Module = "1";
          Is_Enabled = "1";
-         Clock_Source = "clk";
+         Clock_Source = "clk_25";
          Has_Clock = "1";
          View 
          {
@@ -2094,6 +2108,139 @@ SYSTEM nios
       HDL_INFO 
       {
          Simulation_HDL_Files = "__PROJECT_DIRECTORY__/ram.vhd";
+      }
+      WIZARD_SCRIPT_ARGUMENTS 
+      {
+      }
+   }
+   MODULE ram_signal
+   {
+      SLAVE avalon_slave_0
+      {
+         PORT_WIRING 
+         {
+            PORT clk
+            {
+               type = "clk";
+               width = "1";
+               direction = "input";
+               Is_Enabled = "1";
+            }
+            PORT reset_n
+            {
+               type = "reset_n";
+               width = "1";
+               direction = "input";
+               Is_Enabled = "1";
+            }
+            PORT write
+            {
+               type = "write";
+               width = "1";
+               direction = "input";
+               Is_Enabled = "1";
+            }
+            PORT chipselect
+            {
+               type = "chipselect";
+               width = "1";
+               direction = "input";
+               Is_Enabled = "1";
+            }
+            PORT address
+            {
+               type = "address";
+               width = "1";
+               direction = "input";
+               Is_Enabled = "1";
+            }
+            PORT writedata
+            {
+               type = "writedata";
+               width = "8";
+               direction = "input";
+               Is_Enabled = "1";
+            }
+         }
+         SYSTEM_BUILDER_INFO 
+         {
+            Bus_Type = "avalon";
+            Write_Wait_States = "0cycles";
+            Read_Wait_States = "1cycles";
+            Hold_Time = "0cycles";
+            Setup_Time = "0cycles";
+            Is_Printable_Device = "0";
+            Address_Alignment = "dynamic";
+            Well_Behaved_Waitrequest = "0";
+            Is_Nonvolatile_Storage = "0";
+            Address_Span = "2";
+            Read_Latency = "0";
+            Is_Memory_Device = "0";
+            Maximum_Pending_Read_Transactions = "0";
+            Minimum_Uninterrupted_Run_Length = "1";
+            Accepts_Internal_Connections = "1";
+            Data_Width = "8";
+            Address_Width = "1";
+            Maximum_Burst_Size = "1";
+            Register_Incoming_Signals = "0";
+            Register_Outgoing_Signals = "0";
+            Interleave_Bursts = "0";
+            Linewrap_Bursts = "0";
+            Burst_On_Burst_Boundaries_Only = "0";
+            Always_Burst_Max_Burst = "0";
+            Is_Big_Endian = "0";
+            Is_Enabled = "1";
+            MASTERED_BY cpu/data_master
+            {
+               priority = "1";
+               Offset_Address = "0x01001048";
+            }
+            Base_Address = "0x01001048";
+            Address_Group = "0";
+            IRQ_MASTER cpu/data_master
+            {
+               IRQ_Number = "NC";
+            }
+         }
+      }
+      PORT_WIRING 
+      {
+         PORT read_data
+         {
+            type = "export";
+            width = "8";
+            direction = "output";
+            Is_Enabled = "1";
+         }
+         PORT read_addr
+         {
+            type = "export";
+            width = "1";
+            direction = "input";
+            Is_Enabled = "1";
+         }
+      }
+      class = "no_legacy_module";
+      class_version = "7.07";
+      gtf_class_name = "ramctrl";
+      gtf_class_version = "1.0";
+      SYSTEM_BUILDER_INFO 
+      {
+         Do_Not_Generate = "1";
+         Instantiate_In_System_Module = "1";
+         Is_Enabled = "1";
+         Clock_Source = "clk_25";
+         Has_Clock = "1";
+         View 
+         {
+            MESSAGES 
+            {
+            }
+         }
+      }
+      HDL_INFO 
+      {
+         Simulation_HDL_Files = "__PROJECT_DIRECTORY__/ram_signal.vhd";
       }
       WIZARD_SCRIPT_ARGUMENTS 
       {

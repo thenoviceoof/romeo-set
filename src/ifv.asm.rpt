@@ -1,5 +1,5 @@
 Assembler report for ifv
-Wed May  9 05:58:52 2012
+Wed May  9 07:02:49 2012
 Quartus II Version 7.2 Build 151 09/26/2007 SJ Full Version
 
 
@@ -38,7 +38,7 @@ applicable agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Wed May  9 05:58:52 2012 ;
+; Assembler Status      ; Successful - Wed May  9 07:02:49 2012 ;
 ; Revision Name         ; ifv                                   ;
 ; Top-level Entity Name ; ifv                                   ;
 ; Family                ; Cyclone II                            ;
@@ -95,7 +95,7 @@ applicable agreement for further details.
 +----------------+------------------+
 ; Device         ; EP2C35F672C6     ;
 ; JTAG usercode  ; 0xFFFFFFFF       ;
-; Checksum       ; 0x00DB5AE5       ;
+; Checksum       ; 0x00DE03A3       ;
 +----------------+------------------+
 
 
@@ -106,7 +106,7 @@ applicable agreement for further details.
 +--------------------+--------------+
 ; Device             ; EPCS16       ;
 ; JTAG usercode      ; 0x00000000   ;
-; Checksum           ; 0x1B9BA843   ;
+; Checksum           ; 0x1B8E7B3F   ;
 ; Compression Ratio  ; 2            ;
 +--------------------+--------------+
 
@@ -117,12 +117,12 @@ applicable agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus II Assembler
     Info: Version 7.2 Build 151 09/26/2007 SJ Full Version
-    Info: Processing started: Wed May  9 05:58:41 2012
+    Info: Processing started: Wed May  9 07:02:39 2012
 Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off ifv -c ifv
 Info: Writing out detailed assembly data for power analysis
 Info: Assembler is generating device programming files
 Info: Quartus II Assembler was successful. 0 errors, 0 warnings
-    Info: Processing ended: Wed May  9 05:58:52 2012
-    Info: Elapsed time: 00:00:11
+    Info: Processing ended: Wed May  9 07:02:49 2012
+    Info: Elapsed time: 00:00:10
 
 

@@ -218,6 +218,8 @@ architecture datapath of ifv is
 	signal ram_addr			: unsigned(3 downto 0);
 	
 	signal debug_vector 	: std_logic_vector(3 downto 0);
+	
+	signal sig : std_logic_vector(7 downto 0);
 	begin
 
 	debug_vector <= SW(17 downto 14);
@@ -284,7 +286,7 @@ architecture datapath of ifv is
 	DRAM_LDQM <= DRAM_DQM(0);
 	DRAM_CLK  <= clk_sdram;
 --	reset <= reset_from_nios or SW(0);
-	reset <= SW(0);
+	reset <= SW(0) or sig(0);
 
 CLK5025: entity work.pll5025 port map(
 	inclk0	=> CLOCK_50,
@@ -314,6 +316,7 @@ IFM: entity work.hook port map(
 NIOS: entity work.nios port map (
  -- 1) global signals:
 	clk							=> clk_50,
+	clk_25						=> clk_25,
 	reset_n						=> '1',
 
  -- the_ram
@@ -321,6 +324,10 @@ NIOS: entity work.nios port map (
 	read_to_the_ram				=> ram_read,
 	std_logic_vector(readdata_from_the_ram)		=> ram_data,
 	std_logic_vector(readaddr_from_the_ram)		=> ram_addr,
+	
+ -- the sram signal
+	read_addr_to_the_ram_signal	=> '0',
+	read_data_from_the_ram_signal => sig,
 
  -- the_sdram
 	zs_addr_from_the_sdram		=> DRAM_ADDR,

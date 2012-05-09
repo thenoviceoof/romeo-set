@@ -1,14 +1,14 @@
-Fitter Status : Successful - Wed May  9 05:58:31 2012
+Fitter Status : Successful - Wed May  9 07:02:28 2012
 Quartus II Version : 7.2 Build 151 09/26/2007 SJ Full Version
 Revision Name : ifv
 Top-level Entity Name : ifv
 Family : Cyclone II
 Device : EP2C35F672C6
 Timing Models : Final
-Total logic elements : 15,052 / 33,216 ( 45 % )
-    Total combinational functions : 14,523 / 33,216 ( 44 % )
-    Dedicated logic registers : 2,591 / 33,216 ( 8 % )
-Total registers : 2643
+Total logic elements : 15,293 / 33,216 ( 46 % )
+    Total combinational functions : 14,713 / 33,216 ( 44 % )
+    Dedicated logic registers : 2,676 / 33,216 ( 8 % )
+Total registers : 2728
 Total pins : 428 / 475 ( 90 % )
 Total virtual pins : 0
 Total memory bits : 10,528 / 483,840 ( 2 % )

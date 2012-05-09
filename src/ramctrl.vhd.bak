@@ -32,6 +32,8 @@ architecture ramarch of ramctrl is
 	process(clk)
 	begin
 		if rising_edge(clk) then
+			
+			
 			if chipselect = '1' and write = '1' then
 				RAM(to_integer(address)) 	<= writedata;
 				read_data_hold				<= read_data_hold;
