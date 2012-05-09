@@ -49,23 +49,23 @@ def save_img(window, size, const, img):
         print("Finished writing")
 
 # fractal generator
-def generate_fractal(window=((2.6,2.0),(-2.6,-2.0)), size=(640,480), const=0):
+def generate_fractal(window=((1.95,1.5),(-1.95,-1.5)), size=(640,480), const=0):
     img = load_img(window, size, const)
     if not(img is None):
         return img
     print("Generating fractal...")
     img = [[0 for i in range(size[0])] for j in range(size[1])]
-    for x in range(size[1]):
+    for x in range(size[0]):
         print "row %d" % x
-        for y in range(size[0]):
-            py = (window[0][0] - window[1][0])*(float(x)/size[0]) + window[1][0]
-            px = (window[0][1] - window[1][1])*(float(y)/size[1]) + window[1][1]
+        for y in range(size[1]):
+            px = (window[0][0] - window[1][0])*(float(x)/size[0]) + window[1][0]
+            py = (window[0][1] - window[1][1])*(float(y)/size[1]) + window[1][1]
             p = px + py*1j
             it = 0
             while abs(p) < 2 and it < CAP - 1:
                 p = p ** 2 + const
                 it += 1
-            img[x][y] = it
+            img[y][x] = it
     save_img(window, size, const, img)
     return img
 
