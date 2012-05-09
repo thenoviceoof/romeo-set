@@ -13,7 +13,6 @@ entity vga_mod is
 		clk, reset	: in std_logic;
 		count		: in unsigned(7 downto 0);
 		switch		: in std_logic;
-		VGA_CLK,                                -- Clock
 		VGA_HS,                                 -- H_SYNC
 		VGA_VS,                                 -- V_SYNC
 		VGA_BLANK,                              -- BLANK
@@ -35,8 +34,6 @@ architecture imp of vga_mod is
     reset   : in std_logic;
     clk     : in std_logic;                    -- Should be 25.125 MHz
     VGA_RGB : in unsigned(29 downto 0);
-    
-    VGA_CLK,                          -- Clock
     VGA_HS,                           -- H_SYNC
     VGA_VS,                           -- V_SYNC
     VGA_BLANK,                        -- BLANK
@@ -67,7 +64,6 @@ begin
   G : vga port map (reset => reset,
 					clk => clk,                -- Should be 25.125 MHz
 					VGA_RGB => VGA_RGB,
-					VGA_CLK  => VGA_CLK,
 					VGA_HS     => VGA_HS,
 					VGA_VS     => VGA_VS,
 					VGA_BLANK  => VGA_BLANK,

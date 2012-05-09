@@ -218,29 +218,30 @@ architecture datapath of ifv is
 	signal ram_addr			: unsigned(3 downto 0);
 	
 	signal debug_vector 	: std_logic_vector(3 downto 0);
-begin
-	process (clk_50)
 	begin
-		debug_vector <= SW(17 downto 14);
-		case debug_vector is
-			when "0000"		=>	LEDR(17 downto 0) <= std_logic_vector(a_min(35 downto 18));
-			when "0001"		=>	LEDR(17 downto 0) <= std_logic_vector(a_min(17 downto 0));
-			when "0010"		=>	LEDR(17 downto 0) <= std_logic_vector(b_min(35 downto 18));
-			when "0011"		=>	LEDR(17 downto 0) <= std_logic_vector(b_min(17 downto 0));
-			when "0100"		=>	LEDR(17 downto 0) <= std_logic_vector(a_diff(35 downto 18));
-			when "0101"		=>	LEDR(17 downto 0) <= std_logic_vector(a_diff(17 downto 0));
-			when "0110"		=>	LEDR(17 downto 0) <= std_logic_vector(b_diff(35 downto 18));
-			when "0111"		=>	LEDR(17 downto 0) <= std_logic_vector(b_diff(17 downto 0));
-			when "1000"		=>	LEDR(17 downto 0) <= std_logic_vector((a_leap&"00000000"));
-			when "1001"		=>	LEDR(17 downto 0) <= std_logic_vector((b_leap&"00000000"));
-			when "1010"		=>	LEDR(17 downto 0) <= std_logic_vector(cr(35 downto 18));
-			when "1011"		=>	LEDR(17 downto 0) <= std_logic_vector(cr(17 downto 0));
-			when "1100"		=>	LEDR(17 downto 0) <= std_logic_vector(ci(35 downto 18));
-			when "1101"		=>	LEDR(17 downto 0) <= std_logic_vector(ci(17 downto 0));
-			when others		=>	LEDR(17 downto 0) <= (others => '1');
-		end case;
-	
-		if rising_edge(clk_50) then
+
+	debug_vector <= SW(17 downto 14);
+	with debug_vector select LEDR(17 downto 0) <= 
+		std_logic_vector(a_min(35 downto 18))	when "0000",
+		std_logic_vector(a_min(17 downto 0))	when "0001",
+		std_logic_vector(b_min(35 downto 18))	when "0010",
+		std_logic_vector(b_min(17 downto 0))	when "0011",
+		std_logic_vector(a_diff(35 downto 18))	when "0100",
+		std_logic_vector(a_diff(17 downto 0))	when "0101",
+		std_logic_vector(b_diff(35 downto 18))	when "0110",
+		std_logic_vector(b_diff(17 downto 0))	when "0111",
+		std_logic_vector((a_leap&"00000000"))	when "1000",
+		std_logic_vector((b_leap&"00000000"))	when "1001",
+		std_logic_vector(cr(35 downto 18))		when "1010",
+		std_logic_vector(cr(17 downto 0))		when "1011",
+		std_logic_vector(ci(35 downto 18))		when "1100",
+		std_logic_vector(ci(17 downto 0))		when "1101",
+		(others => '1')							when others;
+		
+	process (clk_25)
+	begin
+		if rising_edge(clk_25) then
+
 			--clk_vga <= not clk_vga;
 			if SW(6) = '1' then
 			if SW(4) = '1' then
@@ -276,7 +277,7 @@ begin
 	end process;
 	
 	
-	
+	VGA_CLK   <= clk_25;
 	DRAM_BA_1 <= DRAM_BA(1);
 	DRAM_BA_0 <= DRAM_BA(0);
 	DRAM_UDQM <= DRAM_DQM(1);
@@ -356,7 +357,6 @@ VGA: entity work.vga_mod port map (
 	reset		=> '0',
 	switch		=> SW(3),
 	count		=> cread,--EXTERNAL SIGNALS
-	VGA_CLK		=> VGA_CLK,
 	VGA_HS		=> VGA_HS,
 	VGA_VS		=> VGA_VS,
 	VGA_BLANK	=> VGA_BLANK,
