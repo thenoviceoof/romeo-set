@@ -1,39 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <system name="nios">
-    <parameter valueString="6389697347" name="systemHash"/>
+    <parameter valueString="5816557756" name="systemHash"/>
     <parameter name="quartusRootDir">/opt/altera/altera7.2/quartus</parameter>
-    <parameter valueString="1336560443471" name="timeStamp"/>
+    <parameter valueString="1336563605549" name="timeStamp"/>
     <parameter valueString="false" name="generateLegacySDK"/>
     <parameter name="bonusData">bonusData 
 {
-   element sdram
+   element nios
    {
-      datum _sortIndex
-      {
-         value = "2";
-         type = "int";
-      }
-      datum megawizard_uipreferences
-      {
-         value = "{}";
-         type = "String";
-      }
    }
-   element cpu.jtag_debug_module
+   element clk_25
    {
-      datum baseAddress
-      {
-         value = "16779264";
-         type = "long";
-      }
-   }
-   element jtag_uart.avalon_jtag_slave
-   {
-      datum baseAddress
-      {
-         value = "16781376";
-         type = "long";
-      }
    }
    element ram_signal
    {
@@ -43,19 +20,34 @@
          type = "int";
       }
    }
-   element ram
+   element cpu
    {
       datum _sortIndex
       {
-         value = "3";
+         value = "0";
          type = "int";
       }
+      datum megawizard_uipreferences
+      {
+         value = "{}";
+         type = "String";
+      }
    }
-   element clk
+   element ps2_0.avalon_slave_0
    {
+      datum baseAddress
+      {
+         value = "16781384";
+         type = "long";
+      }
    }
-   element nios
+   element ram_signal.avalon_slave_0
    {
+      datum baseAddress
+      {
+         value = "16781392";
+         type = "long";
+      }
    }
    element ram.avalon_slave_0
    {
@@ -86,25 +78,52 @@
          type = "String";
       }
    }
-   element ram_signal.avalon_slave_0
+   element cpu.jtag_debug_module
    {
       datum baseAddress
       {
-         value = "16781384";
+         value = "16779264";
          type = "long";
       }
    }
-   element cpu
+   element sdram
    {
       datum _sortIndex
       {
-         value = "0";
+         value = "2";
          type = "int";
       }
       datum megawizard_uipreferences
       {
          value = "{}";
          type = "String";
+      }
+   }
+   element clk
+   {
+   }
+   element ps2_0
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+   }
+   element ram
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+   }
+   element jtag_uart.avalon_jtag_slave
+   {
+      datum baseAddress
+      {
+         value = "16781376";
+         type = "long";
       }
    }
 }
@@ -114,7 +133,7 @@
     <parameter valueString="false" name="generateLegacySim"/>
     <parameter valueString="ifv.qpf" name="projectName"/>
     <parameter valueString="VHDL" name="hdlLanguage"/>
-    <parameter name="projectDirectory">/home/user4/spring12/nyh2105/embedded/qqq/src</parameter>
+    <parameter name="projectDirectory">/home/user4/spring12/lep2141/4840/romeo-set/src</parameter>
     <module version="7.2" name="clk" kind="clock_source">
         <parameter valueString="true" name="clockFrequencyKnown"/>
         <parameter valueString="50000000" name="clockFrequency"/>
@@ -230,6 +249,9 @@
         <parameter valueString="true" name="clockFrequencyKnown"/>
         <parameter valueString="25000000" name="clockFrequency"/>
     </module>
+    <module version="1.0" name="ps2_0" kind="Altera_UP_Avalon_PS2">
+        <parameter valueString="" name="sharedPorts"/>
+    </module>
     <connection version="7.2" start="clk.clk" kind="clock" end="cpu.clk"/>
     <connection version="7.2" start="cpu.instruction_master" kind="avalon" end="cpu.jtag_debug_module">
         <parameter valueString="1" name="arbitrationPriority"/>
@@ -262,9 +284,14 @@
     </connection>
     <connection version="7.2" start="cpu.data_master" kind="avalon" end="ram_signal.avalon_slave_0">
         <parameter valueString="1" name="arbitrationPriority"/>
-        <parameter valueString="0x01001048" name="baseAddress"/>
+        <parameter valueString="0x01001050" name="baseAddress"/>
     </connection>
     <connection version="7.2" start="clk_25.clk" kind="clock" end="ram.clock"/>
     <connection version="7.2" start="clk_25.clk" kind="clock" end="ram_signal.clock"/>
+    <connection version="7.2" start="clk.clk" kind="clock" end="ps2_0.clock"/>
+    <connection version="7.2" start="cpu.data_master" kind="avalon" end="ps2_0.avalon_slave_0">
+        <parameter valueString="1" name="arbitrationPriority"/>
+        <parameter valueString="0x01001048" name="baseAddress"/>
+    </connection>
 </system>
 
