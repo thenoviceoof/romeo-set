@@ -82,15 +82,17 @@ When plotting the resulting Julia set, one may choose to colorize the image base
 
 Generating Julia sets in this fashion can be a very lengthy process, especially when the points must be done in series. However, since each recurrence to be tested is completely independent of each other, the problem is extraordinarily parallelizeable. Furthermore, since the function being applied is relatively simple, it may be very easily implemented in hardware. Giving the \textbf{Interactive Fractal Viewer} its motivation.
 
-\begin{figure}
+\begin{figure}[H]
   \centering
 	\includegraphics[width=200pt]{images/julia_wiki.png}
-  \caption{The quadratic polynomial Julia set defined by $c=(\phi - 2)+(\phi - 1)i$ (from Wikipedia)}
+  \caption{The quadratic polynomial Julia set defined by \\$c=(\phi - 2)+(\phi - 1)i$ (from Wikipedia)}
 \end{figure}
 
 \section{Design}
 
-\subsection{System Description}
+\subsection{System Description and Development Environments}
+\subsubsection{System Description}
+
 The Interactive Fractal Generator is implemented on an \textbf{Altera DE2 Cyclone FPGA} by \textit{Terasic Technologies}. Terasic advertises the following specification about the device:
 
 \begin{itemize}
@@ -120,13 +122,21 @@ The Interactive Fractal Generator is implemented on an \textbf{Altera DE2 Cyclon
 \item DE2 Lab CD-ROM which contains many examples with source code to exercise the boards, including: SDRAM and Flash Controller, CD-Quality Music Player, VGA and TV Labs, SD Card reader, RS-232/PS-2 Communication Labs, NIOSII, and Control Panel API
 \end{itemize}
 
+\subsubsection{Development Environments}
+
+\begin{itemize}
+\item VHDL Development was done in the Altera Quartus II IDE v. 7.2
+\item Software Development was done in a combination of Emacs v. 23.1 and the NIOS II IDE
+\end{itemize}
+
+\subsection{High-level Overview}
+
+
 \begin{figure}\label{fig:block}
   \centering
 	\includegraphics[width=\textwidth]{block_diagrams/top_level.pdf}
   \caption{High-level Block Diagram}
 \end{figure}
-
-\subsection{High-level Overview}
 
 The following is a description of how data travels through the block structure specified in Figure~\ref{fig:block} when generating a single fractal.
 
@@ -149,7 +159,7 @@ the \texttt{Window Generator}
   each co-ordinate on the screen. The computation will be performed by a specialized component called an 
   \texttt{Iterative Function Module}, or \texttt{IFM}.
 
-\item Before the next $(a, b, x, y)$ tuple is delivered to an \texttt{IFM}, it must be requested by a component
+\item Before the next $(a, b, x, y)$ tuple is delivered to one of the $4$ available \texttt{IFM}s, it must be requested by a component
 known as the \texttt{IFM Controller}. The \texttt{IFM Controller} is responsible for distributing work among
 several \texttt{IFM}s working in parallel. 
 
@@ -252,7 +262,7 @@ $(x, y, a, b)$ tuples.
 
 \begin{figure}
   \centering
-    \includegraphics[width=160pt]{block_diagrams/win_gen.pdf}
+    \includegraphics[width=240pt]{block_diagrams/win_gen.pdf}
   \caption{High-level Block Diagram of the Window Generator}
 \end{figure}
 
@@ -287,7 +297,7 @@ iterations. One computes values for $b$ and the other $a$.
 
 \begin{figure}
   \centering
-    \includegraphics[width=160pt]{block_diagrams/acounter.pdf}
+    \includegraphics[width=240pt]{block_diagrams/acounter.pdf}
   \caption{Block diagram of a \texttt{Differential Counter} used in window generation}
 \end{figure}
 
@@ -297,7 +307,7 @@ its maximum, it asserts a flag.
 
 \begin{figure}
   \centering
-    \includegraphics[width=200pt]{state_diagrams/diff_counter.pdf}
+    \includegraphics[width=300pt]{state_diagrams/diff_counter.pdf}
   \caption{State Diagram for the \texttt{Differential Counter}, Moore machine: signals
     \texttt{max=c\_cuis=max\_itr}, \texttt{leap=iter\_count=v\_leap}. Omit
     unused signals (X) for compactness. Colorcoded signal bundles.}
@@ -305,7 +315,7 @@ its maximum, it asserts a flag.
 
 \begin{figure}
   \centering
-    \includegraphics[width=200pt]{timing_diagrams/diff_counter.pdf}
+    \includegraphics[width=300pt]{timing_diagrams/diff_counter.pdf}
   \caption{Timing diagram of the \texttt{Differential Counter}}
 \end{figure}
 
@@ -314,7 +324,7 @@ from left to right down the screen.
 
 \begin{figure}
   \centering
-    \includegraphics[width=150pt, angle=270]{block_diagrams/win_gen_interior.pdf}
+    \includegraphics[width=250pt, angle=270]{block_diagrams/win_gen_interior.pdf}
   \caption{Block diagram illustrating $(x, y, a, b)$ tuple dataflow.}
 \end{figure}
 
@@ -334,7 +344,7 @@ When the \texttt{IFM} reads an $(x, y, a, b)$ tuple, it asserts a next value sig
 
 \begin{figure}
   \centering
-    \includegraphics[width=160pt]{timing_diagrams/gen_ifm.pdf}
+    \includegraphics[width=240pt]{timing_diagrams/gen_ifm.pdf}
   \caption{Timing diagram of interface between the \texttt{Window Generator}
     and the IFMs.}
 \end{figure}
@@ -348,11 +358,11 @@ the calculation of fractal sets lends itself to parallel
 computation. However, the very nature of the iterated fractal
 calculation means that the amount of time spent performing computations on each individual point
 can vary drastically, introducing synchronization issues. It is the responsibility of the
-IFM control module to resolve these issues.
+\texttt{IFM Controller} to resolve these issues.
 
 \begin{figure}
   \centering
-    \includegraphics[width=160pt]{block_diagrams/ifmunit.pdf}
+    \includegraphics[width=240pt]{block_diagrams/ifmunit.pdf}
   \caption{Block diagram for the IFM wrappers}
 \end{figure}
 
@@ -401,11 +411,20 @@ b_{next} &=& 2P_C - c_{img} \nonumber \\
 |z|^2 &=& P_A + P_B \nonumber 
 \end{eqnarray}
 
-The squaring operations for $P_A$ and $P_B$ is perfomed by a specialized logical circuit provided as an \textit{Altera Megafunction}. The multiplication $P_C$ is perfomed by embedded multipliers on the DE2.
+The squaring operations for $P_A$ and $P_B$ is perfomed by a specialized logical circuit provided as an \textit{Altera Megafunction}. The multiplication $P_C$ is perfomed by embedded multipliers on the DE2. These are expansive circuits, but the FPGA is still to accomodate up to $4$ \texttt{IFM}s.
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width=160pt]{block_diagrams/ifm.pdf}
+    \includegraphics[width=300pt]{state_diagrams/ifm.pdf}
+  \caption{State diagram for a single \texttt{IFM}. Moore
+    machine: using abstract transition descriptions. Omits unused
+    signals for compactness.}
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=240pt]{block_diagrams/ifm.pdf}
   \caption{Arithmetic Logic Circuit within each \texttt{IFM}}
 \end{figure}
 
@@ -422,10 +441,8 @@ $9.31 \times 10 ^ -10$.
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width=200pt]{state_diagrams/ifm.pdf}
-  \caption{State diagram for a single \texttt{IFM}. Moore
-    machine: using abstract transition descriptions. Omits unused
-    signals for compactness.}
+    \includegraphics[width=300pt]{timing_diagrams/IFM.PNG}
+  \caption{Timing diagram for a single \texttt{IFM}.}
 \end{figure}
 
 
@@ -434,8 +451,8 @@ Thus, the \texttt{IFM Controller} need only alter the state of the wrapper modul
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width=200pt]{state_diagrams/ifmunit.pdf}
-  \caption{State diagram for a single \texttt{IFM} unit (\texttt{IFM} handler/wrapper),
+    \includegraphics[width=300pt]{state_diagrams/ifmunit.pdf}
+  \caption{State diagram for a single \texttt{IFM} wrapper module,
     Moore machine: using abstract transition descriptions.}
 \end{figure}
 
@@ -454,7 +471,7 @@ Controller} as well as the \texttt{VGA Module}.
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width=160pt]{block_diagrams/clut.pdf}
+    \includegraphics[width=240pt]{block_diagrams/clut.pdf}
   \caption{Block Diagram of the \texttt{Coordinate-Breakaway LUT}: signals on
     the right side are inputs, signals on the left are outputs.}
 \end{figure}
@@ -499,7 +516,7 @@ the next clock cycle. In this way, we reduce the frequency of VGA reads from the
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width=200pt]{timing_diagrams/clut_vga.pdf}
+    \includegraphics[width=300pt]{timing_diagrams/clut_vga.pdf}
   \caption{Timing diagram of the interface between the Coordinate-Breakaway LUT and VGA module}
 \end{figure}
 
@@ -510,7 +527,7 @@ constantly reads from the \texttt{IFM} output, but only shifts when the SRAM's r
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width=200pt]{state_diagrams/clut.pdf}
+    \includegraphics[width=300pt]{state_diagrams/clut.pdf}
   \caption{Simplified State Diagram of the \texttt{Coordinate-Breakaway LUT}:
     Mealy machine, only includes re and we as inputs and rv as an
     output, with $\thicksim$ denoting a lack of outputs}
@@ -524,7 +541,7 @@ guaranteeing reliable data transmission.
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width=200pt]{timing_diagrams/ifm_clut.pdf}
+    \includegraphics[width=300pt]{timing_diagrams/ifm_clut.pdf}
   \caption{Timing diagram of the interface between the \texttt{IFM}s and the \texttt{Coordinate-Breakaway LUT}.}
 \end{figure}
 
@@ -543,13 +560,24 @@ the RAM is thus the breakaway value associated with that coordinate.
 
 \begin{figure}[H]
   \centering
-    \includegraphics[width=200pt]{block_diagrams/vga.pdf}
+    \includegraphics[width=300pt]{block_diagrams/vga.pdf}
   \caption{Block diagram of the VGA module}
 \end{figure}
 
 This breakaway value is passed through a decoder known as the
 \texttt{Colorization lookup table} and the resulting $(R, G, B)$ signal tuple
 is sent to the VGA port.
+
+\subsubsection{Colorization lookup table}
+The \texttt{Colorization lookup table} is implemented using a ROM on the FPGA. The ROM maps each possible breakaway $k$ value to a bit-vector corresponding to the $(R, G, B)$ signal tuple that should be expressed for that value.
+The system includes a special "cycle colors" mode, wherein the $k$ value being sent in to the \texttt{Colorization 
+lookup table} is modified by a linearly increasing amount. This causes the colors to shift on screen, creating a 
+remarkable aesthetic.
+
+To assist with programming the ROM, the development team created a small Python application that allows the user
+to graphically modify $(R, G, B)$ components for different $k$ values, and interpolates the results. The application 
+can then display a preview of what a Julia set will look like with these settings, and produces VHDL for programming
+the ROM accordingly.
 
 % ----------------------------------------
 % figures for the VGA
@@ -567,11 +595,6 @@ is sent to the VGA port.
 
 
 % ------------------------------------------------------------
-\subsection{Parametrization Modules}
-
-\subsubsection{Software-based Parameterization}
-
-\subsubsection{Colorization}
 
 %These modules might be used parameterize the output fractal
 
@@ -587,7 +610,56 @@ is sent to the VGA port.
 %  the way the fractal looks without recomputing it.
 %\end{itemize}
 
-\section{System Performance and Validation}
+\section{System Validation and Performance}
+
+\subsection{Verification and Validation}
+
+During development of the Interactive Fractal Viewer, it was desireable to validate the functionality of
+individual components. We used VHDL Test Benches in combination with the Quartus RTL simulation tool to verify proper timing and behavior during the early stages of development.
+
+The development team wrote Test Benches for each of the major hardware components. These proved invaluable in 
+finding problems during the initial implementation stages, as well as diagnosing them later on. 
+
+Additionally, in order to strictly verify the correctness of the Julia sets that the system produced, the team wrote a 
+specialized Test Bench capable of dumping $(a, b, k)$  triples to a file. A Python
+script was written to parse and validate this file. The script built a complex number for each $(a, b)$ double 
+and computed its own breakaway iteration $k'$ for that value using floating point precision. If the $|k-k'|<\epsilon$, 
+it marks the value as a success. Otherwise, it is marked as a failure. The tolerance parameter $\epsilon$ is necessary
+because Julia set iterations represent chaotic systems. Therefore, the minor perturbations caused by the difference
+in hardware vs. software computation can cause major changes.
+
+For the Julia set described by a chosen $c$, and $\epsilon = 5$, the validation script showed a $98$\% success rate on
+the $307200$ points tested.
+
+\subsection{Performance Analysis}
+
+\subsubsection{Upper-Bound on Image Generation Time}
+
+Say the system wishes to compute an arbitrary window of an arbitrary Julia set. The only variable in generation time for a given
+image is the amount of time it takes for the \texttt{IFM}s to completely write all $k$ values to the \texttt{Coordinate-Breakaway lookup table}. Thus, to find an upper bound on image generation time, we may assume that
+each \texttt{IFM} spends the maximum possible amount of time computing the $k$ value for each coordinate. The 
+number of iterations in each \texttt{IFM} is capped at $127$. Each \texttt{IFV} can perform one function evaluation
+per clock cycle, and requires $3$ cycles of setup and tear-down time for state changes. 
+
+Additionally the \texttt{IFM Controller} takes a clock cycle between each \texttt{IFM} value assignment to perform a check for a ready \texttt{IFM} and grab a new value from the \texttt{Window Generator}. 
+
+Thus, the system sets up a pipeline extending from the \texttt{IFV Controller} to the \texttt{Coordinate-Breakaway lookup table}. When using $4$ \texttt{IFM}s for computation, it may achieve a throughput of $\frac{4\; \text{values}}{133\; \text{iterations}}$ 
+
+Though the system has to worry about
+scheduling conflicts from the controller on the first set of values to go to the \texttt{IFM}s (since only one \texttt{IFM} may be assigned or report a value at a once), this issue vanishes due to pipelining on subsequent value sets because maximizing the number of iterations required for each value means synchronizing the start and end times of each \texttt{IFM}.
+
+It is now possible compute the delay incurred between the \texttt{IFM Controller} and the \texttt{Coordinate-Breakaway lookup table} when generating a full image on a 25MHz clock in this scenario. $640 \times 480 = 307200$ values must be computed, so
+
+$$
+\frac{307200\; \text{values}}{1\; \text{image}} \times \frac{133 \;\text{iterations}}{4 \;\text{values}} \times \frac{1 \;\text{cycle}}{1 \;\text{iteration}} \times \frac{1 \;\text{seconds}}{25000000 \;\text{cycles}} = \frac{0.408576 \;\text{seconds}}{\text{image}}
+$$
+
+Which is a good approximation of the upper bound on total time it takes for data to flow through the system.
+
+\subsubsection{Experimental Results}
+
+Simulations on a variety of constants confirmed the above results, producing delays ranging from $0.125s$ to $0.250s$ 
+on use case images, and a delay of $0.395s$ on a "maximum cost" image. 
 
 \section{Milestone Report}
 
@@ -602,9 +674,58 @@ Milestone 2&Apr 10&Display the colorized Julia set through VGA.&\textit{As plann
 Milestone 3&Apr 24&Implement parameter mutation, with subsequent updates to the displayed Julia set.&
 	Hardware-based parameter mutation and set redraw.\\
 &&&\\
-Deadline&May 10&Feature complete system with accompanying report and presentation.&\textit{As planned.}\\
+Deadline&May 9&Feature-complete system with accompanying report and presentation.&\textit{As planned.}\\
 &&&\\
 \end{tabular}
+
+\section{Contributions and Teamwork}
+
+As in all good engineering projects, our development team was heavily collaborative. There are very few
+files in our source that were produced by one person alone. However, our modular development process allowed
+different team members to accept primary responsibility for certain files. The following is a list of major
+contributions of each team member to the project 
+
+\begin{itemize}
+
+\item
+\textbf{Nathan Hwang}
+\begin{enumerate}
+\item Project management work
+\item \texttt{Coordinate-Breakaway lookup table}
+\item VHDL for color cycling
+\item Instruction registers for communication with NIOS
+\end{enumerate}
+
+\item 
+\textbf{Richard Nwaobasi}
+\begin{enumerate}
+\item \texttt{Colorization lookup table}
+\item \texttt{VGA Module}
+\item Communication with PS/2 keyboard
+\item Control loop software (with Stephen Pratt)
+\end{enumerate}
+
+\item 
+\textbf{Luis Pe\~{n}a}
+\begin{enumerate}
+\item Systems integration
+\item Top level module
+\item \texttt{IFM} and \texttt{IFM Controller}
+\item Parameterization RAM (with Stephen Pratt)
+\end{enumerate}
+
+\item 
+\textbf{Stephen Pratt}
+\begin{enumerate}
+\item Document composition and presentaiton management
+\item Integration test bench and validation script
+\item \texttt{Window Generator} and window generation algorithm
+\item Parameterization RAM (with Luis Pe\~{n}a)
+\item Control loop software (with Richard Nwaobasi)
+\end{enumerate}
+
+\end{itemize}
+
 
 \section{Challenges and Lessons Learned}
 
@@ -647,7 +768,7 @@ Furthermore, each group member ended up with a few personal takeaways:
 \textbf{Stephen Pratt}
 \begin{enumerate}
 \item Consistent progress is of central importance to the success of a project. A team should always focus on 
-moving forward at least a little bit, no matter the week. Even the most marginal rates of progress are far preferable
+moving forward at least a little bit, no matter how busy the week. Even the most marginal rates of progress are far preferable
 to the overhead that ends up getting poured into teardown/setup time if a team decides to focus its efforts elsewhere
 for even a short period.
 \item Implementation challenges are not exam questions. They do not need to be solved alone, or even successfully on 
@@ -661,7 +782,7 @@ solution and pour time into trying to make the implementation work out.
 \section{Reflections and Prospective}
 
 All things considered, our team is extremely satisfied with the results that we've achieved. 
-Development was certainly not without its ups and downs, but ultimately, we brought all major project
+Development was certainly not without its ups and downs, but we ultimately brought all major project
 goals to fruition. 
 
 Of course, like all good engineers, we can never claim to be completely satisfied with the fruits of our
