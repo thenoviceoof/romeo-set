@@ -144,9 +144,9 @@ class Base:
     def build_bmp_color_map(self):
         d = self.build_color_map()
         for i in range(CAP):
-            d[i] = (round(d[i][0]/4) % 2**8,
-                    round(d[i][1]/4) % 2**8,
-                    round(d[i][2]/4) % 2**8)
+            d[i] = (max(min(round(d[i][0]/4), 2**8-1), 0),
+                    max(min(round(d[i][1]/4), 2**8-1), 0),
+                    max(min(round(d[i][2]/4), 2**8-1), 0))
         return d
 
     def gen_clut(self, widget, data=None):
