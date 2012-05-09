@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<LOG_ROOT>
+	<PROJECT NAME="ifv">
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|sqr2:multb|altsquare:altsquare_component" CBX_FILE_NAME="altsquare_gea.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|sqr2:multa|altsquare:altsquare_component" CBX_FILE_NAME="altsquare_gea.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|sqr2:multa|altsquare:altsquare_component" CBX_FILE_NAME="altsquare_gea.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|mult2:multc|lpm_mult:lpm_mult_component" CBX_FILE_NAME="mult_nnq.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|sqr2:multb|altsquare:altsquare_component" CBX_FILE_NAME="altsquare_gea.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|sqr2:multb|altsquare:altsquare_component" CBX_FILE_NAME="altsquare_gea.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|sqr2:multa|altsquare:altsquare_component" CBX_FILE_NAME="altsquare_gea.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|mult2:multc|lpm_mult:lpm_mult_component" CBX_FILE_NAME="mult_nnq.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_oci_im:the_cpu_nios2_oci_im|cpu_traceram_lpm_dram_bdp_component_module:cpu_traceram_lpm_dram_bdp_component|altsyncram:the_altsyncram" CBX_FILE_NAME="altsyncram_e502.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_ocimem:the_cpu_nios2_ocimem|cpu_ociram_lpm_dram_bdp_component_module:cpu_ociram_lpm_dram_bdp_component|altsyncram:the_altsyncram" CBX_FILE_NAME="altsyncram_t072.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|nios:NIOS|cpu:the_cpu|cpu_rf_module:cpu_rf|altsyncram:the_altsyncram" CBX_FILE_NAME="altsyncram_ig22.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_w:the_jtag_uart_scfifo_w|scfifo:wfifo" CBX_FILE_NAME="scfifo_1n21.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|mult2:multc|lpm_mult:lpm_mult_component" CBX_FILE_NAME="mult_nnq.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|sqr2:multb|altsquare:altsquare_component" CBX_FILE_NAME="altsquare_gea.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|sqr2:multa|altsquare:altsquare_component" CBX_FILE_NAME="altsquare_gea.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_r:the_jtag_uart_scfifo_r|scfifo:rfifo" CBX_FILE_NAME="scfifo_1n21.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|sld_hub:sld_hub_inst|lpm_decode:instruction_decoder" CBX_FILE_NAME="decode_aoi.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|mult2:multc|lpm_mult:lpm_mult_component" CBX_FILE_NAME="mult_nnq.tdf"/>
+	</PROJECT>
+</LOG_ROOT>

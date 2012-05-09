@@ -137,7 +137,7 @@ architecture datapath of ifv is
 
 	--sig					<= SW(7 downto 0);
 
-	reset				<= sig(0);
+	reset				<= sig(0) or SW(0);
 	iterate				<= sig(1);
 	color				<= sig(4 downto 2);
 	refresh				<= sig(5);
@@ -290,7 +290,7 @@ NIOS: entity work.nios port map (
 	
  -- the sram signal
 	read_addr_to_the_ram_signal		=> '0',
-	read_data_from_the_ram_signal 	=> siga,
+	read_data_from_the_ram_signal 	=> sig,
 
  -- the_sdram
 	zs_addr_from_the_sdram		=> DRAM_ADDR,
@@ -305,7 +305,7 @@ NIOS: entity work.nios port map (
  );
 
 RMR: entity work.rammer port map(
-	clk				=> clk_50,
+	clk				=> clk_25,
 	compute			=> sig(5),
 	done			=> reset_from_nios,
 	read			=> ram_read,

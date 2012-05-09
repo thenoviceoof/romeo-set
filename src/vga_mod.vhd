@@ -12,7 +12,7 @@ entity vga_mod is
 	port(
 		clk, reset	: in std_logic;
 		count		: in unsigned(7 downto 0);
-		switch		: in std_logic;
+		switch		: in std_logic_vector(2 downto 0);
 		VGA_HS,                                 -- H_SYNC
 		VGA_VS,                                 -- V_SYNC
 		VGA_BLANK,                              -- BLANK
@@ -50,7 +50,7 @@ architecture imp of vga_mod is
   component Color_LUT
     port(
       count   : in unsigned(7 downto 0);
-      switch  : in std_logic;
+      switch  : in std_logic_vector(2 downto 0);
       VGA_RGB : out unsigned(29 downto 0));
   end component;
 

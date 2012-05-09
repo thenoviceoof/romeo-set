@@ -135,9 +135,7 @@ architecture datapath of ifv is
 	signal siga				: std_logic_vector(7 downto 0);
 	begin
 
-	--sig					<= SW(7 downto 0);
-
-	reset				<= sig(0);
+	reset				<= sig(0) or SW(0);
 	iterate				<= sig(1);
 	color				<= sig(4 downto 2);
 	refresh				<= sig(5);
@@ -204,37 +202,6 @@ architecture datapath of ifv is
 				a_leap		<= "0000000010";
 				b_leap		<= "0000000010";
 			end if;
-
---			if SW(6) = '1' then
---			if SW(4) = '1' then
---				a_min		<= X"F80000000";
---				b_min		<= X"FA0000000";
---				a_diff		<= X"000666666";
---				b_diff		<= X"000666666";
---				cr			<= X"CCCCCCCCC";
---				ci			<= X"CCCCCCCCC";
---				a_leap		<= "0000000010";
---				b_leap		<= "0000000010";
---			else
---				a_min		<= X"F80000000";
---				b_min		<= X"FA0000000";
---				a_diff		<= X"000666666";
---				b_diff		<= X"000666666";
---				cr			<= X"FCA8F5C29";
---				ci			<= X"FF125460B";
---				a_leap		<= "0000000010";
---				b_leap		<= "0000000010";
---			end if;
---			else
---				a_min		<= a_mine;
---				b_min		<= b_mine;
---				a_diff		<= a_diffe;
---				b_diff		<= b_diffe;
---				cr			<= cre;
---				ci			<= cie;
---				a_leap		<= a_leape;
---				b_leap		<= b_leape; 
---			end if;
 		end if;
 	end process;
 	
@@ -245,7 +212,6 @@ architecture datapath of ifv is
 	DRAM_UDQM <= DRAM_DQM(1);
 	DRAM_LDQM <= DRAM_DQM(0);
 	DRAM_CLK  <= clk_sdram;
---	reset <= SW(0);
 
 CLK5025: entity work.pll5025 port map(
 	inclk0	=> CLOCK_50,
@@ -305,7 +271,7 @@ NIOS: entity work.nios port map (
  );
 
 RMR: entity work.rammer port map(
-	clk				=> clk_50,
+	clk				=> clk_25,
 	compute			=> sig(5),
 	done			=> reset_from_nios,
 	read			=> ram_read,
@@ -325,7 +291,7 @@ RMR: entity work.rammer port map(
 VGA: entity work.vga_mod port map (
 	clk			=> clk_25,
 	reset		=> '0',
-	switch		=> sig(2),
+	switch		=> color,
 	count		=> cread,--EXTERNAL SIGNALS
 	VGA_HS		=> VGA_HS,
 	VGA_VS		=> VGA_VS,

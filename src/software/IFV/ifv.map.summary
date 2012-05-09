@@ -1,0 +1,14 @@
+Analysis & Synthesis Status : Successful - Sun May  6 09:13:40 2012
+Quartus II Version : 7.2 Build 151 09/26/2007 SJ Full Version
+Revision Name : ifv
+Top-level Entity Name : ifv
+Family : Cyclone II
+Total logic elements : 13,979
+    Total combinational functions : 13,979
+    Dedicated logic registers : 1,961
+Total registers : 1961
+Total pins : 428
+Total virtual pins : 0
+Total memory bits : 10,240
+Embedded Multiplier 9-bit elements : 32
+Total PLLs : 1

@@ -1,5 +1,5 @@
 Analysis & Synthesis report for ifv
-Wed May  9 09:20:15 2012
+Wed May  9 11:43:10 2012
 Quartus II Version 7.2 Build 151 09/26/2007 SJ Full Version
 
 
@@ -22,64 +22,65 @@ Quartus II Version 7.2 Build 151 09/26/2007 SJ Full Version
  14. Removed Registers Triggering Further Register Optimizations
  15. General Register Statistics
  16. Inverted Register Statistics
- 17. Multiplexer Restructuring Statistics (Restructuring Performed)
- 18. Source assignments for nios:NIOS|clock_0:the_clock_0
- 19. Source assignments for nios:NIOS|clock_0:the_clock_0|clock_0_master_read_done_sync_module:clock_0_master_read_done_sync
- 20. Source assignments for nios:NIOS|clock_0:the_clock_0|clock_0_master_write_done_sync_module:clock_0_master_write_done_sync
- 21. Source assignments for nios:NIOS|clock_0:the_clock_0|clock_0_slave_read_request_sync_module:clock_0_slave_read_request_sync
- 22. Source assignments for nios:NIOS|clock_0:the_clock_0|clock_0_slave_write_request_sync_module:clock_0_slave_write_request_sync
- 23. Source assignments for nios:NIOS|clock_0:the_clock_0|clock_0_bit_pipe:endofpacket_bit_pipe
- 24. Source assignments for nios:NIOS|clock_1:the_clock_1
- 25. Source assignments for nios:NIOS|clock_1:the_clock_1|clock_1_master_read_done_sync_module:clock_1_master_read_done_sync
- 26. Source assignments for nios:NIOS|clock_1:the_clock_1|clock_1_master_write_done_sync_module:clock_1_master_write_done_sync
- 27. Source assignments for nios:NIOS|clock_1:the_clock_1|clock_1_slave_read_request_sync_module:clock_1_slave_read_request_sync
- 28. Source assignments for nios:NIOS|clock_1:the_clock_1|clock_1_slave_write_request_sync_module:clock_1_slave_write_request_sync
- 29. Source assignments for nios:NIOS|clock_1:the_clock_1|clock_1_bit_pipe:endofpacket_bit_pipe
- 30. Source assignments for nios:NIOS|cpu:the_cpu|cpu_rf_module:cpu_rf|altsyncram:the_altsyncram|altsyncram_ig22:auto_generated
- 31. Source assignments for nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_ocimem:the_cpu_nios2_ocimem|cpu_ociram_lpm_dram_bdp_component_module:cpu_ociram_lpm_dram_bdp_component|altsyncram:the_altsyncram|altsyncram_t072:auto_generated
- 32. Source assignments for nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_oci_im:the_cpu_nios2_oci_im|cpu_traceram_lpm_dram_bdp_component_module:cpu_traceram_lpm_dram_bdp_component|altsyncram:the_altsyncram|altsyncram_e502:auto_generated
- 33. Source assignments for nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_jtag_debug_module_wrapper:the_cpu_jtag_debug_module_wrapper|cpu_jtag_debug_module:the_cpu_jtag_debug_module1
- 34. Source assignments for nios:NIOS|jtag_uart:the_jtag_uart
- 35. Source assignments for nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_w:the_jtag_uart_scfifo_w|scfifo:wfifo|scfifo_1n21:auto_generated|a_dpfifo_8t21:dpfifo|dpram_5h21:FIFOram|altsyncram_9tl1:altsyncram2
- 36. Source assignments for nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_r:the_jtag_uart_scfifo_r|scfifo:rfifo|scfifo_1n21:auto_generated|a_dpfifo_8t21:dpfifo|dpram_5h21:FIFOram|altsyncram_9tl1:altsyncram2
- 37. Source assignments for nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|scfifo:Incoming_Data_FIFO|scfifo_tr31:auto_generated|a_dpfifo_gj31:dpfifo|altsyncram_rqd1:FIFOram
- 38. Source assignments for nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|scfifo:Incoming_Data_FIFO|scfifo_tr31:auto_generated|a_dpfifo_gj31:dpfifo|altsyncram_rqd1:FIFOram|altsyncram_mbj1:altsyncram1
- 39. Source assignments for nios:NIOS|sdram:the_sdram
- 40. Source assignments for nios:NIOS|nios_reset_clk_domain_synch_module:nios_reset_clk_domain_synch
- 41. Source assignments for nios:NIOS|nios_reset_clk_25_domain_synch_module:nios_reset_clk_25_domain_synch
- 42. Source assignments for sld_hub:sld_hub_inst
- 43. Source assignments for sld_hub:sld_hub_inst|sld_rom_sr:HUB_INFO_REG
- 44. Source assignments for nios:NIOS|ram:the_ram|ramcon:the_ramcon|altsyncram:RAM_rtl_0|altsyncram_hse1:auto_generated
- 45. Parameter Settings for User Entity Instance: pll5025:CLK5025|altpll:altpll_component
- 46. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|sqr2:multa|altsquare:altsquare_component
- 47. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|sqr2:multb|altsquare:altsquare_component
- 48. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|mult2:multc|lpm_mult:lpm_mult_component
- 49. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|sqr2:multa|altsquare:altsquare_component
- 50. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|sqr2:multb|altsquare:altsquare_component
- 51. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|mult2:multc|lpm_mult:lpm_mult_component
- 52. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|sqr2:multa|altsquare:altsquare_component
- 53. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|sqr2:multb|altsquare:altsquare_component
- 54. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|mult2:multc|lpm_mult:lpm_mult_component
- 55. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|sqr2:multa|altsquare:altsquare_component
- 56. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|sqr2:multb|altsquare:altsquare_component
- 57. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|mult2:multc|lpm_mult:lpm_mult_component
- 58. Parameter Settings for User Entity Instance: nios:NIOS|cpu:the_cpu|cpu_rf_module:cpu_rf
- 59. Parameter Settings for User Entity Instance: nios:NIOS|cpu:the_cpu|cpu_rf_module:cpu_rf|altsyncram:the_altsyncram
- 60. Parameter Settings for User Entity Instance: nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_ocimem:the_cpu_nios2_ocimem|cpu_ociram_lpm_dram_bdp_component_module:cpu_ociram_lpm_dram_bdp_component
- 61. Parameter Settings for User Entity Instance: nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_ocimem:the_cpu_nios2_ocimem|cpu_ociram_lpm_dram_bdp_component_module:cpu_ociram_lpm_dram_bdp_component|altsyncram:the_altsyncram
- 62. Parameter Settings for User Entity Instance: nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_oci_im:the_cpu_nios2_oci_im|cpu_traceram_lpm_dram_bdp_component_module:cpu_traceram_lpm_dram_bdp_component
- 63. Parameter Settings for User Entity Instance: nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_oci_im:the_cpu_nios2_oci_im|cpu_traceram_lpm_dram_bdp_component_module:cpu_traceram_lpm_dram_bdp_component|altsyncram:the_altsyncram
- 64. Parameter Settings for User Entity Instance: nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_jtag_debug_module_wrapper:the_cpu_jtag_debug_module_wrapper|cpu_jtag_debug_module:the_cpu_jtag_debug_module1
- 65. Parameter Settings for User Entity Instance: nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_w:the_jtag_uart_scfifo_w|scfifo:wfifo
- 66. Parameter Settings for User Entity Instance: nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_r:the_jtag_uart_scfifo_r|scfifo:rfifo
- 67. Parameter Settings for User Entity Instance: nios:NIOS|jtag_uart:the_jtag_uart|alt_jtag_atlantic:jtag_uart_alt_jtag_atlantic
- 68. Parameter Settings for User Entity Instance: nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Command_Out:PS2_Command_Out
- 69. Parameter Settings for User Entity Instance: nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|scfifo:Incoming_Data_FIFO
- 70. Parameter Settings for Inferred Entity Instance: sld_hub:sld_hub_inst
- 71. Parameter Settings for Inferred Entity Instance: nios:NIOS|ram:the_ram|ramcon:the_ramcon|altsyncram:RAM_rtl_0
- 72. lpm_mult Parameter Settings by Entity Instance
- 73. scfifo Parameter Settings by Entity Instance
- 74. Analysis & Synthesis Messages
+ 17. Registers Added for RAM Pass-Through Logic
+ 18. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 19. Source assignments for nios:NIOS|clock_0:the_clock_0
+ 20. Source assignments for nios:NIOS|clock_0:the_clock_0|clock_0_master_read_done_sync_module:clock_0_master_read_done_sync
+ 21. Source assignments for nios:NIOS|clock_0:the_clock_0|clock_0_master_write_done_sync_module:clock_0_master_write_done_sync
+ 22. Source assignments for nios:NIOS|clock_0:the_clock_0|clock_0_slave_read_request_sync_module:clock_0_slave_read_request_sync
+ 23. Source assignments for nios:NIOS|clock_0:the_clock_0|clock_0_slave_write_request_sync_module:clock_0_slave_write_request_sync
+ 24. Source assignments for nios:NIOS|clock_0:the_clock_0|clock_0_bit_pipe:endofpacket_bit_pipe
+ 25. Source assignments for nios:NIOS|clock_1:the_clock_1
+ 26. Source assignments for nios:NIOS|clock_1:the_clock_1|clock_1_master_read_done_sync_module:clock_1_master_read_done_sync
+ 27. Source assignments for nios:NIOS|clock_1:the_clock_1|clock_1_master_write_done_sync_module:clock_1_master_write_done_sync
+ 28. Source assignments for nios:NIOS|clock_1:the_clock_1|clock_1_slave_read_request_sync_module:clock_1_slave_read_request_sync
+ 29. Source assignments for nios:NIOS|clock_1:the_clock_1|clock_1_slave_write_request_sync_module:clock_1_slave_write_request_sync
+ 30. Source assignments for nios:NIOS|clock_1:the_clock_1|clock_1_bit_pipe:endofpacket_bit_pipe
+ 31. Source assignments for nios:NIOS|cpu:the_cpu|cpu_rf_module:cpu_rf|altsyncram:the_altsyncram|altsyncram_ig22:auto_generated
+ 32. Source assignments for nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_ocimem:the_cpu_nios2_ocimem|cpu_ociram_lpm_dram_bdp_component_module:cpu_ociram_lpm_dram_bdp_component|altsyncram:the_altsyncram|altsyncram_t072:auto_generated
+ 33. Source assignments for nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_oci_im:the_cpu_nios2_oci_im|cpu_traceram_lpm_dram_bdp_component_module:cpu_traceram_lpm_dram_bdp_component|altsyncram:the_altsyncram|altsyncram_e502:auto_generated
+ 34. Source assignments for nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_jtag_debug_module_wrapper:the_cpu_jtag_debug_module_wrapper|cpu_jtag_debug_module:the_cpu_jtag_debug_module1
+ 35. Source assignments for nios:NIOS|jtag_uart:the_jtag_uart
+ 36. Source assignments for nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_w:the_jtag_uart_scfifo_w|scfifo:wfifo|scfifo_1n21:auto_generated|a_dpfifo_8t21:dpfifo|dpram_5h21:FIFOram|altsyncram_9tl1:altsyncram2
+ 37. Source assignments for nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_r:the_jtag_uart_scfifo_r|scfifo:rfifo|scfifo_1n21:auto_generated|a_dpfifo_8t21:dpfifo|dpram_5h21:FIFOram|altsyncram_9tl1:altsyncram2
+ 38. Source assignments for nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|scfifo:Incoming_Data_FIFO|scfifo_tr31:auto_generated|a_dpfifo_gj31:dpfifo|altsyncram_rqd1:FIFOram
+ 39. Source assignments for nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|scfifo:Incoming_Data_FIFO|scfifo_tr31:auto_generated|a_dpfifo_gj31:dpfifo|altsyncram_rqd1:FIFOram|altsyncram_mbj1:altsyncram1
+ 40. Source assignments for nios:NIOS|sdram:the_sdram
+ 41. Source assignments for nios:NIOS|nios_reset_clk_domain_synch_module:nios_reset_clk_domain_synch
+ 42. Source assignments for nios:NIOS|nios_reset_clk_25_domain_synch_module:nios_reset_clk_25_domain_synch
+ 43. Source assignments for sld_hub:sld_hub_inst
+ 44. Source assignments for sld_hub:sld_hub_inst|sld_rom_sr:HUB_INFO_REG
+ 45. Source assignments for nios:NIOS|ram:the_ram|ramcon:the_ramcon|altsyncram:RAM_rtl_0|altsyncram_bpi1:auto_generated
+ 46. Parameter Settings for User Entity Instance: pll5025:CLK5025|altpll:altpll_component
+ 47. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|sqr2:multa|altsquare:altsquare_component
+ 48. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|sqr2:multb|altsquare:altsquare_component
+ 49. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|mult2:multc|lpm_mult:lpm_mult_component
+ 50. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|sqr2:multa|altsquare:altsquare_component
+ 51. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|sqr2:multb|altsquare:altsquare_component
+ 52. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|mult2:multc|lpm_mult:lpm_mult_component
+ 53. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|sqr2:multa|altsquare:altsquare_component
+ 54. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|sqr2:multb|altsquare:altsquare_component
+ 55. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|mult2:multc|lpm_mult:lpm_mult_component
+ 56. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|sqr2:multa|altsquare:altsquare_component
+ 57. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|sqr2:multb|altsquare:altsquare_component
+ 58. Parameter Settings for User Entity Instance: hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|mult2:multc|lpm_mult:lpm_mult_component
+ 59. Parameter Settings for User Entity Instance: nios:NIOS|cpu:the_cpu|cpu_rf_module:cpu_rf
+ 60. Parameter Settings for User Entity Instance: nios:NIOS|cpu:the_cpu|cpu_rf_module:cpu_rf|altsyncram:the_altsyncram
+ 61. Parameter Settings for User Entity Instance: nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_ocimem:the_cpu_nios2_ocimem|cpu_ociram_lpm_dram_bdp_component_module:cpu_ociram_lpm_dram_bdp_component
+ 62. Parameter Settings for User Entity Instance: nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_ocimem:the_cpu_nios2_ocimem|cpu_ociram_lpm_dram_bdp_component_module:cpu_ociram_lpm_dram_bdp_component|altsyncram:the_altsyncram
+ 63. Parameter Settings for User Entity Instance: nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_oci_im:the_cpu_nios2_oci_im|cpu_traceram_lpm_dram_bdp_component_module:cpu_traceram_lpm_dram_bdp_component
+ 64. Parameter Settings for User Entity Instance: nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_oci_im:the_cpu_nios2_oci_im|cpu_traceram_lpm_dram_bdp_component_module:cpu_traceram_lpm_dram_bdp_component|altsyncram:the_altsyncram
+ 65. Parameter Settings for User Entity Instance: nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_jtag_debug_module_wrapper:the_cpu_jtag_debug_module_wrapper|cpu_jtag_debug_module:the_cpu_jtag_debug_module1
+ 66. Parameter Settings for User Entity Instance: nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_w:the_jtag_uart_scfifo_w|scfifo:wfifo
+ 67. Parameter Settings for User Entity Instance: nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_r:the_jtag_uart_scfifo_r|scfifo:rfifo
+ 68. Parameter Settings for User Entity Instance: nios:NIOS|jtag_uart:the_jtag_uart|alt_jtag_atlantic:jtag_uart_alt_jtag_atlantic
+ 69. Parameter Settings for User Entity Instance: nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Command_Out:PS2_Command_Out
+ 70. Parameter Settings for User Entity Instance: nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|scfifo:Incoming_Data_FIFO
+ 71. Parameter Settings for Inferred Entity Instance: sld_hub:sld_hub_inst
+ 72. Parameter Settings for Inferred Entity Instance: nios:NIOS|ram:the_ram|ramcon:the_ramcon|altsyncram:RAM_rtl_0
+ 73. lpm_mult Parameter Settings by Entity Instance
+ 74. scfifo Parameter Settings by Entity Instance
+ 75. Analysis & Synthesis Messages
 
 
 
@@ -105,15 +106,15 @@ applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +------------------------------------+------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Wed May  9 09:20:15 2012    ;
+; Analysis & Synthesis Status        ; Successful - Wed May  9 11:43:10 2012    ;
 ; Quartus II Version                 ; 7.2 Build 151 09/26/2007 SJ Full Version ;
 ; Revision Name                      ; ifv                                      ;
 ; Top-level Entity Name              ; ifv                                      ;
 ; Family                             ; Cyclone II                               ;
-; Total logic elements               ; 14,927                                   ;
-;     Total combinational functions  ; 14,927                                   ;
-;     Dedicated logic registers      ; 2,910                                    ;
-; Total registers                    ; 2910                                     ;
+; Total logic elements               ; 16,303                                   ;
+;     Total combinational functions  ; 16,303                                   ;
+;     Dedicated logic registers      ; 2,934                                    ;
+; Total registers                    ; 2934                                     ;
 ; Total pins                         ; 231                                      ;
 ; Total virtual pins                 ; 0                                        ;
 ; Total memory bits                  ; 12,576                                   ;
@@ -194,48 +195,48 @@ applicable agreement for further details.
 +-----------------------------------+-----------------+------------------------------+-----------------------------------------------------------------------------------+
 ; File Name with User-Entered Path  ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                      ;
 +-----------------------------------+-----------------+------------------------------+-----------------------------------------------------------------------------------+
-; ramctrl.vhd                       ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/ramctrl.vhd                       ;
-; ps2_0.vhd                         ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/ps2_0.vhd                         ;
-; Altera_UP_PS2_Command_Out.v       ; yes             ; User Verilog HDL File        ; /home/user4/spring12/lep2141/4840/romeo-set/src/Altera_UP_PS2_Command_Out.v       ;
-; Altera_UP_PS2_Data_In.v           ; yes             ; User Verilog HDL File        ; /home/user4/spring12/lep2141/4840/romeo-set/src/Altera_UP_PS2_Data_In.v           ;
-; Altera_UP_PS2.v                   ; yes             ; User Verilog HDL File        ; /home/user4/spring12/lep2141/4840/romeo-set/src/Altera_UP_PS2.v                   ;
-; ram.vhd                           ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/ram.vhd                           ;
-; cpu_jtag_debug_module.vhd         ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/cpu_jtag_debug_module.vhd         ;
-; sdram.vhd                         ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/sdram.vhd                         ;
-; jtag_uart.vhd                     ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/jtag_uart.vhd                     ;
-; cpu.vhd                           ; yes             ; Encrypted User VHDL File     ; /home/user4/spring12/lep2141/4840/romeo-set/src/cpu.vhd                           ;
-; Color_LUT.vhd                     ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/Color_LUT.vhd                     ;
-; nios.vhd                          ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/nios.vhd                          ;
-; diff_counter.vhd                  ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/diff_counter.vhd                  ;
-; hook.vhd                          ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/hook.vhd                          ;
-; ifmd.vhd                          ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/ifmd.vhd                          ;
-; ifmunitd.vhd                      ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/ifmunitd.vhd                      ;
-; ifv.vhd                           ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/ifv.vhd                           ;
-; mult2.vhd                         ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/mult2.vhd                         ;
-; pll5025.vhd                       ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/pll5025.vhd                       ;
-; sqr2.vhd                          ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/sqr2.vhd                          ;
-; sram.vhd                          ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/sram.vhd                          ;
-; vga.vhd                           ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/vga.vhd                           ;
-; vga_mod.vhd                       ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/vga_mod.vhd                       ;
-; window_gen.vhd                    ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/window_gen.vhd                    ;
-; rammer.vhd                        ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/rammer.vhd                        ;
-; ramcon.vhd                        ; yes             ; User VHDL File               ; /home/user4/spring12/lep2141/4840/romeo-set/src/ramcon.vhd                        ;
+; ramctrl.vhd                       ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/ramctrl.vhd                       ;
+; ps2_0.vhd                         ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/ps2_0.vhd                         ;
+; Altera_UP_PS2_Command_Out.v       ; yes             ; User Verilog HDL File        ; /home/user5/spring12/rcn2105/embed_proj/alt/src/Altera_UP_PS2_Command_Out.v       ;
+; Altera_UP_PS2_Data_In.v           ; yes             ; User Verilog HDL File        ; /home/user5/spring12/rcn2105/embed_proj/alt/src/Altera_UP_PS2_Data_In.v           ;
+; Altera_UP_PS2.v                   ; yes             ; User Verilog HDL File        ; /home/user5/spring12/rcn2105/embed_proj/alt/src/Altera_UP_PS2.v                   ;
+; ram.vhd                           ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/ram.vhd                           ;
+; cpu_jtag_debug_module.vhd         ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/cpu_jtag_debug_module.vhd         ;
+; sdram.vhd                         ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/sdram.vhd                         ;
+; jtag_uart.vhd                     ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/jtag_uart.vhd                     ;
+; cpu.vhd                           ; yes             ; Encrypted User VHDL File     ; /home/user5/spring12/rcn2105/embed_proj/alt/src/cpu.vhd                           ;
+; Color_LUT.vhd                     ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/Color_LUT.vhd                     ;
+; nios.vhd                          ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/nios.vhd                          ;
+; diff_counter.vhd                  ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/diff_counter.vhd                  ;
+; hook.vhd                          ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/hook.vhd                          ;
+; ifmd.vhd                          ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/ifmd.vhd                          ;
+; ifmunitd.vhd                      ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/ifmunitd.vhd                      ;
+; ifv.vhd                           ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/ifv.vhd                           ;
+; mult2.vhd                         ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/mult2.vhd                         ;
+; pll5025.vhd                       ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/pll5025.vhd                       ;
+; sqr2.vhd                          ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/sqr2.vhd                          ;
+; sram.vhd                          ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/sram.vhd                          ;
+; vga.vhd                           ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/vga.vhd                           ;
+; vga_mod.vhd                       ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/vga_mod.vhd                       ;
+; window_gen.vhd                    ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/window_gen.vhd                    ;
+; rammer.vhd                        ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/rammer.vhd                        ;
+; ramcon.vhd                        ; yes             ; User VHDL File               ; /home/user5/spring12/rcn2105/embed_proj/alt/src/ramcon.vhd                        ;
 ; altpll.tdf                        ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/altpll.tdf                  ;
 ; aglobal72.inc                     ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/aglobal72.inc               ;
 ; stratix_pll.inc                   ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/stratix_pll.inc             ;
 ; stratixii_pll.inc                 ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/stratixii_pll.inc           ;
 ; cycloneii_pll.inc                 ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/cycloneii_pll.inc           ;
 ; altsquare.tdf                     ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/altsquare.tdf               ;
-; db/altsquare_gea.tdf              ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/altsquare_gea.tdf              ;
+; db/altsquare_gea.tdf              ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/altsquare_gea.tdf              ;
 ; lpm_mult.tdf                      ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/lpm_mult.tdf                ;
 ; lpm_add_sub.inc                   ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/lpm_add_sub.inc             ;
 ; multcore.inc                      ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/multcore.inc                ;
 ; bypassff.inc                      ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/bypassff.inc                ;
 ; altshift.inc                      ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/altshift.inc                ;
-; db/mult_nnq.tdf                   ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/mult_nnq.tdf                   ;
-; clock_0.vhd                       ; yes             ; Other                        ; /home/user4/spring12/lep2141/4840/romeo-set/src/clock_0.vhd                       ;
-; clock_1.vhd                       ; yes             ; Other                        ; /home/user4/spring12/lep2141/4840/romeo-set/src/clock_1.vhd                       ;
-; cpu_test_bench.vhd                ; yes             ; Other                        ; /home/user4/spring12/lep2141/4840/romeo-set/src/cpu_test_bench.vhd                ;
+; db/mult_nnq.tdf                   ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/mult_nnq.tdf                   ;
+; clock_0.vhd                       ; yes             ; Other                        ; /home/user5/spring12/rcn2105/embed_proj/alt/src/clock_0.vhd                       ;
+; clock_1.vhd                       ; yes             ; Other                        ; /home/user5/spring12/rcn2105/embed_proj/alt/src/clock_1.vhd                       ;
+; cpu_test_bench.vhd                ; yes             ; Other                        ; /home/user5/spring12/rcn2105/embed_proj/alt/src/cpu_test_bench.vhd                ;
 ; altsyncram.tdf                    ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/altsyncram.tdf              ;
 ; stratix_ram_block.inc             ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/stratix_ram_block.inc       ;
 ; lpm_mux.inc                       ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/lpm_mux.inc                 ;
@@ -245,33 +246,33 @@ applicable agreement for further details.
 ; altram.inc                        ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/altram.inc                  ;
 ; altdpram.inc                      ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/altdpram.inc                ;
 ; altqpram.inc                      ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/altqpram.inc                ;
-; db/altsyncram_ig22.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/altsyncram_ig22.tdf            ;
-; db/altsyncram_t072.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/altsyncram_t072.tdf            ;
-; db/altsyncram_e502.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/altsyncram_e502.tdf            ;
-; cpu_jtag_debug_module_wrapper.vhd ; yes             ; Other                        ; /home/user4/spring12/lep2141/4840/romeo-set/src/cpu_jtag_debug_module_wrapper.vhd ;
+; db/altsyncram_ig22.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/altsyncram_ig22.tdf            ;
+; db/altsyncram_t072.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/altsyncram_t072.tdf            ;
+; db/altsyncram_e502.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/altsyncram_e502.tdf            ;
+; cpu_jtag_debug_module_wrapper.vhd ; yes             ; Other                        ; /home/user5/spring12/rcn2105/embed_proj/alt/src/cpu_jtag_debug_module_wrapper.vhd ;
 ; scfifo.tdf                        ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/scfifo.tdf                  ;
 ; a_regfifo.inc                     ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/a_regfifo.inc               ;
 ; a_dpfifo.inc                      ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/a_dpfifo.inc                ;
 ; a_i2fifo.inc                      ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/a_i2fifo.inc                ;
 ; a_fffifo.inc                      ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/a_fffifo.inc                ;
 ; a_f2fifo.inc                      ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/a_f2fifo.inc                ;
-; db/scfifo_1n21.tdf                ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/scfifo_1n21.tdf                ;
-; db/a_dpfifo_8t21.tdf              ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/a_dpfifo_8t21.tdf              ;
-; db/a_fefifo_7cf.tdf               ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/a_fefifo_7cf.tdf               ;
-; db/cntr_rj7.tdf                   ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/cntr_rj7.tdf                   ;
-; db/dpram_5h21.tdf                 ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/dpram_5h21.tdf                 ;
-; db/altsyncram_9tl1.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/altsyncram_9tl1.tdf            ;
-; db/cntr_fjb.tdf                   ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/cntr_fjb.tdf                   ;
+; db/scfifo_1n21.tdf                ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/scfifo_1n21.tdf                ;
+; db/a_dpfifo_8t21.tdf              ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/a_dpfifo_8t21.tdf              ;
+; db/a_fefifo_7cf.tdf               ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/a_fefifo_7cf.tdf               ;
+; db/cntr_rj7.tdf                   ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/cntr_rj7.tdf                   ;
+; db/dpram_5h21.tdf                 ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/dpram_5h21.tdf                 ;
+; db/altsyncram_9tl1.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/altsyncram_9tl1.tdf            ;
+; db/cntr_fjb.tdf                   ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/cntr_fjb.tdf                   ;
 ; alt_jtag_atlantic.v               ; yes             ; Encrypted Megafunction       ; /opt/altera/altera7.2/quartus/libraries/megafunctions/alt_jtag_atlantic.v         ;
-; Altera_UP_Avalon_PS2.v            ; yes             ; Other                        ; /home/user4/spring12/lep2141/4840/romeo-set/src/Altera_UP_Avalon_PS2.v            ;
-; db/scfifo_tr31.tdf                ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/scfifo_tr31.tdf                ;
-; db/a_dpfifo_gj31.tdf              ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/a_dpfifo_gj31.tdf              ;
-; db/altsyncram_rqd1.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/altsyncram_rqd1.tdf            ;
-; db/altsyncram_mbj1.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/altsyncram_mbj1.tdf            ;
-; db/cntr_e5b.tdf                   ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/cntr_e5b.tdf                   ;
-; db/cntr_r57.tdf                   ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/cntr_r57.tdf                   ;
-; db/cntr_f5b.tdf                   ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/cntr_f5b.tdf                   ;
-; ram_signal.vhd                    ; yes             ; Other                        ; /home/user4/spring12/lep2141/4840/romeo-set/src/ram_signal.vhd                    ;
+; Altera_UP_Avalon_PS2.v            ; yes             ; Other                        ; /home/user5/spring12/rcn2105/embed_proj/alt/src/Altera_UP_Avalon_PS2.v            ;
+; db/scfifo_tr31.tdf                ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/scfifo_tr31.tdf                ;
+; db/a_dpfifo_gj31.tdf              ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/a_dpfifo_gj31.tdf              ;
+; db/altsyncram_rqd1.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/altsyncram_rqd1.tdf            ;
+; db/altsyncram_mbj1.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/altsyncram_mbj1.tdf            ;
+; db/cntr_e5b.tdf                   ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/cntr_e5b.tdf                   ;
+; db/cntr_r57.tdf                   ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/cntr_r57.tdf                   ;
+; db/cntr_f5b.tdf                   ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/cntr_f5b.tdf                   ;
+; ram_signal.vhd                    ; yes             ; Other                        ; /home/user5/spring12/rcn2105/embed_proj/alt/src/ram_signal.vhd                    ;
 ; sld_hub.vhd                       ; yes             ; Encrypted Megafunction       ; /opt/altera/altera7.2/quartus/libraries/megafunctions/sld_hub.vhd                 ;
 ; lpm_shiftreg.tdf                  ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/lpm_shiftreg.tdf            ;
 ; lpm_constant.inc                  ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/lpm_constant.inc            ;
@@ -279,10 +280,10 @@ applicable agreement for further details.
 ; lpm_decode.tdf                    ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/lpm_decode.tdf              ;
 ; declut.inc                        ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/declut.inc                  ;
 ; lpm_compare.inc                   ; yes             ; Megafunction                 ; /opt/altera/altera7.2/quartus/libraries/megafunctions/lpm_compare.inc             ;
-; db/decode_aoi.tdf                 ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/decode_aoi.tdf                 ;
+; db/decode_aoi.tdf                 ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/decode_aoi.tdf                 ;
 ; sld_dffex.vhd                     ; yes             ; Encrypted Megafunction       ; /opt/altera/altera7.2/quartus/libraries/megafunctions/sld_dffex.vhd               ;
 ; sld_rom_sr.vhd                    ; yes             ; Encrypted Megafunction       ; /opt/altera/altera7.2/quartus/libraries/megafunctions/sld_rom_sr.vhd              ;
-; db/altsyncram_hse1.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user4/spring12/lep2141/4840/romeo-set/src/db/altsyncram_hse1.tdf            ;
+; db/altsyncram_bpi1.tdf            ; yes             ; Auto-Generated Megafunction  ; /home/user5/spring12/rcn2105/embed_proj/alt/src/db/altsyncram_bpi1.tdf            ;
 +-----------------------------------+-----------------+------------------------------+-----------------------------------------------------------------------------------+
 
 
@@ -291,20 +292,20 @@ applicable agreement for further details.
 +---------------------------------------------+-----------------------------------------------+
 ; Resource                                    ; Usage                                         ;
 +---------------------------------------------+-----------------------------------------------+
-; Estimated Total logic elements              ; 14,927                                        ;
+; Estimated Total logic elements              ; 16,303                                        ;
 ;                                             ;                                               ;
-; Total combinational functions               ; 14927                                         ;
+; Total combinational functions               ; 16303                                         ;
 ; Logic element usage by number of LUT inputs ;                                               ;
-;     -- 4 input functions                    ; 1535                                          ;
-;     -- 3 input functions                    ; 7021                                          ;
-;     -- <=2 input functions                  ; 6371                                          ;
+;     -- 4 input functions                    ; 2788                                          ;
+;     -- 3 input functions                    ; 7462                                          ;
+;     -- <=2 input functions                  ; 6053                                          ;
 ;                                             ;                                               ;
 ; Logic elements by mode                      ;                                               ;
-;     -- normal mode                          ; 8598                                          ;
-;     -- arithmetic mode                      ; 6329                                          ;
+;     -- normal mode                          ; 9972                                          ;
+;     -- arithmetic mode                      ; 6331                                          ;
 ;                                             ;                                               ;
-; Total registers                             ; 2910                                          ;
-;     -- Dedicated logic registers            ; 2910                                          ;
+; Total registers                             ; 2934                                          ;
+;     -- Dedicated logic registers            ; 2934                                          ;
 ;     -- I/O registers                        ; 0                                             ;
 ;                                             ;                                               ;
 ; I/O pins                                    ; 231                                           ;
@@ -312,9 +313,9 @@ applicable agreement for further details.
 ; Embedded Multiplier 9-bit elements          ; 32                                            ;
 ; Total PLLs                                  ; 1                                             ;
 ; Maximum fan-out node                        ; pll5025:CLK5025|altpll:altpll_component|_clk0 ;
-; Maximum fan-out                             ; 2813                                          ;
-; Total fan-out                               ; 52305                                         ;
-; Average fan-out                             ; 2.87                                          ;
+; Maximum fan-out                             ; 2837                                          ;
+; Total fan-out                               ; 58055                                         ;
+; Average fan-out                             ; 2.96                                          ;
 +---------------------------------------------+-----------------------------------------------+
 
 
@@ -323,7 +324,7 @@ applicable agreement for further details.
 +-------------------------------------------------------------------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
 ; Compilation Hierarchy Node                                                                                        ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                                                                                  ; Library Name ;
 +-------------------------------------------------------------------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
-; |ifv                                                                                                              ; 14927 (399)       ; 2910 (236)   ; 12576       ; 32           ; 0       ; 16        ; 231  ; 0            ; |ifv                                                                                                                                                                                                                                 ; work         ;
+; |ifv                                                                                                              ; 16303 (400)       ; 2934 (236)   ; 12576       ; 32           ; 0       ; 16        ; 231  ; 0            ; |ifv                                                                                                                                                                                                                                 ; work         ;
 ;    |hook:IFM|                                                                                                     ; 12071 (0)         ; 994 (0)      ; 0           ; 32           ; 0       ; 16        ; 0    ; 0            ; |ifv|hook:IFM                                                                                                                                                                                                                        ; work         ;
 ;       |ifmunitd:ifm|                                                                                              ; 11816 (428)       ; 764 (364)    ; 0           ; 32           ; 0       ; 16        ; 0    ; 0            ; |ifv|hook:IFM|ifmunitd:ifm                                                                                                                                                                                                           ; work         ;
 ;          |ifmd:\g1:0:ifm|                                                                                         ; 2847 (196)        ; 100 (100)    ; 0           ; 8            ; 0       ; 4         ; 0    ; 0            ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm                                                                                                                                                                                            ; work         ;
@@ -369,7 +370,7 @@ applicable agreement for further details.
 ;       |window_gen:gen|                                                                                            ; 255 (3)           ; 230 (0)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|hook:IFM|window_gen:gen                                                                                                                                                                                                         ; work         ;
 ;          |diff_counter:a_counter|                                                                                 ; 126 (126)         ; 115 (115)    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|hook:IFM|window_gen:gen|diff_counter:a_counter                                                                                                                                                                                  ; work         ;
 ;          |diff_counter:b_counter|                                                                                 ; 126 (126)         ; 115 (115)    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|hook:IFM|window_gen:gen|diff_counter:b_counter                                                                                                                                                                                  ; work         ;
-;    |nios:NIOS|                                                                                                    ; 2080 (0)          ; 1277 (0)     ; 12576       ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS                                                                                                                                                                                                                       ; work         ;
+;    |nios:NIOS|                                                                                                    ; 2100 (0)          ; 1300 (0)     ; 12576       ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS                                                                                                                                                                                                                       ; work         ;
 ;       |clock_0:the_clock_0|                                                                                       ; 24 (0)            ; 66 (44)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|clock_0:the_clock_0                                                                                                                                                                                                   ; work         ;
 ;          |clock_0_edge_to_pulse:read_done_edge_to_pulse|                                                          ; 1 (1)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|clock_0:the_clock_0|clock_0_edge_to_pulse:read_done_edge_to_pulse                                                                                                                                                     ; work         ;
 ;          |clock_0_edge_to_pulse:read_request_edge_to_pulse|                                                       ; 1 (1)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|clock_0:the_clock_0|clock_0_edge_to_pulse:read_request_edge_to_pulse                                                                                                                                                  ; work         ;
@@ -394,7 +395,7 @@ applicable agreement for further details.
 ;          |clock_1_slave_FSM:slave_FSM|                                                                            ; 14 (14)           ; 5 (5)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|clock_1:the_clock_1|clock_1_slave_FSM:slave_FSM                                                                                                                                                                       ; work         ;
 ;          |clock_1_slave_read_request_sync_module:clock_1_slave_read_request_sync|                                 ; 0 (0)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|clock_1:the_clock_1|clock_1_slave_read_request_sync_module:clock_1_slave_read_request_sync                                                                                                                            ; work         ;
 ;          |clock_1_slave_write_request_sync_module:clock_1_slave_write_request_sync|                               ; 0 (0)             ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|clock_1:the_clock_1|clock_1_slave_write_request_sync_module:clock_1_slave_write_request_sync                                                                                                                          ; work         ;
-;       |clock_1_in_arbitrator:the_clock_1_in|                                                                      ; 6 (6)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|clock_1_in_arbitrator:the_clock_1_in                                                                                                                                                                                  ; work         ;
+;       |clock_1_in_arbitrator:the_clock_1_in|                                                                      ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|clock_1_in_arbitrator:the_clock_1_in                                                                                                                                                                                  ; work         ;
 ;       |clock_1_out_arbitrator:the_clock_1_out|                                                                    ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|clock_1_out_arbitrator:the_clock_1_out                                                                                                                                                                                ; work         ;
 ;       |cpu:the_cpu|                                                                                               ; 858 (616)         ; 486 (310)    ; 9216        ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu:the_cpu                                                                                                                                                                                                           ; work         ;
 ;          |cpu_nios2_oci:the_cpu_nios2_oci|                                                                        ; 242 (28)          ; 175 (0)      ; 8192        ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci                                                                                                                                                                           ; work         ;
@@ -411,11 +412,11 @@ applicable agreement for further details.
 ;             |altsyncram:the_altsyncram|                                                                           ; 0 (0)             ; 0 (0)        ; 1024        ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu:the_cpu|cpu_rf_module:cpu_rf|altsyncram:the_altsyncram                                                                                                                                                            ; work         ;
 ;                |altsyncram_ig22:auto_generated|                                                                   ; 0 (0)             ; 0 (0)        ; 1024        ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu:the_cpu|cpu_rf_module:cpu_rf|altsyncram:the_altsyncram|altsyncram_ig22:auto_generated                                                                                                                             ; work         ;
 ;          |cpu_test_bench:the_cpu_test_bench|                                                                      ; 0 (0)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu:the_cpu|cpu_test_bench:the_cpu_test_bench                                                                                                                                                                         ; work         ;
-;       |cpu_data_master_arbitrator:the_cpu_data_master|                                                            ; 116 (116)         ; 52 (52)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu_data_master_arbitrator:the_cpu_data_master                                                                                                                                                                        ; work         ;
-;       |cpu_instruction_master_arbitrator:the_cpu_instruction_master|                                              ; 7 (7)             ; 17 (17)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu_instruction_master_arbitrator:the_cpu_instruction_master                                                                                                                                                          ; work         ;
-;       |cpu_jtag_debug_module_arbitrator:the_cpu_jtag_debug_module|                                                ; 51 (51)           ; 11 (11)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu_jtag_debug_module_arbitrator:the_cpu_jtag_debug_module                                                                                                                                                            ; work         ;
-;       |jtag_uart:the_jtag_uart|                                                                                   ; 150 (48)          ; 108 (13)     ; 1024        ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|jtag_uart:the_jtag_uart                                                                                                                                                                                               ; work         ;
-;          |alt_jtag_atlantic:jtag_uart_alt_jtag_atlantic|                                                          ; 51 (51)           ; 55 (55)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|jtag_uart:the_jtag_uart|alt_jtag_atlantic:jtag_uart_alt_jtag_atlantic                                                                                                                                                 ; work         ;
+;       |cpu_data_master_arbitrator:the_cpu_data_master|                                                            ; 114 (114)         ; 52 (52)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu_data_master_arbitrator:the_cpu_data_master                                                                                                                                                                        ; work         ;
+;       |cpu_instruction_master_arbitrator:the_cpu_instruction_master|                                              ; 5 (5)             ; 17 (17)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu_instruction_master_arbitrator:the_cpu_instruction_master                                                                                                                                                          ; work         ;
+;       |cpu_jtag_debug_module_arbitrator:the_cpu_jtag_debug_module|                                                ; 53 (53)           ; 11 (11)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu_jtag_debug_module_arbitrator:the_cpu_jtag_debug_module                                                                                                                                                            ; work         ;
+;       |jtag_uart:the_jtag_uart|                                                                                   ; 149 (48)          ; 108 (13)     ; 1024        ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|jtag_uart:the_jtag_uart                                                                                                                                                                                               ; work         ;
+;          |alt_jtag_atlantic:jtag_uart_alt_jtag_atlantic|                                                          ; 50 (50)           ; 55 (55)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|jtag_uart:the_jtag_uart|alt_jtag_atlantic:jtag_uart_alt_jtag_atlantic                                                                                                                                                 ; work         ;
 ;          |jtag_uart_scfifo_r:the_jtag_uart_scfifo_r|                                                              ; 26 (0)            ; 20 (0)       ; 512         ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_r:the_jtag_uart_scfifo_r                                                                                                                                                     ; work         ;
 ;             |scfifo:rfifo|                                                                                        ; 26 (0)            ; 20 (0)       ; 512         ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_r:the_jtag_uart_scfifo_r|scfifo:rfifo                                                                                                                                        ; work         ;
 ;                |scfifo_1n21:auto_generated|                                                                       ; 26 (0)            ; 20 (0)       ; 512         ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_r:the_jtag_uart_scfifo_r|scfifo:rfifo|scfifo_1n21:auto_generated                                                                                                             ; work         ;
@@ -453,17 +454,17 @@ applicable agreement for further details.
 ;                      |cntr_f5b:wr_ptr|                                                                            ; 9 (9)             ; 8 (8)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|scfifo:Incoming_Data_FIFO|scfifo_tr31:auto_generated|a_dpfifo_gj31:dpfifo|cntr_f5b:wr_ptr                                                               ; work         ;
 ;                      |cntr_r57:usedw_counter|                                                                     ; 9 (9)             ; 8 (8)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|scfifo:Incoming_Data_FIFO|scfifo_tr31:auto_generated|a_dpfifo_gj31:dpfifo|cntr_r57:usedw_counter                                                        ; work         ;
 ;       |ps2_0_avalon_slave_0_arbitrator:the_ps2_0_avalon_slave_0|                                                  ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|ps2_0_avalon_slave_0_arbitrator:the_ps2_0_avalon_slave_0                                                                                                                                                              ; work         ;
-;       |ram:the_ram|                                                                                               ; 0 (0)             ; 22 (0)       ; 288         ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|ram:the_ram                                                                                                                                                                                                           ; work         ;
-;          |ramcon:the_ramcon|                                                                                      ; 0 (0)             ; 22 (22)      ; 288         ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|ram:the_ram|ramcon:the_ramcon                                                                                                                                                                                         ; work         ;
+;       |ram:the_ram|                                                                                               ; 21 (0)            ; 45 (0)       ; 288         ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|ram:the_ram                                                                                                                                                                                                           ; work         ;
+;          |ramcon:the_ramcon|                                                                                      ; 21 (21)           ; 45 (45)      ; 288         ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|ram:the_ram|ramcon:the_ramcon                                                                                                                                                                                         ; work         ;
 ;             |altsyncram:RAM_rtl_0|                                                                                ; 0 (0)             ; 0 (0)        ; 288         ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|ram:the_ram|ramcon:the_ramcon|altsyncram:RAM_rtl_0                                                                                                                                                                    ; work         ;
-;                |altsyncram_hse1:auto_generated|                                                                   ; 0 (0)             ; 0 (0)        ; 288         ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|ram:the_ram|ramcon:the_ramcon|altsyncram:RAM_rtl_0|altsyncram_hse1:auto_generated                                                                                                                                     ; work         ;
+;                |altsyncram_bpi1:auto_generated|                                                                   ; 0 (0)             ; 0 (0)        ; 288         ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|ram:the_ram|ramcon:the_ramcon|altsyncram:RAM_rtl_0|altsyncram_bpi1:auto_generated                                                                                                                                     ; work         ;
 ;       |ram_avalon_slave_0_arbitrator:the_ram_avalon_slave_0|                                                      ; 0 (0)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|ram_avalon_slave_0_arbitrator:the_ram_avalon_slave_0                                                                                                                                                                  ; work         ;
 ;       |ram_signal:the_ram_signal|                                                                                 ; 0 (0)             ; 16 (0)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|ram_signal:the_ram_signal                                                                                                                                                                                             ; work         ;
 ;          |ramctrl:the_ramctrl|                                                                                    ; 0 (0)             ; 16 (16)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|ram_signal:the_ram_signal|ramctrl:the_ramctrl                                                                                                                                                                         ; work         ;
 ;       |ram_signal_avalon_slave_0_arbitrator:the_ram_signal_avalon_slave_0|                                        ; 0 (0)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|ram_signal_avalon_slave_0_arbitrator:the_ram_signal_avalon_slave_0                                                                                                                                                    ; work         ;
 ;       |sdram:the_sdram|                                                                                           ; 406 (357)         ; 235 (149)    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|sdram:the_sdram                                                                                                                                                                                                       ; work         ;
 ;          |sdram_input_efifo_module:the_sdram_input_efifo_module|                                                  ; 49 (49)           ; 86 (86)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|sdram:the_sdram|sdram_input_efifo_module:the_sdram_input_efifo_module                                                                                                                                                 ; work         ;
-;       |sdram_s1_arbitrator:the_sdram_s1|                                                                          ; 114 (64)          ; 43 (12)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|sdram_s1_arbitrator:the_sdram_s1                                                                                                                                                                                      ; work         ;
+;       |sdram_s1_arbitrator:the_sdram_s1|                                                                          ; 115 (65)          ; 43 (12)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|sdram_s1_arbitrator:the_sdram_s1                                                                                                                                                                                      ; work         ;
 ;          |rdv_fifo_for_cpu_data_master_to_sdram_s1_module:rdv_fifo_for_cpu_data_master_to_sdram_s1|               ; 33 (33)           ; 12 (12)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|sdram_s1_arbitrator:the_sdram_s1|rdv_fifo_for_cpu_data_master_to_sdram_s1_module:rdv_fifo_for_cpu_data_master_to_sdram_s1                                                                                             ; work         ;
 ;          |rdv_fifo_for_cpu_instruction_master_to_sdram_s1_module:rdv_fifo_for_cpu_instruction_master_to_sdram_s1| ; 17 (17)           ; 19 (19)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|sdram_s1_arbitrator:the_sdram_s1|rdv_fifo_for_cpu_instruction_master_to_sdram_s1_module:rdv_fifo_for_cpu_instruction_master_to_sdram_s1                                                                               ; work         ;
 ;    |pll5025:CLK5025|                                                                                              ; 0 (0)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|pll5025:CLK5025                                                                                                                                                                                                                 ; work         ;
@@ -484,10 +485,10 @@ applicable agreement for further details.
 ;       |sld_dffex:\GEN_SHADOW_IRF:2:S_IRF|                                                                         ; 0 (0)             ; 5 (5)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|sld_hub:sld_hub_inst|sld_dffex:\GEN_SHADOW_IRF:2:S_IRF                                                                                                                                                                          ; work         ;
 ;       |sld_jtag_state_machine:jtag_state_machine|                                                                 ; 20 (20)           ; 19 (19)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|sld_hub:sld_hub_inst|sld_jtag_state_machine:jtag_state_machine                                                                                                                                                                  ; work         ;
 ;       |sld_rom_sr:HUB_INFO_REG|                                                                                   ; 24 (24)           ; 9 (9)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|sld_hub:sld_hub_inst|sld_rom_sr:HUB_INFO_REG                                                                                                                                                                                    ; work         ;
-;    |sram:SRAM|                                                                                                    ; 28 (28)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|sram:SRAM                                                                                                                                                                                                                       ; work         ;
-;    |vga_mod:VGA|                                                                                                  ; 220 (39)          ; 81 (26)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|vga_mod:VGA                                                                                                                                                                                                                     ; work         ;
-;       |Color_LUT:A|                                                                                               ; 37 (37)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|vga_mod:VGA|Color_LUT:A                                                                                                                                                                                                         ; work         ;
-;       |vga:G|                                                                                                     ; 144 (144)         ; 55 (55)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|vga_mod:VGA|vga:G                                                                                                                                                                                                               ; work         ;
+;    |sram:SRAM|                                                                                                    ; 29 (29)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|sram:SRAM                                                                                                                                                                                                                       ; work         ;
+;    |vga_mod:VGA|                                                                                                  ; 1574 (41)         ; 82 (27)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|vga_mod:VGA                                                                                                                                                                                                                     ; work         ;
+;       |Color_LUT:A|                                                                                               ; 724 (724)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|vga_mod:VGA|Color_LUT:A                                                                                                                                                                                                         ; work         ;
+;       |vga:G|                                                                                                     ; 809 (809)         ; 55 (55)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|vga_mod:VGA|vga:G                                                                                                                                                                                                               ; work         ;
 +-------------------------------------------------------------------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -502,7 +503,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_r:the_jtag_uart_scfifo_r|scfifo:rfifo|scfifo_1n21:auto_generated|a_dpfifo_8t21:dpfifo|dpram_5h21:FIFOram|altsyncram_9tl1:altsyncram2|ALTSYNCRAM                                         ; AUTO ; Simple Dual Port ; 64           ; 8            ; 64           ; 8            ; 512  ; None                            ;
 ; nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_w:the_jtag_uart_scfifo_w|scfifo:wfifo|scfifo_1n21:auto_generated|a_dpfifo_8t21:dpfifo|dpram_5h21:FIFOram|altsyncram_9tl1:altsyncram2|ALTSYNCRAM                                         ; AUTO ; Simple Dual Port ; 64           ; 8            ; 64           ; 8            ; 512  ; None                            ;
 ; nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|scfifo:Incoming_Data_FIFO|scfifo_tr31:auto_generated|a_dpfifo_gj31:dpfifo|altsyncram_rqd1:FIFOram|altsyncram_mbj1:altsyncram1|ALTSYNCRAM                           ; AUTO ; True Dual Port   ; 256          ; 8            ; 256          ; 8            ; 2048 ; None                            ;
-; nios:NIOS|ram:the_ram|ramcon:the_ramcon|altsyncram:RAM_rtl_0|altsyncram_hse1:auto_generated|ALTSYNCRAM                                                                                                                                     ; AUTO ; Simple Dual Port ; 16           ; 18           ; 16           ; 18           ; 288  ; None                            ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|altsyncram:RAM_rtl_0|altsyncram_bpi1:auto_generated|ALTSYNCRAM                                                                                                                                     ; AUTO ; Simple Dual Port ; 16           ; 18           ; 16           ; 18           ; 288  ; None                            ;
 +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+------+---------------------------------+
 
 
@@ -713,6 +714,10 @@ Encoding Type:  One-Hot
 ; nios:NIOS|sdram:the_sdram|i_next[0]                                                                                                                                  ; Merged with nios:NIOS|sdram:the_sdram|i_next[2]                                                                                                                      ;
 ; nios:NIOS|sdram:the_sdram|m_next[1..2,5..6]                                                                                                                          ; Merged with nios:NIOS|sdram:the_sdram|m_next[8]                                                                                                                      ;
 ; nios:NIOS|cpu_jtag_debug_module_arbitrator:the_cpu_jtag_debug_module|cpu_jtag_debug_module_arb_share_counter[2]                                                      ; Stuck at GND due to stuck port data_in                                                                                                                               ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~29                                                                                                                       ; Merged with rammer:RMR|idx[0]                                                                                                                                        ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~32                                                                                                                       ; Merged with rammer:RMR|idx[1]                                                                                                                                        ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~35                                                                                                                       ; Merged with rammer:RMR|idx[2]                                                                                                                                        ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~38                                                                                                                       ; Merged with rammer:RMR|idx[3]                                                                                                                                        ;
 ; nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|s_ps2_transceiver~18                                           ; Lost fanout                                                                                                                                                          ;
 ; nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|s_ps2_transceiver~19                                           ; Lost fanout                                                                                                                                                          ;
 ; nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Command_Out:PS2_Command_Out|s_ps2_transmitter~29 ; Lost fanout                                                                                                                                                          ;
@@ -728,12 +733,12 @@ Encoding Type:  One-Hot
 ; nios:NIOS|ram_signal:the_ram_signal|ramctrl:the_ramctrl|RAM~46                                                                                                       ; Lost fanout                                                                                                                                                          ;
 ; nios:NIOS|ram_signal:the_ram_signal|ramctrl:the_ramctrl|RAM~48                                                                                                       ; Lost fanout                                                                                                                                                          ;
 ; nios:NIOS|ram_signal:the_ram_signal|ramctrl:the_ramctrl|RAM~50                                                                                                       ; Lost fanout                                                                                                                                                          ;
-; vga_mod:VGA|cycle[6..7]                                                                                                                                              ; Lost fanout                                                                                                                                                          ;
+; vga_mod:VGA|cycle[7]                                                                                                                                                 ; Lost fanout                                                                                                                                                          ;
 ; nios:NIOS|clock_1:the_clock_1|clock_1_master_FSM:master_FSM|master_state[2]                                                                                          ; Merged with nios:NIOS|clock_1:the_clock_1|clock_1_master_FSM:master_FSM|internal_master_write1                                                                       ;
 ; nios:NIOS|clock_1:the_clock_1|clock_1_master_FSM:master_FSM|internal_master_read1                                                                                    ; Merged with nios:NIOS|clock_1:the_clock_1|clock_1_master_FSM:master_FSM|master_state[1]                                                                              ;
 ; nios:NIOS|clock_0:the_clock_0|clock_0_master_FSM:master_FSM|master_state[2]                                                                                          ; Merged with nios:NIOS|clock_0:the_clock_0|clock_0_master_FSM:master_FSM|internal_master_write1                                                                       ;
 ; nios:NIOS|clock_0:the_clock_0|clock_0_master_FSM:master_FSM|internal_master_read1                                                                                    ; Merged with nios:NIOS|clock_0:the_clock_0|clock_0_master_FSM:master_FSM|master_state[1]                                                                              ;
-; Total Number of Removed Registers = 336                                                                                                                              ;                                                                                                                                                                      ;
+; Total Number of Removed Registers = 339                                                                                                                              ;                                                                                                                                                                      ;
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
@@ -856,12 +861,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 2910  ;
-; Number of registers using Synchronous Clear  ; 441   ;
-; Number of registers using Synchronous Load   ; 533   ;
+; Total registers                              ; 2934  ;
+; Number of registers using Synchronous Clear  ; 442   ;
+; Number of registers using Synchronous Load   ; 534   ;
 ; Number of registers using Asynchronous Clear ; 937   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 1815  ;
+; Number of registers using Clock Enable       ; 1816  ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -958,14 +963,14 @@ Encoding Type:  One-Hot
 ; nios:NIOS|sdram:the_sdram|i_cmd[3]                                                                                                                                     ; 1       ;
 ; nios:NIOS|sdram:the_sdram|m_next[0]                                                                                                                                    ; 5       ;
 ; nios:NIOS|cpu:the_cpu|hbreak_enabled                                                                                                                                   ; 10      ;
-; nios:NIOS|jtag_uart:the_jtag_uart|alt_jtag_atlantic:jtag_uart_alt_jtag_atlantic|count[9]                                                                               ; 11      ;
 ; nios:NIOS|jtag_uart:the_jtag_uart|t_dav                                                                                                                                ; 3       ;
+; nios:NIOS|jtag_uart:the_jtag_uart|alt_jtag_atlantic:jtag_uart_alt_jtag_atlantic|count[9]                                                                               ; 11      ;
 ; nios:NIOS|clock_1:the_clock_1|clock_1_master_FSM:master_FSM|master_state[0]                                                                                            ; 5       ;
 ; nios:NIOS|cpu:the_cpu|internal_i_read                                                                                                                                  ; 27      ;
 ; nios:NIOS|cpu:the_cpu|F_pc[21]                                                                                                                                         ; 25      ;
 ; nios:NIOS|cpu_data_master_arbitrator:the_cpu_data_master|internal_cpu_data_master_waitrequest                                                                          ; 13      ;
 ; nios:NIOS|sdram_s1_arbitrator:the_sdram_s1|rdv_fifo_for_cpu_data_master_to_sdram_s1_module:rdv_fifo_for_cpu_data_master_to_sdram_s1|fifo_contains_ones_n               ; 2       ;
-; nios:NIOS|sdram_s1_arbitrator:the_sdram_s1|rdv_fifo_for_cpu_instruction_master_to_sdram_s1_module:rdv_fifo_for_cpu_instruction_master_to_sdram_s1|fifo_contains_ones_n ; 3       ;
+; nios:NIOS|sdram_s1_arbitrator:the_sdram_s1|rdv_fifo_for_cpu_instruction_master_to_sdram_s1_module:rdv_fifo_for_cpu_instruction_master_to_sdram_s1|fifo_contains_ones_n ; 4       ;
 ; nios:NIOS|sdram_s1_arbitrator:the_sdram_s1|sdram_s1_arb_addend[0]                                                                                                      ; 5       ;
 ; nios:NIOS|sdram:the_sdram|refresh_counter[12]                                                                                                                          ; 2       ;
 ; nios:NIOS|sdram:the_sdram|refresh_counter[9]                                                                                                                           ; 2       ;
@@ -976,89 +981,126 @@ Encoding Type:  One-Hot
 *Too many items, table truncated at 100 items.
 
 
++-------------------------------------------------------------------------------------------------+
+; Registers Added for RAM Pass-Through Logic                                                      ;
++------------------------------------------------+------------------------------------------------+
+; Register Name                                  ; RAM Name                                       ;
++------------------------------------------------+------------------------------------------------+
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~25 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~28 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~29 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~31 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~32 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~34 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~35 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~37 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~38 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~40 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~42 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~44 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~46 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~48 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~50 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~52 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~54 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~56 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~58 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~60 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~62 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~64 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~66 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~68 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~70 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~72 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
+; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~74 ; nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24 ;
++------------------------------------------------+------------------------------------------------+
+
+
 +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                                                                                                                                   ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                                                                                                                         ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; 3:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Command_Out:PS2_Command_Out|ps2_command[4]                ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Data_In:PS2_Data_In|received_data[0]                      ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|internal_d_byteenable[1]                                                                                                                                ;
+; 3:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Command_Out:PS2_Command_Out|ps2_command[7]                ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Data_In:PS2_Data_In|received_data[6]                      ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|internal_d_byteenable[0]                                                                                                                                ;
 ; 3:1                ; 17 bits   ; 34 LEs        ; 17 LEs               ; 17 LEs                 ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Command_Out:PS2_Command_Out|transfer_counter[17]          ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Data_In:PS2_Data_In|data_shift_reg[5]                     ;
-; 3:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|D_iw[0]                                                                                                                                                 ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|av_ld_byte0_data[0]                                                                                                                                     ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|av_ld_byte1_data[7]                                                                                                                                     ;
-; 4:1                ; 22 bits   ; 44 LEs        ; 44 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|F_pc[14]                                                                                                                                                ;
-; 3:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|E_src2[1]                                                                                                                                               ;
-; 3:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|E_src1[31]                                                                                                                                              ;
-; 3:1                ; 23 bits   ; 46 LEs        ; 46 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|E_src1[2]                                                                                                                                               ;
-; 3:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|E_shift_rot_result[23]                                                                                                                                  ;
-; 3:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |ifv|vga_mod:VGA|vga:G|VGA_B[4]                                                                                                                                                    ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 20 LEs               ; 0 LEs                  ; Yes        ; |ifv|vga_mod:VGA|vga:G|VGA_R[5]                                                                                                                                                    ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 2 LEs                ; 4 LEs                  ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|sdram_input_efifo_module:the_sdram_input_efifo_module|entries[1]                                                                                    ;
-; 4:1                ; 22 bits   ; 44 LEs        ; 44 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_ocimem:the_cpu_nios2_ocimem|internal_MonDReg[28]                                                              ;
-; 4:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_ocimem:the_cpu_nios2_ocimem|MonAReg[4]                                                                        ;
-; 4:1                ; 25 bits   ; 50 LEs        ; 50 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|W_alu_result[7]                                                                                                                                         ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Data_In:PS2_Data_In|data_shift_reg[6]                     ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|D_iw[10]                                                                                                                                                ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|av_ld_byte0_data[3]                                                                                                                                     ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|av_ld_byte1_data[6]                                                                                                                                     ;
+; 4:1                ; 22 bits   ; 44 LEs        ; 44 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|F_pc[22]                                                                                                                                                ;
+; 3:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|E_src2[3]                                                                                                                                               ;
+; 3:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|E_src1[29]                                                                                                                                              ;
+; 3:1                ; 23 bits   ; 46 LEs        ; 46 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|E_src1[16]                                                                                                                                              ;
+; 3:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|E_shift_rot_result[3]                                                                                                                                   ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 2 LEs                ; 4 LEs                  ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|sdram_input_efifo_module:the_sdram_input_efifo_module|entries[0]                                                                                    ;
+; 4:1                ; 22 bits   ; 44 LEs        ; 44 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_ocimem:the_cpu_nios2_ocimem|internal_MonDReg[21]                                                              ;
+; 4:1                ; 9 bits    ; 18 LEs        ; 9 LEs                ; 9 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_ocimem:the_cpu_nios2_ocimem|MonAReg[9]                                                                        ;
+; 4:1                ; 25 bits   ; 50 LEs        ; 50 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|W_alu_result[3]                                                                                                                                         ;
 ; 8:1                ; 3 bits    ; 15 LEs        ; 3 LEs                ; 12 LEs                 ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|i_refs[1]                                                                                                                                           ;
-; 4:1                ; 19 bits   ; 38 LEs        ; 19 LEs               ; 19 LEs                 ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|y[8]                                                                                                                                     ;
-; 4:1                ; 72 bits   ; 144 LEs       ; 144 LEs              ; 0 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|oldr[7]                                                                                                                                  ;
-; 4:1                ; 19 bits   ; 38 LEs        ; 19 LEs               ; 19 LEs                 ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|x[0]                                                                                                                                     ;
-; 4:1                ; 72 bits   ; 144 LEs       ; 144 LEs              ; 0 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|oldi[24]                                                                                                                                 ;
-; 4:1                ; 19 bits   ; 38 LEs        ; 19 LEs               ; 19 LEs                 ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|x[5]                                                                                                                                     ;
-; 4:1                ; 72 bits   ; 144 LEs       ; 144 LEs              ; 0 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|oldi[13]                                                                                                                                 ;
-; 4:1                ; 19 bits   ; 38 LEs        ; 19 LEs               ; 19 LEs                 ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|x[2]                                                                                                                                     ;
-; 4:1                ; 72 bits   ; 144 LEs       ; 144 LEs              ; 0 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|oldi[27]                                                                                                                                 ;
-; 4:1                ; 15 bits   ; 30 LEs        ; 30 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|E_src2[21]                                                                                                                                              ;
-; 4:1                ; 163 bits  ; 326 LEs       ; 163 LEs              ; 163 LEs                ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ia[0].cr[3]                                                                                                                                             ;
-; 4:1                ; 163 bits  ; 326 LEs       ; 163 LEs              ; 163 LEs                ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ia[1].b[20]                                                                                                                                             ;
-; 4:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |ifv|hook:IFM|window_gen:gen|diff_counter:b_counter|c_curr[0]                                                                                                                      ;
-; 4:1                ; 36 bits   ; 72 LEs        ; 36 LEs               ; 36 LEs                 ; Yes        ; |ifv|hook:IFM|window_gen:gen|diff_counter:b_counter|v_curr[33]                                                                                                                     ;
-; 4:1                ; 15 bits   ; 30 LEs        ; 15 LEs               ; 15 LEs                 ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[3]                                                                                           ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[8]                                                                                           ;
-; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_ocimem:the_cpu_nios2_ocimem|internal_MonDReg[0]                                                               ;
-; 4:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |ifv|hook:IFM|window_gen:gen|diff_counter:a_counter|c_curr[2]                                                                                                                      ;
-; 4:1                ; 36 bits   ; 72 LEs        ; 36 LEs               ; 36 LEs                 ; Yes        ; |ifv|hook:IFM|window_gen:gen|diff_counter:a_counter|v_curr[16]                                                                                                                     ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|d_writedata[31]                                                                                                                                         ;
-; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Command_Out:PS2_Command_Out|command_initiate_counter[5]   ;
-; 5:1                ; 19 bits   ; 57 LEs        ; 57 LEs               ; 0 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|oy[0][4]                                                                                                                                                ;
-; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_oci_break:the_cpu_nios2_oci_break|break_readreg[27]                                                           ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|idle_counter[2]                                                         ;
-; 5:1                ; 7 bits    ; 21 LEs        ; 21 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|W_alu_result[28]                                                                                                                                        ;
-; 4:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Command_Out:PS2_Command_Out|waiting_counter[3]            ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Command_Out:PS2_Command_Out|cur_bit[1]                    ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Data_In:PS2_Data_In|data_count[2]                         ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|counter[0]                                                                                                                               ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|counter[3]                                                                                                                               ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|counter[1]                                                                                                                               ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|counter[4]                                                                                                                               ;
+; 4:1                ; 19 bits   ; 38 LEs        ; 19 LEs               ; 19 LEs                 ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|x[9]                                                                                                                                     ;
+; 4:1                ; 72 bits   ; 144 LEs       ; 144 LEs              ; 0 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|oldi[35]                                                                                                                                 ;
+; 4:1                ; 19 bits   ; 38 LEs        ; 19 LEs               ; 19 LEs                 ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|y[0]                                                                                                                                     ;
+; 4:1                ; 72 bits   ; 144 LEs       ; 144 LEs              ; 0 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|oldr[24]                                                                                                                                 ;
+; 4:1                ; 19 bits   ; 38 LEs        ; 19 LEs               ; 19 LEs                 ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|y[5]                                                                                                                                     ;
+; 4:1                ; 72 bits   ; 144 LEs       ; 144 LEs              ; 0 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|oldi[0]                                                                                                                                  ;
+; 4:1                ; 19 bits   ; 38 LEs        ; 19 LEs               ; 19 LEs                 ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|y[1]                                                                                                                                     ;
+; 4:1                ; 72 bits   ; 144 LEs       ; 144 LEs              ; 0 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|oldr[28]                                                                                                                                 ;
+; 4:1                ; 15 bits   ; 30 LEs        ; 30 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|E_src2[23]                                                                                                                                              ;
+; 4:1                ; 163 bits  ; 326 LEs       ; 163 LEs              ; 163 LEs                ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ia[0].a[3]                                                                                                                                              ;
+; 4:1                ; 163 bits  ; 326 LEs       ; 163 LEs              ; 163 LEs                ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ia[1].y[3]                                                                                                                                              ;
+; 4:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |ifv|hook:IFM|window_gen:gen|diff_counter:b_counter|itr_count[9]                                                                                                                   ;
+; 4:1                ; 36 bits   ; 72 LEs        ; 36 LEs               ; 36 LEs                 ; Yes        ; |ifv|hook:IFM|window_gen:gen|diff_counter:b_counter|v_curr[9]                                                                                                                      ;
+; 4:1                ; 15 bits   ; 30 LEs        ; 15 LEs               ; 15 LEs                 ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[22]                                                                                          ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[10]                                                                                          ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_ocimem:the_cpu_nios2_ocimem|internal_MonDReg[11]                                                              ;
+; 4:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |ifv|hook:IFM|window_gen:gen|diff_counter:a_counter|itr_count[5]                                                                                                                   ;
+; 4:1                ; 36 bits   ; 72 LEs        ; 36 LEs               ; 36 LEs                 ; Yes        ; |ifv|hook:IFM|window_gen:gen|diff_counter:a_counter|v_curr[2]                                                                                                                      ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|d_writedata[25]                                                                                                                                         ;
+; 9:1                ; 7 bits    ; 42 LEs        ; 35 LEs               ; 7 LEs                  ; Yes        ; |ifv|vga_mod:VGA|vga:G|VGA_B[4]                                                                                                                                                    ;
+; 9:1                ; 9 bits    ; 54 LEs        ; 36 LEs               ; 18 LEs                 ; Yes        ; |ifv|vga_mod:VGA|vga:G|VGA_G[8]                                                                                                                                                    ;
+; 9:1                ; 10 bits   ; 60 LEs        ; 50 LEs               ; 10 LEs                 ; Yes        ; |ifv|vga_mod:VGA|vga:G|VGA_R[0]                                                                                                                                                    ;
+; 4:1                ; 13 bits   ; 26 LEs        ; 13 LEs               ; 13 LEs                 ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Command_Out:PS2_Command_Out|command_initiate_counter[4]   ;
+; 5:1                ; 19 bits   ; 57 LEs        ; 57 LEs               ; 0 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|oy[0][2]                                                                                                                                                ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_oci_break:the_cpu_nios2_oci_break|break_readreg[12]                                                           ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|idle_counter[3]                                                         ;
+; 5:1                ; 7 bits    ; 21 LEs        ; 21 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|W_alu_result[27]                                                                                                                                        ;
+; 4:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Command_Out:PS2_Command_Out|waiting_counter[8]            ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Command_Out:PS2_Command_Out|cur_bit[3]                    ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Data_In:PS2_Data_In|data_count[1]                         ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|counter[3]                                                                                                                               ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|counter[5]                                                                                                                               ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|counter[5]                                                                                                                               ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|counter[7]                                                                                                                               ;
 ; 9:1                ; 3 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|i_count[1]                                                                                                                                          ;
-; 6:1                ; 8 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|oc[0][2]                                                                                                                                                ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|internal_d_byteenable[3]                                                                                                                                ;
-; 10:1               ; 3 bits    ; 18 LEs        ; 12 LEs               ; 6 LEs                  ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|i_state[0]                                                                                                                                          ;
-; 258:1              ; 4 bits    ; 688 LEs       ; 4 LEs                ; 684 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_bank[1]                                                                                                                                           ;
+; 6:1                ; 3 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; Yes        ; |ifv|vga_mod:VGA|vga:G|VGA_B[1]                                                                                                                                                    ;
+; 6:1                ; 8 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|oc[0][7]                                                                                                                                                ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|internal_d_byteenable[2]                                                                                                                                ;
+; 10:1               ; 3 bits    ; 18 LEs        ; 12 LEs               ; 6 LEs                  ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|i_state[1]                                                                                                                                          ;
+; 258:1              ; 4 bits    ; 688 LEs       ; 4 LEs                ; 684 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_bank[0]                                                                                                                                           ;
 ; 260:1              ; 4 bits    ; 692 LEs       ; 8 LEs                ; 684 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_addr[11]                                                                                                                                          ;
-; 261:1              ; 2 bits    ; 348 LEs       ; 4 LEs                ; 344 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_addr[4]                                                                                                                                           ;
-; 261:1              ; 6 bits    ; 1044 LEs      ; 12 LEs               ; 1032 LEs               ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_addr[6]                                                                                                                                           ;
-; 517:1              ; 2 bits    ; 688 LEs       ; 26 LEs               ; 662 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_state[8]                                                                                                                                          ;
-; 519:1              ; 8 bits    ; 2768 LEs      ; 0 LEs                ; 2768 LEs               ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|active_addr[4]                                                                                                                                      ;
-; 518:1              ; 2 bits    ; 690 LEs       ; 54 LEs               ; 636 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_state[6]                                                                                                                                          ;
-; 266:1              ; 33 bits   ; 5841 LEs      ; 0 LEs                ; 5841 LEs               ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|active_data[5]                                                                                                                                      ;
-; 521:1              ; 2 bits    ; 694 LEs       ; 10 LEs               ; 684 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_state[4]                                                                                                                                          ;
-; 8:1                ; 4 bits    ; 20 LEs        ; 12 LEs               ; 8 LEs                  ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|i_cmd[2]                                                                                                                                            ;
-; 259:1              ; 16 bits   ; 2752 LEs      ; 32 LEs               ; 2720 LEs               ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_data[8]                                                                                                                                           ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|readdata[2]                                                                                                             ;
-; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; No         ; |ifv|nios:NIOS|cpu:the_cpu|E_logic_result[23]                                                                                                                                      ;
+; 261:1              ; 2 bits    ; 348 LEs       ; 4 LEs                ; 344 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_addr[5]                                                                                                                                           ;
+; 261:1              ; 6 bits    ; 1044 LEs      ; 12 LEs               ; 1032 LEs               ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_addr[7]                                                                                                                                           ;
+; 517:1              ; 2 bits    ; 688 LEs       ; 26 LEs               ; 662 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_state[7]                                                                                                                                          ;
+; 519:1              ; 8 bits    ; 2768 LEs      ; 0 LEs                ; 2768 LEs               ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|active_addr[2]                                                                                                                                      ;
+; 518:1              ; 2 bits    ; 690 LEs       ; 54 LEs               ; 636 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_state[2]                                                                                                                                          ;
+; 266:1              ; 33 bits   ; 5841 LEs      ; 0 LEs                ; 5841 LEs               ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|active_addr[20]                                                                                                                                     ;
+; 521:1              ; 2 bits    ; 694 LEs       ; 10 LEs               ; 684 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_state[3]                                                                                                                                          ;
+; 8:1                ; 4 bits    ; 20 LEs        ; 12 LEs               ; 8 LEs                  ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|i_cmd[0]                                                                                                                                            ;
+; 259:1              ; 16 bits   ; 2752 LEs      ; 32 LEs               ; 2720 LEs               ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_data[1]                                                                                                                                           ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|readdata[3]                                                                                                             ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 64 LEs               ; 0 LEs                  ; No         ; |ifv|nios:NIOS|cpu:the_cpu|E_logic_result[6]                                                                                                                                       ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; No         ; |ifv|nios:NIOS|sdram:the_sdram|module_input1[17]                                                                                                                                   ;
-; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; No         ; |ifv|nios:NIOS|cpu_jtag_debug_module_arbitrator:the_cpu_jtag_debug_module|cpu_jtag_debug_module_arb_share_counter_next_value[1]                                                    ;
+; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; No         ; |ifv|nios:NIOS|cpu_jtag_debug_module_arbitrator:the_cpu_jtag_debug_module|cpu_jtag_debug_module_arb_share_counter_next_value[2]                                                    ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; No         ; |ifv|nios:NIOS|sdram_s1_arbitrator:the_sdram_s1|sdram_s1_arb_share_counter_next_value[1]                                                                                           ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |ifv|sram:SRAM|mask[1]                                                                                                                                                             ;
-; 3:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; No         ; |ifv|sram:SRAM|rv[3]                                                                                                                                                               ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |ifv|rammer:RMR|idx~6                                                                                                                                                              ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |ifv|nios:NIOS|sdram_s1_arbitrator:the_sdram_s1|rdv_fifo_for_cpu_data_master_to_sdram_s1_module:rdv_fifo_for_cpu_data_master_to_sdram_s1|A_WE_StdLogicVector~11                    ;
-; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |ifv|nios:NIOS|sdram_s1_arbitrator:the_sdram_s1|rdv_fifo_for_cpu_instruction_master_to_sdram_s1_module:rdv_fifo_for_cpu_instruction_master_to_sdram_s1|A_WE_StdLogicVector~8       ;
-; 4:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; No         ; |ifv|nios:NIOS|cpu:the_cpu|D_dst_regnum[1]                                                                                                                                         ;
-; 16:1               ; 8 bits    ; 80 LEs        ; 72 LEs               ; 8 LEs                  ; No         ; |ifv|Mux14                                                                                                                                                                         ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |ifv|sram:SRAM|mask[0]                                                                                                                                                             ;
+; 3:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; No         ; |ifv|sram:SRAM|rv[0]                                                                                                                                                               ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |ifv|rammer:RMR|idx~4                                                                                                                                                              ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |ifv|nios:NIOS|sdram_s1_arbitrator:the_sdram_s1|rdv_fifo_for_cpu_data_master_to_sdram_s1_module:rdv_fifo_for_cpu_data_master_to_sdram_s1|A_WE_StdLogicVector~10                    ;
+; 4:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |ifv|nios:NIOS|sdram_s1_arbitrator:the_sdram_s1|rdv_fifo_for_cpu_instruction_master_to_sdram_s1_module:rdv_fifo_for_cpu_instruction_master_to_sdram_s1|A_WE_StdLogicVector~10      ;
+; 4:1                ; 5 bits    ; 10 LEs        ; 10 LEs               ; 0 LEs                  ; No         ; |ifv|nios:NIOS|cpu:the_cpu|D_dst_regnum[0]                                                                                                                                         ;
+; 16:1               ; 8 bits    ; 80 LEs        ; 72 LEs               ; 8 LEs                  ; No         ; |ifv|Mux10                                                                                                                                                                         ;
 ; 16:1               ; 10 bits   ; 100 LEs       ; 100 LEs              ; 0 LEs                  ; No         ; |ifv|Mux0                                                                                                                                                                          ;
 ; 6:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_jtag_debug_module_wrapper:the_cpu_jtag_debug_module_wrapper|cpu_jtag_debug_module:the_cpu_jtag_debug_module1|sr[36] ;
 ; 6:1                ; 6 bits    ; 24 LEs        ; 18 LEs               ; 6 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_jtag_debug_module_wrapper:the_cpu_jtag_debug_module_wrapper|cpu_jtag_debug_module:the_cpu_jtag_debug_module1|sr[10] ;
@@ -1807,7 +1849,7 @@ Encoding Type:  One-Hot
 
 
 +--------------------------------------------------------------------------------------------------------------------+
-; Source assignments for nios:NIOS|ram:the_ram|ramcon:the_ramcon|altsyncram:RAM_rtl_0|altsyncram_hse1:auto_generated ;
+; Source assignments for nios:NIOS|ram:the_ram|ramcon:the_ramcon|altsyncram:RAM_rtl_0|altsyncram_bpi1:auto_generated ;
 +---------------------------------+--------------------+------+------------------------------------------------------+
 ; Assignment                      ; Value              ; From ; To                                                   ;
 +---------------------------------+--------------------+------+------------------------------------------------------+
@@ -2834,7 +2876,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; INDATA_REG_B                       ; CLOCK1               ; Untyped                                           ;
 ; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped                                           ;
 ; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped                                           ;
-; ADDRESS_REG_B                      ; CLOCK1               ; Untyped                                           ;
+; ADDRESS_REG_B                      ; CLOCK0               ; Untyped                                           ;
 ; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped                                           ;
 ; BYTEENA_REG_B                      ; CLOCK1               ; Untyped                                           ;
 ; INDATA_ACLR_B                      ; NONE                 ; Untyped                                           ;
@@ -2847,7 +2889,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; WIDTH_BYTEENA_B                    ; 1                    ; Untyped                                           ;
 ; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped                                           ;
 ; BYTE_SIZE                          ; 8                    ; Untyped                                           ;
-; READ_DURING_WRITE_MODE_MIXED_PORTS ; DONT_CARE            ; Untyped                                           ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA             ; Untyped                                           ;
 ; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped                                           ;
 ; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped                                           ;
 ; INIT_FILE                          ; UNUSED               ; Untyped                                           ;
@@ -2861,7 +2903,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped                                           ;
 ; ENABLE_ECC                         ; FALSE                ; Untyped                                           ;
 ; DEVICE_FAMILY                      ; Cyclone II           ; Untyped                                           ;
-; CBXI_PARAMETER                     ; altsyncram_hse1      ; Untyped                                           ;
+; CBXI_PARAMETER                     ; altsyncram_bpi1      ; Untyped                                           ;
 +------------------------------------+----------------------+---------------------------------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings Tables in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
@@ -2952,7 +2994,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus II Analysis & Synthesis
     Info: Version 7.2 Build 151 09/26/2007 SJ Full Version
-    Info: Processing started: Wed May  9 09:16:35 2012
+    Info: Processing started: Wed May  9 11:38:43 2012
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off ifv -c ifv
 Info: Found 2 design units, including 1 entities, in source file ramctrl.vhd
     Info: Found design unit 1: ramctrl-ramarch
@@ -3107,7 +3149,7 @@ Info: Found 2 design units, including 1 entities, in source file ifmunitd.vhd
 Info: Found 2 design units, including 1 entities, in source file ifv.vhd
     Info: Found design unit 1: ifv-datapath
     Info: Found entity 1: ifv
-Warning: Entity "mult2" obtained from "/home/user4/spring12/lep2141/4840/romeo-set/src/mult2.vhd" instead of from Quartus II megafunction library
+Warning: Entity "mult2" obtained from "/home/user5/spring12/rcn2105/embed_proj/alt/src/mult2.vhd" instead of from Quartus II megafunction library
 Info: Found 2 design units, including 1 entities, in source file mult2.vhd
     Info: Found design unit 1: mult2-SYN
     Info: Found entity 1: mult2
@@ -3135,11 +3177,10 @@ Info: Found 2 design units, including 1 entities, in source file rammer.vhd
 Info: Found 2 design units, including 1 entities, in source file ramcon.vhd
     Info: Found design unit 1: ramcon-ramarch
     Info: Found entity 1: ramcon
-Warning: Can't analyze file -- file /home/user4/spring12/lep2141/4840/romeo-set/src/altera_europa_support.vhd is missing
+Warning: Can't analyze file -- file /home/user5/spring12/rcn2105/embed_proj/alt/src/altera_europa_support.vhd is missing
 Info: Elaborating entity "ifv" for the top level hierarchy
 Warning (10036): Verilog HDL or VHDL warning at ifv.vhd(118): object "reset_from_nios" assigned a value but never read
 Warning (10036): Verilog HDL or VHDL warning at ifv.vhd(129): object "iterate" assigned a value but never read
-Warning (10036): Verilog HDL or VHDL warning at ifv.vhd(131): object "color" assigned a value but never read
 Warning (10036): Verilog HDL or VHDL warning at ifv.vhd(132): object "refresh" assigned a value but never read
 Info: Elaborating entity "pll5025" for hierarchy "pll5025:CLK5025"
 Info: Found 1 design units, including 1 entities, in source file /opt/altera/altera7.2/quartus/libraries/megafunctions/altpll.tdf
@@ -3670,18 +3711,18 @@ Info: Duplicate registers merged to single register
     Info: Duplicate register "nios:NIOS|sdram:the_sdram|i_addr[10]" merged to single register "nios:NIOS|sdram:the_sdram|i_addr[11]"
     Info: Duplicate register "nios:NIOS|ram_signal_avalon_slave_0_arbitrator:the_ram_signal_avalon_slave_0|d1_ram_signal_avalon_slave_0_end_xfer" merged to single register "nios:NIOS|ram_signal_avalon_slave_0_arbitrator:the_ram_signal_avalon_slave_0|d1_reasons_to_wait", power-up level changed
     Info: Duplicate register "nios:NIOS|ram_avalon_slave_0_arbitrator:the_ram_avalon_slave_0|d1_ram_avalon_slave_0_end_xfer" merged to single register "nios:NIOS|ram_avalon_slave_0_arbitrator:the_ram_avalon_slave_0|d1_reasons_to_wait", power-up level changed
-    Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[13]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
-    Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[29]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
     Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[31]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
     Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[11]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
-    Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[24]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
+    Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[13]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
     Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[14]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
-    Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[25]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
-    Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[15]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
-    Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[12]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
-    Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[27]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
     Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[30]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
+    Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[25]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
     Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[28]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
+    Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[15]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
+    Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[24]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
+    Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[29]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
+    Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[27]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
+    Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[12]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
     Info: Duplicate register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[26]" merged to single register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]"
     Info: Duplicate register "nios:NIOS|cpu_jtag_debug_module_arbitrator:the_cpu_jtag_debug_module|d1_cpu_jtag_debug_module_end_xfer" merged to single register "nios:NIOS|cpu_jtag_debug_module_arbitrator:the_cpu_jtag_debug_module|d1_reasons_to_wait", power-up level changed
 Warning (14130): Reduced register "nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|readdata[9]" with stuck data_in port to stuck value GND
@@ -3703,10 +3744,15 @@ Info: Duplicate registers merged to single register
     Info: Duplicate register "nios:NIOS|sdram:the_sdram|m_next[5]" merged to single register "nios:NIOS|sdram:the_sdram|m_next[8]"
     Info: Duplicate register "nios:NIOS|sdram:the_sdram|m_next[2]" merged to single register "nios:NIOS|sdram:the_sdram|m_next[8]"
     Info: Duplicate register "nios:NIOS|sdram:the_sdram|m_next[1]" merged to single register "nios:NIOS|sdram:the_sdram|m_next[8]"
-Warning: Inferred dual-clock RAM node "nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24" from synchronous design logic.  The read-during-write behavior of a dual-clock RAM is undefined and may not match the behavior of the original design.
+Warning: Inferred RAM node "nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~24" from synchronous design logic.  Pass-through logic has been added to match the read-during-write behavior of the original design.
 Info: Found 1 instances of uninferred RAM logic
     Info: RAM logic "nios:NIOS|ram_signal:the_ram_signal|ramctrl:the_ramctrl|RAM" uninferred due to size
 Warning (14130): Reduced register "nios:NIOS|cpu_jtag_debug_module_arbitrator:the_cpu_jtag_debug_module|cpu_jtag_debug_module_arb_share_counter[2]" with stuck data_in port to stuck value GND
+Info: Duplicate registers merged to single register
+    Info: Duplicate register "nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~29" merged to single register "rammer:RMR|idx[0]"
+    Info: Duplicate register "nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~32" merged to single register "rammer:RMR|idx[1]"
+    Info: Duplicate register "nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~35" merged to single register "rammer:RMR|idx[2]"
+    Info: Duplicate register "nios:NIOS|ram:the_ram|ramcon:the_ramcon|RAM~38" merged to single register "rammer:RMR|idx[3]"
 Info: State machine "|ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|s_ps2_transceiver" contains 5 states
 Info: State machine "|ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Command_Out:PS2_Command_Out|s_ps2_transmitter" contains 8 states
 Info: State machine "|ifv|nios:NIOS|ps2_0:the_ps2_0|Altera_UP_Avalon_PS2:the_Altera_UP_Avalon_PS2|Altera_UP_PS2:PS2_Serial_Port|Altera_UP_PS2_Data_In:PS2_Data_In|s_ps2_receiver" contains 5 states
@@ -3768,13 +3814,14 @@ Info: Inferred 1 megafunctions from design logic
         Info: Parameter OUTDATA_REG_B set to UNREGISTERED
         Info: Parameter ADDRESS_ACLR_B set to NONE
         Info: Parameter OUTDATA_ACLR_B set to NONE
-        Info: Parameter ADDRESS_REG_B set to CLOCK1
+        Info: Parameter ADDRESS_REG_B set to CLOCK0
         Info: Parameter INDATA_ACLR_A set to NONE
         Info: Parameter WRCONTROL_ACLR_A set to NONE
         Info: Parameter RAM_BLOCK_TYPE set to AUTO
+        Info: Parameter READ_DURING_WRITE_MODE_MIXED_PORTS set to OLD_DATA
 Info: Elaborated megafunction instantiation "nios:NIOS|ram:the_ram|ramcon:the_ramcon|altsyncram:RAM_rtl_0"
-Info: Found 1 design units, including 1 entities, in source file db/altsyncram_hse1.tdf
-    Info: Found entity 1: altsyncram_hse1
+Info: Found 1 design units, including 1 entities, in source file db/altsyncram_bpi1.tdf
+    Info: Found entity 1: altsyncram_bpi1
 Info: Registers with preset signals will power-up high
 Info: DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
 Info: Duplicate registers merged to single register
@@ -3845,7 +3892,7 @@ Warning: Output pins are stuck at VCC or GND
     Warning (13410): Pin "SRAM_CE_N" stuck at GND
     Warning (13410): Pin "TDO" stuck at GND
     Warning (13410): Pin "VGA_SYNC" stuck at GND
-Info: 71 registers lost all their fanouts during netlist optimizations. The first 71 are displayed below.
+Info: 70 registers lost all their fanouts during netlist optimizations. The first 70 are displayed below.
     Info: Register "nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_oci_itrace:the_cpu_nios2_oci_itrace|itm[0]" lost all its fanouts during netlist optimizations.
     Info: Register "nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_oci_itrace:the_cpu_nios2_oci_itrace|itm[1]" lost all its fanouts during netlist optimizations.
     Info: Register "nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_oci_itrace:the_cpu_nios2_oci_itrace|itm[2]" lost all its fanouts during netlist optimizations.
@@ -3915,16 +3962,14 @@ Info: 71 registers lost all their fanouts during netlist optimizations. The firs
     Info: Register "nios:NIOS|ram_signal:the_ram_signal|ramctrl:the_ramctrl|RAM~46" lost all its fanouts during netlist optimizations.
     Info: Register "nios:NIOS|ram_signal:the_ram_signal|ramctrl:the_ramctrl|RAM~48" lost all its fanouts during netlist optimizations.
     Info: Register "nios:NIOS|ram_signal:the_ram_signal|ramctrl:the_ramctrl|RAM~50" lost all its fanouts during netlist optimizations.
-    Info: Register "vga_mod:VGA|cycle[6]" lost all its fanouts during netlist optimizations.
     Info: Register "vga_mod:VGA|cycle[7]" lost all its fanouts during netlist optimizations.
 Info: Registers with preset signals will power-up high
 Info: DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
-Warning: Design contains 23 input pin(s) that do not drive logic
+Warning: Design contains 22 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "KEY[0]"
     Warning (15610): No output dependent on input pin "KEY[1]"
     Warning (15610): No output dependent on input pin "KEY[2]"
     Warning (15610): No output dependent on input pin "KEY[3]"
-    Warning (15610): No output dependent on input pin "SW[0]"
     Warning (15610): No output dependent on input pin "SW[1]"
     Warning (15610): No output dependent on input pin "SW[2]"
     Warning (15610): No output dependent on input pin "SW[3]"
@@ -3943,16 +3988,16 @@ Warning: Design contains 23 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "TDI"
     Warning (15610): No output dependent on input pin "TCK"
     Warning (15610): No output dependent on input pin "TCS"
-Info: Implemented 16049 device resources after synthesis - the final resource count might be different
+Info: Implemented 17430 device resources after synthesis - the final resource count might be different
     Info: Implemented 31 input pins
     Info: Implemented 166 output pins
     Info: Implemented 34 bidirectional pins
-    Info: Implemented 15678 logic cells
+    Info: Implemented 17059 logic cells
     Info: Implemented 106 RAM segments
     Info: Implemented 1 ClockLock PLLs
     Info: Implemented 32 DSP elements
-Info: Quartus II Analysis & Synthesis was successful. 0 errors, 377 warnings
-    Info: Processing ended: Wed May  9 09:20:16 2012
-    Info: Elapsed time: 00:03:41
+Info: Quartus II Analysis & Synthesis was successful. 0 errors, 375 warnings
+    Info: Processing ended: Wed May  9 11:43:10 2012
+    Info: Elapsed time: 00:04:27
 
 
