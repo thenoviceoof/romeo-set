@@ -115,19 +115,25 @@ signal		done	: std_logic				:= '0';						-- Indicates if IFM is done iterating
 	end process;
 
 	multa:	entity	work.sqr2 port map(
+
 		dataa		=> oldr,
 		result		=> proda
+
 	);
 
 		multb:	entity	work.sqr2 port map(
+
 		dataa		=> oldi,
 		result		=> prodb
+
 	);
 
 		multc:	entity	work.mult2 port map(
+
 		dataa		=> oldr,
 		datab		=> oldi,
 		result		=> prodc
+
 	);
 
 end first;

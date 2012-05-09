@@ -59,7 +59,7 @@ alt_64 b_delt;
 alt_64 a_leap_total;
 alt_64 b_leap_total;
 
-int curr_speed = 1;
+int curr_speed = 5;
 int speeds[] = {60000, 70000, 80000, 90000, 100000};
 
 //

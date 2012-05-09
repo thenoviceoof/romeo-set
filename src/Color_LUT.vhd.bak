@@ -1,3 +1,11 @@
+---------------------------------------------------------------------
+--Color_LUT.vhd
+--
+--A device that outputs RGB to the VGA depending on the count signal
+--and the colorization setting given to it.
+--
+--Author: Richard Nwaobasi
+---------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -1079,7 +1087,7 @@ begin
 	with switch select VGA_RGB <=
 	CLUT0(to_integer(index)) when "000",
 	CLUT1(to_integer(index)) when "001",
-	CLUT2(to_integer(index)) when "000",
+	CLUT2(to_integer(index)) when "010",
 	CLUT3(to_integer(index)) when "011",
 	CLUT4(to_integer(index)) when "100",
 	CLUT5(to_integer(index)) when "101",

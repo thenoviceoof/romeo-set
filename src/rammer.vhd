@@ -1,3 +1,11 @@
+---------------------------------------------------------------------
+--rammer.vhd
+--
+--This component reads the values to the hook from the RAM where the
+--Nios writes the necessary 
+--
+--Author: Luis E. P.
+---------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -6,7 +14,6 @@ entity rammer is
 	port(
 	clk						: in std_logic;
 	compute					: in std_logic;
-	done					: out std_logic;
 	read					: out std_logic;
 	addressout				: out unsigned(3 downto 0);
 	addressin				: in unsigned(3 downto 0);
@@ -38,7 +45,6 @@ architecture compute of rammer is
 	begin
 
 	addressout		<= idx;
-	done			<= finish;
 	amin			<= a_min;
 	bmin			<= b_min;
 	adiff			<= a_diff;
@@ -68,12 +74,11 @@ architecture compute of rammer is
 				when "1011"		=>	cr(17 downto 0)		<= readdata;
 				when "1100"		=>	ci(35 downto 18)	<= readdata;
 				when "1101"		=>	ci(17 downto 0)		<= readdata;
-				when others		=>	finish				<= '1';
+				when others		=>	idx					<= idx + 1;
 			end case;
 			idx <= idx + 1;
 			elsif compute = '0' and idx = "1111" then
 				idx <= "0000";
-				finish <= '0';
 			end if;
 		end if;
 	end process;

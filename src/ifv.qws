@@ -15,12 +15,13 @@ ptn_Child5=Document-4
 ptn_Child6=Document-5
 ptn_Child7=Document-6
 ptn_Child8=Document-7
+ptn_Child9=Document-8
 
 [ProjectWorkspace.Frames.ChildFrames.Document-0]
 ptn_Child1=ViewFrame-0
 
 [ProjectWorkspace.Frames.ChildFrames.Document-0.ViewFrame-0]
-DocPathName=ifv.vhd
+DocPathName=window_gen.vhd
 DocumentCLSID={ca385d57-a4c7-11d1-a098-0020affa43f2}
 IsChildFrameDetached=False
 IsActiveChildFrame=False
@@ -33,7 +34,7 @@ AFC_IN_REPORT=False
 ptn_Child1=ViewFrame-0
 
 [ProjectWorkspace.Frames.ChildFrames.Document-1.ViewFrame-0]
-DocPathName=cpu.vhd
+DocPathName=rammer.vhd
 DocumentCLSID={ca385d57-a4c7-11d1-a098-0020affa43f2}
 IsChildFrameDetached=False
 IsActiveChildFrame=False
@@ -59,11 +60,24 @@ AFC_IN_REPORT=False
 ptn_Child1=ViewFrame-0
 
 [ProjectWorkspace.Frames.ChildFrames.Document-3.ViewFrame-0]
-DocPathName=vga_mod.vhd
+DocPathName=ramcon.vhd
 DocumentCLSID={ca385d57-a4c7-11d1-a098-0020affa43f2}
 IsChildFrameDetached=False
 IsActiveChildFrame=False
 ptn_Child1=StateMap
 
 [ProjectWorkspace.Frames.ChildFrames.Document-3.ViewFrame-0.StateMap]
+AFC_IN_REPORT=False
+
+[ProjectWorkspace.Frames.ChildFrames.Document-4]
+ptn_Child1=ViewFrame-0
+
+[ProjectWorkspace.Frames.ChildFrames.Document-4.ViewFrame-0]
+DocPathName=ifv.vhd
+DocumentCLSID={ca385d57-a4c7-11d1-a098-0020affa43f2}
+IsChildFrameDetached=False
+IsActiveChildFrame=False
+ptn_Child1=StateMap
+
+[ProjectWorkspace.Frames.ChildFrames.Document-4.ViewFrame-0.StateMap]
 AFC_IN_REPORT=False

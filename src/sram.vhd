@@ -1,3 +1,11 @@
+---------------------------------------------------------------------
+--sram.vhd
+--
+--This module is an asynchronous SRAM. This is where the computed
+--values for each pixel are stored
+--
+--Author: Nathan Hwang
+---------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;

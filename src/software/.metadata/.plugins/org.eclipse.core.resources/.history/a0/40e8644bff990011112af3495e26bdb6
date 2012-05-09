@@ -35,8 +35,8 @@
 #define COLOR_O         2
 #define REF_O           5
 #define FRACT_O         6
-#define RMR_REFRESH     7500
-#define MAX_SPEED       5
+#define RMR_REFRESH     7000
+#define MAX_SPEED      5
 
 KB_CODE_TYPE decode_mode;
 
@@ -184,6 +184,11 @@ int main()
     a_min = -2LL;
     a_min = a_min << (RADIX_SHIFT-0);
     
+    c_rea = 5LL;
+    c_rea = c_rea << (RADIX_SHIFT-1);
+    c_img = 0LL;
+    c_img = c_img << (RADIX_SHIFT-2);
+    
     c_rea = 0xFF91F5C29LL;
     c_img = 0xFC925460BLL;
     
@@ -325,17 +330,7 @@ int main()
                             curr_speed++;
                     break;
                    
-                    case '`':
-                        b_max = 3LL;
-                        b_max = b_max << (RADIX_SHIFT-1);
-                        a_max = 2LL;
-                        a_max = a_max << (RADIX_SHIFT-0);
-                        b_min = -3LL;
-                        b_min = b_min << (RADIX_SHIFT-1);
-                        a_min = -2LL;
-                        a_min = a_min << (RADIX_SHIFT-0);
-                        redraw();                        
-                    break;
+                    
                     
                     
                     case '0': 

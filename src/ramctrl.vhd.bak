@@ -1,3 +1,11 @@
+---------------------------------------------------------------------
+--ramctrl.vhd
+--
+--A small RAM that interfaces a control signal between the Nios processor,
+--and the rest of the viewer
+--
+--Author: Nathan Hwang
+---------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -32,8 +40,6 @@ architecture ramarch of ramctrl is
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			
-			
 			if chipselect = '1' and write = '1' then
 				RAM(to_integer(address)) 	<= writedata;
 				read_data_hold				<= read_data_hold;

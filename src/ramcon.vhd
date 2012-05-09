@@ -1,3 +1,11 @@
+---------------------------------------------------------------------
+--ramcon
+--
+--This is the entity holding all four IFMs. This is where all the
+--wiring and the IFM coordination takes place.
+--
+--Author: Luis E. P.
+---------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;

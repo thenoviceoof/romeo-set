@@ -12,6 +12,7 @@ use ieee.numeric_std.all;
 
 entity hook is
 	port(
+	clk50		: in std_logic;								-- Global clock
 	clk25		: in std_logic;
 	reset		: in std_logic;								-- Clear
 	a_min		: in signed(35 downto 0);
@@ -61,6 +62,7 @@ architecture first of hook is
 
 	ifm: entity work.ifmunitd port map(
 		clk25		=> clk25,
+		clk50		=> clk50,
 		reset		=> reset,
 		data		=> data,
 		xin 		=> x,

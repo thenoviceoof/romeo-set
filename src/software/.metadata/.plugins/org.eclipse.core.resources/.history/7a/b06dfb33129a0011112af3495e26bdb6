@@ -36,7 +36,7 @@
 #define REF_O           5
 #define FRACT_O         6
 #define RMR_REFRESH     7500
-#define MAX_SPEED       5
+#define MAX_SPEED       7
 
 KB_CODE_TYPE decode_mode;
 
@@ -59,8 +59,8 @@ alt_64 b_delt;
 alt_64 a_leap_total;
 alt_64 b_leap_total;
 
-int curr_speed = 1;
-int speeds[] = {60000, 70000, 80000, 90000, 100000};
+int curr_speed = 5;
+int speeds[] = {60000, 70000, 80000, 90000, 100000, 120000, 140000};
 
 //
 alt_8 iterate = 0;

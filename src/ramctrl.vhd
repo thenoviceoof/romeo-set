@@ -1,3 +1,11 @@
+---------------------------------------------------------------------
+--ramctrl.vhd
+--
+--A small RAM that interfaces a control signal between the Nios processor,
+--and the rest of the viewer
+--
+--Author: Nathan Hwang
+---------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -18,11 +26,8 @@ end ramctrl;
 
 architecture ramarch of ramctrl is
 
-	-- ram
-	-- ready	etc
 	type ram_type is array(1 downto 0) of unsigned(7 downto 0);
 	signal RAM				: ram_type;
-	
 	signal read_data_hold	: unsigned(7 downto 0);
 
 	begin

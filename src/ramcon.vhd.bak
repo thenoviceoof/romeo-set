@@ -27,10 +27,9 @@ architecture ramarch of ramcon is
 	process(clk)
 	begin
 		if rising_edge(clk) then
-			read_addr	<= to_integer(addressout);
 			readaddr	<= addressout;
 			readdata	<= RAM(to_integer(addressout));
-			if chipselect = '1' then					
+			if chipselect = '1' then
 				if write = '1' then
 					RAM(to_integer(address))	<= writedata(17 downto 0);
 				end if;
