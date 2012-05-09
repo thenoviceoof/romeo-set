@@ -11,7 +11,6 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
---Provides registers for writing to the function modules.
 entity diff_counter is
   
   port (

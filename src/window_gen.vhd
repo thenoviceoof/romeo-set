@@ -1,8 +1,17 @@
+---------------------------------------------------------------------
+--window_gen.vhd
+--
+--A device used to generate (a, b) values for each pixel on the
+--screen under the given window parameters.
+--
+--Author: Stephen Pratt
+---------------------------------------------------------------------
+
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
---Provides registers for writing to the function modules.
 entity window_gen is
   
   port (
@@ -56,7 +65,9 @@ begin
 	y_out <= std_logic_vector(y_max - unsigned(y_out_mirror));
 	
 	ready <= a_ready and b_ready;
-	
+
+	--Module is composed of two diff_counters, one for each
+	--screen dimension.
 	a_counter:	entity work.diff_counter port map (
 		clk 		=> clk,
 		next_val 	=> next_val,
