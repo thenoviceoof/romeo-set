@@ -481,6 +481,5 @@ set_global_assignment -name VHDL_FILE vga_mod.vhd
 set_global_assignment -name VHDL_FILE window_gen.vhd
 set_global_assignment -name VHDL_FILE rammer.vhd
 set_global_assignment -name VHDL_FILE ramcon.vhd
-set_global_assignment -name VHDL_FILE altera_europa_support.vhd
 set_instance_assignment -name PARTITION_HIERARCHY no_file_for_top_partition -to | -section_id Top
 set_instance_assignment -name GLOBAL_SIGNAL "GLOBAL CLOCK" -from "pll5025:CLK5025|c1" -to VGA_CLK

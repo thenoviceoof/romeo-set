@@ -5,9 +5,9 @@ Timing Analyzer Summary
 Type           : Worst-case tsu
 Slack          : N/A
 Required Time  : None
-Actual Time    : 13.011 ns
-From           : SRAM_DQ[0]
-To             : vga_mod:VGA|vga:G|VGA_G[4]
+Actual Time    : 12.738 ns
+From           : SRAM_DQ[2]
+To             : vga_mod:VGA|vga:G|VGA_G[2]
 From Clock     : --
 To Clock       : CLOCK_50
 Failed Paths   : 0
@@ -15,9 +15,9 @@ Failed Paths   : 0
 Type           : Worst-case tco
 Slack          : N/A
 Required Time  : None
-Actual Time    : 11.548 ns
-From           : a_diff[21]
-To             : LEDR[3]
+Actual Time    : 12.015 ns
+From           : ci[18]
+To             : LEDR[0]
 From Clock     : CLOCK_50
 To Clock       : --
 Failed Paths   : 0
@@ -25,9 +25,9 @@ Failed Paths   : 0
 Type           : Worst-case tpd
 Slack          : N/A
 Required Time  : None
-Actual Time    : 17.264 ns
+Actual Time    : 17.844 ns
 From           : SW[17]
-To             : LEDR[1]
+To             : LEDR[0]
 From Clock     : --
 To Clock       : --
 Failed Paths   : 0
@@ -35,29 +35,29 @@ Failed Paths   : 0
 Type           : Worst-case th
 Slack          : N/A
 Required Time  : None
-Actual Time    : 2.812 ns
+Actual Time    : 3.233 ns
 From           : altera_internal_jtag~TDIUTAP
-To             : sld_hub:sld_hub_inst|lpm_shiftreg:jtag_ir_register|dffs[9]
+To             : nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_jtag_debug_module_wrapper:the_cpu_jtag_debug_module_wrapper|cpu_jtag_debug_module:the_cpu_jtag_debug_module1|sr[15]
 From Clock     : --
 To Clock       : altera_internal_jtag~TCKUTAP
 Failed Paths   : 0
 
 Type           : Clock Setup: 'pll5025:CLK5025|altpll:altpll_component|_clk0'
-Slack          : 9.000 ns
+Slack          : 9.137 ns
 Required Time  : 50.00 MHz ( period = 20.000 ns )
-Actual Time    : 90.91 MHz ( period = 11.000 ns )
-From           : nios:NIOS|cpu:the_cpu|F_pc[16]
-To             : nios:NIOS|cpu:the_cpu|av_ld_byte1_data[3]
+Actual Time    : 92.06 MHz ( period = 10.863 ns )
+From           : nios:NIOS|cpu:the_cpu|W_alu_result[18]
+To             : nios:NIOS|cpu:the_cpu|D_iw[28]
 From Clock     : pll5025:CLK5025|altpll:altpll_component|_clk0
 To Clock       : pll5025:CLK5025|altpll:altpll_component|_clk0
 Failed Paths   : 0
 
 Type           : Clock Setup: 'pll5025:CLK5025|altpll:altpll_component|_clk1'
-Slack          : 9.841 ns
+Slack          : 11.495 ns
 Required Time  : 25.00 MHz ( period = 40.000 ns )
 Actual Time    : N/A
 From           : hook:IFM|ifmunitd:ifm|ow[0]
-To             : vga_mod:VGA|vga:G|VGA_G[4]
+To             : vga_mod:VGA|vga:G|VGA_G[2]
 From Clock     : pll5025:CLK5025|altpll:altpll_component|_clk0
 To Clock       : pll5025:CLK5025|altpll:altpll_component|_clk1
 Failed Paths   : 0
@@ -65,9 +65,9 @@ Failed Paths   : 0
 Type           : Clock Setup: 'altera_internal_jtag~TCKUTAP'
 Slack          : N/A
 Required Time  : None
-Actual Time    : 127.71 MHz ( period = 7.830 ns )
+Actual Time    : 133.42 MHz ( period = 7.495 ns )
 From           : sld_hub:sld_hub_inst|jtag_debug_mode
-To             : nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_jtag_debug_module_wrapper:the_cpu_jtag_debug_module_wrapper|cpu_jtag_debug_module:the_cpu_jtag_debug_module1|sr[32]
+To             : nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_jtag_debug_module_wrapper:the_cpu_jtag_debug_module_wrapper|cpu_jtag_debug_module:the_cpu_jtag_debug_module1|sr[11]
 From Clock     : altera_internal_jtag~TCKUTAP
 To Clock       : altera_internal_jtag~TCKUTAP
 Failed Paths   : 0
@@ -76,8 +76,8 @@ Type           : Clock Hold: 'pll5025:CLK5025|altpll:altpll_component|_clk0'
 Slack          : 0.391 ns
 Required Time  : 50.00 MHz ( period = 20.000 ns )
 Actual Time    : N/A
-From           : hook:IFM|ifmunitd:ifm|ow[0]
-To             : hook:IFM|ifmunitd:ifm|ow[0]
+From           : nios:NIOS|sdram:the_sdram|i_refs[0]
+To             : nios:NIOS|sdram:the_sdram|i_refs[0]
 From Clock     : pll5025:CLK5025|altpll:altpll_component|_clk0
 To Clock       : pll5025:CLK5025|altpll:altpll_component|_clk0
 Failed Paths   : 0

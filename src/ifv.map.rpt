@@ -1,5 +1,5 @@
 Analysis & Synthesis report for ifv
-Wed May  9 02:32:17 2012
+Wed May  9 05:56:57 2012
 Quartus II Version 7.2 Build 151 09/26/2007 SJ Full Version
 
 
@@ -86,13 +86,13 @@ applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +------------------------------------+------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Wed May  9 02:32:16 2012    ;
+; Analysis & Synthesis Status        ; Successful - Wed May  9 05:56:56 2012    ;
 ; Quartus II Version                 ; 7.2 Build 151 09/26/2007 SJ Full Version ;
 ; Revision Name                      ; ifv                                      ;
 ; Top-level Entity Name              ; ifv                                      ;
 ; Family                             ; Cyclone II                               ;
-; Total logic elements               ; 14,503                                   ;
-;     Total combinational functions  ; 14,503                                   ;
+; Total logic elements               ; 14,515                                   ;
+;     Total combinational functions  ; 14,515                                   ;
 ;     Dedicated logic registers      ; 2,624                                    ;
 ; Total registers                    ; 2624                                     ;
 ; Total pins                         ; 428                                      ;
@@ -256,16 +256,16 @@ applicable agreement for further details.
 +---------------------------------------------+-----------------------------------------------+
 ; Resource                                    ; Usage                                         ;
 +---------------------------------------------+-----------------------------------------------+
-; Estimated Total logic elements              ; 14,503                                        ;
+; Estimated Total logic elements              ; 14,515                                        ;
 ;                                             ;                                               ;
-; Total combinational functions               ; 14503                                         ;
+; Total combinational functions               ; 14515                                         ;
 ; Logic element usage by number of LUT inputs ;                                               ;
-;     -- 4 input functions                    ; 1362                                          ;
+;     -- 4 input functions                    ; 1360                                          ;
 ;     -- 3 input functions                    ; 6745                                          ;
-;     -- <=2 input functions                  ; 6396                                          ;
+;     -- <=2 input functions                  ; 6410                                          ;
 ;                                             ;                                               ;
 ; Logic elements by mode                      ;                                               ;
-;     -- normal mode                          ; 8248                                          ;
+;     -- normal mode                          ; 8260                                          ;
 ;     -- arithmetic mode                      ; 6255                                          ;
 ;                                             ;                                               ;
 ; Total registers                             ; 2624                                          ;
@@ -277,8 +277,8 @@ applicable agreement for further details.
 ; Embedded Multiplier 9-bit elements          ; 32                                            ;
 ; Total PLLs                                  ; 1                                             ;
 ; Maximum fan-out node                        ; pll5025:CLK5025|altpll:altpll_component|_clk0 ;
-; Maximum fan-out                             ; 2529                                          ;
-; Total fan-out                               ; 49786                                         ;
+; Maximum fan-out                             ; 2519                                          ;
+; Total fan-out                               ; 49798                                         ;
 ; Average fan-out                             ; 2.81                                          ;
 +---------------------------------------------+-----------------------------------------------+
 
@@ -288,9 +288,9 @@ applicable agreement for further details.
 +-------------------------------------------------------------------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
 ; Compilation Hierarchy Node                                                                                        ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                                                                                  ; Library Name ;
 +-------------------------------------------------------------------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
-; |ifv                                                                                                              ; 14503 (398)       ; 2624 (236)   ; 10528       ; 32           ; 0       ; 16        ; 428  ; 0            ; |ifv                                                                                                                                                                                                                                 ; work         ;
-;    |hook:IFM|                                                                                                     ; 12058 (0)         ; 994 (0)      ; 0           ; 32           ; 0       ; 16        ; 0    ; 0            ; |ifv|hook:IFM                                                                                                                                                                                                                        ; work         ;
-;       |ifmunitd:ifm|                                                                                              ; 11803 (415)       ; 764 (364)    ; 0           ; 32           ; 0       ; 16        ; 0    ; 0            ; |ifv|hook:IFM|ifmunitd:ifm                                                                                                                                                                                                           ; work         ;
+; |ifv                                                                                                              ; 14515 (398)       ; 2624 (236)   ; 10528       ; 32           ; 0       ; 16        ; 428  ; 0            ; |ifv                                                                                                                                                                                                                                 ; work         ;
+;    |hook:IFM|                                                                                                     ; 12071 (0)         ; 994 (0)      ; 0           ; 32           ; 0       ; 16        ; 0    ; 0            ; |ifv|hook:IFM                                                                                                                                                                                                                        ; work         ;
+;       |ifmunitd:ifm|                                                                                              ; 11816 (428)       ; 764 (364)    ; 0           ; 32           ; 0       ; 16        ; 0    ; 0            ; |ifv|hook:IFM|ifmunitd:ifm                                                                                                                                                                                                           ; work         ;
 ;          |ifmd:\g1:0:ifm|                                                                                         ; 2847 (196)        ; 100 (100)    ; 0           ; 8            ; 0       ; 4         ; 0    ; 0            ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm                                                                                                                                                                                            ; work         ;
 ;             |mult2:multc|                                                                                         ; 113 (0)           ; 0 (0)        ; 0           ; 8            ; 0       ; 4         ; 0    ; 0            ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|mult2:multc                                                                                                                                                                                ; work         ;
 ;                |lpm_mult:lpm_mult_component|                                                                      ; 113 (0)           ; 0 (0)        ; 0           ; 8            ; 0       ; 4         ; 0    ; 0            ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|mult2:multc|lpm_mult:lpm_mult_component                                                                                                                                                    ; work         ;
@@ -334,7 +334,7 @@ applicable agreement for further details.
 ;       |window_gen:gen|                                                                                            ; 255 (3)           ; 230 (0)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|hook:IFM|window_gen:gen                                                                                                                                                                                                         ; work         ;
 ;          |diff_counter:a_counter|                                                                                 ; 126 (126)         ; 115 (115)    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|hook:IFM|window_gen:gen|diff_counter:a_counter                                                                                                                                                                                  ; work         ;
 ;          |diff_counter:b_counter|                                                                                 ; 126 (126)         ; 115 (115)    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|hook:IFM|window_gen:gen|diff_counter:b_counter                                                                                                                                                                                  ; work         ;
-;    |nios:NIOS|                                                                                                    ; 1668 (0)          ; 990 (0)      ; 10528       ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS                                                                                                                                                                                                                       ; work         ;
+;    |nios:NIOS|                                                                                                    ; 1667 (0)          ; 990 (0)      ; 10528       ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS                                                                                                                                                                                                                       ; work         ;
 ;       |cpu:the_cpu|                                                                                               ; 860 (618)         ; 486 (310)    ; 9216        ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu:the_cpu                                                                                                                                                                                                           ; work         ;
 ;          |cpu_nios2_oci:the_cpu_nios2_oci|                                                                        ; 242 (28)          ; 175 (0)      ; 8192        ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci                                                                                                                                                                           ; work         ;
 ;             |cpu_jtag_debug_module_wrapper:the_cpu_jtag_debug_module_wrapper|                                     ; 111 (0)           ; 90 (0)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_jtag_debug_module_wrapper:the_cpu_jtag_debug_module_wrapper                                                                                                           ; work         ;
@@ -353,8 +353,8 @@ applicable agreement for further details.
 ;       |cpu_data_master_arbitrator:the_cpu_data_master|                                                            ; 90 (90)           ; 51 (51)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu_data_master_arbitrator:the_cpu_data_master                                                                                                                                                                        ; work         ;
 ;       |cpu_instruction_master_arbitrator:the_cpu_instruction_master|                                              ; 5 (5)             ; 17 (17)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu_instruction_master_arbitrator:the_cpu_instruction_master                                                                                                                                                          ; work         ;
 ;       |cpu_jtag_debug_module_arbitrator:the_cpu_jtag_debug_module|                                                ; 32 (32)           ; 4 (4)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|cpu_jtag_debug_module_arbitrator:the_cpu_jtag_debug_module                                                                                                                                                            ; work         ;
-;       |jtag_uart:the_jtag_uart|                                                                                   ; 136 (34)          ; 108 (13)     ; 1024        ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|jtag_uart:the_jtag_uart                                                                                                                                                                                               ; work         ;
-;          |alt_jtag_atlantic:jtag_uart_alt_jtag_atlantic|                                                          ; 51 (51)           ; 55 (55)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|jtag_uart:the_jtag_uart|alt_jtag_atlantic:jtag_uart_alt_jtag_atlantic                                                                                                                                                 ; work         ;
+;       |jtag_uart:the_jtag_uart|                                                                                   ; 135 (34)          ; 108 (13)     ; 1024        ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|jtag_uart:the_jtag_uart                                                                                                                                                                                               ; work         ;
+;          |alt_jtag_atlantic:jtag_uart_alt_jtag_atlantic|                                                          ; 50 (50)           ; 55 (55)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|jtag_uart:the_jtag_uart|alt_jtag_atlantic:jtag_uart_alt_jtag_atlantic                                                                                                                                                 ; work         ;
 ;          |jtag_uart_scfifo_r:the_jtag_uart_scfifo_r|                                                              ; 26 (0)            ; 20 (0)       ; 512         ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_r:the_jtag_uart_scfifo_r                                                                                                                                                     ; work         ;
 ;             |scfifo:rfifo|                                                                                        ; 26 (0)            ; 20 (0)       ; 512         ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_r:the_jtag_uart_scfifo_r|scfifo:rfifo                                                                                                                                        ; work         ;
 ;                |scfifo_1n21:auto_generated|                                                                       ; 26 (0)            ; 20 (0)       ; 512         ; 0            ; 0       ; 0         ; 0    ; 0            ; |ifv|nios:NIOS|jtag_uart:the_jtag_uart|jtag_uart_scfifo_r:the_jtag_uart_scfifo_r|scfifo:rfifo|scfifo_1n21:auto_generated                                                                                                             ; work         ;
@@ -537,11 +537,11 @@ Note: number of Embedded Multiplier Blocks used is only available after a succes
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
 ; Total registers                              ; 2624  ;
-; Number of registers using Synchronous Clear  ; 416   ;
-; Number of registers using Synchronous Load   ; 501   ;
+; Number of registers using Synchronous Clear  ; 400   ;
+; Number of registers using Synchronous Load   ; 499   ;
 ; Number of registers using Asynchronous Clear ; 818   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 1728  ;
+; Number of registers using Clock Enable       ; 1720  ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -638,12 +638,12 @@ Note: number of Embedded Multiplier Blocks used is only available after a succes
 ; nios:NIOS|sdram:the_sdram|i_cmd[3]                                                                                                                                     ; 1       ;
 ; nios:NIOS|sdram:the_sdram|m_next[0]                                                                                                                                    ; 5       ;
 ; nios:NIOS|cpu:the_cpu|hbreak_enabled                                                                                                                                   ; 10      ;
-; nios:NIOS|jtag_uart:the_jtag_uart|alt_jtag_atlantic:jtag_uart_alt_jtag_atlantic|count[9]                                                                               ; 11      ;
 ; nios:NIOS|jtag_uart:the_jtag_uart|t_dav                                                                                                                                ; 3       ;
+; nios:NIOS|jtag_uart:the_jtag_uart|alt_jtag_atlantic:jtag_uart_alt_jtag_atlantic|count[9]                                                                               ; 11      ;
 ; nios:NIOS|cpu_data_master_arbitrator:the_cpu_data_master|internal_cpu_data_master_waitrequest                                                                          ; 14      ;
 ; nios:NIOS|sdram_s1_arbitrator:the_sdram_s1|rdv_fifo_for_cpu_data_master_to_sdram_s1_module:rdv_fifo_for_cpu_data_master_to_sdram_s1|fifo_contains_ones_n               ; 2       ;
 ; nios:NIOS|cpu:the_cpu|internal_i_read                                                                                                                                  ; 27      ;
-; nios:NIOS|cpu:the_cpu|F_pc[21]                                                                                                                                         ; 26      ;
+; nios:NIOS|cpu:the_cpu|F_pc[21]                                                                                                                                         ; 25      ;
 ; nios:NIOS|sdram_s1_arbitrator:the_sdram_s1|rdv_fifo_for_cpu_instruction_master_to_sdram_s1_module:rdv_fifo_for_cpu_instruction_master_to_sdram_s1|fifo_contains_ones_n ; 3       ;
 ; nios:NIOS|sdram_s1_arbitrator:the_sdram_s1|sdram_s1_arb_addend[0]                                                                                                      ; 5       ;
 ; nios:NIOS|sdram:the_sdram|refresh_counter[12]                                                                                                                          ; 2       ;
@@ -724,30 +724,30 @@ Note: number of Embedded Multiplier Blocks used is only available after a succes
 ; 4:1                ; 15 bits   ; 30 LEs        ; 30 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|E_src2[17]                                                                                                                                              ;
 ; 4:1                ; 163 bits  ; 326 LEs       ; 163 LEs              ; 163 LEs                ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ia[1].ci[9]                                                                                                                                             ;
 ; 4:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |ifv|hook:IFM|window_gen:gen|diff_counter:b_counter|c_curr[1]                                                                                                                      ;
-; 4:1                ; 36 bits   ; 72 LEs        ; 36 LEs               ; 36 LEs                 ; Yes        ; |ifv|hook:IFM|window_gen:gen|diff_counter:b_counter|v_curr[28]                                                                                                                     ;
-; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_ocimem:the_cpu_nios2_ocimem|internal_MonDReg[11]                                                              ;
+; 4:1                ; 36 bits   ; 72 LEs        ; 36 LEs               ; 36 LEs                 ; Yes        ; |ifv|hook:IFM|window_gen:gen|diff_counter:b_counter|v_curr[10]                                                                                                                     ;
+; 4:1                ; 7 bits    ; 14 LEs        ; 14 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_ocimem:the_cpu_nios2_ocimem|internal_MonDReg[4]                                                               ;
 ; 4:1                ; 20 bits   ; 40 LEs        ; 20 LEs               ; 20 LEs                 ; Yes        ; |ifv|hook:IFM|window_gen:gen|diff_counter:a_counter|c_curr[9]                                                                                                                      ;
-; 4:1                ; 36 bits   ; 72 LEs        ; 36 LEs               ; 36 LEs                 ; Yes        ; |ifv|hook:IFM|window_gen:gen|diff_counter:a_counter|v_curr[28]                                                                                                                     ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|d_writedata[24]                                                                                                                                         ;
-; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_oci_break:the_cpu_nios2_oci_break|break_readreg[30]                                                           ;
+; 4:1                ; 36 bits   ; 72 LEs        ; 36 LEs               ; 36 LEs                 ; Yes        ; |ifv|hook:IFM|window_gen:gen|diff_counter:a_counter|v_curr[27]                                                                                                                     ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|d_writedata[28]                                                                                                                                         ;
+; 5:1                ; 19 bits   ; 57 LEs        ; 57 LEs               ; 0 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ox[0][6]                                                                                                                                                ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|cpu_nios2_oci:the_cpu_nios2_oci|cpu_nios2_oci_break:the_cpu_nios2_oci_break|break_readreg[28]                                                           ;
 ; 5:1                ; 7 bits    ; 21 LEs        ; 21 LEs               ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|W_alu_result[31]                                                                                                                                        ;
 ; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:3:ifm|counter[7]                                                                                                                               ;
 ; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:2:ifm|counter[7]                                                                                                                               ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|counter[6]                                                                                                                               ;
-; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|counter[4]                                                                                                                               ;
-; 9:1                ; 3 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|i_count[0]                                                                                                                                          ;
-; 6:1                ; 19 bits   ; 76 LEs        ; 57 LEs               ; 19 LEs                 ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ox[0][9]                                                                                                                                                ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:1:ifm|counter[5]                                                                                                                               ;
+; 5:1                ; 8 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm|counter[6]                                                                                                                               ;
+; 9:1                ; 3 bits    ; 18 LEs        ; 6 LEs                ; 12 LEs                 ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|i_count[2]                                                                                                                                          ;
+; 6:1                ; 8 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|oc[0][5]                                                                                                                                                ;
 ; 10:1               ; 3 bits    ; 18 LEs        ; 12 LEs               ; 6 LEs                  ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|i_state[0]                                                                                                                                          ;
 ; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |ifv|nios:NIOS|cpu:the_cpu|internal_d_byteenable[2]                                                                                                                                ;
-; 7:1                ; 8 bits    ; 32 LEs        ; 24 LEs               ; 8 LEs                  ; Yes        ; |ifv|hook:IFM|ifmunitd:ifm|oc[0][0]                                                                                                                                                ;
-; 258:1              ; 4 bits    ; 688 LEs       ; 4 LEs                ; 684 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_bank[1]                                                                                                                                           ;
-; 260:1              ; 4 bits    ; 692 LEs       ; 8 LEs                ; 684 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_addr[8]                                                                                                                                           ;
-; 261:1              ; 2 bits    ; 348 LEs       ; 4 LEs                ; 344 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_addr[5]                                                                                                                                           ;
+; 258:1              ; 4 bits    ; 688 LEs       ; 4 LEs                ; 684 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_dqm[1]                                                                                                                                            ;
+; 260:1              ; 4 bits    ; 692 LEs       ; 8 LEs                ; 684 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_addr[10]                                                                                                                                          ;
+; 261:1              ; 2 bits    ; 348 LEs       ; 4 LEs                ; 344 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_addr[4]                                                                                                                                           ;
 ; 261:1              ; 6 bits    ; 1044 LEs      ; 12 LEs               ; 1032 LEs               ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_addr[2]                                                                                                                                           ;
 ; 517:1              ; 2 bits    ; 688 LEs       ; 26 LEs               ; 662 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_state[7]                                                                                                                                          ;
-; 519:1              ; 8 bits    ; 2768 LEs      ; 0 LEs                ; 2768 LEs               ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|active_addr[0]                                                                                                                                      ;
-; 518:1              ; 2 bits    ; 690 LEs       ; 54 LEs               ; 636 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_state[2]                                                                                                                                          ;
-; 266:1              ; 33 bits   ; 5841 LEs      ; 0 LEs                ; 5841 LEs               ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|active_addr[10]                                                                                                                                     ;
+; 519:1              ; 8 bits    ; 2768 LEs      ; 0 LEs                ; 2768 LEs               ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|active_addr[6]                                                                                                                                      ;
+; 518:1              ; 2 bits    ; 690 LEs       ; 54 LEs               ; 636 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_state[6]                                                                                                                                          ;
+; 266:1              ; 33 bits   ; 5841 LEs      ; 0 LEs                ; 5841 LEs               ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|active_addr[9]                                                                                                                                      ;
 ; 521:1              ; 2 bits    ; 694 LEs       ; 10 LEs               ; 684 LEs                ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_state[3]                                                                                                                                          ;
 ; 8:1                ; 4 bits    ; 20 LEs        ; 12 LEs               ; 8 LEs                  ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|i_cmd[0]                                                                                                                                            ;
 ; 259:1              ; 16 bits   ; 2752 LEs      ; 32 LEs               ; 2720 LEs               ; Yes        ; |ifv|nios:NIOS|sdram:the_sdram|m_data[4]                                                                                                                                           ;
@@ -2122,7 +2122,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus II Analysis & Synthesis
     Info: Version 7.2 Build 151 09/26/2007 SJ Full Version
-    Info: Processing started: Wed May  9 02:28:45 2012
+    Info: Processing started: Wed May  9 05:53:30 2012
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off ifv -c ifv
 Info: Found 2 design units, including 1 entities, in source file pllvga.vhd
     Info: Found design unit 1: pllvga-SYN
@@ -2273,7 +2273,6 @@ Info: Found 2 design units, including 1 entities, in source file rammer.vhd
 Info: Found 2 design units, including 1 entities, in source file ramcon.vhd
     Info: Found design unit 1: ramcon-ramarch
     Info: Found entity 1: ramcon
-Warning: Can't analyze file -- file /home/user4/spring12/lep2141/4840/romeo-set/src/altera_europa_support.vhd is missing
 Info: Elaborating entity "ifv" for the top level hierarchy
 Info: Elaborating entity "pll5025" for hierarchy "pll5025:CLK5025"
 Info: Found 1 design units, including 1 entities, in source file /opt/altera/altera7.2/quartus/libraries/megafunctions/altpll.tdf
@@ -2282,8 +2281,8 @@ Info: Elaborating entity "altpll" for hierarchy "pll5025:CLK5025|altpll:altpll_c
 Info: Elaborated megafunction instantiation "pll5025:CLK5025|altpll:altpll_component"
 Info: Elaborating entity "hook" for hierarchy "hook:IFM"
 Info: Elaborating entity "window_gen" for hierarchy "hook:IFM|window_gen:gen"
-Warning (10540): VHDL Signal Declaration warning at window_gen.vhd(34): used explicit default value for signal "x_max" because signal was never assigned a value
-Warning (10540): VHDL Signal Declaration warning at window_gen.vhd(35): used explicit default value for signal "y_max" because signal was never assigned a value
+Warning (10540): VHDL Signal Declaration warning at window_gen.vhd(43): used explicit default value for signal "x_max" because signal was never assigned a value
+Warning (10540): VHDL Signal Declaration warning at window_gen.vhd(44): used explicit default value for signal "y_max" because signal was never assigned a value
 Info: Elaborating entity "diff_counter" for hierarchy "hook:IFM|window_gen:gen|diff_counter:a_counter"
 Info: Elaborating entity "ifmunitd" for hierarchy "hook:IFM|ifmunitd:ifm"
 Info: Elaborating entity "ifmd" for hierarchy "hook:IFM|ifmunitd:ifm|ifmd:\g1:0:ifm"
@@ -2850,16 +2849,16 @@ Warning: Design contains 37 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "TD_DATA[7]"
     Warning (15610): No output dependent on input pin "TD_HS"
     Warning (15610): No output dependent on input pin "TD_VS"
-Info: Implemented 15691 device resources after synthesis - the final resource count might be different
+Info: Implemented 15707 device resources after synthesis - the final resource count might be different
     Info: Implemented 51 input pins
     Info: Implemented 218 output pins
     Info: Implemented 159 bidirectional pins
-    Info: Implemented 15131 logic cells
+    Info: Implemented 15147 logic cells
     Info: Implemented 98 RAM segments
     Info: Implemented 1 ClockLock PLLs
     Info: Implemented 32 DSP elements
-Info: Quartus II Analysis & Synthesis was successful. 0 errors, 308 warnings
-    Info: Processing ended: Wed May  9 02:32:17 2012
-    Info: Elapsed time: 00:03:32
+Info: Quartus II Analysis & Synthesis was successful. 0 errors, 307 warnings
+    Info: Processing ended: Wed May  9 05:56:57 2012
+    Info: Elapsed time: 00:03:27
 
 

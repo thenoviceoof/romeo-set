@@ -93,28 +93,26 @@ signal oy			: oyb;
 			oc(m)			<= (others => '0');
 		end loop init1;
 	else
-		if clk25 = '1' then
-			if bdone(0) = '1' then
-				ox(0)				<= bx(0);
-				oy(0)				<= by(0);
-				oc(0)				<= bc(0);
-				ow(0)				<= '1';
-			elsif bdone(1) = '1' then
-				ox(0)				<= bx(1);
-				oy(0)				<= by(1);
-				oc(0)				<= bc(1);
-				ow(0)				<= '1';
-			elsif bdone(2) = '1' then
-				ox(0)				<= bx(2);
-				oy(0)				<= by(2);
-				oc(0)				<= bc(2);
-				ow(0)				<= '1';
-			elsif bdone(3) = '1' then
-				ox(0)				<= bx(3);
-				oy(0)				<= by(3);
-				oc(0)				<= bc(3);
-				ow(0)				<= '1';
-			end if;
+		if bdone(0) = '1' then
+			ox(0)				<= bx(0);
+			oy(0)				<= by(0);
+			oc(0)				<= bc(0);
+			ow(0)				<= '1';
+		elsif bdone(1) = '1' then
+			ox(0)				<= bx(1);
+			oy(0)				<= by(1);
+			oc(0)				<= bc(1);
+			ow(0)				<= '1';
+		elsif bdone(2) = '1' then
+			ox(0)				<= bx(2);
+			oy(0)				<= by(2);
+			oc(0)				<= bc(2);
+			ow(0)				<= '1';
+		elsif bdone(3) = '1' then
+			ox(0)				<= bx(3);
+			oy(0)				<= by(3);
+			oc(0)				<= bc(3);
+			ow(0)				<= '1';
 		else
 			ox(0)				<= (others => '0');
 			oy(0)				<= (others => '0');
