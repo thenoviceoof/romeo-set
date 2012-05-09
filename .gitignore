@@ -1,37 +1,22 @@
 *~
+*.swp
 
-*.o
-*.d
-*.mk
-*.elf
-*.a
-*.bsf
-*.bak
-*.dpf
-*.pin
-*.sof
-*.qip
-*.ppf
-*.qpf
-*.dat
-*.summary
-*.rpt
-*.mif
-*.ocp
-*.tcl # this seems like a bad idea
-*.done
-*.smsg
-*.jdi
-*.pof
-*.qpf
+########## in /ifm_test_scripts/
+ifm_test_scripts/*.png
+ifm_test_scripts/*.txt
+ifm_test_scripts/*.pyc
+ifm_test_scripts/*.pickle
+ifm_test_scripts/cache/*
 
+
+########## in /src/
+
+### folders
 */db/*
-*.spoc_builder*
-*.ptf
-*nios_system*				# This also seems like a bad idea-LEP 
-*nios_system_sim/*
-*modelsim*
 
+########## in /docs/
+
+### TeX things
 *.aux
 *.log
 docs/proposal/proposal.pdf

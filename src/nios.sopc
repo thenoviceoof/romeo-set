@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<system name="nios">
+    <parameter valueString="15378877402" name="systemHash"/>
+    <parameter name="quartusRootDir">/opt/altera/altera7.2/quartus</parameter>
+    <parameter valueString="1336450878753" name="timeStamp"/>
+    <parameter valueString="false" name="generateLegacySDK"/>
+    <parameter name="bonusData">bonusData 
+{
+   element sdram.s1
+   {
+      datum baseAddress
+      {
+         value = "8388608";
+         type = "long";
+      }
+   }
+   element jtag_uart.avalon_jtag_slave
+   {
+      datum baseAddress
+      {
+         value = "16781376";
+         type = "long";
+      }
+   }
+   element jtag_uart
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{}";
+         type = "String";
+      }
+   }
+   element sdram
+   {
+      datum _sortIndex
+      {
+         value = "2";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{}";
+         type = "String";
+      }
+   }
+   element cpu.jtag_debug_module
+   {
+      datum baseAddress
+      {
+         value = "16779264";
+         type = "long";
+      }
+   }
+   element nios
+   {
+   }
+   element clk
+   {
+   }
+   element cpu
+   {
+      datum _sortIndex
+      {
+         value = "0";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{}";
+         type = "String";
+      }
+   }
+   element ram.avalon_slave_0
+   {
+      datum baseAddress
+      {
+         value = "16781312";
+         type = "long";
+      }
+   }
+   element ram
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+   }
+}
+</parameter>
+    <parameter valueString="false" name="hardcopyCompatible"/>
+    <parameter valueString="CYCLONEII" name="deviceFamily"/>
+    <parameter valueString="false" name="generateLegacySim"/>
+    <parameter valueString="ifv.qpf" name="projectName"/>
+    <parameter valueString="VHDL" name="hdlLanguage"/>
+    <parameter name="projectDirectory">/home/user4/spring12/lep2141/4840/romeo-set/src</parameter>
+    <module version="7.2" name="clk" kind="clock_source">
+        <parameter valueString="true" name="clockFrequencyKnown"/>
+        <parameter valueString="50000000" name="clockFrequency"/>
+    </module>
+    <module version="7.2" name="cpu" kind="altera_nios2">
+        <parameter valueString="" name="userDefinedSettings"/>
+        <parameter valueString="Automatic" name="setting_branchPredictionType"/>
+        <parameter valueString="_10" name="mmu_processIDNumBits"/>
+        <parameter valueString="32" name="exceptionOffset"/>
+        <parameter valueString="EmbeddedMulFast" name="muldiv_multiplierType"/>
+        <parameter valueString="_4096" name="icache_size"/>
+        <parameter valueString="_128" name="debug_OCIOnchipTrace"/>
+        <parameter valueString="Tiny" name="impl"/>
+        <parameter valueString="_4" name="mmu_uitlbNumEntries"/>
+        <parameter valueString="sdram.s1" name="exceptionSlave"/>
+        <parameter valueString="false" name="dcache_omitDataMaster"/>
+        <parameter valueString="0" name="mmu_TLBMissExcOffset"/>
+        <parameter valueString="false" name="setting_illegalMemAccessDetection"/>
+        <parameter valueString="32" name="breakOffset"/>
+        <parameter valueString="true" name="debug_embeddedPLL"/>
+        <parameter valueString="false" name="setting_debugSimGen"/>
+        <parameter valueString="false" name="setting_alwaysBypassDCache"/>
+        <parameter valueString="_0" name="icache_numTCIM"/>
+        <parameter valueString="false" name="setting_showInternalSettings"/>
+        <parameter valueString="false" name="setting_illegalInstructionsTrap"/>
+        <parameter valueString="0" name="resetOffset"/>
+        <parameter valueString="false" name="setting_bhtIndexPcOnly"/>
+        <parameter valueString="true" name="setting_HDLSimCachesCleared"/>
+        <parameter valueString="true" name="setting_alwaysEncrypt"/>
+        <parameter valueString="false" name="setting_activateModelChecker"/>
+        <parameter valueString="_32" name="dcache_lineSize"/>
+        <parameter valueString="false" name="setting_allowFullAddressRange"/>
+        <parameter valueString="_7" name="mmu_dtlbPtrSz"/>
+        <parameter valueString="_4" name="mmu_itlbNumWays"/>
+        <parameter valueString="false" name="setting_avalonDebugPortPresent"/>
+        <parameter valueString="false" name="cpuReset"/>
+        <parameter valueString="true" name="setting_clearXBitsLDNonBypass"/>
+        <parameter valueString="_4" name="mmu_dtlbNumWays"/>
+        <parameter valueString="sdram.s1" name="resetSlave"/>
+        <parameter valueString="_32" name="setting_perfCounterWidth"/>
+        <parameter valueString="" name="mmu_TLBMissExcSlave"/>
+        <parameter name="breakSlave">cpu.jtag_debug_module</parameter>
+        <parameter valueString="false" name="setting_preciseIllegalMemAccessException"/>
+        <parameter valueString="Level1" name="debug_level"/>
+        <parameter valueString="false" name="muldiv_divider"/>
+        <parameter valueString="false" name="dcache_bursts"/>
+        <parameter valueString="true" name="setting_activateMonitors"/>
+        <parameter valueString="true" name="setting_bit31BypassDCache"/>
+        <parameter valueString="Automatic" name="icache_ramBlockType"/>
+        <parameter valueString="_8" name="setting_bhtPtrSz"/>
+        <parameter valueString="false" name="setting_preciseDivisionErrorException"/>
+        <parameter valueString="false" name="setting_preciseSlaveAccessErrorException"/>
+        <parameter valueString="false" name="debug_debugReqSignals"/>
+        <parameter valueString="_6" name="mmu_udtlbNumEntries"/>
+        <parameter valueString="_0" name="dcache_numTCDM"/>
+        <parameter valueString="false" name="setting_fullWaveformSignals"/>
+        <parameter valueString="false" name="setting_performanceCounter"/>
+        <parameter valueString="_7" name="mmu_itlbPtrSz"/>
+        <parameter valueString="_2048" name="dcache_size"/>
+        <parameter valueString="Automatic" name="dcache_ramBlockType"/>
+        <parameter valueString="true" name="setting_activateTrace"/>
+        <parameter valueString="false" name="setting_HBreakTest"/>
+        <parameter valueString="false" name="setting_exportPCB"/>
+        <parameter valueString="false" name="setting_activateTestEndChecker"/>
+        <parameter valueString="None" name="icache_burstType"/>
+        <parameter valueString="false" name="setting_showUnpublishedSettings"/>
+        <parameter valueString="true" name="debug_triggerArming"/>
+        <parameter valueString="false" name="mmu_enabled"/>
+    </module>
+    <module version="7.2" name="jtag_uart" kind="altera_avalon_jtag_uart">
+        <parameter valueString="8" name="readIRQThreshold"/>
+        <parameter valueString="" name="simInputCharacterStream"/>
+        <parameter valueString="0" name="hubInstanceID"/>
+        <parameter valueString="64" name="readBufferDepth"/>
+        <parameter valueString="false" name="allowMultipleConnections"/>
+        <parameter valueString="64" name="writeBufferDepth"/>
+        <parameter valueString="8" name="writeIRQThreshold"/>
+        <parameter valueString="false" name="useRegistersForWriteBuffer"/>
+        <parameter valueString="false" name="useRegistersForReadBuffer"/>
+        <parameter name="simInteractiveOptions">INTERACTIVE_ASCII_OUTPUT</parameter>
+    </module>
+    <module version="7.2" name="sdram" kind="altera_avalon_new_sdram_controller">
+        <parameter valueString="20.0" name="TRP"/>
+        <parameter valueString="16" name="dataWidth"/>
+        <parameter valueString="12" name="rowWidth"/>
+        <parameter valueString="70.0" name="TRFC"/>
+        <parameter valueString="true" name="registerDataIn"/>
+        <parameter valueString="3" name="casLatency"/>
+        <parameter valueString="100.0" name="powerUpDelay"/>
+        <parameter valueString="false" name="generateSimulationModel"/>
+        <parameter valueString="2" name="initRefreshCommands"/>
+        <parameter valueString="" name="masteredTristateBridgeSlave"/>
+        <parameter valueString="3" name="TMRD"/>
+        <parameter valueString="14.0" name="TWR"/>
+        <parameter valueString="0.0" name="initNOPDelay"/>
+        <parameter valueString="15.625" name="refreshPeriod"/>
+        <parameter valueString="5.5" name="TAC"/>
+        <parameter valueString="8" name="columnWidth"/>
+        <parameter valueString="4" name="numberOfBanks"/>
+        <parameter valueString="1" name="numberOfChipSelects"/>
+        <parameter valueString="false" name="pinsSharedViaTriState"/>
+        <parameter valueString="20.0" name="TRCD"/>
+        <parameter valueString="custom" name="model"/>
+        <parameter valueString="8388608" name="size"/>
+    </module>
+    <module version="1.0" name="ram" kind="ramcon">
+        <parameter valueString="" name="sharedPorts"/>
+    </module>
+    <connection version="7.2" start="clk.clk" kind="clock" end="cpu.clk"/>
+    <connection version="7.2" start="cpu.instruction_master" kind="avalon" end="cpu.jtag_debug_module">
+        <parameter valueString="1" name="arbitrationPriority"/>
+        <parameter valueString="0x01000800" name="baseAddress"/>
+    </connection>
+    <connection version="7.2" start="cpu.data_master" kind="avalon" end="cpu.jtag_debug_module">
+        <parameter valueString="1" name="arbitrationPriority"/>
+        <parameter valueString="0x01000800" name="baseAddress"/>
+    </connection>
+    <connection version="7.2" start="clk.clk" kind="clock" end="jtag_uart.clk"/>
+    <connection version="7.2" start="cpu.data_master" kind="avalon" end="jtag_uart.avalon_jtag_slave">
+        <parameter valueString="1" name="arbitrationPriority"/>
+        <parameter valueString="0x01001040" name="baseAddress"/>
+    </connection>
+    <connection version="7.2" start="cpu.d_irq" kind="interrupt" end="jtag_uart.irq">
+        <parameter valueString="0" name="irqNumber"/>
+    </connection>
+    <connection version="7.2" start="clk.clk" kind="clock" end="sdram.clk"/>
+    <connection version="7.2" start="cpu.instruction_master" kind="avalon" end="sdram.s1">
+        <parameter valueString="1" name="arbitrationPriority"/>
+        <parameter valueString="0x00800000" name="baseAddress"/>
+    </connection>
+    <connection version="7.2" start="cpu.data_master" kind="avalon" end="sdram.s1">
+        <parameter valueString="1" name="arbitrationPriority"/>
+        <parameter valueString="0x00800000" name="baseAddress"/>
+    </connection>
+    <connection version="7.2" start="clk.clk" kind="clock" end="ram.clock"/>
+    <connection version="7.2" start="cpu.data_master" kind="avalon" end="ram.avalon_slave_0">
+        <parameter valueString="1" name="arbitrationPriority"/>
+        <parameter valueString="0x0000" name="baseAddress"/>
+    </connection>
+</system>
+
