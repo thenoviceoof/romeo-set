@@ -25,7 +25,8 @@ mutable by buttons or some other input.
 COMPILING
 --------------------------------------------------------------------------------
 This project was developed with Quartus II (v7.2) along with SOPC
-Builder (v???) and Nios-IDE (v7.2, tied to Quartus), on Red Hat 5.
+Builder (v7.2, tied to Quartus) and Nios-IDE (v7.2, tied to Quartus),
+on Red Hat 5.
 
 From source, one need only:
  - Generate the SOPC system using SPOC Builder
@@ -35,12 +36,12 @@ From source, one need only:
    - then, you have to import all the folders as projects, then
      compile with IFV
 
-For the class notes, see <???>
+For the class notes, see
+<http://www.cs.columbia.edu/~sedwards/classes/2012/4840/index.html>
 
 
 RUNNING
 --------------------------------------------------------------------------------
-
 To run, program the board with Quartus, then nios2-ide.
 
 Controls:
@@ -48,7 +49,8 @@ Controls:
  - Arrow keys are pan
  - WASD moves the constant around in the complex plane
  - The number row changes the preset constant
- - The z to slash row changes the color scheme
+ - The z to m keys change the color scheme
+ - The enter key cycles the colors
 
 
 TODO
