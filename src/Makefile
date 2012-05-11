@@ -24,8 +24,12 @@ clean:
 	rm -f *.pof
 	rm -f *.jdi
 	rm -rf nios_system_sim/
+	rm -rf nios_sim/
 	rm -rf .sopc_builder/
 	rm -f *.ptf
 	rm -f *_ptf
 	rm -f *.mif
 	rm -f *log.txt
+	rm -rf software/.metadata
+	rm -rf software/IFV/Debug
+	rm -rf software/IFV_syslib/Debug
