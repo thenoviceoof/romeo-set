@@ -1,11 +1,11 @@
--------------------------------------------------------------------------------
+---------------------------------------------------------------------
+--vga.vhd
 --
--- Simple VGA raster display
+--This unit is a VGA raster. It sends the signals to the converter
+--to drive the monitor
 --
--- Stephen A. Edwards
--- sedwards@cs.columbia.edu
---
--------------------------------------------------------------------------------
+--Author: Richard Nwaobasi
+---------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;

@@ -1,38 +1,24 @@
+--------------------------------------------------------------------
+-- DE2 top-level module for the IFV
 --
--- DE2 top-level module that includes the simple VGA raster generator
---
--- Stephen A. Edwards, Columbia University, sedwards@cs.columbia.edu
+-- Nathan Hwang, Richard Nwaobasi, Luis E. P. & Stephen Pratt
 --
 -- From an original by Terasic Technology, Inc.
 -- (DE2_TOP.v, part of the DE2 system board CD supplied by Altera)
---
-
+--------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity ifv is
 
-	port (                                   -- 27 MHz
+	port (
 	CLOCK_50	: in std_logic;                    -- 50 MHz
-
-	-- Buttons and switches
-	KEY : in std_logic_vector(3 downto 0);         -- Push buttons
-	SW : in std_logic_vector(17 downto 0);         -- DPDT switches
 
 	-- LED displays
 	HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, HEX6, HEX7 -- 7-segment displays
 	: out std_logic_vector(6 downto 0);
 	LEDG : out std_logic_vector(8 downto 0);       -- Green LEDs
-	LEDR : out std_logic_vector(17 downto 0);      -- Red LEDs
-
-	-- RS-232 interface
-	UART_TXD : out std_logic;                      -- UART transmitter   
-	UART_RXD : in std_logic;                       -- UART receiver
-
-	-- IRDA interface
---    IRDA_TXD : out std_logic;                      -- IRDA Transmitter
-	IRDA_RXD : in std_logic;                       -- IRDA Receiver
 
 	-- SDRAM
 	DRAM_DQ : inout std_logic_vector(15 downto 0); -- Data Bus
@@ -57,12 +43,6 @@ entity ifv is
 	SRAM_CE_N,                                     -- Chip Enable
 	SRAM_OE_N : out std_logic;                     -- Output Enable	
 
-	-- USB JTAG link 
-	TDI,                        -- CPLD -> FPGA (data in)
-	TCK,                        -- CPLD -> FPGA (clk)
-	TCS : in std_logic;         -- CPLD -> FPGA (CS)
-	TDO : out std_logic;        -- FPGA -> CPLD (data out)
-
 	-- PS/2 port
 	PS2_DAT,                    -- Data
 	PS2_CLK : inout std_logic;     -- Clock
@@ -84,7 +64,6 @@ architecture datapath of ifv is
 
 	signal clk_25			: std_logic;
 	signal clk_50			: std_logic;
-	--signal clk_vga			: std_logic;
 	signal clk_sdram		: std_logic;
 
 	signal cread			: unsigned(7 downto 0);
@@ -115,7 +94,6 @@ architecture datapath of ifv is
 	signal a_leape			: unsigned(9 downto 0)		;
 	signal b_leape			: unsigned(9 downto 0)		;
 
-	signal reset_from_nios 	: std_logic;
 	signal DRAM_BA			: std_logic_vector(1 downto 0);
 	signal DRAM_DQM			: std_logic_vector(1 downto 0);
 
@@ -123,44 +101,22 @@ architecture datapath of ifv is
 	signal ram_data			: signed(17 downto 0);
 	signal ram_address		: unsigned(3 downto 0);
 	signal ram_addr			: unsigned(3 downto 0);
-	
-	signal debug_vector 	: std_logic_vector(3 downto 0);
-	
+
 	signal iterate			: std_logic;
 	signal reset			: std_logic;
 	signal color			: std_logic_vector(2 downto 0);
 	signal refresh			: std_logic;
 	signal fract			: std_logic_vector(1 downto 0);
 	signal sig				: std_logic_vector(7 downto 0);
-	signal siga				: std_logic_vector(7 downto 0);
 	begin
 
-	reset				<= sig(0) or SW(0);
-	iterate				<= sig(1);
-	color				<= sig(4 downto 2);
-	refresh				<= sig(5);
-	fract				<= sig(7 downto 6);
+	reset					<= sig(0);
+	iterate					<= sig(1);
+	color					<= sig(4 downto 2);
+	refresh					<= sig(5);
+	fract					<= sig(7 downto 6);
+	LEDG(7 downto 0)		<= sig;
 
-	LEDG				<= '0'& sig;
-
-	debug_vector <= SW(17 downto 14);
-	with debug_vector select LEDR(17 downto 0) <= 
-		std_logic_vector(a_min(35 downto 18))	when "0000",
-		std_logic_vector(a_min(17 downto 0))	when "0001",
-		std_logic_vector(b_min(35 downto 18))	when "0010",
-		std_logic_vector(b_min(17 downto 0))	when "0011",
-		std_logic_vector(a_diff(35 downto 18))	when "0100",
-		std_logic_vector(a_diff(17 downto 0))	when "0101",
-		std_logic_vector(b_diff(35 downto 18))	when "0110",
-		std_logic_vector(b_diff(17 downto 0))	when "0111",
-		std_logic_vector((a_leap&"00000000"))	when "1000",
-		std_logic_vector((b_leap&"00000000"))	when "1001",
-		std_logic_vector(cr(35 downto 18))		when "1010",
-		std_logic_vector(cr(17 downto 0))		when "1011",
-		std_logic_vector(ci(35 downto 18))		when "1100",
-		std_logic_vector(ci(17 downto 0))		when "1101",
-		(others => '1')							when others;
-		
 	process (clk_25)
 	begin
 		if rising_edge(clk_25) then
@@ -204,8 +160,7 @@ architecture datapath of ifv is
 			end if;
 		end if;
 	end process;
-	
-	
+
 	VGA_CLK   <= clk_25;
 	DRAM_BA_1 <= DRAM_BA(1);
 	DRAM_BA_0 <= DRAM_BA(0);
@@ -221,7 +176,6 @@ CLK5025: entity work.pll5025 port map(
 	);
 
 IFM: entity work.hook port map(
-	clk50		=> clk_50,
 	clk25		=> clk_25,
 	reset		=> reset,
 	a_min		=> a_min,
@@ -246,7 +200,7 @@ NIOS: entity work.nios port map (
 
 	PS2_CLK_to_and_from_the_ps2_0	=> PS2_CLK,
 	PS2_DAT_to_and_from_the_ps2_0	=> PS2_DAT,
-	irq_from_the_ps2_0				=> reset_from_nios,
+	irq_from_the_ps2_0				=> LEDG(8),
 
  -- the_ram
 	addressout_to_the_ram			=> std_logic_vector(ram_address),
@@ -272,8 +226,7 @@ NIOS: entity work.nios port map (
 
 RMR: entity work.rammer port map(
 	clk				=> clk_25,
-	compute			=> sig(5),
-	done			=> reset_from_nios,
+	compute			=> refresh,
 	read			=> ram_read,
 	addressout		=> ram_address,
 	addressin		=> ram_addr,
@@ -303,7 +256,7 @@ VGA: entity work.vga_mod port map (
 	xout		=> xread,--EXTERNAL SIGNALS
 	yout		=> yread,--EXTERNAL SIGNALS
 	re  		=> re,--EXTERNAL SIGNALS
-	ce  		=> sig(1)
+	ce  		=> iterate
 	);
 
 SRAM: entity work.sram port map(
@@ -332,7 +285,4 @@ SRAM: entity work.sram port map(
 	HEX2     <= "0010010"; -- S
 	HEX1     <= "0000110"; -- E
 	HEX0     <= "0000111"; -- t
-
-	UART_TXD <= '0';
-	TDO <= '0';
 end datapath;

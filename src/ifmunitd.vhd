@@ -1,12 +1,18 @@
+---------------------------------------------------------------------
+--ifmunitd.vhd
+--
+--This is the entity holding all four IFMs. This is where all the
+--wiring and the IFM coordination takes place.
+--
+--Author: Luis E. P.
+---------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity ifmunitd is
-
 	port(
 	clk25		: in std_logic;
-	clk50		: in std_logic;
 	reset		: in std_logic;
 	data		: in std_logic;								--Asserted high when data is ready to be read
 	xin			: in std_logic_vector(9 downto 0);
@@ -17,12 +23,8 @@ entity ifmunitd is
 	ci			: in signed(35 downto 0);
 	xout		: out std_logic_vector(9 downto 0);
 	yout		: out std_logic_vector(8 downto 0);
---	aout		: out std_logic_vector(35 downto 0);
---	bout		: out std_logic_vector(35 downto 0);
 	count		: out unsigned(7 downto 0);					--Data to be written in memory
 	full		: out std_logic;
---	done		: out unsigned(3 downto 0);
---	compute		: out unsigned(3 downto 0);
 	we			: out std_logic								-- Write enable
 	);
 end ifmunitd;
@@ -84,9 +86,9 @@ signal oy			: oyb;
 	we				<= ow(0);
 	count			<= oc(0);
 
-	process(clk50)
+	process(clk25)
 	begin
-	if rising_edge(clk50) then
+	if rising_edge(clk25) then
 	if reset = '1' then
 		init1:	for m in 0 to 0 loop
 			ow(m)			<= '0';
@@ -143,19 +145,7 @@ signal oy			: oyb;
 			bclear(n)		<= '1';
 			bcomp(n)		<= '0';
 			end loop init2;
-
 	else
-
----- OUTPUT BUFFER:
---	ob:	for idx in 0 to 0 loop
---		ox(idx)			<= ox(idx-1);
---		oy(idx)			<= oy(idx-1);
---		oc(idx)			<= oc(idx-1);
---		ow(idx)			<= ow(idx-1);
---		oa(idx)			<= oa(idx-1);
---		ob(idx)			<= ob(idx-1);
---	end loop ob;
----- END OUTPUT BUFFER:
 
 -- INPUT BUFFER:
 	if ia(1).d = '0' then
@@ -247,8 +237,6 @@ clear:	for idx in 0 to 3 loop
 		ci			=> ia(0).ci,
 		xout		=> bx(I),
 		yout		=> by(I),
---		aout		=> ba(I),
---		bout		=> bb(I),
 		count		=> bc(I),
 		don			=> bdone(I),
 		ready		=> bready(I)

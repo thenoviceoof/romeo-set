@@ -2,15 +2,84 @@
 <system name="nios">
     <parameter valueString="5816557756" name="systemHash"/>
     <parameter name="quartusRootDir">/opt/altera/altera7.2/quartus</parameter>
-    <parameter valueString="1336563605549" name="timeStamp"/>
+    <parameter valueString="1336593514120" name="timeStamp"/>
     <parameter valueString="false" name="generateLegacySDK"/>
     <parameter name="bonusData">bonusData 
 {
+   element ram.avalon_slave_0
+   {
+      datum baseAddress
+      {
+         value = "16781312";
+         type = "long";
+      }
+   }
+   element clk
+   {
+   }
+   element ps2_0
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+   }
+   element cpu.jtag_debug_module
+   {
+      datum baseAddress
+      {
+         value = "16779264";
+         type = "long";
+      }
+   }
+   element ram
+   {
+      datum _sortIndex
+      {
+         value = "3";
+         type = "int";
+      }
+   }
+   element sdram.s1
+   {
+      datum baseAddress
+      {
+         value = "8388608";
+         type = "long";
+      }
+   }
+   element ram_signal.avalon_slave_0
+   {
+      datum baseAddress
+      {
+         value = "16781392";
+         type = "long";
+      }
+   }
    element nios
    {
    }
-   element clk_25
+   element ps2_0.avalon_slave_0
    {
+      datum baseAddress
+      {
+         value = "16781384";
+         type = "long";
+      }
+   }
+   element jtag_uart
+   {
+      datum _sortIndex
+      {
+         value = "1";
+         type = "int";
+      }
+      datum megawizard_uipreferences
+      {
+         value = "{}";
+         type = "String";
+      }
    }
    element ram_signal
    {
@@ -33,58 +102,8 @@
          type = "String";
       }
    }
-   element ps2_0.avalon_slave_0
+   element clk_25
    {
-      datum baseAddress
-      {
-         value = "16781384";
-         type = "long";
-      }
-   }
-   element ram_signal.avalon_slave_0
-   {
-      datum baseAddress
-      {
-         value = "16781392";
-         type = "long";
-      }
-   }
-   element ram.avalon_slave_0
-   {
-      datum baseAddress
-      {
-         value = "16781312";
-         type = "long";
-      }
-   }
-   element sdram.s1
-   {
-      datum baseAddress
-      {
-         value = "8388608";
-         type = "long";
-      }
-   }
-   element jtag_uart
-   {
-      datum _sortIndex
-      {
-         value = "1";
-         type = "int";
-      }
-      datum megawizard_uipreferences
-      {
-         value = "{}";
-         type = "String";
-      }
-   }
-   element cpu.jtag_debug_module
-   {
-      datum baseAddress
-      {
-         value = "16779264";
-         type = "long";
-      }
    }
    element sdram
    {
@@ -97,25 +116,6 @@
       {
          value = "{}";
          type = "String";
-      }
-   }
-   element clk
-   {
-   }
-   element ps2_0
-   {
-      datum _sortIndex
-      {
-         value = "5";
-         type = "int";
-      }
-   }
-   element ram
-   {
-      datum _sortIndex
-      {
-         value = "3";
-         type = "int";
       }
    }
    element jtag_uart.avalon_jtag_slave

@@ -1,8 +1,10 @@
+---------------------------------------------------------------------
+--vga_mod.vhd
 --
--- lab1.vhd
+--This unit connects the VGA raster and the Color_LUT.
 --
--- Richard Nwaobasi
---
+--Author: Richard Nwaobasi
+---------------------------------------------------------------------
 
 library ieee;
 use ieee.std_logic_1164.all;

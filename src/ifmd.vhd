@@ -1,3 +1,12 @@
+---------------------------------------------------------------------
+--ifmd.vhd
+--
+--This is the iterating unit. This unit, given a complex number and a
+--complex constant, calculates the number of iterations until breakaway
+--or whether or not the coordinate is out of bounds
+--
+--Author: Luis E. P.
+---------------------------------------------------------------------
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -15,8 +24,6 @@ entity ifmd is
 	bin			: in std_logic_vector(35 downto 0);			-- Imaginary part of input
 	cr			: in signed(35 downto 0);					-- Real part of constant
 	ci			: in signed(35 downto 0);					-- Imaginary part of constant
---	aout		: out std_logic_vector(35 downto 0);		-- Real part of input
---	bout		: out std_logic_vector(35 downto 0);		-- Imaginary part of input
 	xout		: out std_logic_vector(9 downto 0);			-- The x coordinate output
 	yout		: out std_logic_vector(8 downto 0);			-- The y coordinate output
 	count		: out unsigned(7 downto 0);					-- Iteration count
@@ -28,10 +35,6 @@ entity ifmd is
 end ifmd;
 
 architecture first of ifmd is
-
---signal		cr		: signed(35 downto 0)	:= X"FCA8F5C29";	-- Real part of the constant		0
---signal		ci		: signed(35 downto 0)	:= X"FF125460B";	-- Imaginary part of the constant	0
-
 signal		proda	: std_logic_vector(71 downto 0);
 signal		prodb	: std_logic_vector(71 downto 0);
 signal		prodc	: std_logic_vector(71 downto 0);
@@ -112,25 +115,19 @@ signal		done	: std_logic				:= '0';						-- Indicates if IFM is done iterating
 	end process;
 
 	multa:	entity	work.sqr2 port map(
-
 		dataa		=> oldr,
 		result		=> proda
-
 	);
 
 		multb:	entity	work.sqr2 port map(
-
 		dataa		=> oldi,
 		result		=> prodb
-
 	);
 
 		multc:	entity	work.mult2 port map(
-
 		dataa		=> oldr,
 		datab		=> oldi,
 		result		=> prodc
-
 	);
 
 end first;
